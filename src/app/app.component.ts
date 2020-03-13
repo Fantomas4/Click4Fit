@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Click4Fit';
-  imageUrl="./assets/logo.JPG";
+  logoUrl="./assets/logo.JPG";
+  imageUrl="./assets/fitness.jpg"
   clickedWorkout=false;
   clickedAbout=false;
   clickedSearch=false;

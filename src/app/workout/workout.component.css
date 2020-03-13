@@ -7,13 +7,19 @@ mat-sidenav {
     background-color: #3F51B5;
     color:#fff
 }
-.radiochoiceB,.radiochoiceA{
+#yes,#men,#women,#easy{
     margin-left:20px;
+}
+#hard,#no{
+    margin-left:37px;
+}
+#no{
+    margin-left:47px;
 }
 h1{
     color:  #3F51B5; 
     font-style: oblique;
-    font-size: 60px; 
+    font-size: 50px; 
     line-height: 100px; 
     font-weight: normal;
     margin-top: 1px;
@@ -29,3 +35,13 @@ h1{
 .part,.equip,.adv,.dif{
     font-size:18px;
 }
+.features{
+    margin-left:900px;
+    margin-top:-45px;
+    background-color: lightgray;
+    border-radius: 25px;
+ }
+ #searchButton{
+    background-color:  #3F51B5 ;
+    margin-left:65px;
+ }

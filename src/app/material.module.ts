@@ -3,18 +3,21 @@ import {NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
   imports: [
     MatSidenavModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatButtonModule
   ],
   exports: [
     MatSidenavModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatButtonModule
   ]
 })
 

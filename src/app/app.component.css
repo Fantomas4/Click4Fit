@@ -11,13 +11,19 @@ mat-sidenav {
   font-size:25px;
   margin-top:100px;
 }
-.picture{
+.logo{
   width:125px;
   height:60px;
 }
+.image{
+  width:600px;
+  height:300px;
+  border-radius:25px;
+  margin-left:260px;
+}
 .home,.about,.search,.myprofile,.workout{
   margin: 0 auto;
-  padding: 0.50em 0.625em;
+  padding: 10px;
   background-color:	#282828;
   font-size:22px;
   
