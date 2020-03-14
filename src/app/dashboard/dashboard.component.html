@@ -1,0 +1,19 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav-content>
+    <div class="maincontent" *ngIf="!clickedWorkout && !clickedSearch && !clickedAbout && !clickedMyprofile">
+      <h1>Welcome</h1>
+      <p class="moto">Don't wish for a good body. <i><b>Search</b></i> for it.</p>
+      <img [src]="imageUrl" class="image"></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+  <mat-sidenav mode="side" #sidenav opened position="start">
+    <div class="title"><img class="logo" [src]="logoUrl"></div>
+    <div class="dashboard">
+      <p class="home" (click)="goToHome()">Home</p>
+      <p class="myprofile" (click)="goToMyprofile()">My profile</p>
+      <p class="search" (click)="goToSearch()">Search</p>
+      <p class="workout" (click)="goToWorkout()">Workout</p>
+      <p class="about" (click)="goToAbout()">About</p>
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>
