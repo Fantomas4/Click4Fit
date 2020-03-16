@@ -10,5 +10,3 @@ export class AppComponent {
   title = 'Tour of Heroes';
   // constructor(private router: Router) {}
 }
-
-

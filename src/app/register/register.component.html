@@ -1,4 +1,3 @@
-<!--name, surname, date of birth, email, password, repeat password-->
 <mat-card class="register-card">
   <mat-card-header>
     <mat-card-title>Please provide your registration details:</mat-card-title>
@@ -7,7 +6,7 @@
     <form class="register-form">
       <table class="example-full-width" cellspacing="0">
         <tr>
-          <td>
+          <td class="first-name-column">
             <mat-form-field class="example-full-width">
               <mat-label>First name</mat-label>
               <input matInput placeholder="e.g. George" [(ngModel)]="firstName" name="first-name" required>
@@ -20,16 +19,32 @@
             </mat-form-field>
           </td>
         </tr>
-
         <tr>
-<!--          <mat-form-field>-->
-<!--            <mat-label>Choose your birthday</mat-label>-->
-<!--            <input matInput [matDatepicker]="picker">-->
-<!--            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--            <mat-datepicker #picker></mat-datepicker>-->
-<!--          </mat-form-field>-->
+          <mat-form-field>
+            <mat-label>Choose your birthday</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </tr>
-
+      </table>
+      <mat-form-field class="email-input-field">
+        <mat-label>E-mail:</mat-label>
+        <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
+               type="email" name="registration-email" required>
+        <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <table>
+        <tr>
+          <mat-form-field>
+            <input matInput placeholder="Password" [(ngModel)]="initialPassword" type="password" name="initial-password" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <input matInput placeholder="Repeat password" [(ngModel)]="repeatedPassword" type="password" name="repeated-password" required>
+          </mat-form-field>
+        </tr>
       </table>
     </form>
     <!--    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>-->

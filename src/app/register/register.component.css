@@ -8,6 +8,10 @@
   font-size: 21px;
 }
 
-td {
+.first-name-column {
   padding-right: 8px;
+}
+
+.email-input-field {
+  width: 80%
 }

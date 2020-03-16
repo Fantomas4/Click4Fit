@@ -10,13 +10,13 @@ import { SearchComponent } from './search/search.component';
 import { AboutComponent } from './about/about.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { OverviewComponent } from './overview/overview.component';
 import {MaterialModule} from './core/material.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -27,10 +27,10 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     AboutComponent,
     MyprofileComponent,
     DashboardComponent,
-    OverviewComponent,
     LoginComponent,
     RegisterComponent,
-    RecoverPasswordComponent
+    RecoverPasswordComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
