@@ -1,0 +1,13 @@
+.login-card {
+  /*width: 400px;*/
+  width: 25%;
+  margin: 10% auto;
+}
+
+.mat-card-title {
+  font-size: 21px;
+}
+
+.forgot-password {
+  margin-left: 15px;
+}

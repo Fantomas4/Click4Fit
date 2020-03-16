@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './core/app-routing.module';
 import { RouterModule } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -11,8 +11,12 @@ import { AboutComponent } from './about/about.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OverviewComponent } from './overview/overview.component';
-import {MaterialModule} from './material/material.module';
+import {MaterialModule} from './core/material.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 @NgModule({
   declarations: [
@@ -22,16 +26,21 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     AboutComponent,
     MyprofileComponent,
     DashboardComponent,
-    OverviewComponent
+    OverviewComponent,
+    LoginComponent,
+    RegisterComponent,
+    RecoverPasswordComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    AppRoutingModule,
-    RouterModule,
-    MatToolbarModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        AppRoutingModule,
+        RouterModule,
+        MatToolbarModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}],
   bootstrap: [AppComponent]
 })
