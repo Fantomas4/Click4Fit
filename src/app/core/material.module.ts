@@ -29,7 +29,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatSidenavModule,
     MatCheckboxModule,
     MatRadioModule,
-
   ],
   exports: [
     MatToolbarModule,
@@ -43,7 +42,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatSidenavModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatButtonModule
+    MatButtonModule,
   ]
 })
 

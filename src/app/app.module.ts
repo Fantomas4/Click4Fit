@@ -18,6 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,16 +32,16 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     RegisterComponent,
     RecoverPasswordComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        MaterialModule,
-        AppRoutingModule,
-        RouterModule,
-        MatToolbarModule,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    AppRoutingModule,
+    RouterModule,
+    MatToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}],
   bootstrap: [AppComponent]
 })

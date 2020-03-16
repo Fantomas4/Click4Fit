@@ -1,0 +1,13 @@
+.register-card {
+  /*width: 400px;*/
+  width: 25%;
+  margin: 10% auto;
+}
+
+.mat-card-title {
+  font-size: 21px;
+}
+
+td {
+  padding-right: 8px;
+}
