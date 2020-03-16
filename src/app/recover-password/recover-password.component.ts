@@ -20,6 +20,10 @@ export class RecoverPasswordComponent implements OnInit {
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
   }
 
+  submit() {
+
+  }
+
   constructor() { }
 
   ngOnInit(): void {
