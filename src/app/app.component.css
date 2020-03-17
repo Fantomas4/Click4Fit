@@ -1,64 +1,21 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-mat-sidenav {
-  width: 150px;
-  padding:10px;
+/*.example-fill-remaining-space {*/
+/*  !* This fills the remaining space, by using flexbox.*/
+/*     Every toolbar row uses a flexbox row layout. *!*/
+/*  flex: 1 1 auto;*/
+/*}*/
+.title {
+  font-size: 1.8em;
 }
-.mat-drawer {
-  background-color: #3F51B5;
-  color:#fff
-}
-.dashboard{
-  font-size:25px;
-  margin-top:100px;
-}
-.logo{
-  width:125px;
-  height:60px;
-}
-.image{
-  width:600px;
-  height:300px;
-  border-radius:25px;
-  margin-left:260px;
-}
-.home,.about,.search,.myprofile,.workout{
-  margin: 0 auto;
-  padding: 10px;
-  background-color:	#282828;
-  font-size:22px;
-  
-}
-.workout:hover,.home:hover,.search:hover,.myprofile:hover,.about:hover{
-  background-color:grey;
-}
-h1 { 
-  color:  #3F51B5; 
-  font-style: oblique;
-  font-size: 100px; 
-  line-height: 160px; 
-  font-weight: normal;
-   margin-bottom: 0px; 
-   margin-top: 40px; 
-   text-align: center; 
-   text-shadow: 0 1px 1px #fff; 
-  }
 
-.moto { 
-  color: #7a7c7f; 
-  font-size: 29px; 
-  font-family: "Libre Baskerville", serif; 
-  line-height: 45px; 
-  text-align: center; 
-  text-shadow: 0 1px 1px #fff; 
-  padding-top: 20px; 
+.toolbar-button {
+  font-size: 1em;
 }
-.moto:byline { 
-  font-style: italic; 
-  color: #B6B6B6; 
-  font-size: 24px; 
-  margin-top: 20px;
-   text-align: center; 
-   text-shadow: 0 1px 1px #fff; 
-  }
 
+.empty-filler {
+  flex: 1 1 auto;
+}
+
+.button-container {
+
+}
 

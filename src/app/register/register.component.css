@@ -1,0 +1,17 @@
+.register-card {
+  /*width: 400px;*/
+  width: 25%;
+  margin: 10% auto;
+}
+
+.mat-card-title {
+  font-size: 21px;
+}
+
+.first-name-column {
+  padding-right: 8px;
+}
+
+.email-input-field {
+  width: 80%
+}
