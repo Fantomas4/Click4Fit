@@ -16,10 +16,10 @@
 <!--    <button mat-raised-button color="primary" routerLink="/user/search">My Profile</button>-->
 <!--    <button mat-raised-button color="primary" routerLink="/user/workout">My Profile</button>-->
     <mat-nav-list>
-      <a mat-list-item [routerLink]="'/user/dashboard'"><b class="list-item-text">Dashboard</b></a>
-      <a mat-list-item [routerLink]="'/create-account'"><b class="list-item-text">My Profile</b></a>
-      <a mat-list-item [routerLink]="'/contacts'"><b class="list-item-text">Search</b></a>
-      <a mat-list-item [routerLink]="'/create-contact'"><b class="list-item-text">Workout</b></a>
+      <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Dashboard</b></a>
+      <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>
+      <a mat-list-item routerLink="/user/search"><b class="list-item-text">Search</b></a>
+      <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>
       <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
     </mat-nav-list>
   </mat-sidenav>
