@@ -16,7 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
-import { HomeComponent } from './home/home.component';
+import { UserMainViewComponent } from './user-main-view/user-main-view.component';
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     RegisterComponent,
     RecoverPasswordComponent,
-    HomeComponent
+    UserMainViewComponent
   ],
   imports: [
     BrowserModule,

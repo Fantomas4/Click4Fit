@@ -1,0 +1,54 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+mat-sidenav {
+  width: 12%;
+  padding:10px;
+}
+
+.mat-drawer {
+  background-color: #3F51B5;
+  color:#fff
+}
+
+/*.menu-item {*/
+/*  font-size: large;*/
+/*}*/
+
+.list-item-text {
+  font-size: 100%;
+}
+
+
+
+
+
+/*.dashboard{*/
+/*  font-size:25px;*/
+/*  margin-top:100px;*/
+/*}*/
+/*.logo{*/
+/*  width:125px;*/
+/*  height:60px;*/
+/*}*/
+
+/*.home,.about,.search,.myprofile,.workout{*/
+/*  margin: 0 auto;*/
+/*  padding: 10px;*/
+/*  background-color:	#282828;*/
+/*  font-size:22px;*/
+/*}*/
+
+/*.workout:hover,.home:hover,.search:hover,.myprofile:hover,.about:hover{*/
+/*  background-color:grey;*/
+/*}*/
+
+/*.moto:byline {*/
+/*  font-style: italic;*/
+/*  color: #B6B6B6;*/
+/*  font-size: 24px;*/
+/*  margin-top: 20px;*/
+/*   text-align: center;*/
+/*   text-shadow: 0 1px 1px #fff;*/
+/*  }*/
+
+
