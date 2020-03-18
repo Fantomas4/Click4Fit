@@ -11,15 +11,21 @@ import {LoginComponent} from '../login/login.component';
 import {RegisterComponent} from '../register/register.component';
 import {RecoverPasswordComponent} from '../recover-password/recover-password.component';
 import {UserMainViewComponent} from '../user-main-view/user-main-view.component';
+import {ContactUsComponent} from '../contact-us/contact-us.component';
+import {HomeComponent} from '../home/home.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   // {path: '', component: AppComponent},
+  {path: 'home', component: HomeComponent},
+  {path: 'about', component: AboutComponent},
+  {path: 'contact-us', component: ContactUsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'recover-password', component: RecoverPasswordComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserMainViewComponent,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {path: 'dashboard', component: DashboardComponent},
       {path: 'myprofile', component: MyprofileComponent},
       {path: 'search', component: SearchComponent},

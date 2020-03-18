@@ -1,14 +1,53 @@
-<mat-sidenav-container fullscreen>
-  <mat-toolbar color="primary">
+<!--<mat-sidenav-container fullscreen>-->
+
+<!--  <mat-sidenav-content>-->
+<!--    <mat-toolbar color="primary">-->
+<!--      <span class="title">Click4Fit</span>-->
+<!--      <span class="empty-filler"></span>-->
+<!--      <div class="button-container">-->
+<!--        <a mat-button class="toolbar-button" routerLink="/login">Login</a>-->
+<!--        <a mat-button class="toolbar-button" routerLink="/register">Register</a>-->
+<!--      </div>-->
+<!--    </mat-toolbar>-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </mat-sidenav-content>-->
+<!--</mat-sidenav-container>-->
+
+
+<!--<mat-toolbar role="heading" color="primary" class="top-bar">-->
+<!--  <span class="title">Click4Fit</span>-->
+<!--  <span class="empty-filler"></span>-->
+<!--  <div class="button-container">-->
+<!--    <a mat-button class="toolbar-button" routerLink="/login">Login</a>-->
+<!--    <a mat-button class="toolbar-button" routerLink="/register">Register</a>-->
+<!--  </div>-->
+<!--</mat-toolbar>-->
+<!--<router-outlet></router-outlet>-->
+<div class="toolbar-section">
+  <mat-toolbar role="heading" color="primary" class="top-bar">
     <span class="title">Click4Fit</span>
-    <span class="empty-filler"></span>
-    <div class="button-container">
-      <a mat-button class="toolbar-button" routerLink="/login">Login</a>
-      <a mat-button class="toolbar-button" routerLink="/register">Register</a>
+
+    <div class="flex-container">
+      <a mat-button class="toolbar-button" routerLink="/home">Home</a>
+      <a mat-button class="toolbar-button" routerLink="/about">About</a>
+      <a mat-button class="toolbar-button" routerLink="/contact-us">Contact Us</a>
+      <div class="button-container">
+        <a mat-button class="toolbar-button" routerLink="/login">Login</a>
+        <a mat-button class="toolbar-button" routerLink="/register">Register</a>
+      </div>
     </div>
+
+    <!--  <span class="empty-filler"></span>-->
+
   </mat-toolbar>
+</div>
+<div class="content-section">
   <router-outlet></router-outlet>
-</mat-sidenav-container>
+</div>
+
+
+
+
 
 
 
