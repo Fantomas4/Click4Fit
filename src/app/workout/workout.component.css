@@ -7,10 +7,10 @@ mat-sidenav {
     background-color: #3F51B5;
     color:#fff
 }
-#yes,#men,#women,#easy{
+#men{
     margin-left:20px;
 }
-#hard,#no{
+#hard{
     margin-left:37px;
 }
 #no{
@@ -26,8 +26,11 @@ h1{
     text-align: center; 
     text-shadow: 0 1px 1px #fff; 
 }
-.part,.advisedfor,.difficultyslevel,.equipment{
+.advisedfor,.difficultyslevel,.equipment{
     margin-left:20px;
+}
+.part{
+    margin-left:-20px;
 }
 .partofbody{
     margin-left:40px;
@@ -36,12 +39,29 @@ h1{
     font-size:18px;
 }
 .features{
-    margin-left:900px;
-    margin-top:-45px;
+    margin-left:120px;
+    margin-top:-75px;
     background-color: lightgray;
     border-radius: 25px;
+    display: inline-block;
  }
  #searchButton{
     background-color:  #3F51B5 ;
-    margin-left:65px;
+    margin-left:55px;
  }
+ .category{
+     width:300px;
+     margin-left:50px;
+     background-color: lightgray;
+ }
+.row{
+    display: flex;
+    flex-direction:row;
+}
+.exercise-title{
+    font-size:20px;
+}
+.category-title{
+    text-align: center;
+    font-size:25px;
+}

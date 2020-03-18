@@ -8,5 +8,6 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Tour of Heroes';
-  // constructor(private router: Router) {}
+  logoUrl = './assets/logo.png';
+  imageUrl='./assets/fitness.jpg'
 }
