@@ -12,8 +12,13 @@
   z-index: 998;
 }
 
-.title {
-  font-size: 1.8em;
+/*.title {*/
+/*  font-size: 1.8em;*/
+/*}*/
+
+#logo{
+  width:90px;
+  height:90px;
 }
 
 .toolbar-button {
