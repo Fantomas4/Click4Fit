@@ -1,16 +1,48 @@
 <h1>Workout</h1>
+<div id="divfeat">
+    <mat-card class="features">
+        <mat-card-content>
+            <div class="row">
+            <div class="partofbody"><p id="part">Part of body</p>
+                <mat-checkbox>Legs</mat-checkbox><mat-checkbox id="chest">Chest</mat-checkbox><mat-checkbox id="biceps">Biceps</mat-checkbox><mat-checkbox id="core">Core</mat-checkbox><br>
+                <mat-checkbox>Back</mat-checkbox><mat-checkbox id="shoulders">Shoulders</mat-checkbox><mat-checkbox id="triceps">Triceps</mat-checkbox><mat-checkbox id="abs">Abs</mat-checkbox><br>
+            </div><br>
+            <div class="advisedfor">
+                <mat-radio-group><p id="adv">Advised for</p>
+                    <mat-radio-button value="Women">Women</mat-radio-button><br>
+                    <mat-radio-button value="men">Men</mat-radio-button>
+                </mat-radio-group>
+            </div><br>
+            <div class="difficultyslevel">
+                <mat-radio-group><p id="dif">Level of difficulty</p>
+                    <mat-radio-button value="easy">Easy</mat-radio-button><br>
+                    <mat-radio-button value="hard">Hard </mat-radio-button>
+                </mat-radio-group>
+            </div><br>
+            <div class="equipment">
+                <mat-radio-group><p id="equip">Equipment</p>
+                    <mat-radio-button value="yes">Yes</mat-radio-button><br>
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+            </div><br>
+        </div><br>
+        <button mat-raised-button id="searchButton">Search</button>
+        </mat-card-content>
+    </mat-card>
+</div><br>
 <div class="row">
     <div>
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Legs
-            </mat-card-title>
+            </mat-card-title><br>
             <mat-card>
                 <mat-card-title class="exercise-title">
                     Squat with weight
                 </mat-card-title>
                 <mat-card-content>
                     <iframe width="250" height="215" src="https://www.youtube.com/embed/MVMNk0HiTMg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p class="sets">Recommended sets: 4x15</p>
                 </mat-card-content>
             </mat-card><br>
             <mat-card>
@@ -19,6 +51,7 @@
                 </mat-card-title>
                 <mat-card-content>
                     <iframe width="250" height="215" src="https://www.youtube.com/embed/a7amnNyWNxo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p class="sets">Recommended sets: 4x15</p>
                 </mat-card-content>
             </mat-card>
         </mat-card>
@@ -27,13 +60,14 @@
        <mat-card class="category">
             <mat-card-title class="category-title">
                Triceps
-            </mat-card-title>
+            </mat-card-title><br>
            <mat-card>
                 <mat-card-title class="exercise-title">
                     Kickbacks
                 </mat-card-title>
                 <mat-card-content>
                     <iframe width="250" height="215" src="https://www.youtube.com/embed/ShCYaoHmWmk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p class="sets">Recommended sets: 4x15</p>
                 </mat-card-content>
             </mat-card><br>
             <mat-card>
@@ -42,58 +76,24 @@
                 </mat-card-title>
                 <mat-card-content>
                     <iframe width="250" height="215" src="https://www.youtube.com/embed/dl8_opV0A0Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p class="sets">Recommended sets: 4x15</p>
                 </mat-card-content> 
             </mat-card> 
         </mat-card>
     </div>
     <div>
-        <mat-card class="features">
-            <mat-card-content>
-                <div class="partofbody"><p class="part">Part of body</p>
-                    <mat-checkbox>Legs</mat-checkbox><br>
-                    <mat-checkbox>Back</mat-checkbox><br>
-                    <mat-checkbox>Chest</mat-checkbox><br>
-                    <mat-checkbox>Biceps</mat-checkbox><br>
-                    <mat-checkbox>Triceps</mat-checkbox><br>
-                    <mat-checkbox>Core</mat-checkbox><br>
-                    <mat-checkbox>Abs</mat-checkbox><br>
-                </div><br>
-                <div class="advisedfor">
-                    <mat-radio-group><p class="adv">Advised for</p>
-                        <mat-radio-button id="women" value="Women">Women</mat-radio-button>
-                        <mat-radio-button id="men" value="men">Men</mat-radio-button>
-                    </mat-radio-group>
-                </div><br>
-                <div class="difficultyslevel">
-                    <mat-radio-group><p class="dif">Difficulty's level</p>
-                        <mat-radio-button id="easy" value="easy">Easy</mat-radio-button>
-                        <mat-radio-button id="hard" value="hard">Hard </mat-radio-button>
-                    </mat-radio-group>
-                </div><br>
-                <div class="equipment">
-                    <mat-radio-group><p class="equip">Equipment</p>
-                        <mat-radio-button id="yes" value="yes">Yes</mat-radio-button>
-                        <mat-radio-button id="no" value="no">No</mat-radio-button>
-                    </mat-radio-group>
-                </div><br>
-                <button mat-raised-button id="searchButton">Search</button>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div><br>
-<div class="row">
-    <div>
         <mat-card class="category">
            <mat-card-title class="category-title">
                Abs
-           </mat-card-title>
+           </mat-card-title><br>
            <mat-card>
                <mat-card-title class="exercise-title"> 
                    Obliques
                </mat-card-title>
                <mat-card-content>
                   <iframe width="250" height="215" src="https://www.youtube.com/embed/9Q0D6xAyrOI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-               </mat-card-content>
+                  <p class="sets">Recommended sets: 4x15</p>
+                </mat-card-content>
            </mat-card><br>
            <mat-card>
                <mat-card-title class="exercise-title">
@@ -101,8 +101,9 @@
                </mat-card-title>
                <mat-card-content>
                    <iframe width="250" height="215" src="https://www.youtube.com/embed/Ai1Ne5dLlQA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-               </mat-card-content>
+                   <p class="sets">Recommended sets: 4x15</p>
+                </mat-card-content>
            </mat-card>
-       </mat-card>        
+       </mat-card>   
    </div>
 </div>

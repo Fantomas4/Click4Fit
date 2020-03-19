@@ -7,51 +7,47 @@ mat-sidenav {
     background-color: #3F51B5;
     color:#fff
 }
-#men{
-    margin-left:20px;
-}
-#hard{
-    margin-left:37px;
-}
-#no{
-    margin-left:47px;
-}
 h1{
-    color:  #3F51B5; 
+    color:  black; 
     font-style: oblique;
     font-size: 50px; 
     line-height: 100px; 
     font-weight: normal;
-    margin-top: 1px;
+    margin-top: -5px;
     text-align: center; 
     text-shadow: 0 1px 1px #fff; 
 }
 .advisedfor,.difficultyslevel,.equipment{
-    margin-left:20px;
-}
-.part{
-    margin-left:-20px;
+    margin-left:100px;
 }
 .partofbody{
-    margin-left:40px;
+    margin-left:30px;
 }
-.part,.equip,.adv,.dif{
+#part,#equip,#adv,#dif{
     font-size:18px;
 }
 .features{
-    margin-left:120px;
-    margin-top:-75px;
-    background-color: lightgray;
-    border-radius: 25px;
+    margin-left:40px;
+    background-color:  #3F51B5;
+    border-radius: 18px;
     display: inline-block;
+    color:white;
+    width: 1010px;
+    height:150px;
+    margin-top:28px;
+ }
+ #divfeat{
+    margin-top:-50px;
  }
  #searchButton{
-    background-color:  #3F51B5 ;
-    margin-left:55px;
+    background-color: white ;
+    height:35px;
+    width:80px;
+    margin-left:400px;
  }
  .category{
      width:300px;
-     margin-left:50px;
+     margin-left:30px;
      background-color: lightgray;
  }
 .row{
@@ -64,4 +60,21 @@ h1{
 .category-title{
     text-align: center;
     font-size:25px;
+    font-weight: bold;
+}
+.sets{
+    font-style: italic;
+    font-size:16px;
+}
+#biceps{
+    margin-left:37px;
+}
+.part,#triceps{
+    margin-left:10px;
+}
+#chest,#shoulders,#core{
+    margin-left:20px;
+}
+#abs{
+    margin-left:16px; 
 }
