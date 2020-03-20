@@ -4,16 +4,12 @@
 /*  flex: 1 1 auto;*/
 /*}*/
 
-.top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 998;
-}
-
-/*.title {*/
-/*  font-size: 1.8em;*/
+/*.top-bar {*/
+/*  position: sticky;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  z-index: 998;*/
 /*}*/
 
 #logo{
@@ -31,9 +27,9 @@
   justify-content: flex-end;
 }
 
-.content-section {
-  margin-top: 65px;
-}
+/*.content-section {*/
+/*  margin-top: 65px;*/
+/*}*/
 
 /*.empty-filler {*/
 /*  flex: 1 1 auto;*/

@@ -5,6 +5,11 @@ mat-sidenav {
   padding:10px;
 }
 
+#logo {
+  width:130px;
+  height:120px;
+}
+
 .mat-drawer {
   background-color: #3F51B5;
   color:#fff

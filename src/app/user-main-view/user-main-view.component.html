@@ -1,6 +1,7 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav mode="side" #sidenav opened position="start">
-<!--    <div class="title"><img class="logo" [src]="logoUrl"></div>-->
+    <img [src]="logoUrl" id="logo">
+    <!--    <div class="title"><img class="logo" [src]="logoUrl"></div>-->
 <!--    <div class="dashboard">-->
 <!--      <p class="home" (click)="goToHome()">Home</p>-->
 <!--      <p class="myprofile" (click)="goToMyprofile()">My profile</p>-->
@@ -23,6 +24,8 @@
       <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
     </mat-nav-list>
   </mat-sidenav>
-  <router-outlet></router-outlet>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>
 
