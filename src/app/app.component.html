@@ -1,17 +1,58 @@
-<mat-sidenav-container fullscreen>
-  <mat-toolbar>
-    <span class="title"><img [src]="logoUrl" id="logo"></span>
-    <span class="empty-filler"></span>
+<!--<mat-sidenav-container fullscreen>-->
+
+<!--  <mat-sidenav-content>-->
+<!--    <mat-toolbar color="primary">-->
+<!--      <span class="title">Click4Fit</span>-->
+<!--      <span class="empty-filler"></span>-->
+<!--      <div class="button-container">-->
+<!--        <a mat-button class="toolbar-button" routerLink="/login">Login</a>-->
+<!--        <a mat-button class="toolbar-button" routerLink="/register">Register</a>-->
+<!--      </div>-->
+<!--    </mat-toolbar>-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </mat-sidenav-content>-->
+<!--</mat-sidenav-container>-->
+
+
+<!--<mat-toolbar role="heading" color="primary" class="top-bar">-->
+<!--  <span class="title">Click4Fit</span>-->
+<!--  <span class="empty-filler"></span>-->
+<!--  <div class="button-container">-->
+<!--    <a mat-button class="toolbar-button" routerLink="/login">Login</a>-->
+<!--    <a mat-button class="toolbar-button" routerLink="/register">Register</a>-->
+<!--  </div>-->
+<!--</mat-toolbar>-->
+<!--<router-outlet></router-outlet>-->
+
+
+
+<!--<div class="toolbar-section">-->
+<!--  -->
+
+<!--    &lt;!&ndash;  <span class="empty-filler"></span>&ndash;&gt;-->
+
+<!--  -->
+<!--</div>-->
+<!--<div class="content-section">-->
+<!--  -->
+<!--</div>-->
+
+
+<mat-toolbar role="heading" color="primary" class="top-bar">
+  <span class="title"><img [src]="logoUrl" id="logo"></span>
+
+  <div class="flex-container">
+    <a mat-button class="toolbar-button" routerLink="/home">Home</a>
+    <a mat-button class="toolbar-button" routerLink="/about">About</a>
+    <a mat-button class="toolbar-button" routerLink="/contact-us">Contact Us</a>
     <div class="button-container">
       <a mat-button class="toolbar-button" routerLink="/login">Login</a>
       <a mat-button class="toolbar-button" routerLink="/register">Register</a>
     </div>
-  </mat-toolbar>
-  <router-outlet></router-outlet>
-  <h1>Welcome</h1>
-  <p class="moto">Don't wish for a good body. <i><b>Search</b></i> for it.</p>
-  <img [src]="imageUrl" id="fitness">
-</mat-sidenav-container>
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>
+
 
 
 

@@ -17,6 +17,8 @@ import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { UserMainViewComponent } from './user-main-view/user-main-view.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { UserMainViewComponent } from './user-main-view/user-main-view.component
     LoginComponent,
     RegisterComponent,
     RecoverPasswordComponent,
-    UserMainViewComponent
+    UserMainViewComponent,
+    ContactUsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

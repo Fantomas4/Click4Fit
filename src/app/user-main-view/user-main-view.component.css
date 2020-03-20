@@ -4,9 +4,12 @@ mat-sidenav {
   width: 12%;
   padding:10px;
 }
-mat-nav-list{
-  margin-top:50px;
+
+#logo {
+  width:130px;
+  height:120px;
 }
+
 .mat-drawer {
   background-color: #3F51B5;
 }

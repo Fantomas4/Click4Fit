@@ -7,7 +7,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
   logoUrl = './assets/logo.png';
-  imageUrl='./assets/fitness.jpg'
 }

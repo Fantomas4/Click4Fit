@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
 })
 export class UserMainViewComponent implements OnInit {
 
-  title = 'Click4Fit';
   logoUrl = './assets/logo.png';
   clickedWorkout = false;
   clickedAbout = false;
