@@ -12,20 +12,15 @@ mat-sidenav {
 
 .mat-drawer {
   background-color: #3F51B5;
-  color:#fff
 }
-
-/*.menu-item {*/
-/*  font-size: large;*/
-/*}*/
-
 .list-item-text {
   font-size: 100%;
+  font-weight: bold;
 }
-
-
-
-
+#image{
+  width:130px;
+  height:120px;
+}
 
 /*.dashboard{*/
 /*  font-size:25px;*/
