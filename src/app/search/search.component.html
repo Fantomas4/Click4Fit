@@ -1,20 +1,71 @@
-<div class="search-view">
-  <div class="search-controls-container">
-    <h1 id="title">Search</h1>
+<!--<div class="search-view">-->
+<!--  <mat-sidenav-container fullscreen>-->
+<!--    <mat-sidenav mode="side" #sidenav closed position="end">-->
+<!--      <mat-nav-list>-->
+<!--        <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Dashboard</b></a>-->
+<!--        <a mat-list-item routerLink="/user/search"><b class="list-item-text">Search</b></a>-->
+<!--        <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>-->
+<!--        &lt;!&ndash;      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>&ndash;&gt;-->
+<!--        <div class="account-options-container">-->
+<!--          <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>-->
+<!--          <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">Logout</b></a>-->
+<!--        </div>-->
+<!--        <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to Homepage</b></a>-->
+<!--      </mat-nav-list>-->
+<!--    </mat-sidenav>-->
+<!--    <mat-sidenav-content>-->
+<!--      <div class="search-controls-container">-->
+<!--        <h1 id="title">Search</h1>-->
 
-<!--    <input matInput placeholder="Search..." class="search-input" name="search-input" >-->
+<!--        &lt;!&ndash;    <input matInput placeholder="Search..." class="search-input" name="search-input" >&ndash;&gt;-->
 
-<!--    <button mat-raised-button id="search-button" (click)="search" color="primary">Go!</button>-->
+<!--        &lt;!&ndash;    <button mat-raised-button id="search-button" (click)="search" color="primary">Go!</button>&ndash;&gt;-->
 
-    <form>
-      <input matInput placeholder="Search..." class="search-input" name="search-input">
-<!--      <button>Go</button>-->
-      <button id="search-button" (click)="search">Go!</button>
-    </form>
+<!--        <form>-->
+<!--          <input matInput placeholder="Search..." class="search-input" name="search-input">-->
+<!--          &lt;!&ndash;      <button>Go</button>&ndash;&gt;-->
+<!--          <button id="search-button" (click)="search">Go!</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--      <div class="search-results-container">-->
 
-  </div>
-  <div class="search-results-container">
+<!--      </div>-->
+<!--    </mat-sidenav-content>-->
 
-  </div>
-</div>
+
+<!--  </mat-sidenav-container>-->
+
+<!--</div>-->
+
+
+
+
+
+
+
+<mat-drawer-container>
+  <mat-drawer mode="side" #sidenav opened position="end">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Dashboard</b></a>
+      <a mat-list-item routerLink="/user/search"><b class="list-item-text">Search</b></a>
+      <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>
+      <!--      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>-->
+      <div class="account-options-container">
+        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>
+        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">Logout</b></a>
+      </div>
+      <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to Homepage</b></a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+      <h1 id="title">Search</h1>
+      <form>
+        <input matInput placeholder="Search..." class="search-input" name="search-input">
+        <!--      <button>Go</button>-->
+        <button id="search-button" (click)="search">Go!</button>
+      </form>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
 
