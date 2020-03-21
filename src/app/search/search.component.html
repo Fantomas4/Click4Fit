@@ -1,8 +1,20 @@
-<!--search:-->
-<!-- - search field + search button-->
-<!-- - search filters:-->
-<!--&#45;&#45; category: gym, personal trainer, fitness sales point -> checkbox-->
-<!--&#45;&#45; country -> (choose from available options) drop down list-->
-<!--&#45;&#45; city -> (choose from available options) drop down list-->
+<div class="search-view">
+  <div class="search-controls-container">
+    <h1 id="title">Search</h1>
 
-<input type="search" name="name">
+<!--    <input matInput placeholder="Search..." class="search-input" name="search-input" >-->
+
+<!--    <button mat-raised-button id="search-button" (click)="search" color="primary">Go!</button>-->
+
+    <form>
+      <input matInput placeholder="Search..." class="search-input" name="search-input">
+<!--      <button>Go</button>-->
+      <button id="search-button" (click)="search">Go!</button>
+    </form>
+
+  </div>
+  <div class="search-results-container">
+
+  </div>
+</div>
+
