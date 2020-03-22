@@ -2,28 +2,6 @@
 <!--Category: Gym, Personal Trainer, Fitness Shop-->
 <!--Country:-->
 <!--City: -->
-
-
-<!--<mat-accordion>-->
-<!--  <mat-expansion-panel>-->
-<!--    <mat-expansion-panel-header>-->
-
-<!--      <mat-panel-title>-->
-<!--        Category-->
-<!--      </mat-panel-title>-->
-
-<!--      <mat-panel-description>-->
-
-<!--      </mat-panel-description>-->
-
-<!--    </mat-expansion-panel-header>-->
-
-<!--    <mat-checkbox>Gym</mat-checkbox>-->
-<!--    <mat-checkbox>Personal Trainer</mat-checkbox>-->
-<!--    <mat-checkbox>Fitness Shop</mat-checkbox>-->
-<!--  </mat-expansion-panel>-->
-<!--</mat-accordion>-->
-
 <mat-drawer-container>
   <mat-drawer mode="side" #sidenav position="end">
     <mat-nav-list id="filter-list" title="Category">
@@ -65,13 +43,23 @@
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
-      <h1 id="title">Search</h1>
-      <form>
-        <input matInput placeholder="Search..." class="search-input" name="search-input">
-        <!--      <button>Go</button>-->
-        <button id="filters-button" (click)="sidenav.toggle()">Filters</button>
-        <button id="search-button" (click)="search">Go!</button>
-      </form>
+    <h1 id="title">Search</h1>
+    <form>
+      <input matInput placeholder="Search..." class="search-input" name="search-input">
+      <!--      <button>Go</button>-->
+      <button id="filters-button" (click)="sidenav.toggle()">Filters</button>
+      <button id="search-button" (click)="search">Go!</button>
+    </form>
+
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile>1</mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+      <mat-grid-tile>3</mat-grid-tile>
+      <mat-grid-tile>4</mat-grid-tile>
+    </mat-grid-list>
+
+
+
   </mat-drawer-content>
 </mat-drawer-container>
 

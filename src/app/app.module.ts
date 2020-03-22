@@ -19,6 +19,8 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
 import { UserMainViewComponent } from './user-main-view/user-main-view.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
+import { ResultCardComponent } from './search/result-card/result-card.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import { HomeComponent } from './home/home.component';
     RecoverPasswordComponent,
     UserMainViewComponent,
     ContactUsComponent,
-    HomeComponent
+    HomeComponent,
+    ResultCardComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
+    MatGridListModule,
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}],
   bootstrap: [AppComponent]

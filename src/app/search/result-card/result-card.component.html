@@ -1,0 +1,21 @@
+<mat-card>
+
+  <mat-card-header>
+    <mat-card-title class="md-card-title">{{cardTitle}}</mat-card-title>
+  </mat-card-header>
+
+  <img mat-card-image [src]="cardImagePath">
+
+  <mat-card-content>
+    <div class="card-text-content">
+      {{cardShortDescription}}
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+<!--    <button md-button (click)="addProductToCart()">ADAUGA IN COS</button>-->
+<!--    <button md-button (click)="openDialog()">Details</button>-->
+    <button mat-button>Details</button>
+  </mat-card-actions>
+
+</mat-card>
