@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "Click4Fit": {
@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -88,6 +89,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Click4Fit"
+    }
+  },
+  "defaultProject": "Click4Fit",
+  "cli": {
+    "analytics": "f1fa95b6-732c-4930-8c4e-79f53f1c6748"
+  }
 }
