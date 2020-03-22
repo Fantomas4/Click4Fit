@@ -1,29 +1,36 @@
 h1{
-    color:  black; 
+    color:  black;
     font-style: oblique;
-    font-size: 50px; 
-    line-height: 100px; 
+    font-size: 50px;
+    line-height: 100px;
     font-weight: normal;
     margin-top: -5px;
-    text-align: center; 
-    text-shadow: 0 1px 1px #fff; 
+    text-align: center;
+    text-shadow: 0 1px 1px #fff;
 }
+
 .details-card {
-    width: 30%;
-    height:70%;
-    margin: 5% auto;
-  }
+  /*width: 30%;*/
+  /*height: 70%;*/
+  /*margin: 5% auto;*/
+  width: 25%;
+  margin: 10% auto;
+}
+
 .mat-card-title {
     font-size: 21px;
-}  
+}
+
 .email-input-field {
     width: 80%
 }
-.table{
-    margin-top:40px;
+
+#update-details-button {
+  background-color: #3F51B5;
+  color: white;
 }
-.button{
-    background-color:#3F51B5;
-    color:white; 
-    align-content: space-between;   
+
+#delete-button {
+  background-color: red;
+  color: white;
 }

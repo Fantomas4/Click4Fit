@@ -9,15 +9,15 @@ import {MyProfileService} from './myprofile.delete.service';
 })
 export class MyprofileComponent implements OnInit {
 
-  firstName: string='Giorgos';
-  lastName: string='Papadopoulos';
-  date = new FormControl(new Date(1997,3,24));
-  registrationEmail: string ='giorgospapad@gmail.com';
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  initialPassword: string = 'gp123456';
-  repeatedPassword: string = 'gp123456';
+  firstName: string;
+  lastName: string;
+  date: string;
+  registrationEmail: string;
+  initialPassword: string;
+  repeatedPassword: string;
 
-  constructor(public deleteService:MyProfileService) { }
+  constructor(public deleteService: MyProfileService) { }
 
   ngOnInit(): void {
   }
@@ -28,11 +28,11 @@ export class MyprofileComponent implements OnInit {
     }
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
   }
-  change(){
+  change() {
 
   }
-  onClick(){
+  onClick() {
     this.deleteService.openModal();
   }
-  
+
 }

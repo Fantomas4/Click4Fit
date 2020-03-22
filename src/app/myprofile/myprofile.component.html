@@ -1,7 +1,7 @@
 <h1>My profile</h1>
 <mat-card class="details-card">
     <mat-card-header>
-      <mat-card-title>Your profile details:</mat-card-title>
+      <mat-card-title>Your profile details: </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form class="form">
@@ -48,7 +48,7 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button class="button" (click)="change()">Change</button>
-      <button mat-raised-button class="button" (click)="onClick()">Delete account</button>
+      <button mat-raised-button id="update-details-button" (click)="change()">Update details</button>
+      <button mat-raised-button id="delete-button" (click)="onClick()">Delete account</button>
     </mat-card-actions>
   </mat-card>
