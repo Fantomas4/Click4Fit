@@ -16,7 +16,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+import { UserMainViewComponent } from './user-main-view/user-main-view.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
+import { DialogMessageComponent } from './dialog-message/dialog-message.component';
+import {MyProfileService} from './myprofile/myprofile.delete.service';
 
 
 @NgModule({
@@ -30,7 +34,10 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     RegisterComponent,
     RecoverPasswordComponent,
-    HomeComponent
+    UserMainViewComponent,
+    ContactUsComponent,
+    HomeComponent,
+    DialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +49,8 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}],
-  bootstrap: [AppComponent]
+  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogMessageComponent]
 })
 export class AppModule { }

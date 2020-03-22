@@ -14,8 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
-
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   imports: [
@@ -33,7 +32,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatCheckboxModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatListModule
   ],
   exports: [
     MatToolbarModule,
@@ -49,7 +49,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatRadioModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatListModule
   ]
 })
 

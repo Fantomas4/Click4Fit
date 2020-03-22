@@ -3,19 +3,26 @@
 /*     Every toolbar row uses a flexbox row layout. *!*/
 /*  flex: 1 1 auto;*/
 /*}*/
-.title {
-  font-size: 1.8em;
+
+/*.top-bar {*/
+/*  position: sticky;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  z-index: 998;*/
+/*}*/
+
+#logo {
+  width:90px;
+  height:90px;
 }
 
 .toolbar-button {
   font-size: 1em;
 }
 
-.empty-filler {
+.flex-container{
+  display: flex;
   flex: 1 1 auto;
+  justify-content: flex-end;
 }
-
-.button-container {
-
-}
-
