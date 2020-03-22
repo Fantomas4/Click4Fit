@@ -49,7 +49,7 @@ form {
   outline: none;
 }
 
-#search-button {
+button {
   /* Just a little styling to make it pretty */
   font-weight: bold;
   font-size: medium;
@@ -59,4 +59,31 @@ form {
   color:white;
 }
 
+#search-button {
+  margin-left: 0.5em;
+  /* Just a little styling to make it pretty */
+  font-weight: bold;
+  font-size: medium;
+  width: 4em;
+  border:1px solid blue;
+  background:blue;
+  color:white;
+}
+
+#filter-list {
+  text-align: center;
+}
+
+.filter-type-subheader {
+  font-size: large;
+}
+
+mat-list-option {
+  text-align: left;
+}
+
+#done-button {
+  margin-top: 2em;
+  width: 80%;
+}
 
