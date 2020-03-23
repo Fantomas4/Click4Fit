@@ -48,15 +48,28 @@
       <input matInput placeholder="Search..." class="search-input" name="search-input">
       <!--      <button>Go</button>-->
       <button id="filters-button" (click)="sidenav.toggle()">Filters</button>
-      <button id="search-button" (click)="search">Go!</button>
+      <button id="search-button" (click)="getResults()">Go!</button>
     </form>
 
-    <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-grid-tile>1</mat-grid-tile>
-      <mat-grid-tile>2</mat-grid-tile>
-      <mat-grid-tile>3</mat-grid-tile>
-      <mat-grid-tile>4</mat-grid-tile>
-    </mat-grid-list>
+
+<!--    /*Card deck component */-->
+    <div class="card-deck-container">
+<!--      <app-result-card></app-result-card>-->
+      <div *ngFor="let entry of searchResults" class="card-item">
+        <app-result-card [businessData]="entry"></app-result-card>
+      </div>
+
+<!--      <div class="paginator mat-elevation-z4" *ngIf="productsDisplayed.length !== 0">-->
+<!--        <mat-paginator-->
+<!--          [length]="paginatorSize"-->
+<!--          [pageSize]="numberOfProductsDisplayedInPage"-->
+<!--          [pageSizeOptions]="[12, 24]"-->
+<!--          (page)="updateProductsDisplayedInPage($event)">-->
+<!--        </mat-paginator>-->
+<!--      </div>-->
+    </div>
+
+
 
 
 

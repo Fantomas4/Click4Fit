@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {BusinessEntry} from '../../business-entry';
 
 @Component({
   selector: 'app-result-card',
@@ -6,13 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./result-card.component.css']
 })
 export class ResultCardComponent implements OnInit {
-  cardTitle: string;
-  cardImagePath: string;
-  cardShortDescription: string;
 
-  constructor() { }
+  @Input() businessData;
+
+  cardTitle: string;
+  cardCategory: string;
+  cardImagePath: string;
+  cardCountry: string;
+  cardCity: string;
+
+  constructor() {}
 
   ngOnInit(): void {
+    this.cardTitle = this.businessData.name;
+    this.cardCategory = this.businessData.type;
+    this.cardCountry = this.businessData.country;
+    this.cardCity = this.businessData.city;
   }
 
 }
