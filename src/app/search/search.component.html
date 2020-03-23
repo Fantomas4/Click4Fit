@@ -47,8 +47,10 @@
     <form>
       <input matInput placeholder="Search..." class="search-input" name="search-input">
       <!--      <button>Go</button>-->
-      <button id="filters-button" (click)="sidenav.toggle()">Filters</button>
-      <button id="search-button" (click)="getResults()">Go!</button>
+      <div class="button-container">
+        <button id="filters-button" (click)="sidenav.toggle()">Filters</button>
+        <button id="search-button" (click)="getResults()">Go!</button>
+      </div>
     </form>
 
 
