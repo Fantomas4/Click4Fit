@@ -1,1 +1,66 @@
-<p>contact-us works!</p>
+<header>
+    <h1>Contact Us</h1>
+</header>
+
+<div class="content">
+    <form>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Name" required>
+                <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Enter your email" required>
+                <mat-icon matSuffix>drafts</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input type="tel" matInput placeholder="Telephone" required>
+                <mat-icon matSuffix>call</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Subject" required>
+                <mat-icon matSuffix>create</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <textarea matInput placeholder="Textarea" required></textarea>
+                <mat-icon matSuffix>save</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button class="btn-custom">Send Now<i class="material-icons">send</i></button>
+        </div>
+    </form>
+</div>
+  
+<!--
+<form>
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        
+        <input required 
+        ngModel 
+        name="firstName" 
+        #firstName="ngModel" 
+        (change)="log(firstName)" 
+        id="firstName" 
+        type="text" 
+        class="form-control">
+        <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid" >
+            <div *ngIf="firstName.errors.required">First name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea ngModel name="comment" id="comment" cols="30" rows="10" class="form-control"></textarea>
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>
+-->
