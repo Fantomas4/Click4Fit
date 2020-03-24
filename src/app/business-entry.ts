@@ -4,4 +4,5 @@ export interface BusinessEntry {
   type: string;
   country: string;
   city: string;
+  imgPath: string;
 }

@@ -12,9 +12,9 @@ export class ResultCardComponent implements OnInit {
 
   cardTitle: string;
   cardCategory: string;
-  cardImagePath: string;
   cardCountry: string;
   cardCity: string;
+  cardImagePath: string;
 
   constructor() {}
 
@@ -23,6 +23,7 @@ export class ResultCardComponent implements OnInit {
     this.cardCategory = this.businessData.type;
     this.cardCountry = this.businessData.country;
     this.cardCity = this.businessData.city;
+    this.cardImagePath = this.businessData.imgPath;
   }
 
 }
