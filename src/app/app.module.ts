@@ -21,6 +21,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
 import { ResultCardComponent } from './search/result-card/result-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { LocationAutocompleteComponent } from './search/location-autocomplete/location-autocomplete.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     UserMainViewComponent,
     ContactUsComponent,
     HomeComponent,
-    ResultCardComponent
+    ResultCardComponent,
+    LocationAutocompleteComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     FormsModule,
     ReactiveFormsModule,
     MatGridListModule,
+    MatAutocompleteModule,
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}],
   bootstrap: [AppComponent]
