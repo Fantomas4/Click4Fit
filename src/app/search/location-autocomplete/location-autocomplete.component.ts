@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -13,6 +13,8 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./location-autocomplete.component.css']
 })
 export class LocationAutocompleteComponent implements OnInit {
+  @Input() placeholderStr;
+
   formControl: FormControl = new FormControl();
 
   options = [

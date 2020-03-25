@@ -88,6 +88,10 @@ button {
 }
 
 /*============= START: Styling concerning filter sidebar and its elements ============= */
+mat-drawer {
+  width: 15%;
+}
+
 #filter-list {
   text-align: center;
 }

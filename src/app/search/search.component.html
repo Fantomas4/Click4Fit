@@ -13,13 +13,14 @@
         <mat-list-option>Fitness Shop</mat-list-option>
       </mat-selection-list>
       <mat-divider></mat-divider>
-      <mat-selection-list #Location>
+      <div class="location-container">
         <div mat-subheader class="filter-type-subheader">Location</div>
-        <app-location-autocomplete></app-location-autocomplete>
-      </mat-selection-list>
-      <mat-divider></mat-divider>
-<!--      <a mat-list-item id="done-button" (click)="sidenav.close()"><b>Done!</b></a>-->
-
+        <app-location-autocomplete id="country-autocomplete" placeholderStr="Enter a country name">
+        </app-location-autocomplete>
+        <app-location-autocomplete id="city-autocomplet" placeholderStr="Enter a city name">
+        </app-location-autocomplete>
+        <mat-divider></mat-divider>
+      </div>
       <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
 
 
