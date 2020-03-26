@@ -26,6 +26,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
+import { DialogMessageComponent } from './dialog-message/dialog-message.component';
+import {MyProfileService} from './myprofile/myprofile.delete.service';
 
 
 @NgModule({
@@ -45,6 +47,7 @@ import {MatChipsModule} from '@angular/material/chips';
     ResultCardComponent,
     LocationAutocompleteComponent,
     DetailsDialogComponent,
+    DialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatTabsModule,
     MatChipsModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}],
-  bootstrap: [AppComponent]
+  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogMessageComponent]
 })
 export class AppModule { }

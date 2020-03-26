@@ -1,1 +1,26 @@
-
+h1 {
+    color:  #3F51B5;
+    font-style: oblique;
+    font-size: 100px;
+    line-height: 160px;
+    font-weight: normal;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    text-align: center;
+    text-shadow: 0 1px 1px #fff;
+  }
+  .moto {
+    color: #7a7c7f;
+    font-size: 29px;
+    font-family: "Libre Baskerville", serif;
+    line-height: 45px;
+    text-align: center;
+    text-shadow: 0 1px 1px #fff;
+    padding-top: 20px;
+  }
+  #fitness{
+    width:550px;
+    height:300px;
+    border-radius:25px;
+    margin-left:370px;
+  } 
