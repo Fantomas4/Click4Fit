@@ -25,6 +25,7 @@ import { LocationAutocompleteComponent } from './search/location-autocomplete/lo
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 @NgModule({
@@ -45,19 +46,20 @@ import {MatTabsModule} from '@angular/material/tabs';
     LocationAutocompleteComponent,
     DetailsDialogComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        MaterialModule,
-        AppRoutingModule,
-        RouterModule,
-        MatToolbarModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatGridListModule,
-        MatAutocompleteModule,
-        MatTabsModule,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    AppRoutingModule,
+    RouterModule,
+    MatToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatGridListModule,
+    MatAutocompleteModule,
+    MatTabsModule,
+    MatChipsModule,
+  ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}],
   bootstrap: [AppComponent]
 })
