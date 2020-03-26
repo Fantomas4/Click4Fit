@@ -23,6 +23,8 @@ import { ResultCardComponent } from './search/result-card/result-card.component'
 import {MatGridListModule} from '@angular/material/grid-list';
 import { LocationAutocompleteComponent } from './search/location-autocomplete/location-autocomplete.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -40,20 +42,22 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     ContactUsComponent,
     HomeComponent,
     ResultCardComponent,
-    LocationAutocompleteComponent
+    LocationAutocompleteComponent,
+    DetailsDialogComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    AppRoutingModule,
-    RouterModule,
-    MatToolbarModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatGridListModule,
-    MatAutocompleteModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        AppRoutingModule,
+        RouterModule,
+        MatToolbarModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatGridListModule,
+        MatAutocompleteModule,
+        MatTabsModule,
+    ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}],
   bootstrap: [AppComponent]
 })

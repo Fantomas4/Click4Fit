@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BusinessEntry} from '../../business-entry';
+import {MatDialog} from '@angular/material/dialog';
+import {DetailsDialogComponent} from '../details-dialog/details-dialog.component';
 
 @Component({
   selector: 'app-result-card',
@@ -16,7 +17,8 @@ export class ResultCardComponent implements OnInit {
   cardCity: string;
   cardImagePath: string;
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.cardTitle = this.businessData.name;
@@ -26,4 +28,21 @@ export class ResultCardComponent implements OnInit {
     this.cardImagePath = this.businessData.imgPath;
   }
 
+  openDetailsDialog(): void {
+    const dialogRef = this.dialog.open(DetailsDialogComponent, {
+      width: '600px',
+      data: {
+        name: this.businessData.name, category: this.businessData.type,
+        country: this.businessData.country, city: this.businessData.city, availableServProd:
+        this.businessData.availableServProd
+      }
+
+      // dialogRef.afterClosed().subscribe(result => {
+      //   console.log('The dialog was closed');
+      //   this.animal = result;
+      // });
+
+    });
+
+  }
 }

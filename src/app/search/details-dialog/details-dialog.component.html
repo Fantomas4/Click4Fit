@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+  <img class="preview-image" mat-card-image [src]="previewImagePath">
+
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Location">
+      <div>
+        <p>Category: {{data.category}}</p>
+      </div>
+    </mat-tab>
+    <mat-tab label="Offered Services/Products">
+      <div>
+        Large content
+      </div>
+    </mat-tab>
+    <mat-tab label="Contact Details">
+      <div>
+        <p>Country: {{data.country}}</p>
+        <p>City: {{data.city}}</p>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">Close</button>
+<!--  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
+</div>
