@@ -29,7 +29,8 @@ import {MatChipsModule} from '@angular/material/chips';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
 import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
 import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
-import { ResultCard2Component } from './workout/result-card2/result-card2.component'; 
+import { ResultCard2Component } from './workout/result-card2/result-card2.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -65,8 +66,9 @@ import { ResultCard2Component } from './workout/result-card2/result-card2.compon
     MatAutocompleteModule,
     MatTabsModule,
     MatChipsModule,
+    NgbModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''},MyProfileDeleteService],
+  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService],
   bootstrap: [AppComponent],
   entryComponents: [DialogMessageComponent]
 })
