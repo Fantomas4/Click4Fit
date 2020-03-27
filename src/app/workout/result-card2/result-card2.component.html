@@ -1,0 +1,16 @@
+<mat-card class="category">
+    <mat-card-title class="category-title">
+        {{cardCategory}}
+    </mat-card-title><br>
+    <mat-card>
+        <mat-card-title class="exercise-title">
+            {{cardName}}
+        </mat-card-title>
+        <mat-card-content>
+            <iframe width="250" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(cardVideo)' frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <p class="sets">Recommended sets: {{cardSets}}</p>
+        </mat-card-content>
+    </mat-card><br>
+</mat-card>

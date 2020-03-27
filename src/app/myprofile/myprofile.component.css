@@ -1,28 +1,34 @@
 h1{
-    color:  black;
-    font-style: oblique;
-    font-size: 50px;
-    line-height: 100px;
-    font-weight: normal;
-    margin-top: -5px;
-    text-align: center;
-    text-shadow: 0 1px 1px #fff;
+  color:  black;
+  font-style: oblique;
+  font-size: 50px;
+  line-height: 100px;
+  font-weight: normal;
+  margin-top: -5px;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
 }
 
 .details-card {
-  /*width: 30%;*/
-  /*height: 70%;*/
-  /*margin: 5% auto;*/
+/*width: 30%;*/
+/*height: 70%;*/
+/*margin: 5% auto;*/
   width: 25%;
   margin: 10% auto;
+  margin-top:-10px;
+  
 }
 
 .mat-card-title {
-    font-size: 21px;
+  font-size: 21px;
 }
 
 .email-input-field {
-    width: 80%
+  width: 80%
+}
+.buttons{
+  display: flex;
+  flex-direction:row;
 }
 
 #update-details-button {
@@ -34,3 +40,4 @@ h1{
   background-color: red;
   color: white;
 }
+

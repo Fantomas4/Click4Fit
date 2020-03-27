@@ -27,7 +27,9 @@ import { DetailsDialogComponent } from './search/details-dialog/details-dialog.c
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
-import {MyProfileService} from './myprofile/myprofile.delete.service';
+import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
+import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
+import { ResultCard2Component } from './workout/result-card2/result-card2.component'; 
 
 
 @NgModule({
@@ -45,6 +47,7 @@ import {MyProfileService} from './myprofile/myprofile.delete.service';
     ContactUsComponent,
     HomeComponent,
     ResultCardComponent,
+    ResultCard2Component,
     LocationAutocompleteComponent,
     DetailsDialogComponent,
     DialogMessageComponent
@@ -63,7 +66,7 @@ import {MyProfileService} from './myprofile/myprofile.delete.service';
     MatTabsModule,
     MatChipsModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService],
+  providers: [{provide: APP_BASE_HREF, useValue: ''},MyProfileDeleteService],
   bootstrap: [AppComponent],
   entryComponents: [DialogMessageComponent]
 })
