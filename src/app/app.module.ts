@@ -21,6 +21,11 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
 import { ResultCardComponent } from './search/result-card/result-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ResultCard2Component } from './workout/result-card2/result-card2.component'; 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DialogMessageComponent } from './dialog-message/dialog-message.component';
+import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
+import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
 
 
 @NgModule({
@@ -37,7 +42,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     UserMainViewComponent,
     ContactUsComponent,
     HomeComponent,
-    ResultCardComponent
+    ResultCardComponent,
+    ResultCard2Component,
+    DialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -49,8 +56,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     FormsModule,
     ReactiveFormsModule,
     MatGridListModule,
+    NgbModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}],
+  providers: [{provide: APP_BASE_HREF, useValue: ''},MyProfileDeleteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

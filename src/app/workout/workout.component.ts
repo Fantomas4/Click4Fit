@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {WorkoutEntry} from '../workout-entry';
+import {WorkoutService} from './workout.service';
 
 @Component({
   selector: 'app-workout',
@@ -7,11 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkoutComponent implements OnInit {
 
-  constructor() { }
+  workoutResults: WorkoutEntry[];
+  
+  constructor(private workoutService: WorkoutService) { }
 
   ngOnInit(): void {
-  }
-  onChange(event:any){
     
   }
+  getResults(){
+    this.workoutService.getResults().subscribe(results => this.workoutResults = results);
+
+  }
+ 
 }

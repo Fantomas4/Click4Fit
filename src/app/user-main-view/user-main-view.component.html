@@ -22,7 +22,7 @@
       <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>
 <!--      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>-->
       <div class="account-options-container">
-        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>
+        <a mat-list-item routerLink="/user/myprofile" (click)="onClickProfile()"><b class="list-item-text">My Profile</b></a>
         <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">Logout</b></a>
       </div>
       <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to Homepage</b></a>

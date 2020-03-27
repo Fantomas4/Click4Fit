@@ -1,1 +1,19 @@
 
+  .moto {
+    font-size: 40px;
+    font-family: "Libre Baskerville", serif;
+    line-height: 40px;
+    text-shadow: 0 1px 1px white;
+    padding-top:5px;
+    color:white;
+    width:680px;
+    height:60px;
+    border-radius:15px;
+    margin: 0 auto; 
+    display: block;
+    
+  }
+ /*#picture3,#picture1,#picture2{
+   width:1280px;
+   height:609px;
+ }*/

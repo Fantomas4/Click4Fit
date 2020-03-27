@@ -1,0 +1,18 @@
+.exercise-title{
+    font-size:20px;
+}
+.category-title{
+    text-align: center;
+    font-size:25px;
+    font-weight: bold;
+}
+.sets{
+    font-style: italic;
+    font-size:16px;
+}
+.category{
+    width:300px;
+    margin-left:30px;
+    background-color: lightgray;
+}
+ 
