@@ -21,11 +21,15 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
 import { ResultCardComponent } from './search/result-card/result-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { ResultCard2Component } from './workout/result-card2/result-card2.component'; 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { LocationAutocompleteComponent } from './search/location-autocomplete/location-autocomplete.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
 import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
 import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
+import { ResultCard2Component } from './workout/result-card2/result-card2.component'; 
 
 
 @NgModule({
@@ -44,6 +48,8 @@ import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
     HomeComponent,
     ResultCardComponent,
     ResultCard2Component,
+    LocationAutocompleteComponent,
+    DetailsDialogComponent,
     DialogMessageComponent
   ],
   imports: [
@@ -56,9 +62,12 @@ import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
     FormsModule,
     ReactiveFormsModule,
     MatGridListModule,
-    NgbModule
+    MatAutocompleteModule,
+    MatTabsModule,
+    MatChipsModule,
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''},MyProfileDeleteService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogMessageComponent]
 })
 export class AppModule { }

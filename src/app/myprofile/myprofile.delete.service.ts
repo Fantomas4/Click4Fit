@@ -15,6 +15,5 @@ export class MyProfileDeleteService {
         const dialogRef = this.dialog.open(DialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
       }
-
-
 }
+

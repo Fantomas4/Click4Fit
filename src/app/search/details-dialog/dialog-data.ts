@@ -1,9 +1,7 @@
-export interface BusinessEntry {
-  id: number;
+export interface DialogData {
   name: string;
-  type: string;
+  category: string;
   country: string;
   city: string;
-  imgPath: string;
   availableServProd: string[];
 }

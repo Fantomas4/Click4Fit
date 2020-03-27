@@ -2,7 +2,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 /*https://stackoverflow.com/questions/5387576/css-margin-0-is-not-setting-to-0*/
-body{
+body {
   margin: 0%;
   padding: 0;
 }

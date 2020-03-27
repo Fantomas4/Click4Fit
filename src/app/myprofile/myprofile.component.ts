@@ -4,6 +4,7 @@ import {MyProfileDeleteService} from './myprofile.delete.service';
 import {PROFILEENTRIES} from '../mock-database';
 import {MyProfileEntry} from '../myprofile-entry';
 
+
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
@@ -13,7 +14,6 @@ export class MyprofileComponent implements OnInit {
 
   myprofileResults=PROFILEENTRIES;
   myProfileData:MyProfileEntry;
-
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   firstName: string;
@@ -32,6 +32,19 @@ export class MyprofileComponent implements OnInit {
     this.repeatedPassword=this.myprofileResults[0].password;
     this.registrationEmail=this.myprofileResults[0].email;
     this.date=new FormControl(new Date(this.myprofileResults[0].birthdate));
+  }
+
+  getErrorMessage() {
+    if (this.emailFormControl.hasError('required')) {
+      return 'You must enter a value';
+    }
+    return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
+  }
+  change() {
+
+  }
+  onClick() {
+    this.deleteService.openModal();
   }
 
   getErrorMessage() {

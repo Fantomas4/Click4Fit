@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     this.height=screen.height-192;
     this.width=screen.width;
   }
+
   ngOnInit(): void {
   }
   getWidth(){
