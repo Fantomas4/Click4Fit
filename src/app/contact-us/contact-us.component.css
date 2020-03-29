@@ -1,13 +1,51 @@
+.container {
+  display: flex;
+}
+
 .contact-us-card {
-    /*width: 400px;*/
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  margin: 10% auto;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  flex-basis: 21px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+.contact-us-card {
     width: 25%;
     margin: 10% auto;
-  }
+}
 
-  .mat-card-title {
-    font-size: 21px;
-  }
+.mat-card-title {
+  font-size: 21px;
+}
 
-  .text-area{
-    height: 100px;
-  }
+.text-area{
+  height: 100px;
+}
+*/
