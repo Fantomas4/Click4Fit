@@ -1,106 +1,44 @@
-<h1>Workout</h1>
-<div id="divfeat">
-    <mat-card class="features">
-        <mat-card-content>
-            <div class="row">
-                <div class="partofbody"><p id="part">Part of body</p>
-                    <mat-checkbox>Legs</mat-checkbox><mat-checkbox id="chest">Chest</mat-checkbox><mat-checkbox id="biceps">Biceps</mat-checkbox><mat-checkbox id="core">Core</mat-checkbox><br>
-                    <mat-checkbox>Back</mat-checkbox><mat-checkbox id="shoulders">Shoulders</mat-checkbox><mat-checkbox id="triceps">Triceps</mat-checkbox><mat-checkbox id="abs">Abs</mat-checkbox><br>
-                </div><br>
-                <div class="advisedfor">
-                    <p id="adv">Advised for</p>
-                    <mat-checkbox value="Women">Women</mat-checkbox><br>
-                    <mat-checkbox value="men">Men</mat-checkbox>
-                </div><br>
-                <div class="difficultyslevel">
-                    <p id="dif">Level of difficulty</p>
-                    <mat-checkbox value="easy">Easy</mat-checkbox><br>
-                    <mat-checkbox value="hard">Hard </mat-checkbox>
-                </div><br>
-                <div class="equipment">
-                    <p id="equip">Equipment</p>
-                    <mat-checkbox value="yes">Yes</mat-checkbox><br>
-                    <mat-checkbox value="no">No</mat-checkbox>
-                </div><br>
-        </div><br>
-        <button mat-raised-button id="searchButton">Search</button>
-        </mat-card-content>
-    </mat-card>
-</div><br>
-<div class="row">
-    <div>
-        <mat-card class="category">
-            <mat-card-title class="category-title">
-                Legs
-            </mat-card-title><br>
-            <mat-card>
-                <mat-card-title class="exercise-title">
-                    Squat with weight
-                </mat-card-title>
-                <mat-card-content>
-                    <iframe width="250" height="215" src="https://www.youtube.com/embed/MVMNk0HiTMg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <p class="sets">Recommended sets: 4x15</p>
-                </mat-card-content>
-            </mat-card><br>
-            <mat-card>
-                <mat-card-title class="exercise-title">
-                    Lunges
-                </mat-card-title>
-                <mat-card-content>
-                    <iframe width="250" height="215" src="https://www.youtube.com/embed/a7amnNyWNxo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <p class="sets">Recommended sets: 4x15</p>
-                </mat-card-content>
-            </mat-card>
-        </mat-card>
-    </div>
-    <div>
-       <mat-card class="category">
-            <mat-card-title class="category-title">
-               Triceps
-            </mat-card-title><br>
-           <mat-card>
-                <mat-card-title class="exercise-title">
-                    Kickbacks
-                </mat-card-title>
-                <mat-card-content>
-                    <iframe width="250" height="215" src="https://www.youtube.com/embed/ShCYaoHmWmk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <p class="sets">Recommended sets: 4x15</p>
-                </mat-card-content>
-            </mat-card><br>
-            <mat-card>
-                <mat-card-title class="exercise-title">
-                    Dips on bench
-                </mat-card-title>
-                <mat-card-content>
-                    <iframe width="250" height="215" src="https://www.youtube.com/embed/dl8_opV0A0Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <p class="sets">Recommended sets: 4x15</p>
-                </mat-card-content> 
-            </mat-card> 
-        </mat-card>
-    </div>
-    <div>
-        <mat-card class="category">
-           <mat-card-title class="category-title">
-               Abs
-           </mat-card-title><br>
-           <mat-card>
-               <mat-card-title class="exercise-title"> 
-                   Obliques
-               </mat-card-title>
-               <mat-card-content>
-                  <iframe width="250" height="215" src="https://www.youtube.com/embed/9Q0D6xAyrOI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                  <p class="sets">Recommended sets: 4x15</p>
-                </mat-card-content>
-           </mat-card><br>
-           <mat-card>
-               <mat-card-title class="exercise-title">
-                   Crunch
-               </mat-card-title>
-               <mat-card-content>
-                   <iframe width="250" height="215" src="https://www.youtube.com/embed/Ai1Ne5dLlQA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                   <p class="sets">Recommended sets: 4x15</p>
-                </mat-card-content>
-           </mat-card>
-       </mat-card>   
-   </div>
-</div>
+<mat-drawer-container autosize class="example-container">
+    <mat-drawer #drawer mode="side" position="end" opened="true">
+        <mat-selection-list id="categories">
+            <div mat-subheader class="filter-type-subheader">Part of body</div>
+            <mat-list-option>Legs</mat-list-option>
+            <mat-list-option>Back</mat-list-option>
+            <mat-list-option>Chest</mat-list-option>
+            <mat-list-option>Shoulders</mat-list-option>
+            <mat-list-option>Biceps</mat-list-option>
+            <mat-list-option>Triceps</mat-list-option>
+            <mat-list-option>Abs</mat-list-option>
+            <mat-list-option>Core</mat-list-option>
+        </mat-selection-list>
+        <mat-divider></mat-divider>
+        <mat-selection-list>
+            <div mat-subheader class="filter-type-subheader">Advised for</div>
+            <mat-list-option>Men</mat-list-option>
+            <mat-list-option>Women</mat-list-option>
+        </mat-selection-list>
+        <mat-divider></mat-divider>
+        <mat-selection-list>
+            <div mat-subheader class="filter-type-subheader">Level of difficulty</div>
+            <mat-list-option>Easy</mat-list-option>
+            <mat-list-option>Medium</mat-list-option>
+            <mat-list-option>Hard</mat-list-option>
+        </mat-selection-list>
+        <mat-divider></mat-divider>
+        <mat-selection-list>
+            <div mat-subheader class="filter-type-subheader">Equipment</div>
+            <mat-list-option>Yes</mat-list-option>
+            <mat-list-option>No</mat-list-option>
+        </mat-selection-list>
+        <button mat-raised-button id="searchButton" (click)="getResults()">Search</button>
+    </mat-drawer>
+    <mat-drawer-content>
+        <h1>Workout</h1>
+        <button mat-raised-button id="filtersButton" (click)="drawer.toggle()">Show me filters</button><br>
+        <div class="row">
+            <div *ngFor="let entryW of workoutResults" class="card-item">
+                <app-result-card2 [workoutData]="entryW"></app-result-card2>
+           </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

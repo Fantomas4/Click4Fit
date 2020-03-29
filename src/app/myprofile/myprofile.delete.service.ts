@@ -4,7 +4,7 @@ import {DialogMessageComponent} from '../dialog-message/dialog-message.component
 import { Router } from '@angular/router';
 
 @Injectable()
-export class MyProfileService {
+export class MyProfileDeleteService {
     router: Router;
     constructor(public dialog: MatDialog) { }
 
@@ -15,6 +15,5 @@ export class MyProfileService {
         const dialogRef = this.dialog.open(DialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
       }
-
-
 }
+
