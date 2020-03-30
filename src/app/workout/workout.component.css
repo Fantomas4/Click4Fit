@@ -14,10 +14,6 @@ h1{
     background-color:#3F51B5;
     color:white;
 }
-.row{
-    display: flex;
-    flex-direction:row;
-}
 mat-drawer-content {
     width: 100vw;
 }

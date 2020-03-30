@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {WorkoutEntry} from '../workout-entry';
 import {WorkoutService} from './workout.service';
 
 @Component({
@@ -9,7 +8,10 @@ import {WorkoutService} from './workout.service';
 })
 export class WorkoutComponent implements OnInit {
 
-  workoutResults: WorkoutEntry[];
+  filtersClicked=false; //hide filters 
+  searchClicked=false;
+  isClicked=false;
+
   
   constructor(private workoutService: WorkoutService) { }
 
@@ -17,8 +19,21 @@ export class WorkoutComponent implements OnInit {
     
   }
   getResults(){
-    this.workoutService.getResults().subscribe(results => this.workoutResults = results);
-
+    this.isClicked=true;
+  }
+  onClick(){
+    if (this.searchClicked==false){
+      this.searchClicked=true;
+    }
+    if (this.filtersClicked==false ){
+      document.getElementById("filtersButton").innerText="Show filters";
+      this.filtersClicked=true;
+    }
+    else if (this.filtersClicked==true || this.searchClicked==true) {
+      document.getElementById("filtersButton").innerText="Hide filters";
+      this.filtersClicked=false;
+      this.searchClicked=false;
+    }
   }
  
 }

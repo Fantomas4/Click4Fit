@@ -1,16 +1,130 @@
-<mat-card class="category">
-    <mat-card-title class="category-title">
-        {{cardCategory}}
-    </mat-card-title><br>
-    <mat-card>
-        <mat-card-title class="exercise-title">
-            {{cardName}}
-        </mat-card-title>
-        <mat-card-content>
-            <iframe width="250" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(cardVideo)' frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
-            <p class="sets">Recommended sets: {{cardSets}}</p>
-        </mat-card-content>
+<div class="flex">
+    <mat-card class="category" *ngIf="!legsIsEmpty">
+        <mat-card-title class="category-title">
+            Legs
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of legsWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
     </mat-card><br>
-</mat-card>
+    <mat-card class="category" *ngIf="!backIsEmpty">
+        <mat-card-title class="category-title">
+            Back
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of backWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card><br>
+    <mat-card class="category" *ngIf="!chestIsEmpty">
+        <mat-card-title class="category-title">
+            Chest
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of chestWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card><br>
+    <mat-card class="category" *ngIf="!shouldersIsEmpty">
+        <mat-card-title class="category-title">
+            Shoulders
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of shouldersWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card><br>
+    <mat-card class="category" *ngIf="!bicepsIsEmpty">
+        <mat-card-title class="category-title">
+            Biceps
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of bicepsWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card><br>
+    <mat-card class="category" *ngIf="!tricepsIsEmpty">
+        <mat-card-title class="category-title">
+            Triceps
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of tricepsWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card><br><br>
+    <mat-card class="category" *ngIf="!absIsEmpty">
+        <mat-card-title class="category-title">
+            Abs
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of absWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card><br>
+    <mat-card class="category" *ngIf="!coreIsEmpty">
+        <mat-card-title class="category-title">
+            Core
+        </mat-card-title><br>
+        <mat-card *ngFor="let entry of coreWorkoutResults">
+            <mat-card-title class="exercise-title">
+                {{entry.name}}
+            </mat-card-title>
+            <mat-card-content>
+                <iframe width="230" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                <p class="sets">Recommended sets: {{entry.sets}}</p>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card><br>
+</div>

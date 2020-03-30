@@ -30,15 +30,15 @@
             <mat-list-option>Yes</mat-list-option>
             <mat-list-option>No</mat-list-option>
         </mat-selection-list>
-        <button mat-raised-button id="searchButton" (click)="getResults()">Search</button>
+        <div><button mat-raised-button id="searchButton" (click)="getResults();drawer.toggle();onClick()">Search</button><br></div>
     </mat-drawer>
     <mat-drawer-content>
         <h1>Workout</h1>
-        <button mat-raised-button id="filtersButton" (click)="drawer.toggle()">Show me filters</button><br>
-        <div class="row">
-            <div *ngFor="let entryW of workoutResults" class="card-item">
-                <app-result-card2 [workoutData]="entryW"></app-result-card2>
-           </div>
+        <button mat-raised-button id="filtersButton" (click)="drawer.toggle();onClick()">Show me filters</button><br>
+        <div class="card-container">
+            <div *ngIf="isClicked">
+                <app-result-card2></app-result-card2>
+            </div>
         </div>
     </mat-drawer-content>
 </mat-drawer-container>
