@@ -30,7 +30,6 @@ import { DialogMessageComponent } from './dialog-message/dialog-message.componen
 import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
 import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -65,8 +64,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     MatGridListModule,
     MatAutocompleteModule,
     MatTabsModule,
-    MatChipsModule,
-    NgbModule,
+    MatChipsModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService],
   bootstrap: [AppComponent],

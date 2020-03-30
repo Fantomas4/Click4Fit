@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+// import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -15,16 +15,16 @@ export class HomeComponent implements OnInit {
   height: number;
   width: number;
 
-  constructor(config: NgbCarouselConfig) {
-    config.interval = 2100;
-    config.wrap = true;
-    config.keyboard = false;
-    config.pauseOnHover = true;
-    config.showNavigationArrows = false;
-    config.showNavigationIndicators = true;
-    this.height = screen.height - 192;
-    this.width = screen.width;
-  }
+  // constructor(config: NgbCarouselConfig) {
+  //   config.interval = 2100;
+  //   config.wrap = true;
+  //   config.keyboard = false;
+  //   config.pauseOnHover = true;
+  //   config.showNavigationArrows = false;
+  //   config.showNavigationIndicators = true;
+  //   this.height = screen.height - 192;
+  //   this.width = screen.width;
+  // }
 
   ngOnInit(): void {
   }
