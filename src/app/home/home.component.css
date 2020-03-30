@@ -1,17 +1,17 @@
-  .moto {
-    font-size: 40px;
-    font-family: "Libre Baskerville", serif;
-    line-height: 40px;
-    text-shadow: 0 1px 1px white;
-    padding-top:5px;
-    color:white;
-    width:680px;
-    height:60px;
-    border-radius:15px;
-    margin: 0 auto; 
-    display: block;
-    
-  }
+.moto {
+  font-size: 40px;
+  font-family: "Libre Baskerville", serif;
+  line-height: 40px;
+  text-shadow: 0 1px 1px white;
+  padding-top:5px;
+  color:white;
+  width:680px;
+  height:60px;
+  border-radius:15px;
+  margin: 0 auto;
+  display: block;
+
+}
 
  /*#picture3,#picture1,#picture2{
    width:1280px;
@@ -29,18 +29,20 @@ h1 {
     text-align: center;
     text-shadow: 0 1px 1px #fff;
   }
-  .moto {
-    color: #7a7c7f;
-    font-size: 29px;
-    font-family: "Libre Baskerville", serif;
-    line-height: 45px;
-    text-align: center;
-    text-shadow: 0 1px 1px #fff;
-    padding-top: 20px;
-  }
-  #fitness{
-    width:550px;
-    height:300px;
-    border-radius:25px;
-    margin-left:370px;
-  } 
+
+.moto {
+  color: #7a7c7f;
+  font-size: 29px;
+  font-family: "Libre Baskerville", serif;
+  line-height: 45px;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
+  padding-top: 20px;
+}
+
+#fitness{
+  width:550px;
+  height:300px;
+  border-radius:25px;
+  margin-left:370px;
+}
