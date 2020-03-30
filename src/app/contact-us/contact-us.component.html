@@ -1,1 +1,142 @@
-<p>contact-us works!</p>
+<div class="container">
+    <mat-card class="contact-us-card">
+        <mat-card-header>
+            <mat-card-title>Contact Us</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form class="form-area">
+                <table class="form-content">
+                    
+                    <mat-form-field class="name-area">
+                        <input matInput placeholder="Name" required>
+                        <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+                
+                
+                    <mat-form-field class="email-area">
+                        <input matInput placeholder="Enter your email" required>
+                        <mat-icon matSuffix>drafts</mat-icon>
+                    </mat-form-field>
+                
+                
+                    <mat-form-field class="telephone-area">
+                        <span matPrefix>+30 &nbsp;</span>
+                        <input type="tel" matInput placeholder="Telephone" required>
+                        <mat-icon matSuffix>call</mat-icon>
+                    </mat-form-field>
+                
+                
+                    <mat-form-field class="subject-area">
+                        <input matInput placeholder="Subject" required>
+                        <mat-icon matSuffix>create</mat-icon>
+                    </mat-form-field>
+                
+                
+                    <mat-form-field>
+                        <textarea matInput 
+                        placeholder="Textarea" 
+                        required
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="13"></textarea>
+                        <mat-icon matSuffix>save</mat-icon>
+                    </mat-form-field>
+                    
+                    <div class="button">
+                        <button mat-raised-button color="primary" class="btn-custom">Send Now<i class="material-icons">send</i></button>
+                    </div>
+                    
+                </table>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<header>
+    <h1>Contact Us</h1>
+</header>
+
+<div class="content">
+    <form>
+        
+            <mat-form-field>
+                <input matInput placeholder="Name" required>
+                <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+        
+        
+            <mat-form-field>
+                <input matInput placeholder="Enter your email" required>
+                <mat-icon matSuffix>drafts</mat-icon>
+            </mat-form-field>
+        
+        
+            <mat-form-field>
+                <input type="tel" matInput placeholder="Telephone" required>
+                <mat-icon matSuffix>call</mat-icon>
+            </mat-form-field>
+        
+        
+            <mat-form-field>
+                <input matInput placeholder="Subject" required>
+                <mat-icon matSuffix>create</mat-icon>
+            </mat-form-field>
+        
+        
+            <mat-form-field>
+                <textarea matInput placeholder="Textarea" required></textarea>
+                <mat-icon matSuffix>save</mat-icon>
+            </mat-form-field>
+        
+        
+            <button mat-raised-button class="btn-custom">Send Now<i class="material-icons">send</i></button>
+        
+    </form>
+
+  
+<form>
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        
+        <input required 
+        ngModel 
+        name="firstName" 
+        #firstName="ngModel" 
+        (change)="log(firstName)" 
+        id="firstName" 
+        type="text" 
+        class="form-control">
+        <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid" >
+            <div *ngIf="firstName.errors.required">First name is required
+        
+    
+    <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea ngModel name="comment" id="comment" cols="30" rows="10" class="form-control"></textarea>
+    
+    <button class="btn btn-primary">Submit</button>
+</form>
+-->
