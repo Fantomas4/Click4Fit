@@ -30,6 +30,7 @@ import { DialogMessageComponent } from './dialog-message/dialog-message.componen
 import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
 import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
+import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { ResultCard2Component } from './workout/result-card2/result-card2.compon
     ResultCard2Component,
     LocationAutocompleteComponent,
     DetailsDialogComponent,
-    DialogMessageComponent
+    DialogMessageComponent,
+    ManageBusinessEntriesComponent
   ],
   imports: [
     BrowserModule,

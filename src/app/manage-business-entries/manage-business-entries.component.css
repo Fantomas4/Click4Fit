@@ -1,0 +1,13 @@
+.card-container {
+  margin: 5% auto auto;
+
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  width: 60vw;
+}
+
+.management-card {
+  /*height: 20%;*/
+  /*width: 40%;*/
+}
