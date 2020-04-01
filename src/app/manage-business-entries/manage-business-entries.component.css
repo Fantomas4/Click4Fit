@@ -1,13 +1,23 @@
 .card-container {
-  margin: 5% auto auto;
+  margin: 2%;
 
   display: flex;
   flex-direction: column;
-  height: 20vh;
-  width: 60vw;
+  height: 5vh;
+  width: 85vw;
 }
 
 .management-card {
   /*height: 20%;*/
   /*width: 40%;*/
+  max-width: 100%;
+}
+
+.table-container {
+  height: 100%;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
 }

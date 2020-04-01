@@ -31,6 +31,7 @@ import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
 import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { ManageBusinessEntriesComponent } from './manage-business-entries/manage
     MatGridListModule,
     MatAutocompleteModule,
     MatTabsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatPaginatorModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService],
   bootstrap: [AppComponent],
