@@ -9,15 +9,13 @@ import {Router} from '@angular/router';
 export class UserMainViewComponent implements OnInit {
 
   logoUrl = './assets/logo.png';
-  
-  isClicked=false;
+
+  isAdmin = true;
+  isClient = false;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
   }
-  onClickProfile(){
-    this.isClicked=true;
-    return this.isClicked;
-  }
+
 }
