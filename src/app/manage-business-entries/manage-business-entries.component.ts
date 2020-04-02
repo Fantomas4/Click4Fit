@@ -19,7 +19,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
   selection = new SelectionModel<BusinessEntry>(true, []);
 
-  displayedColumns = ['checkboxes', 'id', 'name', 'category'];
+  displayedColumns = ['checkboxes', 'id', 'name', 'category', 'buttons'];
 
   businessData: BusinessEntry[];
   dataSource = new MatTableDataSource(this.businessData);
