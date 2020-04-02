@@ -8,9 +8,9 @@
     </mat-card-header>
     <mat-card-content>
 
-      <mat-form-field>
+      <mat-form-field class="filter-field">
         <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+        <input matInput (keyup)="applyFilter($event)" placeholder="ID, Name or Category...">
       </mat-form-field>
 
 
@@ -53,10 +53,10 @@
             <td mat-cell *matCellDef="let element"> {{element.type}} </td>
           </ng-container>
 
-          <!-- Buttons Column -->
-          <ng-container matColumnDef="buttons">
-            <td mat-cell *matCell
-          </ng-container>
+<!--          &lt;!&ndash; Buttons Column &ndash;&gt;-->
+<!--          <ng-container matColumnDef="buttons">-->
+<!--            <td mat-cell *matCell-->
+<!--          </ng-container>-->
 
 <!--          &lt;!&ndash; Symbol Column &ndash;&gt;-->
 <!--          <ng-container matColumnDef="edit-options">-->
