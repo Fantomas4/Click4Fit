@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  image1Url = './assets/calendar.jpg';
+  image2Url = './assets/heart.jpg';
   constructor() {
   }
+  today: number = Date.now();
 
   ngOnInit(): void {
   }
-
 
 }
