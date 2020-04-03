@@ -4,6 +4,10 @@ export interface BusinessEntry {
   type: string;
   country: string;
   city: string;
-  imgPath: string;
+  address: string;
+  postalCode: string;
+  phoneNumbers: string[];
+  email: string;
   availableServProd: string[];
+  imgPath: string;
 }

@@ -33,6 +33,7 @@ import { ResultCard2Component } from './workout/result-card2/result-card2.compon
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import { DetailsEditDialogueComponent } from './manage-business-entries/details-edit-dialogue/details-edit-dialogue.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {MatSortModule} from '@angular/material/sort';
     LocationAutocompleteComponent,
     DetailsDialogComponent,
     DialogMessageComponent,
-    ManageBusinessEntriesComponent
+    ManageBusinessEntriesComponent,
+    DetailsEditDialogueComponent
   ],
   imports: [
     BrowserModule,
