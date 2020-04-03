@@ -5,6 +5,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DetailsEditDialogueComponent} from './details-edit-dialogue/details-edit-dialogue.component';
+import {MatDialog} from '@angular/material/dialog';
 
 
 @Component({
@@ -24,7 +26,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
   businessData: BusinessEntry[];
   dataSource = new MatTableDataSource(this.businessData);
 
-  constructor(private ManageBusinessEntriesService: SearchService) { }
+  constructor(private ManageBusinessEntriesService: SearchService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getBusinessEntries();
@@ -63,6 +65,13 @@ export class ManageBusinessEntriesComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
+  openDialog(element: BusinessEntry): void {
+    const dialogRef = this.dialog.open(DetailsEditDialogueComponent, {
+      width: '500px',
+      data: {id: element.id, name: element.name, category: element.type}
+    });
+  }
+
   // /** The label for the checkbox on the passed row */
   // checkboxLabel(row?: BusinessEntry): string {
   //   if (!row) {
@@ -72,3 +81,4 @@ export class ManageBusinessEntriesComponent implements OnInit {
   // }
 
 }
+
