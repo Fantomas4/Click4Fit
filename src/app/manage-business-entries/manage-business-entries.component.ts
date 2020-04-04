@@ -67,8 +67,11 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
   openDialog(element: BusinessEntry): void {
     const dialogRef = this.dialog.open(DetailsEditDialogueComponent, {
-      width: '500px',
-      data: {id: element.id, name: element.name, category: element.type}
+      width: '20vw',
+      data: {id: element.id, name: element.name, category: element.type, country: element.country,
+      city: element.city, address: element.address, postalCode: element.postalCode, phoneNumbers:
+      element.phoneNumbers, email: element.email, availableServProd: element.availableServProd,
+      imgPath: element.imgPath}
     });
   }
 
