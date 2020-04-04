@@ -42,6 +42,13 @@
         </mat-form-field>
       </tr>
       <tr>
+        <mat-form-field class="phone-number-field">
+          <span matPrefix>+30 &nbsp;</span>
+          <input type="tel" matInput placeholder="Telephone" [(ngModel)]="this.phoneNumber" required>
+          <mat-icon matSuffix>call</mat-icon>
+        </mat-form-field>
+      </tr>
+      <tr>
         <mat-form-field class="email-input-field">
           <mat-label>E-mail</mat-label>
           <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
@@ -57,3 +64,5 @@
   <button mat-raised-button color="primary" (click)="onCloseClick()">Close</button>
 </div>
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
