@@ -1,12 +1,12 @@
 export interface BusinessEntry {
   id: number;
   name: string;
-  type: string;
+  category: string;
   country: string;
   city: string;
   address: string;
   postalCode: string;
-  phoneNumbers: string[];
+  phoneNumber: string;
   email: string;
   availableServProd: string[];
   imgPath: string;

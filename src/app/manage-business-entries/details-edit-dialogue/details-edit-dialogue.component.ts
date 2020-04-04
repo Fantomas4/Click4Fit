@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {DialogData} from './dialog-data';
+import {BusinessEntry} from '../../business-entry';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -18,13 +18,13 @@ export class DetailsEditDialogueComponent implements OnInit {
   city: string;
   address: string;
   postalCode: string;
-  phoneNumbers: string[];
+  phoneNumber: string;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   availableServProd: string[];
-  imgPath: string[];
+  imgPath: string;
 
   constructor(public dialogRef: MatDialogRef<DetailsEditDialogueComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+              @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
 
   ngOnInit(): void {
     this.id = this.data.id;
@@ -34,7 +34,7 @@ export class DetailsEditDialogueComponent implements OnInit {
     this.city = this.data.city;
     this.address = this.data.address;
     this.postalCode = this.data.postalCode;
-    this.phoneNumbers = this.data.phoneNumbers;
+    this.phoneNumber = this.data.phoneNumber;
     this.emailFormControl.setValue(this.data.email);
     this.availableServProd = this.data.availableServProd;
     this.imgPath = this.data.imgPath;
