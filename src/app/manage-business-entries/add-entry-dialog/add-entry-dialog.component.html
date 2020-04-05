@@ -1,10 +1,8 @@
-<h1 mat-dialog-title>Business Details</h1>
+<h1 mat-dialog-title>Add a new Business Entry</h1>
+<div class="description-text">Please provide the required business details:</div>
 <div mat-dialog-content>
   <form class="form">
     <table class="table" cellspacing="0">
-      <tr>
-        <p class="business-id">Business ID: {{this.id}}</p>
-      </tr>
       <tr>
         <mat-form-field>
           <mat-label>Name</mat-label>
@@ -43,7 +41,7 @@
       </tr>
       <tr>
         <mat-form-field class="phone-number-field">
-          <span matPrefix>+30 &nbsp;</span>
+          <!--          <span matPrefix>+30 &nbsp;</span>-->
           <input type="tel" matInput placeholder="Telephone" [(ngModel)]="this.phoneNumber" required>
           <mat-icon matSuffix>call</mat-icon>
         </mat-form-field>
@@ -61,7 +59,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button color="warn" (click)="onSaveClick()">Save</button>
-  <button mat-raised-button color="primary" (click)="onCloseClick()">Close</button>
+  <button mat-raised-button color="primary" (click)="onDiscardClick()">Discard</button>
 </div>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"

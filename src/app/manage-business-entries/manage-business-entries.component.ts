@@ -5,8 +5,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import {DetailsEditDialogueComponent} from './details-edit-dialogue/details-edit-dialogue.component';
+import {DetailsEditDialogComponent} from './details-edit-dialog/details-edit-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {AddEntryDialogComponent} from './add-entry-dialog/add-entry-dialog.component';
 
 
 @Component({
@@ -65,8 +66,8 @@ export class ManageBusinessEntriesComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  openDialog(element: BusinessEntry): void {
-    const dialogRef = this.dialog.open(DetailsEditDialogueComponent, {
+  openDetailsEditDialog(element: BusinessEntry): void {
+    const dialogRef = this.dialog.open(DetailsEditDialogComponent, {
       width: '20vw',
       data: {id: element.id, name: element.name, category: element.category, country: element.country,
       city: element.city, address: element.address, postalCode: element.postalCode, phoneNumbers:
@@ -83,5 +84,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
   //   return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   // }
 
+  openAddEntryDialog() {
+    const dialogRef = this.dialog.open(AddEntryDialogComponent, {
+      width: '20vw'});
+  }
 }
 
