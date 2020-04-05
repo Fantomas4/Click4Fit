@@ -25,12 +25,17 @@ mat-list-option {
     text-align: left;
 }
 mat-drawer-container {
-  display: flex;
-  height: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-    
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.card-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
 }
 .filter-type-subheader {
     font-size: large;
@@ -41,5 +46,3 @@ mat-drawer-container {
     margin: 0 auto; 
     display: block;
 }
- 
-  
