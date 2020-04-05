@@ -13,6 +13,7 @@ import {RecoverPasswordComponent} from '../recover-password/recover-password.com
 import {UserMainViewComponent} from '../user-main-view/user-main-view.component';
 import {ContactUsComponent} from '../contact-us/contact-us.component';
 import {HomeComponent} from '../home/home.component';
+import {ManageBusinessEntriesComponent} from '../manage-business-entries/manage-business-entries.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'user', component: UserMainViewComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'myprofile', component: MyprofileComponent},
       {path: 'search', component: SearchComponent},

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DetailsDialogComponent} from '../details-dialog/details-dialog.component';
+import {BusinessEntry} from '../../business-entry';
 
 @Component({
   selector: 'app-result-card',
@@ -9,7 +10,7 @@ import {DetailsDialogComponent} from '../details-dialog/details-dialog.component
 })
 export class ResultCardComponent implements OnInit {
 
-  @Input() businessData;
+  @Input() businessData: BusinessEntry;
 
   cardTitle: string;
   cardCategory: string;
@@ -22,7 +23,7 @@ export class ResultCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.cardTitle = this.businessData.name;
-    this.cardCategory = this.businessData.type;
+    this.cardCategory = this.businessData.category;
     this.cardCountry = this.businessData.country;
     this.cardCity = this.businessData.city;
     this.cardImagePath = this.businessData.imgPath;
@@ -32,7 +33,7 @@ export class ResultCardComponent implements OnInit {
     const dialogRef = this.dialog.open(DetailsDialogComponent, {
       width: '600px',
       data: {
-        name: this.businessData.name, category: this.businessData.type,
+        name: this.businessData.name, category: this.businessData.category,
         country: this.businessData.country, city: this.businessData.city, availableServProd:
         this.businessData.availableServProd
       }

@@ -29,6 +29,11 @@ import {MatChipsModule} from '@angular/material/chips';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
 import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
+import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import { DetailsEditDialogComponent } from './manage-business-entries/details-edit-dialog/details-edit-dialog.component';
+import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dialog/add-entry-dialog.component';
 
 
 @NgModule({
@@ -49,7 +54,10 @@ import { ResultCard2Component } from './workout/result-card2/result-card2.compon
     ResultCard2Component,
     LocationAutocompleteComponent,
     DetailsDialogComponent,
-    DialogMessageComponent
+    DialogMessageComponent,
+    ManageBusinessEntriesComponent,
+    DetailsEditDialogComponent,
+    AddEntryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +71,9 @@ import { ResultCard2Component } from './workout/result-card2/result-card2.compon
     MatGridListModule,
     MatAutocompleteModule,
     MatTabsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService],
   bootstrap: [AppComponent],

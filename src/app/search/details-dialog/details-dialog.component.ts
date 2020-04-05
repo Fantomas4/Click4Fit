@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {DialogData} from './dialog-data';
+import {BusinessEntry} from '../../business-entry';
 
 @Component({
   selector: 'app-details-dialog',
@@ -12,7 +12,7 @@ export class DetailsDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
 
   onCloseClick(): void {
     // method is called when the "Close" button is pressed
