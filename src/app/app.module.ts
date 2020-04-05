@@ -28,7 +28,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
 import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
-import {MyProfileEntryService} from './myprofile/myprofile.entry.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
 
 
