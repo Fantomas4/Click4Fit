@@ -1,8 +1,104 @@
-<p class="header">Time and Date</p><img [src]="image1Url" id="calendar">
-<div>
-  <p class="m">Today is {{today | date:'fullDate'}}</p>
-  <p class="m">The time is {{today | date:'h:mm a z'}}</p>
+<h1>Dashboard</h1>
+
+ <mat-card class="features1">
+   <mat-card-content>
+     <mat-card-title class="category-title">
+       Time and Date
+       <img [src]="image1Url" id="calendar">
+     </mat-card-title><br>
+          <p class="medium">{{today | date:'fullDate'}}</p>
+          <p class="mini">{{today | date:'h:mm a z'}}</p>
+       </mat-card-content>
+ </mat-card>
+
+
+
+  <mat-card class="features2">
+    <mat-card-content>
+      <mat-card-title class="category-title">
+        Favorites <img [src]="image2Url" id="heart">
+
+      </mat-card-title><br>
+    </mat-card-content>
+  </mat-card>
+
+<div class="row">
+  <div>
+    <mat-card class="category">
+      <mat-card-title class="category-title">
+        Legs
+      </mat-card-title><br>
+      <mat-card>
+        <mat-card-title class="exercise-title">
+          Squat with weight
+        </mat-card-title>
+        <mat-card-content>
+          <iframe width="250" height="215" src="https://www.youtube.com/embed/MVMNk0HiTMg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p class="sets">Recommended sets: 4x15</p>
+        </mat-card-content>
+      </mat-card><br>
+      <mat-card>
+        <mat-card-title class="exercise-title">
+          Lunges
+        </mat-card-title>
+        <mat-card-content>
+          <iframe width="250" height="215" src="https://www.youtube.com/embed/a7amnNyWNxo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p class="sets">Recommended sets: 4x15</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-card>
+  </div>
+  <div>
+    <mat-card class="category">
+      <mat-card-title class="category-title">
+        Triceps
+      </mat-card-title><br>
+      <mat-card>
+        <mat-card-title class="exercise-title">
+          Kickbacks
+        </mat-card-title>
+        <mat-card-content>
+          <iframe width="250" height="215" src="https://www.youtube.com/embed/ShCYaoHmWmk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p class="sets">Recommended sets: 4x15</p>
+        </mat-card-content>
+      </mat-card><br>
+      <mat-card>
+        <mat-card-title class="exercise-title">
+          Dips on bench
+        </mat-card-title>
+        <mat-card-content>
+          <iframe width="250" height="215" src="https://www.youtube.com/embed/dl8_opV0A0Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p class="sets">Recommended sets: 4x15</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-card>
+  </div>
+  <div>
+    <mat-card class="category">
+      <mat-card-title class="category-title">
+        Abs
+      </mat-card-title><br>
+      <mat-card>
+        <mat-card-title class="exercise-title">
+          Obliques
+        </mat-card-title>
+        <mat-card-content>
+          <iframe width="250" height="215" src="https://www.youtube.com/embed/9Q0D6xAyrOI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p class="sets">Recommended sets: 4x15</p>
+        </mat-card-content>
+      </mat-card><br>
+      <mat-card>
+        <mat-card-title class="exercise-title">
+          Crunch
+        </mat-card-title>
+        <mat-card-content>
+          <iframe width="250" height="215" src="https://www.youtube.com/embed/Ai1Ne5dLlQA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p class="sets">Recommended sets: 4x15</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-card>
+  </div>
 </div>
 
-<p class="header">Favorites</p><img [src]="image2Url" id="heart">
+
 

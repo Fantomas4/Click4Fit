@@ -9,23 +9,45 @@ h1 {
   text-shadow: 0 1px 1px #fff;
 }
 h2 {
-  color: #7a7c7f;
+  color: black;
+  font-style: oblique;
+  font-size: 35px;
+  font-family: "Brush Script MT",cursive ;
+  line-height: 45px;
+  text-align: center;
+
+}
+
+h3{
+  color: black;
+  font-style: oblique;
   font-size: 29px;
   font-family: "Libre Baskerville", serif;
   line-height: 45px;
   text-align: center;
 
 }
-#searchButton{
-  background-color: black;
-  height:35px;
-  width:80px;
-  margin-left:400px;
-}
-a {
-  color: #7a7c7f;
-  font-size: 29px;
-  font-family: "Libre Baskerville", serif;
-  line-height: 45px;
+
+
+.category-title{
+  font-style: oblique;
+  color: crimson;
   text-align: center;
+  font-size:55px;
+  font-family: "Brush Script MT",cursive ;
+  font-weight: bold;
+  text-shadow: 0 1px 1px #fff;
+  text-align: center;
+}
+
+.features2{
+  margin-left:50px;
+  text-align: center;
+  background-color:  #3F51B5;
+  border-radius: 18px;
+  display: inline-block;
+  color:white;
+  width: 1010px;
+  height:450px;
+  margin-top:28px;
 }
