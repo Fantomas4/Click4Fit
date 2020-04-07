@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Add a new User Entry</h1>
+<div class="description-text">Please provide the required user details:</div>
+<div mat-dialog-content>
+  <form class="form">
+    <table class="table" cellspacing="0">
+      <tr>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="e.g. George" [(ngModel)]="this.name" name="name" required>
+        </mat-form-field>
+      </tr>
+      <tr>
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastname" name="lastname" required>
+        </mat-form-field>
+      </tr>
+      <tr>
+        <mat-form-field class="email-input-field">
+          <mat-label>E-mail</mat-label>
+          <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
+                 type="email" name="registration-email" required>
+          <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </tr>
+    </table>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onSaveClick()">Save</button>
+  <button mat-raised-button color="primary" (click)="onDiscardClick()">Discard</button>
+</div>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
