@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
+  currentYear: number = new Date().getFullYear();
+
+  facebookUrl = "./assets/facebook.png";
+  instagramUrl = "./assets/instagram.png";
+  twitterUrl = "./assets/twitter.png";
+  youtubeUrl = "./assets/youtube.png";
+
   constructor() { }
 
   ngOnInit(): void {

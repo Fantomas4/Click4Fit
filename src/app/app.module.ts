@@ -34,6 +34,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { DetailsEditDialogComponent } from './manage-business-entries/details-edit-dialog/details-edit-dialog.component';
 import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dialog/add-entry-dialog.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dia
     DialogMessageComponent,
     ManageBusinessEntriesComponent,
     DetailsEditDialogComponent,
-    AddEntryDialogComponent
+    AddEntryDialogComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
