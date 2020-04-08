@@ -1,5 +1,6 @@
 <div class="flex">
-    <mat-card class="category" *ngIf="!legsIsEmpty">
+    <div *ngIf="!legsIsEmpty">
+    <mat-card class="category">
         <mat-card-title class="category-title">
             Legs
         </mat-card-title><br>
@@ -8,14 +9,15 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br>
-    <mat-card class="category" *ngIf="!backIsEmpty">
+    </mat-card><br></div>
+    <div *ngIf="!backIsEmpty">
+    <mat-card class="category" >
         <mat-card-title class="category-title">
             Back
         </mat-card-title><br>
@@ -24,14 +26,14 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br>
-    <mat-card class="category" *ngIf="!chestIsEmpty">
+    </mat-card><br></div>
+    <div  *ngIf="!chestIsEmpty"><mat-card class="category">
         <mat-card-title class="category-title">
             Chest
         </mat-card-title><br>
@@ -40,14 +42,15 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br>
-    <mat-card class="category" *ngIf="!shouldersIsEmpty">
+    </mat-card><br></div>
+    <div *ngIf="!shouldersIsEmpty">
+    <mat-card class="category">
         <mat-card-title class="category-title">
             Shoulders
         </mat-card-title><br>
@@ -56,14 +59,15 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe frame="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br>
-    <mat-card class="category" *ngIf="!bicepsIsEmpty">
+    </mat-card><br></div>
+    <div *ngIf="!bicepsIsEmpty">
+    <mat-card class="category">
         <mat-card-title class="category-title">
             Biceps
         </mat-card-title><br>
@@ -72,13 +76,14 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br>
+    </mat-card><br></div>
+    <div *ngIf="!tricepsIsEmpty">
     <mat-card class="category" *ngIf="!tricepsIsEmpty">
         <mat-card-title class="category-title">
             Triceps
@@ -88,14 +93,15 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br><br>
-    <mat-card class="category" *ngIf="!absIsEmpty">
+    </mat-card><br></div>
+    <div *ngIf="!absIsEmpty">
+    <mat-card class="category" >
         <mat-card-title class="category-title">
             Abs
         </mat-card-title><br>
@@ -104,14 +110,15 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br>
-    <mat-card class="category" *ngIf="!coreIsEmpty">
+    </mat-card><br></div>
+    <div *ngIf="!coreIsEmpty">
+    <mat-card class="category">
         <mat-card-title class="category-title">
             Core
         </mat-card-title><br>
@@ -120,11 +127,11 @@
                 {{entry.name}}
             </mat-card-title>
             <mat-card-content>
-                <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
                 <p class="sets">Recommended sets: {{entry.sets}}</p>
             </mat-card-content>
         </mat-card><br>
-    </mat-card><br>
+    </mat-card></div>
 </div>

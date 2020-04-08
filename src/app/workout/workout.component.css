@@ -46,3 +46,8 @@ mat-drawer-container {
     margin: 0 auto; 
     display: block;
 }
+@media (max-width:425px){
+    mat-drawer{
+        width:125px;
+    }
+}

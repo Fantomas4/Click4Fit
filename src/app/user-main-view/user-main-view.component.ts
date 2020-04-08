@@ -8,12 +8,18 @@ import {Router} from '@angular/router';
 })
 export class UserMainViewComponent implements OnInit {
 
-  logoUrl = './assets/logo.png';
+  logo = './assets/logo.png';
 
   isAdmin = false;
   isClient = true;
+  screenWidth:number;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.screenWidth = window.innerWidth;
+    window.onresize = () => {
+      this.screenWidth = window.innerWidth;
+    };
+  }
 
   ngOnInit(): void {
   }
