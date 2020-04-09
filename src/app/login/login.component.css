@@ -1,13 +1,58 @@
 .login-card {
-  /*width: 400px;*/
   width: 25%;
   margin: 10% auto;
 }
-
 .mat-card-title {
   font-size: 21px;
 }
-
 .forgot-password {
   margin-left: 15px;
+}
+@media (max-width:320px){
+  .login-card {
+    width: 70%;
+    margin: 0 auto;
+    display:block;
+    margin-top:70px;
+  }
+}
+@media (max-height:320px){
+  .login-card {
+    width: 40%;
+    margin: 0 auto;
+    display:block;
+    margin-top:15px;
+  }
+}
+@media (min-width:321px)and (max-width:375px){
+  .login-card {
+    width: 60%;
+    margin: 0 auto;
+    display:block;
+    margin-top:70px;
+  }
+}
+@media (min-height:321px) and (max-height:375px){
+  .login-card {
+    width: 40%;
+    margin: 0 auto;
+    display:block;
+    margin-top:25px;
+  }
+}
+@media (min-width:376px)and (max-width:425px){
+  .login-card {
+    width: 60%;
+    margin: 0 auto;
+    display:block;
+    margin-top:70px;
+  }
+}
+@media (min-height:376px) and (max-height:425px){
+  .login-card {
+    width: 40%;
+    margin: 0 auto;
+    display:block;
+    margin-top:35px;
+  }
 }
