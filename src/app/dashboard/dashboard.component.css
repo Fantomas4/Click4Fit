@@ -22,7 +22,7 @@ h1{
   text-align: center;
 }
 .mini{
-  font-size:25px;
+  font-size:23px;
   text-align:center;
 }
 .favorites{
@@ -32,6 +32,7 @@ h1{
   height:650px;
   background-color: lightgray;
   border-radius:30px;
+  box-shadow: 10px 10px 5px grey;
 }
 .frame{
   width:265px;

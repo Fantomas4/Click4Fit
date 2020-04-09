@@ -4,17 +4,20 @@
   <p class="mini">{{today | date:'h:mm a z'}}</p>
 </mat-card><br>
 <mat-card class="favorites">
-  <mat-card-title class="title">
+  <mat-card-title>
     Favorites <mat-icon>favorite</mat-icon>
-  </mat-card-title>
+  </mat-card-title><br>
   <mat-card-content class="exercise">
-    <mat-card-title class="exercise-title">
-      Squat with weight
-    </mat-card-title>
-    <mat-card-content>
-      <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/MVMNk0HiTMg")' frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <p class="sets">Recommended sets: 4x15</p>
-    </mat-card-content>
+    <mat-card>
+      <mat-card-title class="exercise-title">
+        Squat with weight
+      </mat-card-title>
+      <mat-card-content>
+        <iframe class="frame"
+          [src]='sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/MVMNk0HiTMg")' frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <p class="sets">Recommended sets: 4x15</p>
+      </mat-card-content>
+    </mat-card>
   </mat-card-content>
 </mat-card>
