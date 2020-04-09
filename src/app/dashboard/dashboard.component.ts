@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +10,7 @@ export class DashboardComponent implements OnInit {
 
   image1Url = './assets/calendar.jpg';
   image2Url = './assets/heart.jpg';
-  constructor() {
+  constructor(public sanitizer: DomSanitizer) {
   }
   today: number = Date.now();
 

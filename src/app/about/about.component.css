@@ -1,53 +1,54 @@
 h1 {
   color:  black;
   font-style: oblique;
-  font-size: 50px;
+  font-size: 45px;
   line-height: 100px;
   font-weight: normal;
   margin-top: -5px;
   text-align: center;
   text-shadow: 0 1px 1px #fff;
 }
-h2 {
+.p1 {
   color: black;
-  font-style: oblique;
-  font-size: 35px;
-  font-family: "Brush Script MT",cursive ;
+  font-size: 23px;
   line-height: 45px;
   text-align: center;
-
 }
-
-h3{
+.p2{
   color: black;
-  font-style: oblique;
-  font-size: 29px;
-  font-family: "Libre Baskerville", serif;
-  line-height: 45px;
-  text-align: center;
-
-}
-
-
-.category-title{
-  font-style: oblique;
-  color: crimson;
-  text-align: center;
-  font-size:55px;
-  font-family: "Brush Script MT",cursive ;
+  font-style:italic;
   font-weight: bold;
-  text-shadow: 0 1px 1px #fff;
+  font-size: 30px;
+  line-height: 45px;
+  text-align: center;
+  margin-top:80px;
+}
+.p3{
+  color: black;
+  font-style:italic;
+  font-size: 22px;
+  line-height: 45px;
+  text-align: center;
+  margin-top:100px;
+}
+.row{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
+mat-card{
+  width:350px;
+  height:250px;
+  background-color:lightgray;
+  margin-left:20px;
+}
+.title{
+  font-style: oblique;
+  font-weight: bold;
+  font-size:18px;
   text-align: center;
 }
-
-.features2{
-  margin-left:50px;
-  text-align: center;
-  background-color:  #3F51B5;
-  border-radius: 18px;
-  display: inline-block;
-  color:white;
-  width: 1010px;
-  height:450px;
-  margin-top:28px;
+.frame{
+  width:350px;
+  height:220px;
 }
