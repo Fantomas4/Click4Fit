@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-user-main-view',
@@ -20,7 +21,6 @@ export class UserMainViewComponent implements OnInit {
       this.screenWidth = window.innerWidth;
     };
   }
-
   ngOnInit(): void {
   }
 

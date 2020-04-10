@@ -1,41 +1,30 @@
 <mat-sidenav-container fullscreen>
-  <mat-sidenav #sidenav [opened]="screenWidth > 768" [mode]="(screenWidth > 768) ? 'side' : 'over'">
+  <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
     <img [src]="logo" id="logo">
-    <!--    <div class="title"><img class="logo" [src]="logoUrl"></div>-->
-<!--    <div class="dashboard">-->
-<!--      <p class="home" (click)="goToHome()">Home</p>-->
-<!--      <p class="myprofile" (click)="goToMyprofile()">My profile</p>-->
-<!--      <p class="search" (click)="goToSearch()">Search</p>-->
-<!--      <p class="workout" (click)="goToWorkout()">Workout</p>-->
-<!--      <p class="about" (click)="goToAbout()">About</p>-->
-<!--    </div>-->
-<!--  <button mat-raised-button (click)="login()" color="primary">Login</button>-->
-
-
-<!--    <button mat-raised-button color="primary" routerLink="/user/dashboard">Dashboard</button>-->
-<!--    <button mat-raised-button color="primary" routerLink="/user/myprofile">My Profile</button>-->
-<!--    <button mat-raised-button color="primary" routerLink="/user/search">My Profile</button>-->
-<!--    <button mat-raised-button color="primary" routerLink="/user/workout">My Profile</button>-->
     <mat-nav-list>
       <ng-container *ngIf="isClient">
-        <a mat-list-item routerLink="/user/dashboard" (click)="sidenav.close()"><b class="list-item-text">Dashboard</b></a>
-        <a mat-list-item routerLink="/user/search" (click)="sidenav.close()"><b class="list-item-text">Search</b></a>
-        <a mat-list-item routerLink="/user/workout" (click)="sidenav.close()"><b class="list-item-text">Workout</b></a>
+        <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Dashboard</b></a>
+        <a mat-list-item routerLink="/user/search"><b class="list-item-text">Search</b></a>
+        <a mat-list-item routerLink="/user/workout" ><b class="list-item-text">Workout</b></a>
       </ng-container>
       <ng-container *ngIf="isAdmin">
-        <a mat-list-item routerLink="/user/dashboard" (click)="sidenav.close()"><b class="list-item-text">Manage Users</b></a>
-        <a mat-list-item routerLink="/user/manage-business-entries" (click)="sidenav.close()"><b class="list-item-text">Manage Business Entries</b></a>
+        <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Manage Users</b></a>
+        <a mat-list-item routerLink="/user/manage-business-entries"><b class="list-item-text">Manage Business
+            Entries</b></a>
       </ng-container>
       <div class="account-options-container">
-        <a mat-list-item routerLink="/user/myprofile" (click)="sidenav.close()"><b class="list-item-text">My Profile</b></a>
-        <a mat-list-item routerLink="/user/myprofile" (click)="sidenav.close()"><b class="list-item-text">Logout</b></a>
+        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>
+        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">Logout</b></a>
       </div>
-      <a mat-list-item class="homepage-option-container" routerLink="/home" (click)="sidenav.close()"><b class="list-item-text">Back to Homepage</b></a>
+      <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to
+          Homepage</b></a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <button mat-raised-button (click)="sidenav.open()" id="menuButton" [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}"><mat-icon>menu</mat-icon></button>
+    <button mat-raised-button (click)="sidenav.open()" id="menuButton"
+      [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">
+      <mat-icon>menu</mat-icon>
+    </button>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
