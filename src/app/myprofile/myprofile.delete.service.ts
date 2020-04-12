@@ -11,7 +11,7 @@ export class MyProfileDeleteService {
     openModal() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
-        dialogConfig.minWidth = 400;
+        dialogConfig.minWidth = 100;
         const dialogRef = this.dialog.open(DialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
       }

@@ -47,7 +47,7 @@ mat-drawer-container {
 @media screen and (max-width:320px){
     mat-drawer{
         width:40%;
-        height:80%;
+        height:70%;
         border-radius: 20px;
         margin-top:80px;
     }
@@ -60,18 +60,78 @@ mat-drawer-container {
     }
 }
 @media screen and (max-height:320px){
-
+    mat-drawer{
+        width:20%;
+        height:70%;
+        border-radius: 20px;
+        margin-top:80px;
+    }
+    #filtersButton{
+        margin: 0 auto; 
+        display: block;
+        background-color:#3F51B5;
+        color:white;
+        margin-top:5px;
+    }
 }
 
 @media screen and (min-width:321px)and (max-width:375px){
-
+    mat-drawer{
+        width:35%;
+        height:70%;
+        border-radius: 20px;
+        margin-top:80px;
+    }
+    #filtersButton{
+        margin: 0 auto; 
+        display: block;
+        background-color:#3F51B5;
+        color:white;
+        margin-top:5px;
+    }
 }
 @media screen and (min-height:321px) and (max-height:375px){
-
+    mat-drawer{
+        width:20%;
+        height:70%;
+        border-radius: 20px;
+        margin-top:80px;
+    }
+    #filtersButton{
+        margin: 0 auto; 
+        display: block;
+        background-color:#3F51B5;
+        color:white;
+        margin-top:5px;
+    }
 }
 @media screen and (min-width:376px)and (max-width:425px){
-
+    mat-drawer{
+        width:35%;
+        height:70%;
+        border-radius: 20px;
+        margin-top:80px;
+    }
+    #filtersButton{
+        margin: 0 auto; 
+        display: block;
+        background-color:#3F51B5;
+        color:white;
+        margin-top:5px;
+    }
 }
 @media screen and (min-height:376px) and (max-height:425px){
-    
+    mat-drawer{
+        width:25%;
+        height:70%;
+        border-radius: 20px;
+        margin-top:80px;
+    }
+    #filtersButton{
+        margin: 0 auto; 
+        display: block;
+        background-color:#3F51B5;
+        color:white;
+        margin-top:5px;
+    }
 }
