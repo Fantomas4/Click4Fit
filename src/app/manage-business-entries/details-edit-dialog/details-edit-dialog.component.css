@@ -1,3 +1,12 @@
-.business-id {
+business-id {
   font-size: large;
+}
+
+.field-list {
+  height: 70%;
+}
+
+.mat-dialog-container {
+  display: flex;
+  flex-direction: column;
 }

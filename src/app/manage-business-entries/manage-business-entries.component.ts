@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {SearchService} from '../search/search.service';
 import {BusinessEntry} from '../business-entry';
 import {MatPaginator} from '@angular/material/paginator';
@@ -27,7 +27,21 @@ export class ManageBusinessEntriesComponent implements OnInit {
   businessData: BusinessEntry[];
   dataSource = new MatTableDataSource(this.businessData);
 
-  constructor(private ManageBusinessEntriesService: SearchService, public dialog: MatDialog) { }
+  screenHeight: number;
+  screenWidth: number;
+
+  dialogHeightRatio = 0.95; // Determines the dialog box height relevant to the screen size
+
+  constructor(private ManageBusinessEntriesService: SearchService, public dialog: MatDialog) {
+    this.onResize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.screenHeight = window.innerHeight * this.dialogHeightRatio;
+    this.screenWidth = window.innerWidth;
+    console.log('height is: ' + this.screenHeight);
+  }
 
   ngOnInit(): void {
     this.getBusinessEntries();
@@ -68,7 +82,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
   openDetailsEditDialog(element: BusinessEntry): void {
     const dialogRef = this.dialog.open(DetailsEditDialogComponent, {
-      width: '20vw',
+      width: this.screenWidth.toString().concat('px'), height: this.screenHeight.toString().concat('px'),
       data: {id: element.id, name: element.name, category: element.category, country: element.country,
       city: element.city, address: element.address, postalCode: element.postalCode, phoneNumbers:
       element.phoneNumber, email: element.email, availableServProd: element.availableServProd,
@@ -85,8 +99,11 @@ export class ManageBusinessEntriesComponent implements OnInit {
   // }
 
   openAddEntryDialog() {
+    // const dialogRef = this.dialog.open(AddEntryDialogComponent, {
+    //   width: '20vw'});
+    console.log('this.screenHeight.toString(): ' + this.screenHeight.toString());
     const dialogRef = this.dialog.open(AddEntryDialogComponent, {
-      width: '20vw'});
+      width: this.screenWidth.toString().concat('px'), height: this.screenHeight.toString().concat('px')});
   }
 }
 
