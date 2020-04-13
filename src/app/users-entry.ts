@@ -3,4 +3,5 @@ export interface UsersEntry {
   name: string;
   lastname: string;
   email: string;
+  birthdate: string;
 }

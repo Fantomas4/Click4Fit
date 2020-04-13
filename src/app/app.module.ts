@@ -34,12 +34,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { DetailsEditDialogComponent } from './manage-business-entries/details-edit-dialog/details-edit-dialog.component';
 import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dialog/add-entry-dialog.component';
-import { SearchInUsersComponent } from './search-in-users/search-in-users.component';
 import { ManageUsersEntriesComponent } from './manage-users-entries/manage-users-entries.component';
-import { AddUserEntryDialogComponent } from './manage-users-entries/add-user-entry-dialog/add-user-entry-dialog.component';
 import { DetailsUserEditComponent } from './manage-users-entries/details-user-edit/details-user-edit.component';
-import { DetailsUsersDialogComponent } from './search-in-users/details-users-dialog/details-users-dialog.component';
-import { ResultUsersCardComponent } from './search-in-users/result-users-card/result-users-card.component';
 
 
 @NgModule({
@@ -64,12 +60,8 @@ import { ResultUsersCardComponent } from './search-in-users/result-users-card/re
     ManageBusinessEntriesComponent,
     DetailsEditDialogComponent,
     AddEntryDialogComponent,
-    SearchInUsersComponent,
     ManageUsersEntriesComponent,
-    AddUserEntryDialogComponent,
     DetailsUserEditComponent,
-    DetailsUsersDialogComponent,
-    ResultUsersCardComponent
   ],
   imports: [
     BrowserModule,

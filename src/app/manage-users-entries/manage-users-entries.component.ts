@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {SearchInUsersService} from '../search-in-users/search-in-users.service';
 import {UsersEntry} from '../users-entry';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -7,7 +6,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material/dialog';
 import {DetailsUserEditComponent} from './details-user-edit/details-user-edit.component';
-import {AddUserEntryDialogComponent} from './add-user-entry-dialog/add-user-entry-dialog.component';
+import {ManageUsersEntriesService} from './manage-users-entries.service';
 
 @Component({
   selector: 'app-manage-users-entries',
@@ -15,18 +14,18 @@ import {AddUserEntryDialogComponent} from './add-user-entry-dialog/add-user-entr
   styleUrls: ['./manage-users-entries.component.css']
 })
 export class ManageUsersEntriesComponent implements OnInit {
-  title = 'About us';
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   selection1 = new SelectionModel<UsersEntry>(true, []);
 
-  displayedColumns = ['checkboxes', 'id', 'name', 'last-name', 'buttons'];
+  displayedColumns = ['checkboxes', 'id', 'name', 'last-name', 'birthdate', 'buttons'];
 
   userData: UsersEntry[];
   dataSource1 = new MatTableDataSource(this.userData);
 
-  constructor(private ManageUserEntriesService: SearchInUsersService, public dialog: MatDialog) { }
+  constructor(private ManageUserEntriesService: ManageUsersEntriesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUsersEntries();
@@ -67,13 +66,9 @@ export class ManageUsersEntriesComponent implements OnInit {
   openDetailsUserEdit(element: UsersEntry): void {
     const dialogRef = this.dialog.open(DetailsUserEditComponent, {
       width: '20vw',
-      data: {id: element.id, name: element.name, lastname: element.lastname, email: element.email}
+      data: {id: element.id, name: element.name, lastname: element.lastname, birthdate: element.birthdate, email: element.email}
     });
   }
 
-  openAddUserEntry() {
-    const dialogRef = this.dialog.open(AddUserEntryDialogComponent, {
-      width: '20vw'});
-  }
 }
 

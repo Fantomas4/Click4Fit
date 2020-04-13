@@ -14,6 +14,7 @@ export class DetailsUserEditComponent implements OnInit {
   id: number;
   name: string;
   lastname: string;
+  birthdate: string;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(public dialogRef: MatDialogRef<DetailsUserEditComponent>,
@@ -24,6 +25,7 @@ export class DetailsUserEditComponent implements OnInit {
     this.id = this.data.id;
     this.name = this.data.name;
     this.lastname = this.data.lastname;
+    this.birthdate = this.data.birthdate;
     this.emailFormControl.setValue(this.data.email);
 
   }
