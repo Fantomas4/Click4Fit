@@ -60,7 +60,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
       console.log('mpika 4');
       console.log('dialogHeight: ' + this.dialogHeight);
       this.addEntryDialogRef.updateSize(this.dialogWidth.toString(), this.dialogHeight.toString());
+      // this.addEntryDialogRef.updatePosition({top: 'auto', bottom: 'auto'});
     }
+
     console.log('onresize height is: ' + this.dialogHeight);
 
   }
