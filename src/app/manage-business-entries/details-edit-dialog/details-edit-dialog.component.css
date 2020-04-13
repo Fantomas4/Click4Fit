@@ -1,12 +1,16 @@
-business-id {
+.main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+#business-id {
   font-size: large;
 }
 
 .field-list {
-  height: 70%;
+  flex-grow: 2;
 }
 
-.mat-dialog-container {
-  display: flex;
-  flex-direction: column;
-}
