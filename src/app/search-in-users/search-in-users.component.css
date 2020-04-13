@@ -1,0 +1,107 @@
+
+#title {
+  text-align: center;
+}
+
+mat-drawer-container {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-drawer-content {
+  width: 100vw;
+}
+
+form {
+  margin: auto;
+  width: 50%;
+  /* This bit sets up the horizontal layout */
+  display: flex;
+  /*flex-direction: row;*/
+
+  /*!* This bit draws the box around it *!*/
+  border: 1px solid grey;
+
+  /*!* I've used padding so you can see the edges of the elements. *!*/
+  padding: 2px;
+}
+
+.search-input {
+  /* Tell the input to use all the available space */
+  flex-grow:2;
+  /* And hide the input's outline, so the form looks like the outline */
+  font-size: large;
+  height: 1.5em;
+  width: 30em;
+  border:none;
+}
+
+.search-input:focus {
+  /* removing the input focus blue box. Put this on the form if you like. */
+  outline: none;
+}
+
+.button-container {
+  display: flex;
+  margin-right: 0;
+}
+
+button {
+  /* Just a little styling to make it pretty */
+  font-weight: bold;
+  font-size: medium;
+  width: 4em;
+  border:1px solid blue;
+  background:blue;
+  color:white;
+}
+
+#search-button {
+  margin-left: 0.5em;
+  /* Just a little styling to make it pretty */
+  font-weight: bold;
+  font-size: medium;
+  width: 4em;
+  border:1px solid blue;
+  background:blue;
+  color:white;
+}
+/* ============= END: Styling concerning search container and its elements ============= */
+
+.card-deck-container {
+  margin-top: 5%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+.card-item {
+  padding: 10px;
+}
+
+/*============= START: Styling concerning filter sidebar and its elements ============= */
+mat-drawer {
+  width: 15%;
+}
+
+#filter-list {
+  text-align: center;
+}
+
+.filter-type-subheader {
+  font-size: large;
+}
+
+mat-list-option {
+  text-align: left;
+}
+
+#done-button {
+  margin-top: 2em;
+  width: 80%;
+}
+/* ============= END: Styling concerning filter sidebar and its elements ============= */

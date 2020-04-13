@@ -1,27 +1,26 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {BusinessEntry} from '../../business-entry';
-import {FormControl, Validators} from '@angular/forms';
 import {UsersEntry} from '../../users-entry';
+import {FormControl, Validators} from '@angular/forms';
+
 
 @Component({
-  selector: 'app-add-edit-dialog',
-  templateUrl: './add-edit-dialog.component.html',
-  styleUrls: ['./add-edit-dialog.component.css']
+  selector: 'app-details-user-edit',
+  templateUrl: './details-user-edit.component.html',
+  styleUrls: ['./details-user-edit.component.css']
 })
-export class AddEditDialogComponent implements OnInit {
+export class DetailsUserEditComponent implements OnInit {
 
-  // https://angular.io/api/forms/FormControlDirective#use-with-ngmodel
   id: number;
   name: string;
   lastname: string;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
-
-  constructor(public dialogRef: MatDialogRef<AddEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: UsersEntry) {}
+  constructor(public dialogRef: MatDialogRef<DetailsUserEditComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: UsersEntry) { }
 
   ngOnInit(): void {
+
     this.id = this.data.id;
     this.name = this.data.name;
     this.lastname = this.data.lastname;
@@ -45,5 +44,5 @@ export class AddEditDialogComponent implements OnInit {
   onSaveClick(): void {
 
   }
-}
 
+}

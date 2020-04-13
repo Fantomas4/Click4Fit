@@ -10,8 +10,8 @@ export class UserMainViewComponent implements OnInit {
 
   logoUrl = './assets/logo.png';
 
-  isAdmin = false;
-  isClient = true;
+  isAdmin = true;
+  isClient = false;
 
   constructor(private router: Router) {}
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEntryDialogComponent } from './add-entry-dialog.component';
+import { SearchInUsersComponent } from './search-in-users.component';
 
-describe('AddEntryDialogComponent', () => {
-  let component: AddEntryDialogComponent;
-  let fixture: ComponentFixture<AddEntryDialogComponent>;
+describe('SearchInUsersComponent', () => {
+  let component: SearchInUsersComponent;
+  let fixture: ComponentFixture<SearchInUsersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddEntryDialogComponent ]
+      declarations: [ SearchInUsersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddEntryDialogComponent);
+    fixture = TestBed.createComponent(SearchInUsersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

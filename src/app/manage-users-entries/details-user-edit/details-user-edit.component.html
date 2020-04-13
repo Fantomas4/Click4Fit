@@ -1,20 +1,20 @@
-<h1 mat-dialog-title>Users Details</h1>
+<h1 mat-dialog-title>User Details</h1>
 <div mat-dialog-content>
   <form class="form">
     <table class="table" cellspacing="0">
       <tr>
-        <p class="users-id">User ID: {{this.id}}</p>
+        <p class="business-id">User ID: {{this.id}}</p>
       </tr>
       <tr>
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput placeholder="e.g. George Brown" [(ngModel)]="this.name" name="name" required>
+          <input matInput placeholder="e.g. George" [(ngModel)]="this.name" name="name" required>
         </mat-form-field>
       </tr>
       <tr>
         <mat-form-field>
           <mat-label>Last Name</mat-label>
-          <input matInput placeholder="e.g. User" [(ngModel)]="this.lastname" name="last name" required>
+          <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastname" name="lastname" required>
         </mat-form-field>
       </tr>
       <tr>
@@ -35,4 +35,3 @@
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-

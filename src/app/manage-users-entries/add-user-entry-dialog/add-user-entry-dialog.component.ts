@@ -1,24 +1,25 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UsersEntry} from '../../users-entry';
+import {MatDialogRef} from '@angular/material/dialog';
+
+
 
 @Component({
-  selector: 'app-add-entry-dialog',
-  templateUrl: './add-entry-dialog.component.html',
-  styleUrls: ['./add-entry-dialog.component.css']
+  selector: 'app-add-user-entry-dialog',
+  templateUrl: './add-user-entry-dialog.component.html',
+  styleUrls: ['./add-user-entry-dialog.component.css']
 })
-export class AddEntryDialogComponent implements OnInit {
+export class AddUserEntryDialogComponent implements OnInit {
 
   id: number;
   name: string;
   lastname: string;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
+  constructor(public dialogRef: MatDialogRef<AddUserEntryDialogComponent>) { }
 
-  constructor(public dialogRef: MatDialogRef<AddEntryDialogComponent>) {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   getErrorMessage() {
     if (this.emailFormControl.hasError('required')) {
@@ -36,6 +37,5 @@ export class AddEntryDialogComponent implements OnInit {
   onSaveClick(): void {
 
   }
-
 
 }
