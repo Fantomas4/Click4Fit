@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SearchService} from './search.service';
 import {BusinessEntry} from '../business-entry';
+// import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-search',
@@ -8,6 +9,8 @@ import {BusinessEntry} from '../business-entry';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   searchResults: BusinessEntry[];
 
   constructor(private searchService: SearchService) { }

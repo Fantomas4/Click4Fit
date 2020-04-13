@@ -22,27 +22,12 @@
         <mat-divider></mat-divider>
       </div>
       <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
-
-
-
-
-      <!--      <mat-divider></mat-divider>-->
-<!--      <a mat-list-item routerLink="/user/search"><b class="list-item-text">Search</b></a>-->
-<!--      <mat-divider></mat-divider>-->
-<!--      <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>-->
-<!--      &lt;!&ndash;      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>&ndash;&gt;-->
-<!--      <div class="account-options-container">-->
-<!--        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>-->
-<!--        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">Logout</b></a>-->
-<!--      </div>-->
-<!--      <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to Homepage</b></a>-->
-
-
-
     </mat-nav-list>
   </mat-drawer>
+
+
+
   <mat-drawer-content>
-    <h1 id="title">Search</h1>
     <form>
       <input matInput placeholder="Search..." class="search-input" name="search-input">
       <!--      <button>Go</button>-->
@@ -60,14 +45,8 @@
         <app-result-card [businessData]="entry"></app-result-card>
       </div>
 
-<!--      <div class="paginator mat-elevation-z4" *ngIf="productsDisplayed.length !== 0">-->
-<!--        <mat-paginator-->
-<!--          [length]="paginatorSize"-->
-<!--          [pageSize]="numberOfProductsDisplayedInPage"-->
-<!--          [pageSizeOptions]="[12, 24]"-->
-<!--          (page)="updateProductsDisplayedInPage($event)">-->
-<!--        </mat-paginator>-->
-<!--      </div>-->
+<!--      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+
     </div>
 
 
