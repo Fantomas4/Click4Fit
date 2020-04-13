@@ -27,6 +27,8 @@ h1{
 }
 .favorites{
   margin:0 auto;
+  margin-top:5%;
+  margin-bottom:5%;
   display:block;
   width:850px;
   height:650px;
