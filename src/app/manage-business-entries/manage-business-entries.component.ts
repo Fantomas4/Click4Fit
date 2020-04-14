@@ -1,5 +1,4 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {SearchService} from '../search/search.service';
 import {BusinessEntry} from '../business-entry';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -8,6 +7,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {DetailsEditDialogComponent} from './details-edit-dialog/details-edit-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddEntryDialogComponent} from './add-entry-dialog/add-entry-dialog.component';
+import {ManageBusinessEntriesService} from './manage-business-entries.service';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
   detailsEditDialogRef: MatDialogRef<DetailsEditDialogComponent, any>;
   addEntryDialogRef: MatDialogRef<AddEntryDialogComponent, any>;
 
-  constructor(private ManageBusinessEntriesService: SearchService, public dialog: MatDialog) {}
+  constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog) {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
@@ -86,7 +86,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
   getBusinessEntries() {
 
-    this.ManageBusinessEntriesService.getResults()
+    this.manageBusinessEntriesService.getResults()
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });
   }
 
