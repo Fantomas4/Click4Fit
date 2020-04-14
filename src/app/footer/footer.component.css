@@ -1,12 +1,12 @@
 footer {
     display: flex;
-    position: fixed;
+    /* position: fixed; */
     left: 0;
     bottom: 0;
     width: 100%;
     height: 49px;
-    background-color: rgb(189, 23, 23); /*change color*/
-    color: rgb(226, 196, 196);         /*change color*/
+    background-color: #B71C1C;
+    color: white;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;

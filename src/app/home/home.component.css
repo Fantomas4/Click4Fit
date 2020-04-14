@@ -1,44 +1,16 @@
-.moto {
-  font-size: 40px;
-  font-family: "Libre Baskerville", serif;
-  line-height: 40px;
-  text-shadow: 0 1px 1px white;
-  padding-top:5px;
-  color:white;
-  width:680px;
-  height:60px;
-  border-radius:15px;
-  margin: 0 auto;
-  display: block;
-
+h1 h2 h3 h4{
+  text-align: center;
 }
 
- /*#picture3,#picture1,#picture2{
-   width:1280px;
-   height:609px;
- }*/
-
 h1 {
-    color:  #3F51B5;
-    font-style: oblique;
-    font-size: 100px;
-    line-height: 160px;
+    font-size: 77px;
     font-weight: normal;
     margin-bottom: 0px;
     margin-top: 5px;
     text-align: center;
-    text-shadow: 0 1px 1px #fff;
+    color: rgb(255, 227, 226);
+    text-shadow: 0 1px 1px rgb(139, 56, 56);
   }
-
-.moto {
-  color: #7a7c7f;
-  font-size: 29px;
-  font-family: "Libre Baskerville", serif;
-  line-height: 45px;
-  text-align: center;
-  text-shadow: 0 1px 1px #fff;
-  padding-top: 20px;
-}
 
 #fitness{
   width:550px;
@@ -48,7 +20,10 @@ h1 {
 }
 
 .fitness-image {
-  background-image: url("../../assets/barbell-on-the-floor.jpg");
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ), url("../../assets/barbell-on-the-floor.jpg");
   background-color: #cccccc;
   height: 100%;
   background-position: center;
@@ -65,3 +40,29 @@ h1 {
   transform: translate(-50%, -50%);
   color: white;
 }
+
+/* .moto {
+  font-size: 40px;
+  font-family: "Libre Baskerville", serif;
+  line-height: 40px;
+  text-shadow: 0 1px 1px white;
+  padding-top:5px;
+  color:white;
+  width:680px;
+  height:60px;
+  border-radius:15px;
+  margin: 0 auto;
+  display: block;
+
+}
+
+
+.moto {
+  color: #7a7c7f;
+  font-size: 29px;
+  font-family: "Libre Baskerville", serif;
+  line-height: 45px;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
+  padding-top: 20px;
+} */

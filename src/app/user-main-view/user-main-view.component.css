@@ -1,4 +1,4 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 
 mat-sidenav {
   width: 12%;
@@ -11,7 +11,7 @@ mat-sidenav {
 }
 
 .mat-drawer {
-  background-color: #3F51B5;
+  background-color: #B71C1C;
 }
 
 .list-item-text {
