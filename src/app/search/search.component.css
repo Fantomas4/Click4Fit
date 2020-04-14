@@ -20,7 +20,7 @@ mat-drawer-content {
 }
 
 /* ============= START: Styling concerning search container and its elements ============= */
-form {
+.search-form {
   margin: auto;
   width: 50%;
   /* This bit sets up the horizontal layout */
@@ -40,7 +40,7 @@ form {
   /* And hide the input's outline, so the form looks like the outline */
   font-size: large;
   height: 1.5em;
-  width: 30em;
+  width: 70%;
   border:none;
 }
 
@@ -66,13 +66,6 @@ button {
 
 #search-button {
   margin-left: 0.5em;
-  /* Just a little styling to make it pretty */
-  font-weight: bold;
-  font-size: medium;
-  width: 4em;
-  border:1px solid blue;
-  background:blue;
-  color:white;
 }
 /* ============= END: Styling concerning search container and its elements ============= */
 
