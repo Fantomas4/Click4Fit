@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ManageUsersEntriesService } from './manage-users-entries.service';
+import { ManageUserEntriesService } from './manage-user-entries.service';
 
 describe('ManageUsersEntriesService', () => {
-  let service: ManageUsersEntriesService;
+  let service: ManageUserEntriesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ManageUsersEntriesService);
+    service = TestBed.inject(ManageUserEntriesService);
   });
 
   it('should be created', () => {

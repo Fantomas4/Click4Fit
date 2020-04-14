@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {ENTRIES} from '../mock-database-for-users';
-import {UsersEntry} from '../users-entry';
+import {UserEntry} from '../user-entry';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ManageUsersEntriesService {
+export class ManageUserEntriesService {
 
   constructor() { }
 
-  getResults1(): Observable<UsersEntry[]> {
+  getResults(): Observable<UserEntry[]> {
     return of(ENTRIES);
   }
 }

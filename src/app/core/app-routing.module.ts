@@ -13,7 +13,7 @@ import {UserMainViewComponent} from '../user-main-view/user-main-view.component'
 import {ContactUsComponent} from '../contact-us/contact-us.component';
 import {HomeComponent} from '../home/home.component';
 import {ManageBusinessEntriesComponent} from '../manage-business-entries/manage-business-entries.component';
-import {ManageUsersEntriesComponent} from '../manage-users-entries/manage-users-entries.component';
+import {ManageUserEntriesComponent} from '../manage-user-entries/manage-user-entries.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserMainViewComponent,
     children: [
-      { path: 'manage-users-entries', component: ManageUsersEntriesComponent },
+      { path: 'manage-user-entries', component: ManageUserEntriesComponent },
       { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'myprofile', component: MyprofileComponent},

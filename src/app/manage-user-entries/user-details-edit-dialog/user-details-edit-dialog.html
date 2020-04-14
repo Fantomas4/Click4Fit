@@ -8,19 +8,21 @@
       <tr>
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput placeholder="e.g. George" [(ngModel)]="this.name" name="name" required>
+          <input matInput placeholder="e.g. George" [(ngModel)]="this.firstName" name="name" required>
         </mat-form-field>
       </tr>
       <tr>
         <mat-form-field>
           <mat-label>Last Name</mat-label>
-          <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastname" name="lastname" required>
+          <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastName" name="lastname" required>
         </mat-form-field>
       </tr>
       <tr>
         <mat-form-field>
-          <mat-label>Birth Date</mat-label>
-          <input matInput placeholder="e.g. 26/01/2000" [(ngModel)]="this.birthdate" name="birthdate" required>
+          <mat-label>Date of birth</mat-label>
+          <input matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </tr>
       <tr>

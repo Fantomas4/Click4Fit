@@ -34,8 +34,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { DetailsEditDialogComponent } from './manage-business-entries/details-edit-dialog/details-edit-dialog.component';
 import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dialog/add-entry-dialog.component';
-import { ManageUsersEntriesComponent } from './manage-users-entries/manage-users-entries.component';
-import { DetailsUserEditComponent } from './manage-users-entries/details-user-edit/details-user-edit.component';
+import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-entries.component';
+import { UserDetailsEditDialogComponent } from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.component';
 
 
 @NgModule({
@@ -60,8 +60,8 @@ import { DetailsUserEditComponent } from './manage-users-entries/details-user-ed
     ManageBusinessEntriesComponent,
     DetailsEditDialogComponent,
     AddEntryDialogComponent,
-    ManageUsersEntriesComponent,
-    DetailsUserEditComponent,
+    ManageUserEntriesComponent,
+    UserDetailsEditDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -1,31 +1,31 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UsersEntry} from '../../users-entry';
+import {UserEntry} from '../../user-entry';
 import {FormControl, Validators} from '@angular/forms';
 
 
 @Component({
   selector: 'app-details-user-edit',
-  templateUrl: './details-user-edit.component.html',
-  styleUrls: ['./details-user-edit.component.css']
+  templateUrl: './user-details-edit-dialog.html',
+  styleUrls: ['./user-details-edit-dialog.css']
 })
-export class DetailsUserEditComponent implements OnInit {
+export class UserDetailsEditDialogComponent implements OnInit {
 
   id: number;
-  name: string;
-  lastname: string;
-  birthdate: string;
+  firstName: string;
+  lastName: string;
+  birthDateFormControl = new FormControl(new Date());
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
-  constructor(public dialogRef: MatDialogRef<DetailsUserEditComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: UsersEntry) { }
+  constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: UserEntry) { }
 
   ngOnInit(): void {
 
     this.id = this.data.id;
-    this.name = this.data.name;
-    this.lastname = this.data.lastname;
-    this.birthdate = this.data.birthdate;
+    this.firstName = this.data.firstName;
+    this.lastName = this.data.lastName;
+    // this.birthDateFormControl;
     this.emailFormControl.setValue(this.data.email);
 
   }
