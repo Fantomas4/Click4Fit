@@ -20,7 +20,7 @@ mat-drawer-content {
 }
 
 #filters-button {
-  margin: 2% auto;
+  margin: 4% auto;
   display: block;
   width: auto;
 }
@@ -55,12 +55,7 @@ mat-drawer-content {
   outline: none;
 }
 
-.button-container {
-  display: flex;
-  margin-right: 0;
-}
-
-button {
+#search-button {
   /* Just a little styling to make it pretty */
   font-weight: bold;
   font-size: medium;
@@ -68,10 +63,6 @@ button {
   border:1px solid blue;
   background:blue;
   color:white;
-}
-
-#search-button {
-  margin-left: 0.5em;
 }
 /* ============= END: Styling concerning search container and its elements ============= */
 
@@ -88,12 +79,6 @@ button {
 }
 
 /*============= START: Styling concerning filter sidebar and its elements ============= */
-
-
-
-
-
-
 /*mat-drawer {*/
 /*  display: flex;*/
 /*  flex-direction: row;*/
@@ -118,14 +103,18 @@ mat-list-option {
 }
 
 .autocomplete-field {
-  width: 20px;
+  width: 80%;
+  display: block;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 #done-button {
+  display: block;
   margin-top: 2em;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  width: auto;
 }
 /* ============= END: Styling concerning filter sidebar and its elements ============= */
 

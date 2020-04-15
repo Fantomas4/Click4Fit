@@ -30,11 +30,11 @@
     <form class="search-form">
       <input matInput placeholder="Search..." class="search-input" name="search-input">
       <!--      <button>Go</button>-->
-      <div class="button-container">
-        <button id="search-button" (click)="getResults()">Go!</button>
-      </div>
+      <button id="search-button" (click)="getResults()">Go!</button>
     </form>
-    <button mat-raised-button id="filters-button" (click)="sidenav.toggle()">Show Filters</button>
+    <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">
+      Show Filters
+    </button>
 
 
 
