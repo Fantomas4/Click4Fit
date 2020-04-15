@@ -31,7 +31,7 @@ h1{
   margin-bottom:5%;
   display:block;
   width:850px;
-  height:650px;
+  height:850px;
   background-color: lightgray;
   border-radius:30px;
   box-shadow: 10px 10px 5px grey;
@@ -42,7 +42,7 @@ h1{
   margin:0 auto;
   display:block;
 }
-.exercise{
+.board{
   width:300px;
   height:300px;
   background-color: white;
@@ -54,4 +54,26 @@ h1{
 .sets{
   font-style: italic;
   font-size:16px;
+}
+
+.category-title{
+  text-align: center;
+  font-size:25px;
+  font-weight: bold;
+}
+
+.category{
+  width:300px;
+  margin-left:30px;
+  background-color: lightgray;
+}
+
+.flex{
+  margin-top: 5%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  width: 80%;
 }
