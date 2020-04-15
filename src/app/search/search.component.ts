@@ -13,8 +13,6 @@ export class SearchComponent implements OnInit {
 
   searchResults: BusinessEntry[];
 
-  filtersButtonClicked = false;
-
   constructor(private searchService: SearchService) { }
 
   ngOnInit(): void {
@@ -25,15 +23,13 @@ export class SearchComponent implements OnInit {
   getResults() {
     this.searchService.getResults()
       .subscribe(results => this.searchResults = results);
-   }
+  }
 
-   onFiltersButtonClick() {
-      if (!this.filtersButtonClicked) {
-        document.getElementById('filters-button').innerText = 'Hide Filters';
-        this.filtersButtonClicked = true;
-      } else {
-        document.getElementById('filters-button').innerText = 'Show Filters';
-      }
-   }
-
+  onToggleSidenav() {
+    if (document.getElementById('filters-button').innerText === 'Show Filters') {
+      document.getElementById('filters-button').innerText = 'Hide Filters';
+    } else {
+      document.getElementById('filters-button').innerText = 'Show Filters';
+    }
+  }
 }

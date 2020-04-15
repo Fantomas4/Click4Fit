@@ -3,7 +3,7 @@
 <!--Country:-->
 <!--City: -->
 <mat-drawer-container>
-  <mat-drawer mode="over" #sidenav position="end">
+  <mat-drawer mode="over" #sidenav (openedChange)="onToggleSidenav()" position="end">
     <mat-nav-list id="filter-list" title="Category">
 <!--      https://material.angular.io/components/list/overview-->
       <mat-selection-list #categories>
@@ -34,7 +34,7 @@
         <button id="search-button" (click)="getResults()">Go!</button>
       </div>
     </form>
-    <button mat-raised-button id="filters-button" (click)="sidenav.toggle();onFiltersButtonClick()">Show filters</button>
+    <button mat-raised-button id="filters-button" (click)="sidenav.toggle()">Show Filters</button>
 
 
 
