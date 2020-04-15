@@ -3,7 +3,7 @@
 <!--Country:-->
 <!--City: -->
 <mat-drawer-container>
-  <mat-drawer mode="side" #sidenav position="end">
+  <mat-drawer mode="over" #sidenav position="end">
     <mat-nav-list id="filter-list" title="Category">
 <!--      https://material.angular.io/components/list/overview-->
       <mat-selection-list #categories>
@@ -15,10 +15,8 @@
       <mat-divider></mat-divider>
       <div class="location-container">
         <div mat-subheader class="filter-type-subheader">Location</div>
-        <app-location-autocomplete id="country-autocomplete" placeholderStr="Enter a country name">
-        </app-location-autocomplete>
-        <app-location-autocomplete id="city-autocomplet" placeholderStr="Enter a city name">
-        </app-location-autocomplete>
+        <app-location-autocomplete class="autocomplete-field" placeholderStr="Country name"></app-location-autocomplete>
+        <app-location-autocomplete class="autocomplete-field" placeholderStr="City name"></app-location-autocomplete>
         <mat-divider></mat-divider>
       </div>
       <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
