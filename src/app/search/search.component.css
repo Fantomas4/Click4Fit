@@ -19,6 +19,12 @@ mat-drawer-content {
   width: 100vw;
 }
 
+#filters-button {
+  margin: 2% auto;
+  display: block;
+  width: auto;
+}
+
 /* ============= START: Styling concerning search container and its elements ============= */
 .search-form {
   margin: auto;

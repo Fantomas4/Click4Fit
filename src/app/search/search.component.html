@@ -31,13 +31,14 @@
       <input matInput placeholder="Search..." class="search-input" name="search-input">
       <!--      <button>Go</button>-->
       <div class="button-container">
-        <button id="filters-button" (click)="sidenav.toggle()">Filters</button>
         <button id="search-button" (click)="getResults()">Go!</button>
       </div>
     </form>
+    <button mat-raised-button id="filters-button" (click)="sidenav.toggle();onFiltersButtonClick()">Show filters</button>
 
 
-<!--    /*Card deck component */-->
+
+    <!--    /*Card deck component */-->
     <div class="card-deck-container">
 <!--      <app-result-card></app-result-card>-->
       <div *ngFor="let entry of searchResults" class="card-item">
