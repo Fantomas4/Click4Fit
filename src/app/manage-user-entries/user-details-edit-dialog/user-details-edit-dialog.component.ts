@@ -14,7 +14,7 @@ export class UserDetailsEditDialogComponent implements OnInit {
   id: number;
   firstName: string;
   lastName: string;
-  birthDateFormControl = new FormControl(new Date());
+  date: FormControl;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
@@ -23,9 +23,9 @@ export class UserDetailsEditDialogComponent implements OnInit {
   ngOnInit(): void {
 
     this.id = this.data.id;
-    this.firstName = this.data.firstName;
-    this.lastName = this.data.lastName;
-    // this.birthDateFormControl;
+    this.firstName = this.data.name;
+    this.lastName = this.data.lastname;
+    this.date = new FormControl(new Date(this.data.birthdate));
     this.emailFormControl.setValue(this.data.email);
 
   }

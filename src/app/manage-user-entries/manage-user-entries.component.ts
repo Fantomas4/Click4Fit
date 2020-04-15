@@ -6,7 +6,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material/dialog';
 import {UserDetailsEditDialogComponent} from './user-details-edit-dialog/user-details-edit-dialog.component';
-import {SearchService} from '../search/search.service';
 import {ManageUserEntriesService} from './manage-user-entries.service';
 
 @Component({
@@ -67,7 +66,7 @@ export class ManageUserEntriesComponent implements OnInit {
   openDetailsEditDialog(element: UserEntry): void {
     const dialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
       width: '20vw',
-      data: {id: element.id, firstName: element.firstName, lastName: element.lastName, birthDate: element.birthDate, email: element.email}
+      data: {id: element.id, name: element.name, lastname: element.lastname, birthdate: element.birthdate, email: element.email}
     });
   }
 

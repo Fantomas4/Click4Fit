@@ -1,7 +1,8 @@
 export interface UserEntry {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  birthDate: string;
+    id: number;
+    name: string;
+    lastname: string;
+    email: string;
+    password: string;
+    birthdate: string;
 }

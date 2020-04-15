@@ -14,13 +14,13 @@
       <tr>
         <mat-form-field>
           <mat-label>Last Name</mat-label>
-          <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastName" name="lastname" required>
+          <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastName" name="lastName" required>
         </mat-form-field>
       </tr>
       <tr>
         <mat-form-field>
           <mat-label>Date of birth</mat-label>
-          <input matInput [matDatepicker]="picker">
+          <input matInput [matDatepicker]="picker" [formControl]="date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -28,8 +28,8 @@
       <tr>
         <mat-form-field class="email-input-field">
           <mat-label>E-mail</mat-label>
-          <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
-                 type="email" name="registration-email" required>
+          <input matInput placeholder="address@example.com" [formControl]="emailFormControl" type="email"
+            name="registration-email" required>
           <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </tr>
@@ -40,6 +40,3 @@
   <button mat-raised-button color="warn" (click)="onSaveClick()">Save</button>
   <button mat-raised-button color="primary" (click)="onCloseClick()">Close</button>
 </div>
-
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">

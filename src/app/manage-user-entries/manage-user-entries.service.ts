@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {ENTRIES} from '../mock-database-for-users';
+import {USERENTRIES} from '../mock-database';
 import {UserEntry} from '../user-entry';
 
 
@@ -12,7 +12,7 @@ export class ManageUserEntriesService {
   constructor() { }
 
   getResults(): Observable<UserEntry[]> {
-    return of(ENTRIES);
+    return of(USERENTRIES);
   }
 }
 
