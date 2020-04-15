@@ -1,12 +1,5 @@
 h1{
-    color:  black; 
-    font-style: oblique;
-    font-size: 50px; 
-    line-height: 100px; 
-    font-weight: normal;
-    margin-top: -5px;
-    text-align: center; 
-    text-shadow: 0 1px 1px #fff; 
+    text-align: center;
 }
 #filtersButton{
     margin: 0 auto; 
@@ -43,6 +36,9 @@ mat-drawer-container {
     color:white;
     margin: 0 auto; 
     display: block;
+}
+mat-drawer-content {
+    width: 100vw;
 }
 @media screen and (max-width:320px){
     mat-drawer{

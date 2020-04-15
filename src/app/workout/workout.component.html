@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer #sidenav mode="side" position="end" opened="true">
+    <mat-drawer #sidenav mode="over" position="end" opened="true">
         <mat-selection-list id="categories">
             <div mat-subheader class="filter-type-subheader">Part of body</div>
             <mat-list-option>Legs</mat-list-option>
@@ -33,7 +33,7 @@
         <div><button mat-raised-button id="searchButton" (click)="getResults();sidenav.toggle();onClick()">Search</button><br></div>
     </mat-drawer>
     <mat-drawer-content>
-        <h1>Workout</h1>
+        <h1 id="title">Workout</h1>
         <button mat-raised-button id="filtersButton" (click)="sidenav.toggle();onClick()">Hide filters</button><br>
         <div class="card-container">
             <div *ngIf="isClicked">

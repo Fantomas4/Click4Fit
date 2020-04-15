@@ -14,6 +14,7 @@ export class UserMainViewComponent implements OnInit {
   isAdmin = false;
   isClient = true;
   screenWidth:number;
+  title:string;
 
   constructor(private router: Router) {
     this.screenWidth = window.innerWidth;
@@ -23,5 +24,5 @@ export class UserMainViewComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
+ 
 }
