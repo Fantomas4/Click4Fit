@@ -8,8 +8,8 @@ import {TricepsWorkoutEntry } from './workout-entry';
 import {AbsWorkoutEntry } from './workout-entry';
 import {CoreWorkoutEntry } from './workout-entry';
 import {UserEntry} from './user-entry';
-import {FavoritesEntry1} from './favorite-entry';
-import {FavoritesEntry2} from './favorite-entry';
+import {FavoriteWorkout} from './favorite-entry';
+import {FavoritePlace} from './favorite-entry';
 
 export const ENTRIES: BusinessEntry[] = [
   { id: 1, name: 'FitClub', category: 'Gym', country: 'Greece', city: 'Thessaloniki', address: 'Diagora 20', postalCode: '567 55',
@@ -135,14 +135,14 @@ export const ABSWORKOUTENTRIES: AbsWorkoutEntry[] = [
 export const COREWORKOUTENTRIES: CoreWorkoutEntry[] = [
 
 ];
-export const FAVORITESWorkout: FavoritesEntry1[] = [
+export const FAVORITEWORKOUT: FavoriteWorkout[] = [
   {id: 1, name: 'Obliques', advisedFor: 'Men', levelOfDifficulty: 'Hard', equipment: 'No', sets: '4x15', video: 'https://www.youtube.com/embed/9Q0D6xAyrOI'},
   {id: 2, name: 'Kickbacks', advisedFor: 'Men', levelOfDifficulty: 'Medium', equipment: 'Yes', sets: '4x15 8kg+8kg', video: 'https://www.youtube.com/embed/ShCYaoHmWmk'},
 
 
 ];
 
-export const FAVORITESPlaces: FavoritesEntry2[] = [
+export const FAVORITEPLACES: FavoritePlace[] = [
   { id: 1, name: 'FitClub', category: 'Gym', country: 'Greece', city: 'Thessaloniki', address: 'diagora 20', postalCode: '567 55',
     phoneNumber: '2310 634590', email: 'fitclub@gmail.com', imgPath: './assets/gym-preview.JPG',
     availableServProd: ['product_1', 'product_2', 'service_1', 'service_2'] },

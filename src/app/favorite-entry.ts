@@ -1,4 +1,4 @@
-export interface FavoritesEntry1 {
+export interface FavoriteWorkout {
     id: number;
     name: string;
     advisedFor: string;
@@ -9,7 +9,7 @@ export interface FavoritesEntry1 {
   
   }
   
-  export interface FavoritesEntry2 {
+  export interface FavoritePlace {
     id: number;
     name: string;
     category: string;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {FAVORITESPlaces, FAVORITESWorkout} from '../mock-database';
-import {FavoritesEntry1, FavoritesEntry2} from '../favorite-entry';
+import {FAVORITEWORKOUT, FAVORITEPLACES} from '../mock-database';
+import {FavoriteWorkout, FavoritePlace} from '../favorite-entry';
 import {Observable, of} from 'rxjs';
 
 
@@ -12,12 +12,12 @@ export class DashboardService {
 
   constructor() { }
 
-  getFAVWResults(): Observable<FavoritesEntry1[]> {
-    return of(FAVORITESWorkout);
+  getFAVWResults(): Observable<FavoriteWorkout[]> {
+    return of(FAVORITEWORKOUT);
   }
 
-  getFAVPResults(): Observable<FavoritesEntry2[]> {
-    return of(FAVORITESPlaces);
+  getFAVPResults(): Observable<FavoritePlace[]> {
+    return of(FAVORITEPLACES);
   }
 
 

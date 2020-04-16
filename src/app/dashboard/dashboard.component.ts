@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import {FavoritesEntry1, FavoritesEntry2} from '../favorite-entry';
+import {FavoriteWorkout, FavoritePlace} from '../favorite-entry';
 import {DashboardService} from './dashboard.service';
 
 @Component({
@@ -10,8 +10,8 @@ import {DashboardService} from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-  FavoritesWorkoutResults: FavoritesEntry1[];
-  FavoritesPlaceResults: FavoritesEntry2[];
+  FavoritesWorkoutResults: FavoriteWorkout[];
+  FavoritesPlaceResults: FavoritePlace[];
   workoutIsEmpty = false;
   placeIsEmpty = false;
   cardImagePath: string;
