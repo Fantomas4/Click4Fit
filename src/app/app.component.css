@@ -13,8 +13,8 @@
 /*}*/
 
 #logo {
-  width:90px;
-  height:90px;
+  width: 85px;
+  height: 85px;
 }
 
 .toolbar-button {
@@ -31,5 +31,5 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  height:80px;
+  height:10vh;
 }
