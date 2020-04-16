@@ -8,8 +8,6 @@ import { WorkoutService } from './workout.service';
 })
 export class WorkoutComponent implements OnInit {
 
-  filtersClicked = true; //show filters 
-  searchClicked = false;
   isClicked = false;
 
 
