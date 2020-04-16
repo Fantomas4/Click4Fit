@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {WorkoutService} from './workout.service';
+import { WorkoutService } from './workout.service';
 
 @Component({
   selector: 'app-workout',
@@ -8,32 +8,25 @@ import {WorkoutService} from './workout.service';
 })
 export class WorkoutComponent implements OnInit {
 
-  filtersClicked=false; //hide filters 
-  searchClicked=false;
-  isClicked=false;
+  filtersClicked = true; //show filters 
+  searchClicked = false;
+  isClicked = false;
 
-  
+
   constructor(private workoutService: WorkoutService) { }
 
   ngOnInit(): void {
-    
+
   }
-  getResults(){
-    this.isClicked=true;
+  getResults() {
+    this.isClicked = true;
   }
-  onClick(){
-    if (this.searchClicked==false){
-      this.searchClicked=true;
-    }
-    if (this.filtersClicked==false ){
-      document.getElementById("filtersButton").innerText="Show filters";
-      this.filtersClicked=true;
-    }
-    else if (this.filtersClicked==true || this.searchClicked==true) {
-      document.getElementById("filtersButton").innerText="Hide filters";
-      this.filtersClicked=false;
-      this.searchClicked=false;
+  onToggleSidenav() {
+    if (document.getElementById('filtersButton').innerText === 'Show Filters') {
+      document.getElementById('filtersButton').innerText = 'Hide Filters';
+    } else {
+      document.getElementById('filtersButton').innerText = 'Show Filters';
     }
   }
- 
 }
+
