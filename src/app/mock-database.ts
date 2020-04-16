@@ -8,6 +8,8 @@ import {TricepsWorkoutEntry } from './workout-entry';
 import {AbsWorkoutEntry } from './workout-entry';
 import {CoreWorkoutEntry } from './workout-entry';
 import {UserEntry} from './user-entry';
+import {FavoritesEntry1} from './favorite-entry';
+import {FavoritesEntry2} from './favorite-entry';
 
 export const ENTRIES: BusinessEntry[] = [
   { id: 1, name: 'FitClub', category: 'Gym', country: 'Greece', city: 'Thessaloniki', address: 'Diagora 20', postalCode: '567 55',
@@ -132,4 +134,20 @@ export const ABSWORKOUTENTRIES: AbsWorkoutEntry[] = [
 ];
 export const COREWORKOUTENTRIES: CoreWorkoutEntry[] = [
 
+];
+export const FAVORITESWorkout: FavoritesEntry1[] = [
+  {id: 1, name: 'Obliques', advisedFor: 'Men', levelOfDifficulty: 'Hard', equipment: 'No', sets: '4x15', video: 'https://www.youtube.com/embed/9Q0D6xAyrOI'},
+  {id: 2, name: 'Kickbacks', advisedFor: 'Men', levelOfDifficulty: 'Medium', equipment: 'Yes', sets: '4x15 8kg+8kg', video: 'https://www.youtube.com/embed/ShCYaoHmWmk'},
+
+
+];
+
+export const FAVORITESPlaces: FavoritesEntry2[] = [
+  { id: 1, name: 'FitClub', category: 'Gym', country: 'Greece', city: 'Thessaloniki', address: 'diagora 20', postalCode: '567 55',
+    phoneNumber: '2310 634590', email: 'fitclub@gmail.com', imgPath: './assets/gym-preview.JPG',
+    availableServProd: ['product_1', 'product_2', 'service_1', 'service_2'] },
+
+  { id: 2, name: 'Planet Fitness', category: 'Gym', country: 'Greece', city: 'Athens', address: '3 Septembriou Street 6', postalCode: '576 45',
+    phoneNumber: '202-555-0376', email: 'planetfitness@gmail.com', imgPath: './assets/gym-preview.JPG',
+    availableServProd: ['product_1', 'product_2', 'service_1', 'service_2'] },
 ];

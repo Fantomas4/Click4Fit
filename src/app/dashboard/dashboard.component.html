@@ -1,0 +1,51 @@
+<h1>Dashboard</h1>
+<mat-card class="date">
+    <p class="medium">{{today | date:'fullDate'}}</p>
+    <p class="mini">{{today | date:'h:mm a z'}}</p>
+</mat-card><br>
+<mat-card class="favorites">
+    <mat-card-title class="favorites-title">
+        Favorites <mat-icon class="icon">favorite</mat-icon>
+    </mat-card-title><br>
+    <mat-card-content class="content">
+        <mat-card class="workout" *ngIf="!workoutIsEmpty">
+            <mat-card-title class="category-title">
+                Your Workouts
+            </mat-card-title><br>
+            <mat-card-content>
+                <mat-card *ngFor="let entry of FavoritesWorkoutResults" class="sub-card">
+                    <mat-card-title class="title">
+                        {{entry.name}}
+                    </mat-card-title>
+                    <mat-card-content>
+                        <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                            frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                        <p class="sets">Recommended sets: {{entry.sets}}</p>
+                    </mat-card-content>
+                </mat-card><br>
+            </mat-card-content>
+        </mat-card><br>
+        <mat-card class="places" *ngIf="!placeIsEmpty">
+            <mat-card-title class="category-title">
+                Your Places
+            </mat-card-title><br>
+            <mat-card-content>
+                <mat-card *ngFor="let entry of FavoritesPlaceResults" class="sub-card">
+                    <mat-card-header>
+                        <mat-card-title class="card-title">{{entry.name}}</mat-card-title>
+                        <mat-card-subtitle>{{entry.category}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="entry.imgPath">
+                    <mat-card-content>
+                        <div>
+                            {{entry.country}}
+                            {{entry.city}}
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-card-content>
+        </mat-card><br>
+    </mat-card-content>
+</mat-card>
