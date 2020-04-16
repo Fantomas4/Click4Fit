@@ -36,6 +36,7 @@ h1 {
 .row{
   display:flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
 }
 mat-card{
