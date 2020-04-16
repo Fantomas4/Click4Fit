@@ -95,18 +95,8 @@ mat-list-option {
 }
 
 .location-container {
-  margin-top: 10%;
-  display: flex;
-  flex-direction: column;
-  padding-left: 5%;
-  padding-right: 5%;
-}
-
-.autocomplete-field {
-  width: 80%;
-  display: block;
-  margin-left: 5%;
-  margin-right: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 #done-button {

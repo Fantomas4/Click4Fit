@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SearchService} from './search.service';
 import {BusinessEntry} from '../business-entry';
+import {FormControl} from '@angular/forms';
 // import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
@@ -10,6 +11,8 @@ import {BusinessEntry} from '../business-entry';
 })
 export class SearchComponent implements OnInit {
   // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  myControl = new FormControl();
 
   searchResults: BusinessEntry[];
 
