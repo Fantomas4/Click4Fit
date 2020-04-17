@@ -1,31 +1,56 @@
 h1 {
   color:  black;
   font-style: oblique;
-  font-size: 50px;
+  font-size: 45px;
   line-height: 100px;
   font-weight: normal;
   margin-top: -5px;
   text-align: center;
   text-shadow: 0 1px 1px #fff;
 }
-h2 {
-  color: #7a7c7f;
-  font-size: 29px;
-  font-family: "Libre Baskerville", serif;
+.p1 {
+  color: black;
+  font-size: 23px;
   line-height: 45px;
   text-align: center;
-
+  margin-left:25px;
+  margin-right:25px;
 }
-#searchButton{
-  background-color: black;
-  height:35px;
-  width:80px;
-  margin-left:400px;
-}
-a {
-  color: #7a7c7f;
-  font-size: 29px;
-  font-family: "Libre Baskerville", serif;
+.p2{
+  color: black;
+  font-style:italic;
+  font-weight: bold;
+  font-size: 30px;
   line-height: 45px;
   text-align: center;
+  margin-top:80px;
+}
+.p3{
+  color: black;
+  font-style:italic;
+  font-size: 22px;
+  line-height: 45px;
+  text-align: center;
+  margin-top:100px;
+}
+.row{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
+mat-card{
+  width:350px;
+  height:250px;
+  background-color:lightgray;
+  margin-left:20px;
+}
+.title{
+  font-style: oblique;
+  font-weight: bold;
+  font-size:18px;
+  text-align: center;
+}
+.frame{
+  width:350px;
+  height:220px;
 }
