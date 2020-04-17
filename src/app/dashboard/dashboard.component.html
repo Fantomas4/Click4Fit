@@ -18,7 +18,7 @@
                         {{entry.name}}
                     </mat-card-title>
                     <mat-card-content>
-                        <iframe width="265" height="215" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
+                        <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)'
                             frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
