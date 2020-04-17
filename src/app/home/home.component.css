@@ -3,13 +3,13 @@ h1 h2 h3 h4{
 }
 
 h1 {
-    font-size: 77px;
+    font-size: 49px;
     font-weight: normal;
     margin-bottom: 0px;
     margin-top: 5px;
     text-align: center;
-    color: rgb(255, 227, 226);
-    text-shadow: 0 1px 1px rgb(139, 56, 56);
+    color: rgb(160, 218, 85);
+    text-shadow: 0 1px 1px rgb(75, 45, 45);
   }
 
 #fitness{

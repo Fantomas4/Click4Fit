@@ -33,17 +33,14 @@
 
 
                     <mat-form-field>
-                        <textarea matInput
-                        placeholder="Textarea"
-                        required
-                        cdkTextareaAutosize
-                        #autosize="cdkTextareaAutosize"
-                        cdkAutosizeMinRows="13"></textarea>
+                        <textarea matInput placeholder="Textarea" required cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="13"></textarea>
                         <mat-icon matSuffix>save</mat-icon>
                     </mat-form-field>
 
                     <div class="button">
-                        <button mat-raised-button color="primary" class="btn-custom">Send Now<i class="material-icons">send</i></button>
+                        <button mat-raised-button color="primary" class="btn-custom">Send Now<mat-icon
+                                class="send-icon">send</mat-icon></button>
                     </div>
 
                 </table>
@@ -51,8 +48,6 @@
         </mat-card-content>
     </mat-card>
 </div>
-
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
 

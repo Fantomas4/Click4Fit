@@ -6,6 +6,19 @@
   .toolbar-button {
     font-size: 1em;
   }
+
+  .flex-container-mobile{
+    display: flex;
+    flex: 1;
+  }
+
+  .menu-button {
+    margin: auto;
+  }
+
+  .example-spacer-mobile{
+    flex: 1;
+  }
   
   .flex-container{
     display: flex;

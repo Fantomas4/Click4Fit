@@ -43,7 +43,7 @@ mat-card{
   width:350px;
   height:250px;
   background-color:lightgray;
-  margin-left:20px;
+  /* margin-left:20px; */
 }
 .title{
   font-style: oblique;
@@ -52,6 +52,7 @@ mat-card{
   text-align: center;
 }
 .frame{
-  width:350px;
+  display: block;
+  margin: 0 auto;
   height:220px;
 }

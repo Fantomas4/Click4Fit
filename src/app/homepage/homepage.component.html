@@ -39,7 +39,7 @@
 <mat-sidenav-container fxFlexFill class="example-container" fullscreen>
   <mat-sidenav #sidenav fxLayout="column">
     <mat-nav-list>
-      <a color="warn" (click)="sidenav.toggle()" mat-button>Close<mat-icon>cancel</mat-icon></a>
+      <!-- <a color="warn" (click)="sidenav.toggle()" mat-button>Close<mat-icon>cancel</mat-icon></a> -->
       <a mat-list-item routerLink="/home">Home</a>
       <a mat-list-item routerLink="/about">About Us</a>
       <a mat-list-item routerLink="/contact-us">Contact Us</a>
@@ -49,10 +49,12 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar role="heading" color="primary" class="top-bar">
-      <div fxShow="true" fxHide.gt-sm="true">
-        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sidenav.toggle()">
+      <div fxShow="true" fxHide.gt-sm="true" class="flex-container-mobile">
+        <button class="menu-button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sidenav.toggle()">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
+        <span class="example-spacer-mobile"></span>
+        <span class="title"><img [src]="logoUrl" id="logo"></span>
       </div>
       <span fxShow="true" fxHide.lt-md="true" class="title"><img [src]="logoUrl" id="logo"></span>
       <span class="example-spacer"></span>
