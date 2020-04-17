@@ -13,8 +13,7 @@ export class UserMainViewComponent implements OnInit {
 
   isAdmin = false;
   isClient = true;
-  screenWidth:number;
-  title:string;
+  screenWidth: number;
 
   constructor(private router: Router) {
     this.screenWidth = window.innerWidth;
