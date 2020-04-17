@@ -4,8 +4,8 @@ h1{
 #filtersButton{
     margin: 0 auto; 
     display: block;
-    /* background-color:#B71C1C; */
-    /* color:white; */
+    color:white;
+    background-color: #B71C1C;
 }
 .row{
     display: flex;
@@ -32,8 +32,8 @@ mat-drawer-container {
     font-size: large;
 }
 #searchButton{
-    /* background-color:#B71C1C; */
-    /* color:white; */
+    background-color:#B71C1C; 
+    color:white; 
     margin: 0 auto; 
     display: block;
 }
