@@ -5,7 +5,7 @@
       <ng-container *ngIf="isClient">
         <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Dashboard</b></a>
         <a mat-list-item routerLink="/user/search"><b class="list-item-text">Search</b></a>
-        <a mat-list-item routerLink="/user/workout" ><b class="list-item-text">Workout</b></a>
+        <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>
       </ng-container>
       <ng-container *ngIf="isAdmin">
         <a mat-list-item routerLink="/user/manage-user-entries"><b class="list-item-text">Manage User Entries</b></a>
@@ -20,10 +20,10 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <button mat-raised-button (click)="sidenav.open()" id="menuButton"
-      [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <mat-toolbar role="heading" color="white" class="top-bar" [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">
+      <button mat-icon-button (click)="sidenav.open()" id="menuButton">
+      <mat-icon>menu</mat-icon></button>
+    </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
