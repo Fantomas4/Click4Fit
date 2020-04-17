@@ -7,5 +7,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  logoUrl = './assets/logo.png';
+  // logoUrl = './assets/logo.png';
 }

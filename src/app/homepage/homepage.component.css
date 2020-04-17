@@ -1,0 +1,21 @@
+#logo {
+    width: 85px;
+    height: 85px;
+  }
+  
+  .toolbar-button {
+    font-size: 1em;
+  }
+  
+  .flex-container{
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+  
+  .top-bar{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height:10vh;
+  }
