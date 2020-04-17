@@ -36,6 +36,7 @@ import { DetailsEditDialogComponent } from './manage-business-entries/details-ed
 import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dialog/add-entry-dialog.component';
 import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-entries.component';
 import { UserDetailsEditDialogComponent } from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { UserDetailsEditDialogComponent } from './manage-user-entries/user-detai
     AddEntryDialogComponent,
     ManageUserEntriesComponent,
     UserDetailsEditDialogComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,

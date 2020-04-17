@@ -1,4 +1,18 @@
+.main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .description-text {
   margin-bottom: 5%;
   font-size: large;
 }
+
+.field-list {
+  flex-grow: 2;
+}
+
+
+

@@ -3,71 +3,52 @@
 <!--Country:-->
 <!--City: -->
 <mat-drawer-container>
-  <mat-drawer mode="side" #sidenav position="end">
+  <mat-drawer mode="over" #sidenav (openedChange)="onToggleSidenav()" position="end">
     <mat-nav-list id="filter-list" title="Category">
 <!--      https://material.angular.io/components/list/overview-->
-      <mat-selection-list #categories>
+      <div class="category-container">
         <div mat-subheader class="filter-type-subheader">Category</div>
-        <mat-list-option>Gym</mat-list-option>
-        <mat-list-option>Personal Trainer</mat-list-option>
-        <mat-list-option>Fitness Shop</mat-list-option>
-      </mat-selection-list>
+        <mat-selection-list #categories>
+          <mat-list-option>Gym</mat-list-option>
+          <mat-list-option>Personal Trainer</mat-list-option>
+          <mat-list-option>Fitness Shop</mat-list-option>
+        </mat-selection-list>
+      </div>
       <mat-divider></mat-divider>
+      <div mat-subheader class="filter-type-subheader">Location</div>
       <div class="location-container">
-        <div mat-subheader class="filter-type-subheader">Location</div>
-        <app-location-autocomplete id="country-autocomplete" placeholderStr="Enter a country name">
-        </app-location-autocomplete>
-        <app-location-autocomplete id="city-autocomplet" placeholderStr="Enter a city name">
-        </app-location-autocomplete>
+        <app-location-autocomplete class="autocomplete-field" placeholderStr="Country name"></app-location-autocomplete>
+        <app-location-autocomplete class="autocomplete-field" placeholderStr="City name"></app-location-autocomplete>
         <mat-divider></mat-divider>
       </div>
       <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
-
-
-
-
-      <!--      <mat-divider></mat-divider>-->
-<!--      <a mat-list-item routerLink="/user/search"><b class="list-item-text">Search</b></a>-->
-<!--      <mat-divider></mat-divider>-->
-<!--      <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>-->
-<!--      &lt;!&ndash;      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>&ndash;&gt;-->
-<!--      <div class="account-options-container">-->
-<!--        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>-->
-<!--        <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">Logout</b></a>-->
-<!--      </div>-->
-<!--      <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to Homepage</b></a>-->
-
-
-
     </mat-nav-list>
   </mat-drawer>
+
+
+
   <mat-drawer-content>
     <h1 id="title">Search</h1>
-    <form>
+    <form class="search-form">
       <input matInput placeholder="Search..." class="search-input" name="search-input">
       <!--      <button>Go</button>-->
-      <div class="button-container">
-        <button id="filters-button" (click)="sidenav.toggle()">Filters</button>
-        <button id="search-button" (click)="getResults()">Go!</button>
-      </div>
+      <button id="search-button" (click)="getResults()">Go!</button>
     </form>
+    <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">
+      Show Filters
+    </button>
 
 
-<!--    /*Card deck component */-->
+
+    <!--    /*Card deck component */-->
     <div class="card-deck-container">
 <!--      <app-result-card></app-result-card>-->
       <div *ngFor="let entry of searchResults" class="card-item">
         <app-result-card [businessData]="entry"></app-result-card>
       </div>
 
-<!--      <div class="paginator mat-elevation-z4" *ngIf="productsDisplayed.length !== 0">-->
-<!--        <mat-paginator-->
-<!--          [length]="paginatorSize"-->
-<!--          [pageSize]="numberOfProductsDisplayedInPage"-->
-<!--          [pageSizeOptions]="[12, 24]"-->
-<!--          (page)="updateProductsDisplayedInPage($event)">-->
-<!--        </mat-paginator>-->
-<!--      </div>-->
+<!--      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+
     </div>
 
 
