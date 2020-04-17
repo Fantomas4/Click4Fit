@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import {FavoriteWorkout, FavoritePlace} from '../favorite-entry';
+import {DashboardService} from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,10 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() {
+  FavoritesWorkoutResults: FavoriteWorkout[];
+  FavoritesPlaceResults: FavoritePlace[];
+  workoutIsEmpty = false;
+  placeIsEmpty = false;
+  cardImagePath: string;
+
+  constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
   }
 
+  today: number = Date.now();
+
+
   ngOnInit(): void {
+    this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
+    this.dashboardService.getFAVPResults().subscribe(results => this.FavoritesPlaceResults = results);
+    if (this.FavoritesWorkoutResults.length == 0) {
+      this.workoutIsEmpty = true;
+    }
+    if (this.FavoritesPlaceResults.length == 0) {
+      this.placeIsEmpty = true;
+    }
   }
 
 

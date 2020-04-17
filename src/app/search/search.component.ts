@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SearchService} from './search.service';
 import {BusinessEntry} from '../business-entry';
+import {FormControl} from '@angular/forms';
+// import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-search',
@@ -8,6 +10,10 @@ import {BusinessEntry} from '../business-entry';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  myControl = new FormControl();
+
   searchResults: BusinessEntry[];
 
   constructor(private searchService: SearchService) { }
@@ -20,6 +26,13 @@ export class SearchComponent implements OnInit {
   getResults() {
     this.searchService.getResults()
       .subscribe(results => this.searchResults = results);
-   }
+  }
 
+  onToggleSidenav() {
+    if (document.getElementById('filters-button').innerText === 'Show Filters') {
+      document.getElementById('filters-button').innerText = 'Hide Filters';
+    } else {
+      document.getElementById('filters-button').innerText = 'Show Filters';
+    }
+  }
 }

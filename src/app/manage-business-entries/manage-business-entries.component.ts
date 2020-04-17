@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SearchService} from '../search/search.service';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {BusinessEntry} from '../business-entry';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {DetailsEditDialogComponent} from './details-edit-dialog/details-edit-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddEntryDialogComponent} from './add-entry-dialog/add-entry-dialog.component';
+import {ManageBusinessEntriesService} from './manage-business-entries.service';
 
 
 @Component({
@@ -27,7 +27,45 @@ export class ManageBusinessEntriesComponent implements OnInit {
   businessData: BusinessEntry[];
   dataSource = new MatTableDataSource(this.businessData);
 
-  constructor(private ManageBusinessEntriesService: SearchService, public dialog: MatDialog) { }
+  dialogHeight: number;
+  dialogWidth: number;
+  dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size
+
+  detailsEditDialogRef: MatDialogRef<DetailsEditDialogComponent, any>;
+  addEntryDialogRef: MatDialogRef<AddEntryDialogComponent, any>;
+
+  constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog) {}
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    if (typeof event !== 'undefined') {
+      console.log('mpika 1');
+      // event.target.dialogHeight = window.innerHeight * this.dialogHeightRatio;
+      // event.target.dialogWidth = window.innerWidth;
+      this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
+      this.dialogWidth = window.innerWidth;
+    } else {
+      console.log('mpika 2');
+      this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
+      this.dialogWidth = window.innerWidth;
+    }
+
+    if (typeof this.detailsEditDialogRef !== 'undefined') {
+      console.log('mpika 3');
+      console.log('dialogHeight: ' + this.dialogHeight);
+      this.detailsEditDialogRef.updateSize(this.dialogWidth.toString(), this.dialogHeight.toString());
+    }
+
+    if (typeof this.addEntryDialogRef !== 'undefined') {
+      console.log('mpika 4');
+      console.log('dialogHeight: ' + this.dialogHeight);
+      this.addEntryDialogRef.updateSize(this.dialogWidth.toString(), this.dialogHeight.toString());
+      // this.addEntryDialogRef.updatePosition({top: 'auto', bottom: 'auto'});
+    }
+
+    console.log('onresize height is: ' + this.dialogHeight);
+
+  }
 
   ngOnInit(): void {
     this.getBusinessEntries();
@@ -48,7 +86,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
   getBusinessEntries() {
 
-    this.ManageBusinessEntriesService.getResults()
+    this.manageBusinessEntriesService.getResults()
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });
   }
 
@@ -67,8 +105,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
   }
 
   openDetailsEditDialog(element: BusinessEntry): void {
-    const dialogRef = this.dialog.open(DetailsEditDialogComponent, {
-      width: '20vw',
+    this.onResize();
+    this.detailsEditDialogRef = this.dialog.open(DetailsEditDialogComponent, {
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
       data: {id: element.id, name: element.name, category: element.category, country: element.country,
       city: element.city, address: element.address, postalCode: element.postalCode, phoneNumbers:
       element.phoneNumber, email: element.email, availableServProd: element.availableServProd,
@@ -85,8 +124,11 @@ export class ManageBusinessEntriesComponent implements OnInit {
   // }
 
   openAddEntryDialog() {
-    const dialogRef = this.dialog.open(AddEntryDialogComponent, {
-      width: '20vw'});
+    // const dialogRef = this.dialog.open(AddEntryDialogComponent, {
+    //   width: '20vw'});
+    this.onResize();
+    this.addEntryDialogRef = this.dialog.open(AddEntryDialogComponent, {
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')});
   }
 }
 
