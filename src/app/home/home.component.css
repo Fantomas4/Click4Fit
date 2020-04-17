@@ -1,4 +1,47 @@
-.moto {
+h1 h2 h3 h4{
+  text-align: center;
+}
+
+h1 {
+    font-size: 77px;
+    font-weight: normal;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    text-align: center;
+    color: rgb(255, 227, 226);
+    text-shadow: 0 1px 1px rgb(139, 56, 56);
+  }
+
+#fitness{
+  width:550px;
+  height:300px;
+  border-radius:25px;
+  margin-left:370px;
+}
+
+.fitness-image {
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ), url("../../assets/barbell-on-the-floor.jpg");
+  background-color: #cccccc;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.home-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+/* .moto {
   font-size: 40px;
   font-family: "Libre Baskerville", serif;
   line-height: 40px;
@@ -13,22 +56,6 @@
 
 }
 
- /*#picture3,#picture1,#picture2{
-   width:1280px;
-   height:609px;
- }*/
-
-h1 {
-    color:  #3F51B5;
-    font-style: oblique;
-    font-size: 100px;
-    line-height: 160px;
-    font-weight: normal;
-    margin-bottom: 0px;
-    margin-top: 5px;
-    text-align: center;
-    text-shadow: 0 1px 1px #fff;
-  }
 
 .moto {
   color: #7a7c7f;
@@ -38,11 +65,4 @@ h1 {
   text-align: center;
   text-shadow: 0 1px 1px #fff;
   padding-top: 20px;
-}
-
-#fitness{
-  width:550px;
-  height:300px;
-  border-radius:25px;
-  margin-left:370px;
-}
+} */

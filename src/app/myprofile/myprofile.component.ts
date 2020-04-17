@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MyProfileDeleteService} from './myprofile.delete.service';
-import {PROFILEENTRIES} from '../mock-database';
-import {MyProfileEntry} from '../myprofile-entry';
+import {USERENTRIES} from '../mock-database';
+import {UserEntry} from '../user-entry';
 
 
 @Component({
@@ -12,8 +12,8 @@ import {MyProfileEntry} from '../myprofile-entry';
 })
 export class MyprofileComponent implements OnInit {
 
-  myprofileResults = PROFILEENTRIES;
-  myProfileData: MyProfileEntry;
+  myprofileResults = USERENTRIES;
+  myProfileData: UserEntry;
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   firstName: string;
