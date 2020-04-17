@@ -1,3 +1,9 @@
+h1{
+  text-align: center;
+  font-style: oblique;
+  font-size: 45px;
+  font-weight: normal;
+}
 .container {
   display: flex;
 }
@@ -7,6 +13,7 @@
   flex-direction: column;
   width: 25%;
   margin: 10% auto;
+  margin-top:-2%;
 }
 
 .form-content {
@@ -16,6 +23,8 @@
 
 .button {
   flex-basis: 21px;
+  display:block;
+  margin:0 auto;
 }
 
 

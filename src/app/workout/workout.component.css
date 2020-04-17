@@ -1,11 +1,15 @@
 h1{
     text-align: center;
-}
+    font-style: oblique;
+    font-size: 45px;
+    font-weight: normal;
+  }
 #filtersButton{
     margin: 0 auto; 
     display: block;
     color:white;
     background-color: #B71C1C;
+    margin-top:7%;
 }
 .row{
     display: flex;
