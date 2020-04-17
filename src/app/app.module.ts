@@ -62,7 +62,7 @@ import { FooterComponent } from './footer/footer.component';
     DetailsEditDialogComponent,
     AddEntryDialogComponent,
     ManageUserEntriesComponent,
-    UserDetailsEditDialogComponent
+    UserDetailsEditDialogComponent,
     FooterComponent
   ],
   imports: [
