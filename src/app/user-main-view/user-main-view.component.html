@@ -1,21 +1,6 @@
 <mat-sidenav-container fullscreen>
-  <mat-sidenav mode="side" #sidenav opened position="start">
-    <img [src]="logoUrl" id="logo">
-    <!--    <div class="title"><img class="logo" [src]="logoUrl"></div>-->
-<!--    <div class="dashboard">-->
-<!--      <p class="home" (click)="goToHome()">Home</p>-->
-<!--      <p class="myprofile" (click)="goToMyprofile()">My profile</p>-->
-<!--      <p class="search" (click)="goToSearch()">Search</p>-->
-<!--      <p class="workout" (click)="goToWorkout()">Workout</p>-->
-<!--      <p class="about" (click)="goToAbout()">About</p>-->
-<!--    </div>-->
-<!--  <button mat-raised-button (click)="login()" color="primary">Login</button>-->
-
-
-<!--    <button mat-raised-button color="primary" routerLink="/user/dashboard">Dashboard</button>-->
-<!--    <button mat-raised-button color="primary" routerLink="/user/myprofile">My Profile</button>-->
-<!--    <button mat-raised-button color="primary" routerLink="/user/search">My Profile</button>-->
-<!--    <button mat-raised-button color="primary" routerLink="/user/workout">My Profile</button>-->
+  <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+    <img [src]="logo" id="logo">
     <mat-nav-list>
       <ng-container *ngIf="isClient">
         <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Dashboard</b></a>
@@ -23,18 +8,22 @@
         <a mat-list-item routerLink="/user/workout"><b class="list-item-text">Workout</b></a>
       </ng-container>
       <ng-container *ngIf="isAdmin">
-        <a mat-list-item routerLink="/user/dashboard"><b class="list-item-text">Manage Users</b></a>
+        <a mat-list-item routerLink="/user/manage-user-entries"><b class="list-item-text">Manage User Entries</b></a>
         <a mat-list-item routerLink="/user/manage-business-entries"><b class="list-item-text">Manage Business Entries</b></a>
       </ng-container>
       <div class="account-options-container">
         <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">My Profile</b></a>
         <a mat-list-item routerLink="/user/myprofile"><b class="list-item-text">Logout</b></a>
       </div>
-      <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to Homepage</b></a>
+      <a mat-list-item class="homepage-option-container" routerLink="/home"><b class="list-item-text">Back to
+          Homepage</b></a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
+    <mat-toolbar role="heading" color="white" class="top-bar" [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">
+      <button mat-icon-button (click)="sidenav.open()" id="menuButton">
+      <mat-icon>menu</mat-icon></button>
+    </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
