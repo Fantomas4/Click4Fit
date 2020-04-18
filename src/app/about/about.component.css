@@ -4,13 +4,20 @@ h1{
   font-size: 45px;
   font-weight: normal;
 }
+/* .text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} */
 .p1 {
   color: black;
-  font-size: 23px;
+  font-size: 22px;
   line-height: 45px;
   text-align: center;
-  margin-left:30px;
-  margin-right:30px;
+  /* margin-left:30px;
+  margin-right:30px; */
+  margin: auto;
+  max-width: 1024px;
 }
 .p2{
   color: black;

@@ -8,7 +8,7 @@ h1{
     margin: 0 auto; 
     display: block;
     color:white;
-    background-color: #B71C1C;
+    background-color: #2E7D32;
     margin-top:7%;
 }
 .row{
@@ -36,7 +36,7 @@ mat-drawer-container {
     font-size: large;
 }
 #searchButton{
-    background-color:#B71C1C; 
+    background-color:#2E7D32; 
     color:white; 
     margin: 0 auto; 
     display: block;
