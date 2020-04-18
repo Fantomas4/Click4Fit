@@ -58,13 +58,28 @@ mat-drawer-content {
   outline: none;
 }
 
+.button-container {
+  display: flex;
+  margin-right: 0;
+}
+
+button {
+  /* Just a little styling to make it pretty */
+  font-weight: bold;
+  font-size: medium;
+  width: 4em;
+  border:1px solid #2E7D32;
+  background: #2E7D32;
+  color:white;
+}
+
 #search-button {
   /* Just a little styling to make it pretty */
   font-weight: bold;
   font-size: medium;
   width: 4em;
-  border:1px solid #B71C1C;
-  background: #B71C1C;
+  border:1px solid #2E7D32;
+  background: #2E7D32;
   color:white;
 }
 /* ============= END: Styling concerning search container and its elements ============= */

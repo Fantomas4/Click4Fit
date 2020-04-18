@@ -1,19 +1,3 @@
-<mat-toolbar role="heading" color="primary" class="top-bar">
-  <span class="title"><img [src]="logoUrl" id="logo"></span>
-
-  <div class="toolbar-content">
-    <a mat-button class="toolbar-button" routerLink="/home">Home</a>
-    <a mat-button class="toolbar-button" routerLink="/about">About Us</a>
-    <a mat-button class="toolbar-button" routerLink="/contact-us">Contact Us</a>
-    <div class="button-container">
-      <a mat-button class="toolbar-button" routerLink="/login">Login</a>
-      <a mat-button class="toolbar-button" routerLink="/register">Register</a>
-    </div>
-  </div>
-</mat-toolbar>
-<router-outlet></router-outlet>
-
-
-
-
-
+<app-homepage>
+    <router-outlet></router-outlet>
+</app-homepage>

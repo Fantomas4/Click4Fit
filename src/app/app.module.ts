@@ -37,6 +37,14 @@ import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dia
 import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-entries.component';
 import { UserDetailsEditDialogComponent } from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.component';
 import { FooterComponent } from './footer/footer.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { HomepageComponent } from './homepage/homepage.component';
 
 
 @NgModule({
@@ -59,11 +67,12 @@ import { FooterComponent } from './footer/footer.component';
     DetailsDialogComponent,
     DialogMessageComponent,
     ManageBusinessEntriesComponent,
-    DetailsEditDialogComponent,
-    AddEntryDialogComponent,
     ManageUserEntriesComponent,
     UserDetailsEditDialogComponent,
-    FooterComponent
+    DetailsEditDialogComponent,
+    AddEntryDialogComponent,
+    FooterComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +88,13 @@ import { FooterComponent } from './footer/footer.component';
     MatTabsModule,
     MatChipsModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    FlexLayoutModule,
+    LayoutModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService],
   bootstrap: [AppComponent],

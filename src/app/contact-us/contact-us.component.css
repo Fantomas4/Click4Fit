@@ -5,6 +5,7 @@
 .contact-us-card {
   display: flex;
   flex-direction: column;
+  min-width: 275px;
   width: 25%;
   margin: 10% auto;
   margin-top:3%;
