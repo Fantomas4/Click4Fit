@@ -3,13 +3,15 @@ h1 h2 h3 h4{
 }
 
 h1 {
-    font-size: 77px;
+    font-size: 60px;
+    font-style:italic;
     font-weight: normal;
-    margin-bottom: 0px;
-    margin-top: 5px;
+    top:50%;
+    left:50%;
     text-align: center;
-    color: rgb(255, 227, 226);
-    text-shadow: 0 1px 1px rgb(139, 56, 56);
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
   }
 
 #fitness{
@@ -20,10 +22,8 @@ h1 {
 }
 
 .fitness-image {
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
-  ), url("../../assets/barbell-on-the-floor.jpg");
+  flex: 1;
+  background-image: url("../../assets/barbell-on-the-floor.jpg");
   background-color: #cccccc;
   height: 100%;
   background-position: center;

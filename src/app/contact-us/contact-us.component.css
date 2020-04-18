@@ -5,8 +5,10 @@
 .contact-us-card {
   display: flex;
   flex-direction: column;
+  min-width: 275px;
   width: 25%;
   margin: 10% auto;
+  margin-top:3%;
 }
 
 .form-content {
@@ -16,6 +18,8 @@
 
 .button {
   flex-basis: 21px;
+  display:block;
+  margin:0 auto;
 }
 
 
