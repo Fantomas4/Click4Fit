@@ -6,7 +6,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of legsWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
@@ -24,7 +29,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of backWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
@@ -42,7 +52,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of chestWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
@@ -60,7 +75,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of shouldersWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe frame="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
@@ -78,7 +98,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of bicepsWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
@@ -96,7 +121,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of tricepsWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
@@ -114,7 +144,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of absWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
@@ -132,7 +167,12 @@
             </mat-card-title><br>
             <mat-card *ngFor="let entry of coreWorkoutResults">
                 <mat-card-title class="exercise-title">
-                    {{entry.name}}
+                    {{entry.name}}<br>
+                    <mat-chip-list>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
+                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
+                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                    </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
                     <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"

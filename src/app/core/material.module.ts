@@ -15,6 +15,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatListModule} from '@angular/material/list';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {MatListModule} from '@angular/material/list';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatListModule
+    MatListModule,
+    MatChipsModule
   ],
   exports: [
     MatToolbarModule,
@@ -50,7 +52,8 @@ import {MatListModule} from '@angular/material/list';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatListModule
+    MatListModule,
+    MatChipsModule
   ]
 })
 

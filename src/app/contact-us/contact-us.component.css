@@ -8,6 +8,7 @@
   min-width: 275px;
   width: 25%;
   margin: 10% auto;
+  margin-top:3%;
 }
 
 .form-content {
@@ -15,13 +16,10 @@
   flex-direction: column;
 }
 
-.btn-custom {
-  margin: 5px;
-}
-
-.send-icon {
-  margin: 5px;
-  /* margin: auto; */
+.button {
+  flex-basis: 21px;
+  display:block;
+  margin:0 auto;
 }
 
 
