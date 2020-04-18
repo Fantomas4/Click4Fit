@@ -5,6 +5,7 @@
 .contact-us-card {
   display: flex;
   flex-direction: column;
+  min-width: 275px;
   width: 25%;
   margin: 10% auto;
 }
@@ -14,8 +15,13 @@
   flex-direction: column;
 }
 
-.button {
-  flex-basis: 21px;
+.btn-custom {
+  margin: 5px;
+}
+
+.send-icon {
+  margin: 5px;
+  /* margin: auto; */
 }
 
 
