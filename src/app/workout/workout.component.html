@@ -34,7 +34,7 @@
     </mat-drawer>
     <mat-drawer-content>
         <h1 id="title">Workout</h1>
-        <button mat-raised-button id="filtersButton" (click)="sidenav.toggle()">Show Filters</button><br>
+        <button mat-raised-button id="filtersButton" (click)="sidenav.toggle()" background-color="primary">Show Filters</button><br>
         <p class="text" *ngIf="!isClicked">
             Click the button above to choose filters <br> and find your workout!
         </p>

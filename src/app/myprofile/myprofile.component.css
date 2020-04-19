@@ -1,19 +1,6 @@
-h1{
-  color:  black;
-  font-style: oblique;
-  font-size: 50px;
-  line-height: 100px;
-  font-weight: normal;
-  margin-top: -5px;
-  text-align: center;
-  text-shadow: 0 1px 1px #fff;
-}
-
 .details-card {
   width: 25%;
   margin: 10% auto;
-  margin-top:-10px;
-  
 }
 
 .mat-card-title {
@@ -28,21 +15,10 @@ h1{
   flex-direction:row;
 }
 
-#update-details-button {
-  /* background-color: #3F51B5; */
-  /* color: white; */
-}
-
-#delete-button {
-  /* background-color: red; */
-  /* color: white; */
-}
-
 @media screen and (max-width:320px){
   .details-card{
     width: 75%;
     margin: 10% auto;
-    margin-top:-30px;
     display:block;
   }
 }
@@ -50,7 +26,6 @@ h1{
   .details-card{
     width: 40%;
     margin: 10% auto;
-    margin-top:-30px;
     display:block;
   }
 }
@@ -58,7 +33,6 @@ h1{
   .details-card{
     width: 65%;
     margin: 10% auto;
-    margin-top:-30px;
     display:block;
   }
 }
@@ -66,7 +40,6 @@ h1{
   .details-card{
     width: 40%;
     margin: 10% auto;
-    margin-top:-30px;
     display:block;
   }
 }
@@ -75,7 +48,6 @@ h1{
   .details-card{
     width: 55%;
     margin: 10% auto;
-    margin-top:-30px;
     display:block;
   }
 }
@@ -83,7 +55,6 @@ h1{
   .details-card{
     width: 40%;
     margin: 10% auto;
-    margin-top:-30px;
     display:block;
   }
 }
