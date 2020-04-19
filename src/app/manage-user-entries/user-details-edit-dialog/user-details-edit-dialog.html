@@ -1,42 +1,45 @@
-<h1 mat-dialog-title>User Details</h1>
-<div mat-dialog-content>
-  <form class="form">
-    <table class="table" cellspacing="0">
-      <tr>
-        <p class="business-id">User ID: {{this.id}}</p>
-      </tr>
-      <tr>
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="e.g. George" [(ngModel)]="this.firstName" name="name" required>
-        </mat-form-field>
-      </tr>
-      <tr>
-        <mat-form-field>
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastName" name="lastName" required>
-        </mat-form-field>
-      </tr>
-      <tr>
-        <mat-form-field>
-          <mat-label>Date of birth</mat-label>
-          <input matInput [matDatepicker]="picker" [formControl]="date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </tr>
-      <tr>
-        <mat-form-field class="email-input-field">
-          <mat-label>E-mail</mat-label>
-          <input matInput placeholder="address@example.com" [formControl]="emailFormControl" type="email"
-            name="registration-email" required>
-          <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </tr>
-    </table>
-  </form>
+<div class="main-container">
+  <h1 mat-dialog-title>User Details</h1>
+  <div mat-dialog-content>
+    <form class="form">
+      <table class="table" cellspacing="0">
+        <tr>
+          <p id="user-id">User ID: {{this.id}}</p>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="e.g. George" [(ngModel)]="this.firstName" name="name" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastName" name="lastName" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Date of birth</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field class="email-input-field">
+            <mat-label>E-mail</mat-label>
+            <input matInput placeholder="address@example.com" [formControl]="emailFormControl" type="email"
+                   name="registration-email" required>
+            <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onSaveClick()">Save</button>
+    <button mat-raised-button color="primary" (click)="onCloseClick()">Close</button>
+  </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-raised-button color="warn" (click)="onSaveClick()">Save</button>
-  <button mat-raised-button color="primary" (click)="onCloseClick()">Close</button>
-</div>
+
