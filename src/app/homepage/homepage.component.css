@@ -2,6 +2,11 @@
     width: 85px;
     height: 85px;
   }
+
+#responsive-logo {
+  width: 85px;
+  height: auto;
+}
   
   .toolbar-button {
     font-size: 1em;
@@ -31,4 +36,5 @@
     top: 0;
     z-index: 1;
     height:10vh;
+    min-height: 69px;
   }
