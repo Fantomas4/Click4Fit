@@ -39,28 +39,19 @@ export class ManageBusinessEntriesComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
     if (typeof event !== 'undefined') {
-      console.log('mpika 1');
-      // event.target.dialogHeight = window.innerHeight * this.dialogHeightRatio;
-      // event.target.dialogWidth = window.innerWidth;
       this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
       this.dialogWidth = window.innerWidth;
     } else {
-      console.log('mpika 2');
       this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
       this.dialogWidth = window.innerWidth;
     }
 
     if (typeof this.detailsEditDialogRef !== 'undefined') {
-      console.log('mpika 3');
-      console.log('dialogHeight: ' + this.dialogHeight);
       this.detailsEditDialogRef.updateSize(this.dialogWidth.toString(), this.dialogHeight.toString());
     }
 
     if (typeof this.addEntryDialogRef !== 'undefined') {
-      console.log('mpika 4');
-      console.log('dialogHeight: ' + this.dialogHeight);
       this.addEntryDialogRef.updateSize(this.dialogWidth.toString(), this.dialogHeight.toString());
-      // this.addEntryDialogRef.updatePosition({top: 'auto', bottom: 'auto'});
     }
 
     console.log('onresize height is: ' + this.dialogHeight);
