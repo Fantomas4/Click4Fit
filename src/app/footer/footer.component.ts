@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  currentYear: number = new Date().getFullYear();
+  // Holding current year
+  currentYear: number;
 
+  // Holding paths for social media icons
   facebookUrl = "./assets/facebook.png";
   instagramUrl = "./assets/instagram.png";
   twitterUrl = "./assets/twitter.png";
@@ -17,6 +19,8 @@ export class FooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // Initialize currentYear field
+    this.currentYear = new Date().getFullYear();
   }
 
 }
