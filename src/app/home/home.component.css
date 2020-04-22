@@ -1,10 +1,6 @@
-h1 h2 h3 h4{
-  text-align: center;
-}
-
 h1 {
     font-size: 60px;
-    font-style:italic;
+    font-style: italic;
     font-weight: normal;
     top:50%;
     left:50%;
@@ -14,13 +10,7 @@ h1 {
     opacity: 0.8;
   }
 
-#fitness{
-  width:550px;
-  height:300px;
-  border-radius:25px;
-  margin-left:370px;
-}
-
+/* Background Image Styles */
 .fitness-image {
   flex: 1;
   background-image: url("../../assets/barbell-on-the-floor.jpg");
@@ -32,6 +22,7 @@ h1 {
   position: relative;
 }
 
+/* Moto Styles */
 .home-text {
   text-align: center;
   position: absolute;
@@ -40,29 +31,3 @@ h1 {
   transform: translate(-50%, -50%);
   color: white;
 }
-
-/* .moto {
-  font-size: 40px;
-  font-family: "Libre Baskerville", serif;
-  line-height: 40px;
-  text-shadow: 0 1px 1px white;
-  padding-top:5px;
-  color:white;
-  width:680px;
-  height:60px;
-  border-radius:15px;
-  margin: 0 auto;
-  display: block;
-
-}
-
-
-.moto {
-  color: #7a7c7f;
-  font-size: 29px;
-  font-family: "Libre Baskerville", serif;
-  line-height: 45px;
-  text-align: center;
-  text-shadow: 0 1px 1px #fff;
-  padding-top: 20px;
-} */
