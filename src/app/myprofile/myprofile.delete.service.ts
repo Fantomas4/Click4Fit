@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {DialogMessageComponent} from '../dialog-message/dialog-message.component';
-import { Router } from '@angular/router';
 
+/*This service is about showing an alert modal message to confirm the user's willing for deleting
+his account*/
 @Injectable()
 export class MyProfileDeleteService {
-    router: Router;
+
     constructor(public dialog: MatDialog) { }
 
+    /*Creates a modal message and determines its parameters */
     openModal() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;

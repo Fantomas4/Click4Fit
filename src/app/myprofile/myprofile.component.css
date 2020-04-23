@@ -1,20 +1,27 @@
+/*!* Configuration for both desktop and mobile view *!*/
+
+/*!* The general card of profile details *!*/
 .details-card {
   width: 25%;
   margin: 10% auto;
 }
-
+/*!* The title of card *!*/
 .mat-card-title {
   font-size: 21px;
 }
-
+/*!* The email input field *!*/
 .email-input-field {
   width: 80%
 }
+/*!* The buttons of card *!*/
 .buttons{
   display: flex;
   flex-direction:row;
 }
 
+/*!* Configuration only for mobile view *!*/
+
+/*!* Size S and horizontal mode *!*/
 @media screen and (max-width:320px){
   .details-card{
     width: 75%;
@@ -22,6 +29,7 @@
     display:block;
   }
 }
+/*!* Size S and vertical mode *!*/
 @media screen and (max-height:320px){
   .details-card{
     width: 40%;
@@ -29,6 +37,7 @@
     display:block;
   }
 }
+/*!* Size M and horizontal mode *!*/
 @media screen and (min-width:321px)and (max-width:375px){
   .details-card{
     width: 65%;
@@ -36,6 +45,7 @@
     display:block;
   }
 }
+/*!* Size M and vertical mode *!*/
 @media screen and (min-height:321px) and (max-height:375px){
   .details-card{
     width: 40%;
@@ -43,7 +53,7 @@
     display:block;
   }
 }
-
+/*!* Size L and horizontal mode *!*/
 @media screen and (min-width:376px)and (max-width:425px){
   .details-card{
     width: 55%;
@@ -51,6 +61,7 @@
     display:block;
   }
 }
+/*!* Size L and vertical mode *!*/
 @media screen and (min-height:376px) and (max-height:425px){
   .details-card{
     width: 40%;

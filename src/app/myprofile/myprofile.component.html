@@ -1,8 +1,10 @@
+<!-- The general card of profile details -->
 <mat-card class="details-card">
     <mat-card-header>
       <mat-card-title>Your profile details: </mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <!-- The form place with each detail -->
       <form class="form">
         <table class="table" cellspacing="0">
           <tr>
@@ -46,6 +48,7 @@
         </table>
       </form>
     </mat-card-content>
+    <!-- The buttons of card -->
     <mat-card-actions class="buttons">
       <button mat-raised-button color="primary" id="update-details-button" (click)="change()">Update details</button>
       <button mat-raised-button color="warn" id="delete-button" (click)="onClick()">Delete account</button>
