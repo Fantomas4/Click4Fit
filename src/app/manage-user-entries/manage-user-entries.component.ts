@@ -7,7 +7,6 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {UserDetailsEditDialogComponent} from './user-details-edit-dialog/user-details-edit-dialog.component';
 import {ManageUserEntriesService} from './manage-user-entries.service';
-import {DetailsEditDialogComponent} from '../manage-business-entries/details-edit-dialog/details-edit-dialog.component';
 
 @Component({
   selector: 'app-manage-users-entries',
@@ -16,24 +15,32 @@ import {DetailsEditDialogComponent} from '../manage-business-entries/details-edi
 })
 export class ManageUserEntriesComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
+  @ViewChild(MatSort, {static: true}) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
 
-  selection1 = new SelectionModel<UserEntry>(true, []);
+  // Holds a SelectionModel<UserEntry> object used to get the table checkboxes' state.
+  selection = new SelectionModel<UserEntry>(true, []);
 
+  // Determines the columns to be displayed in the table's header row.
   displayedColumns = ['checkboxes', 'id', 'name', 'last-name', 'buttons'];
 
-  userData: UserEntry[];
-  dataSource = new MatTableDataSource(this.userData);
+  userData: UserEntry[]; // An array of UserEntry objects retrieved from the database.
+  dataSource = new MatTableDataSource(this.userData); // MatTableDataSource<UserEntry> used as the table's data source.
 
-  dialogHeight: number;
-  dialogWidth: number;
+  dialogHeight: number; // Height of the dialog window.
+  dialogWidth: number; // Width of the dialog window.
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size
 
-  detailsEditDialogRef: MatDialogRef<DetailsEditDialogComponent, any>;
+  detailsEditDialogRef: MatDialogRef<UserDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
 
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog) { }
 
+  /** Method used to change the dialog's height and width according to
+   * the window's size.
+   *
+   * The method is also bound to a HostListener that captures
+   * "window:resize" events triggered during display window resize.
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
     if (typeof event !== 'undefined') {
@@ -53,10 +60,15 @@ export class ManageUserEntriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsersEntries();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
+    this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
   }
 
+  /**
+   * Method called when a key is pressed inside the Filter input field of the UI.
+   * The method receives
+   * @param event: The entire event payload passed to the applyFilter event handler.
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -67,6 +79,10 @@ export class ManageUserEntriesComponent implements OnInit {
     }
   }
 
+  /**
+   * Gets all retrieved user entries fetched from the database by
+   * the manageUserEntriesService.
+   */
   getUsersEntries() {
 
     this.manageUserEntriesService.getResults()
@@ -75,7 +91,7 @@ export class ManageUserEntriesComponent implements OnInit {
 
   /** Checks whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection1.selected.length;
+    const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
@@ -83,13 +99,14 @@ export class ManageUserEntriesComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clears selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selection1.clear() :
-      this.dataSource.data.forEach(row => this.selection1.select(row));
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
+  /** Spawns the "Details/Edit" dialog window */
   openDetailsEditDialog(element: UserEntry): void {
     this.onResize();
-    const dialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
+    this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
       data: {id: element.id, name: element.name, lastname: element.lastname, birthdate: element.birthdate, email: element.email}
     });

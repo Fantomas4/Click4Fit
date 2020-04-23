@@ -30,10 +30,10 @@ import { DialogMessageComponent } from './dialog-message/dialog-message.componen
 import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSortModule} from '@angular/material/sort';
-import { DetailsEditDialogComponent } from './manage-business-entries/details-edit-dialog/details-edit-dialog.component';
-import { AddEntryDialogComponent } from './manage-business-entries/add-entry-dialog/add-entry-dialog.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { BusinessDetailsEditDialogComponent} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.component';
+import { BusinessAddEntryDialogComponent } from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.component';
 import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-entries.component';
 import { UserDetailsEditDialogComponent } from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.component';
 import { FooterComponent } from './footer/footer.component';
@@ -67,10 +67,11 @@ import { HomepageComponent } from './homepage/homepage.component';
     DetailsDialogComponent,
     DialogMessageComponent,
     ManageBusinessEntriesComponent,
+    BusinessDetailsEditDialogComponent,
+    BusinessAddEntryDialogComponent,
     ManageUserEntriesComponent,
     UserDetailsEditDialogComponent,
-    DetailsEditDialogComponent,
-    AddEntryDialogComponent,
+    UserDetailsEditDialogComponent,
     FooterComponent,
     HomepageComponent
   ],

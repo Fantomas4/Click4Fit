@@ -4,9 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import {DetailsEditDialogComponent} from './details-edit-dialog/details-edit-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {AddEntryDialogComponent} from './add-entry-dialog/add-entry-dialog.component';
+import {BusinessDetailsEditDialogComponent} from './business-details-edit-dialog/business-details-edit-dialog.component';
+import {BusinessAddEntryDialogComponent} from './business-add-entry-dialog/business-add-entry-dialog.component';
 import {ManageBusinessEntriesService} from './manage-business-entries.service';
 
 
@@ -34,8 +34,8 @@ export class ManageBusinessEntriesComponent implements OnInit {
   dialogWidth: number; // Width of the dialog window.
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
 
-  detailsEditDialogRef: MatDialogRef<DetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
-  addEntryDialogRef: MatDialogRef<AddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
+  detailsEditDialogRef: MatDialogRef<BusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
+  addEntryDialogRef: MatDialogRef<BusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
 
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog) {}
 
@@ -84,7 +84,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
   /**
    * Gets all retrieved business entries fetched from the database by
-   * the manageBusinessEntriesService
+   * the manageBusinessEntriesService.
    */
   getBusinessEntries() {
 
@@ -109,7 +109,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
   /** Spawns the "Details/Edit" dialog window */
   openDetailsEditDialog(element: BusinessEntry): void {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
-    this.detailsEditDialogRef = this.dialog.open(DetailsEditDialogComponent, {
+    this.detailsEditDialogRef = this.dialog.open(BusinessDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
       data: {id: element.id, name: element.name, category: element.category, country: element.country,
       city: element.city, address: element.address, postalCode: element.postalCode, phoneNumbers:
@@ -121,7 +121,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
   /** Spawns the "Add Entry" dialog window */
   openAddEntryDialog() {
     this.onResize();
-    this.addEntryDialogRef = this.dialog.open(AddEntryDialogComponent, {
+    this.addEntryDialogRef = this.dialog.open(BusinessAddEntryDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')});
   }
 }

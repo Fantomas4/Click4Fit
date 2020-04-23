@@ -5,10 +5,10 @@ import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-details-edit-dialogue',
-  templateUrl: './details-edit-dialog.component.html',
-  styleUrls: ['./details-edit-dialog.component.css']
+  templateUrl: './business-details-edit-dialog.component.html',
+  styleUrls: ['./business-details-edit-dialog.component.css']
 })
-export class DetailsEditDialogComponent implements OnInit {
+export class BusinessDetailsEditDialogComponent implements OnInit {
 
   // https://angular.io/api/forms/FormControlDirective#use-with-ngmodel
   id: number;
@@ -23,7 +23,7 @@ export class DetailsEditDialogComponent implements OnInit {
   availableServProd: string[];
   imgPath: string;
 
-  constructor(public dialogRef: MatDialogRef<DetailsEditDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<BusinessDetailsEditDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
 
   ngOnInit(): void {
