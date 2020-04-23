@@ -12,16 +12,17 @@ export class ResultCardComponent implements OnInit {
 
   @Input() businessData: BusinessEntry;
 
-  cardTitle: string;
-  cardCategory: string;
-  cardCountry: string;
-  cardCity: string;
-  cardImagePath: string;
+  cardTitle: string; // Card title text.
+  cardCategory: string; // Card category text.
+  cardCountry: string; // Card country text.
+  cardCity: string; // Card city text.
+  cardImagePath: string; // Card preview image path.
 
   constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    // Load data from businessData into the result card object's properties.
     this.cardTitle = this.businessData.name;
     this.cardCategory = this.businessData.category;
     this.cardCountry = this.businessData.country;
@@ -29,6 +30,9 @@ export class ResultCardComponent implements OnInit {
     this.cardImagePath = this.businessData.imgPath;
   }
 
+  /**
+   * Spawns the "Details" dialog window.
+   */
   openDetailsDialog(): void {
     const dialogRef = this.dialog.open(DetailsDialogComponent, {
       width: '600px',
@@ -37,13 +41,6 @@ export class ResultCardComponent implements OnInit {
         country: this.businessData.country, city: this.businessData.city, availableServProd:
         this.businessData.availableServProd
       }
-
-      // dialogRef.afterClosed().subscribe(result => {
-      //   console.log('The dialog was closed');
-      //   this.animal = result;
-      // });
-
     });
-
   }
 }
