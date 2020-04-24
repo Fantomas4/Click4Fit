@@ -1,5 +1,5 @@
 .container {
-  display: flex;
+  min-height: 100vh;
 }
 
 .contact-us-card {
@@ -21,35 +21,3 @@
   display:block;
   margin:0 auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.contact-us-card {
-    width: 25%;
-    margin: 10% auto;
-}
-
-.mat-card-title {
-  font-size: 21px;
-}
-
-.text-area{
-  height: 100px;
-}
-*/
