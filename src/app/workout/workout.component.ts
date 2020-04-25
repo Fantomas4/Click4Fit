@@ -16,9 +16,11 @@ export class WorkoutComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
   }
+  /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {
     if (document.getElementById('filtersButton').innerText === 'Show Filters') {
       document.getElementById('filtersButton').innerText = 'Hide Filters';

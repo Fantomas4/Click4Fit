@@ -31,18 +31,21 @@ export class MyprofileComponent implements OnInit {
     this.initialPassword = this.myprofileResults[0].password;
     this.repeatedPassword = this.myprofileResults[0].password;
     this.registrationEmail = this.myprofileResults[0].email;
-    this.date = new FormControl(new Date(this.myprofileResults[0].birthdate));
+    this.date = new FormControl(new Date(this.myprofileResults[0].birthdate)); //it shows the date in a calendar 
   }
 
+  /*Checks if the email form has been completed or if the email is valid*/
   getErrorMessage() {
     if (this.emailFormControl.hasError('required')) {
       return 'You must enter a value';
     }
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
   }
+  /*Updates the user's details in the database according to his changes*/
   change() {
 
   }
+  /*Shows modal message after click on delete account button*/
   onClick() {
     this.deleteService.openModal();
   }

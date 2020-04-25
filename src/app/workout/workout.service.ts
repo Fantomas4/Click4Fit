@@ -3,11 +3,12 @@ import { LEGSWORKOUTENTRIES,BACKWORKOUTENTRIES,
   CHESTWORKOUTENTRIES,SHOULDERSWORKOUTENTRIES,
   BICEPSWORKOUTENTRIES,TRICEPSWORKOUTENTRIES,
   ABSWORKOUTENTRIES,COREWORKOUTENTRIES} from '../mock-database';
-  import {LegsWorkoutEntry,BackWorkoutEntry,ChestWorkoutEntry,ShouldersWorkoutEntry,
+import {LegsWorkoutEntry,BackWorkoutEntry,ChestWorkoutEntry,ShouldersWorkoutEntry,
   BicepsWorkoutEntry,TricepsWorkoutEntry,AbsWorkoutEntry,CoreWorkoutEntry} from '../workout-entry';
-  
 import {Observable, of} from 'rxjs';
 
+
+/* This service is about getting workout entries from mock-database and displaying them */
 @Injectable({
     providedIn: 'root'
   })

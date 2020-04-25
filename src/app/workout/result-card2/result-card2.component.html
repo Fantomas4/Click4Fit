@@ -1,9 +1,12 @@
+<!-- The general container with all cards-->
 <div class="flex">
+    <!-- It is shown only when the array with legs exercises are not empty -->
     <div *ngIf="!legsIsEmpty">
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Legs
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of legsWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
@@ -22,11 +25,13 @@
             </mat-card><br>
         </mat-card><br>
     </div>
+    <!-- It is shown only when the array with back exercises are not empty -->
     <div *ngIf="!backIsEmpty">
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Back
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of backWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
@@ -45,11 +50,13 @@
             </mat-card><br>
         </mat-card><br>
     </div>
+    <!-- It is shown only when the array with chest exercises are not empty -->
     <div *ngIf="!chestIsEmpty">
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Chest
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of chestWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
@@ -68,11 +75,13 @@
             </mat-card><br>
         </mat-card><br>
     </div>
+    <!-- It is shown only when the array with shoulders exercises are not empty -->
     <div *ngIf="!shouldersIsEmpty">
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Shoulders
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of shouldersWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
@@ -91,11 +100,13 @@
             </mat-card><br>
         </mat-card><br>
     </div>
+    <!-- It is shown only when the array with biceps exercises are not empty -->
     <div *ngIf="!bicepsIsEmpty">
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Biceps
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of bicepsWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
@@ -114,11 +125,13 @@
             </mat-card><br>
         </mat-card><br>
     </div>
+    <!-- It is shown only when the array with triceps exercises are not empty -->
     <div *ngIf="!tricepsIsEmpty">
         <mat-card class="category" *ngIf="!tricepsIsEmpty">
             <mat-card-title class="category-title">
                 Triceps
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of tricepsWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
@@ -137,11 +150,13 @@
             </mat-card><br>
         </mat-card><br>
     </div>
+    <!-- It is shown only when the array with abs exercises are not empty -->
     <div *ngIf="!absIsEmpty">
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Abs
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of absWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
@@ -160,11 +175,13 @@
             </mat-card><br>
         </mat-card><br>
     </div>
+    <!-- It is shown only when the array with core exercises are not empty -->
     <div *ngIf="!coreIsEmpty">
         <mat-card class="category">
             <mat-card-title class="category-title">
                 Core
             </mat-card-title><br>
+            <!-- The subcard with every exercise of category -->
             <mat-card *ngFor="let entry of coreWorkoutResults">
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>

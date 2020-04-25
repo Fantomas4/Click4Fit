@@ -28,10 +28,11 @@ export class ResultCard2Component implements OnInit {
   absIsEmpty=false;
   coreIsEmpty=false;
 
-
+  //DomSanitizer helps to pass url video safe
   constructor(public sanitizer: DomSanitizer,private workoutService: WorkoutService){}
 
   ngOnInit(): void {
+    //gets all the results and adds them in a seperated array
     this.workoutService.getLegsResults().subscribe(results => this.legsWorkoutResults = results);
     this.workoutService.getBackResults().subscribe(results => this.backWorkoutResults = results);
     this.workoutService.getChestResults().subscribe(results => this.chestWorkoutResults = results);
@@ -40,6 +41,7 @@ export class ResultCard2Component implements OnInit {
     this.workoutService.getTricepsResults().subscribe(results => this.tricepsWorkoutResults = results);
     this.workoutService.getAbsResults().subscribe(results => this.absWorkoutResults = results);
     this.workoutService.getCoreResults().subscribe(results => this.coreWorkoutResults = results);
+    //in the case of zero workout results
     if (this.legsWorkoutResults.length==0){
       this.legsIsEmpty=true;
     }

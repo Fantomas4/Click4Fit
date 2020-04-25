@@ -19,12 +19,15 @@ export class DashboardComponent implements OnInit {
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
   }
 
-  today: number = Date.now();
+  today: number = Date.now(); //gets the current date
 
 
   ngOnInit(): void {
+    //gets the favrorites workout results from dashboard.service and adds them to an array
     this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
+    //gets the favorites places results from dashboard.service and adds them to an array
     this.dashboardService.getFAVPResults().subscribe(results => this.FavoritesPlaceResults = results);
+    //in the case of zero favorites results
     if (this.FavoritesWorkoutResults.length == 0) {
       this.workoutIsEmpty = true;
     }

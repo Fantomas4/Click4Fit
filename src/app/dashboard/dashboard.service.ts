@@ -3,8 +3,7 @@ import {FAVORITEWORKOUT, FAVORITEPLACES} from '../mock-database';
 import {FavoriteWorkout, FavoritePlace} from '../favorite-entry';
 import {Observable, of} from 'rxjs';
 
-
-
+/* This service is about getting favorites entries from mock-database and displaying them */
 @Injectable({
   providedIn: 'root'
 })
