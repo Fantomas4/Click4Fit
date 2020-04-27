@@ -14,12 +14,17 @@ export class DashboardComponent implements OnInit {
   FavoritesPlaceResults: FavoritePlace[];
   workoutIsEmpty = false;
   placeIsEmpty = false;
-  cardImagePath: string;
+
+  CurrentTime: any;
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
+    setInterval(() => {
+      this.CurrentTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' +  new Date().getSeconds(); }, 1);
+
   }
 
   today: number = Date.now();
+
 
 
   ngOnInit(): void {
