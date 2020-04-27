@@ -1,12 +1,9 @@
 <h1 mat-dialog-title>
-  <div>
     <mat-card-title>{{data.name}}</mat-card-title>
     <mat-card-subtitle>{{data.category}}</mat-card-subtitle>
-  </div>
 </h1>
 <div mat-dialog-content>
   <img class="preview-image" mat-card-image [src]="previewImagePath">
-
   <mat-tab-group dynamicHeight>
     <mat-tab label="Location">
       <div>
@@ -23,13 +20,10 @@
     </mat-tab>
     <mat-tab label="Contact Details">
       <div>
-
       </div>
     </mat-tab>
   </mat-tab-group>
-
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCloseClick()">Close</button>
-<!--  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
 </div>

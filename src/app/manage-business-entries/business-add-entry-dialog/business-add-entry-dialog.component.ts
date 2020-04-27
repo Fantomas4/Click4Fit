@@ -5,10 +5,10 @@ import {BusinessEntry} from '../../business-entry';
 
 @Component({
   selector: 'app-add-entry-dialog',
-  templateUrl: './add-entry-dialog.component.html',
-  styleUrls: ['./add-entry-dialog.component.css']
+  templateUrl: './business-add-entry-dialog.component.html',
+  styleUrls: ['./business-add-entry-dialog.component.css']
 })
-export class AddEntryDialogComponent implements OnInit {
+export class BusinessAddEntryDialogComponent implements OnInit {
 
   id: number;
   name: string;
@@ -22,7 +22,7 @@ export class AddEntryDialogComponent implements OnInit {
   availableServProd: string[];
   imgPath: string;
 
-  constructor(public dialogRef: MatDialogRef<AddEntryDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>) {}
 
   ngOnInit(): void {}
 
