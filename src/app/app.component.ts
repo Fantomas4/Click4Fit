@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {UserEntry} from './user-entry';
+import {Router} from '@angular/router';
+import {AuthenticationService} from './login/authentication.service';
 
 
 @Component({
@@ -7,5 +10,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // logoUrl = './assets/logo.png';
+  // currentUser: UserEntry;
+  //
+  // constructor(private router: Router, private authenticationService: AuthenticationService) {
+  //   this.authenticationService.currentUser.subscribe(currentUser => this.currentUser = currentUser);
+  // }
 }
