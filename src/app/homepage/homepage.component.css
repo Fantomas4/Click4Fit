@@ -1,40 +1,42 @@
 #logo {
-    width: 85px;
-    height: 85px;
-  }
+  width: 85px;
+  height: 85px;
+}
+
+.toolbar-button {
+  font-size: 1em;
+}
+
+.menu-button {
+  margin: auto;
+}
+
+.flex-container {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height:10vh;
+  min-height: 69px;
+}
+
+/*---------------- Responsive Styles ------------------*/
 
 #responsive-logo {
   width: 85px;
   height: auto;
 }
-  
-  .toolbar-button {
-    font-size: 1em;
-  }
 
-  .flex-container-mobile{
-    display: flex;
-    flex: 1;
-  }
+.flex-container-mobile {
+  display: flex;
+  flex: 1;
+}
 
-  .menu-button {
-    margin: auto;
-  }
-
-  .example-spacer-mobile{
-    flex: 1;
-  }
-  
-  .flex-container{
-    display: flex;
-    flex: 1 1 auto;
-    justify-content: flex-end;
-  }
-  
-  .top-bar{
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    height:10vh;
-    min-height: 69px;
-  }
+.example-spacer-mobile {
+  flex: 1;
+}

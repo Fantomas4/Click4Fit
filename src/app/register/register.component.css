@@ -1,3 +1,7 @@
+.container {
+  min-height: 100vh;
+}
+
 .register-card {
   width: 25%;
   margin: 10% auto;

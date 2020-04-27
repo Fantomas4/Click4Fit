@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -7,32 +7,11 @@ import {Router} from '@angular/router';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
+
+  // Holds logos path
   logoUrl = '../assets/logo.png';
 
-  screenWidth: number;
-
-  // constructor(private router: Router) {
-  //   this.screenWidth = window.innerWidth;
-  //   window.onresize = () => {
-  //     this.screenWidth = window.innerWidth;
-  //   };
-  // }
-  constructor(private router: Router) {
-    this.screenWidth = window.innerWidth;
-    window.onresize = () => {
-      this.screenWidth = window.innerWidth;
-    };
-  }
-
-  checkWidth(){
-    if (this.screenWidth<=425){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
-
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
