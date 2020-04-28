@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {LegsWorkoutEntry,BackWorkoutEntry,ChestWorkoutEntry,ShouldersWorkoutEntry,
   BicepsWorkoutEntry,TricepsWorkoutEntry,AbsWorkoutEntry,CoreWorkoutEntry} from '../../workout-entry';
 import {WorkoutService} from '.././workout.service';
+import {ResultCard2Service} from './result-card2.service';
 
 @Component({
   selector: 'app-result-card2',
@@ -27,11 +28,14 @@ export class ResultCard2Component implements OnInit {
   tricepsIsEmpty=false;
   absIsEmpty=false;
   coreIsEmpty=false;
+  results;
 
   //DomSanitizer helps to pass url video safe
-  constructor(public sanitizer: DomSanitizer,private workoutService: WorkoutService){}
+  constructor(public sanitizer: DomSanitizer,private workoutService: WorkoutService,private resultCardSrvice: ResultCard2Service){}
 
   ngOnInit(): void {
+    this.results=this.resultCardSrvice.passResults();
+    console.log(this.results);
     //gets all the results and adds them in a seperated array
     this.workoutService.getLegsResults().subscribe(results => this.legsWorkoutResults = results);
     this.workoutService.getBackResults().subscribe(results => this.backWorkoutResults = results);

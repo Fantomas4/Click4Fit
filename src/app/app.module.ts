@@ -38,13 +38,14 @@ import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-en
 import { UserDetailsEditDialogComponent } from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import {HttpClientModule} from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
+import { WorkoutService } from './workout/workout.service';
 
 
 @NgModule({
@@ -95,9 +96,10 @@ import { HomepageComponent } from './homepage/homepage.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService],
+  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService,WorkoutService],
   bootstrap: [AppComponent],
   entryComponents: [DialogMessageComponent]
 })

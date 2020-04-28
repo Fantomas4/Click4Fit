@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WorkoutService } from './workout.service';
+import {ResultCard2Service} from './result-card2/result-card2.service';
 
 @Component({
   selector: 'app-workout',
@@ -9,9 +10,9 @@ import { WorkoutService } from './workout.service';
 export class WorkoutComponent implements OnInit {
 
   isClicked = false;
+  results;
 
-
-  constructor(private workoutService: WorkoutService) { }
+  constructor(private workoutService: WorkoutService,private resultCardService: ResultCard2Service) { }
 
   ngOnInit(): void {
 
@@ -19,6 +20,12 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
+    var content={categories:['legs','chest'],advisedFor:'women',level:'easy',equipment:'no'}
+    this.workoutService.postFilters(content).toPromise().then((data:any)=>{
+      this.results=data;
+      this.resultCardService.getResults(this.results);
+    });
+   
   }
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {

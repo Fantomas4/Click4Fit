@@ -3,6 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {MyProfileDeleteService} from './myprofile.delete.service';
 import {USERENTRIES} from '../mock-database';
 import {UserEntry} from '../user-entry';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -22,8 +23,9 @@ export class MyprofileComponent implements OnInit {
   registrationEmail: string;
   initialPassword: string;
   repeatedPassword: string;
+  content;
 
-  constructor(public deleteService: MyProfileDeleteService) { }
+  constructor(public deleteService: MyProfileDeleteService,private http: HttpClient) { }
 
   ngOnInit(): void {
     this.firstName = this.myprofileResults[0].name;
@@ -43,7 +45,10 @@ export class MyprofileComponent implements OnInit {
   }
   /*Updates the user's details in the database according to his changes*/
   change() {
-
+    this.content={'username':'eirini','email':'sdadasda'}
+    const headers = { 'content-type': 'application/json'}  
+    const jsonData=JSON.stringify(this.content);
+    this.http.post('http://localhost:5000/api/update-myprofile',jsonData,{'headers':headers}).toPromise().then((data:any)=>{});
   }
   /*Shows modal message after click on delete account button*/
   onClick() {
