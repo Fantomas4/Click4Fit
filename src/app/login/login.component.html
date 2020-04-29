@@ -3,12 +3,12 @@
     <mat-card-title>Login using an existing account:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <table class="example-full-width" cellspacing="0">
         <tr>
           <mat-form-field>
             <mat-label>Username</mat-label>
-            <input matInput [formControl]="usernameFormControl" [(ngModel)]="username"
+            <input matInput [formControl]="usernameFormControl"
                    [errorStateMatcher]="customErrorMatcher" name="username" required>
             <mat-error *ngIf="usernameFormControl.hasError('required')">
               Please enter your username
@@ -18,7 +18,11 @@
         <tr>
           <mat-form-field>
             <mat-label>Password</mat-label>
-            <input matInput [(ngModel)]="password" type="password" name="password" required>
+            <input matInput type="password" [formControl]="passwordFormControl" name="password"
+                   [errorStateMatcher]="customErrorMatcher" required>
+            <mat-error *ngIf="usernameFormControl.hasError('required')">
+              Please enter your password
+            </mat-error>
           </mat-form-field>
         </tr>
       </table>
@@ -27,7 +31,7 @@
     <!--    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>-->
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button type='submit' color="primary">Login</button>
+    <button mat-raised-button (click)="loginForm.ngSubmit.emit()" color="primary">Login</button>
 <!--    <button mat-raised-button color="primary" routerLink="/user">Login</button>-->
     <a class="forgot-password" routerLink="/recover-password">I forgot my password</a>
   </mat-card-actions>
