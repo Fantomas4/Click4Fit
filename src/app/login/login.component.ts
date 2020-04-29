@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
@@ -19,15 +19,25 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
 })
 
 export class LoginComponent implements OnInit {
-  @ViewChild('loginForm') loginForm: FormGroupDirective;
+  // @ViewChild('loginForm') loginForm: FormGroupDirective;
 
-  usernameFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  loginForm = new FormGroup({
+    username: new FormControl('', [
+      Validators.required
+    ]),
+    password: new FormControl('', [
+      Validators.required
+    ])
+  });
 
-  passwordFormControl = new FormControl('', [
-    Validators.required
-  ]);
+
+  // usernameFormControl = new FormControl('', [
+  //   Validators.required
+  // ]);
+
+  // passwordFormControl = new FormControl('', [
+  //   Validators.required
+  // ]);
 
   customErrorMatcher = new CustomErrorStateMatcher();
 
@@ -39,8 +49,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.usernameFormControl.value);
-    console.log(this.passwordFormControl.value);
+
+    console.log(this.loginForm.get('username'));
+    console.log(this.loginForm.get('password'));
 
     // console.log(this.username.length);
     // console.log(this.password.length);
