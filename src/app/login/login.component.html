@@ -27,7 +27,7 @@
         </tr>
       </table>
     </form>
-<!--    <div *ngIf="message">{{message}}</div>-->
+    <div id="auth-error" *ngIf="authErrorMessage">{{authErrorMessage}}</div>
     <!--    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>-->
   </mat-card-content>
   <mat-card-actions>

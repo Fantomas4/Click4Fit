@@ -7,7 +7,6 @@ import {ErrorStateMatcher} from '@angular/material/core';
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    console.log(isSubmitted);
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
@@ -19,8 +18,6 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
 })
 
 export class LoginComponent implements OnInit {
-  // @ViewChild('loginForm') loginForm: FormGroupDirective;
-
   loginForm = new FormGroup({
     username: new FormControl('', [
       Validators.required
@@ -30,22 +27,13 @@ export class LoginComponent implements OnInit {
     ])
   });
 
-
-  // usernameFormControl = new FormControl('', [
-  //   Validators.required
-  // ]);
-
-  // passwordFormControl = new FormControl('', [
-  //   Validators.required
-  // ]);
-
   customErrorMatcher = new CustomErrorStateMatcher();
+  authErrorMessage = '';
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
+  }
 
   ngOnInit() {
-
-
   }
 
   onSubmit(): void {
@@ -53,14 +41,12 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm.get('username'));
     console.log(this.loginForm.get('password'));
 
-    // console.log(this.username.length);
-    // console.log(this.password.length);
-    // if (!this.usernameFormControl.hasError('required') &&
-    //   !this.passwordFormControl.hasError('required')) {
-    //   this.authenticationService.login(this.username, this.password);
-    // } else {
-    //   // ????
-    // }
+    if (!this.loginForm.get('username').hasError('required') &&
+      !this.loginForm.get('password').hasError('required')) {
+
+      this.authenticationService.login(this.loginForm.get('username').value, this.loginForm.get('password').value);
+      this.authErrorMessage = 'Error: Could not authenticate';
+    }
   }
 }
 

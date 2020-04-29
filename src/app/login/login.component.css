@@ -7,9 +7,10 @@
   font-size: 21px;
 }
 
-/*input.input-error {*/
-/*  border:1px solid red;*/
-/*}*/
+#auth-error {
+  color: #B71C1C;
+  font-weight: bold;
+}
 
 .forgot-password {
   margin-left: 15px;
