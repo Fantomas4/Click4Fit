@@ -35,6 +35,64 @@ def displayFavoritePlaces():
     #connection with mongo sending the user's id and getting his favorite place
     return jsonify({'id':5,'name':'CrossFit Gym', 'category':'Gym'})
 
+@app.route("/api/contactus",methods=['POST'])
+def getContact():
+    details=request.get_json() #get all the details of form
+    #connection with mongo sending details and adding contact message
+    return jsonify('Okey')
+
+@app.route("/api/login",methods=['POST','GET'])
+def login():
+    user=request.get_json() #get username and password
+    #connection with mongo sending user and getting answer if this user exists or not
+    #according to this answer return yes or no
+
+@app.route("/api/register", methods=['POST'])
+def register():
+    user=request.get_json()
+    #connection with mongo sending user
+    return jsonify('Okey')
+
+@app.route("/api/recover-password")
+
+@app.route("/api/search", methods=['POST','GET'])
+def search():
+     filters=request.get_json()
+     #connection with mongo sending the fitlers and return the matched place
+     return jsonify({'result'})
+
+@app.route("/api/manage-business-display-entry",methods=['POST','GET'])
+    #connection with mongo getting all the existed business entries
+    return jsonify({'result'})
+
+@app.route("/api/manage-business-add-entry",methods=['POST'])
+    entry=request.get_json()
+    #connection with mongo getting the details for the new business 
+    return jsonify('okey')
+
+@app.route("/api/manage-business-delete-entry",methods=['POST'])
+    entry_id=request.get_json()
+    #connection with mongo sending the id 
+    return jsonify('okey')
+
+@app.route("/api/manage-business-modify-entry",methods=['POST'])
+    entry=request.get_json()
+    #connection with mongo sending the details of modified business entry
+    return jsonify('okey')
+
+@app.route("/api/manage-user-display-entry",methods=['POST','GET'])
+    #connection with mongo getting the user entries
+    return jsonify({'result'})
+
+@app.route("/api/manage-user-delete-entry",methods=['POST'])
+    entry_id=request.get_json()
+    #connection with mongo sending the id
+    return jsonify('okey')
+
+@app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
+    entry=request.get_json()
+    #connection with mongo sending the details of modified entry
+    return jsonify('okey')
 
 
 if __name__ == '__main__':
