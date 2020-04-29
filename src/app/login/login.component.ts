@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+export class CustomErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-login',
@@ -10,11 +19,16 @@ import {AuthenticationService} from './authentication.service';
 
 export class LoginComponent implements OnInit {
   username = '';
+  usernameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
   password = '';
+  passwordFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
-  message: string;
-
-  inputError = false;
+  customErrorMatcher = new CustomErrorStateMatcher();
 
   constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
@@ -31,14 +45,15 @@ export class LoginComponent implements OnInit {
     // } else {
     //   this.message = 'Invalid credentials';
     // }
+
     console.log(this.username.length);
     console.log(this.password.length);
-    if (this.username !== '' && this.password !== '') {
+    if (!this.usernameFormControl.hasError('required') &&
+      !this.passwordFormControl.hasError('required')) {
       this.authenticationService.login(this.username, this.password);
     } else {
-      this.inputError = true;
+      // ????
     }
-    console.log('inputError: ' + this.inputError);
   }
 }
 
