@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MyProfileService} from './myprofile.service';
-import {USERENTRIES} from '../mock-database';
-import {UserEntry} from '../user-entry';
 
 @Component({
   selector: 'app-myprofile',
@@ -10,9 +8,6 @@ import {UserEntry} from '../user-entry';
   styleUrls: ['./myprofile.component.css']
 })
 export class MyprofileComponent implements OnInit {
-
-  myprofileResults = USERENTRIES;
-  myProfileData: UserEntry;
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   firstName: string;
@@ -23,6 +18,7 @@ export class MyprofileComponent implements OnInit {
   repeatedPassword: string;
   content;
   results;
+  picker;
 
   constructor(public myProfileService: MyProfileService) { }
 
@@ -30,14 +26,19 @@ export class MyprofileComponent implements OnInit {
     this.myProfileService.getDetails().subscribe((data:any)=>
     {
       this.results=data;
-      console.log(this.results);
+      this.firstName=this.results.name;
+      this.lastName=this.results.surname;
+      this.initialPassword=this.results.password;
+      this.repeatedPassword=this.results.password;
+      this.registrationEmail=this.results.email;
+      this.date=new FormControl(new Date(this.results.birthdate));
     });
-    this.firstName = this.myprofileResults[0].name;
+    /*this.firstName = this.myprofileResults[0].name;
     this.lastName = this.myprofileResults[0].lastname;
     this.initialPassword = this.myprofileResults[0].password;
     this.repeatedPassword = this.myprofileResults[0].password;
     this.registrationEmail = this.myprofileResults[0].email;
-    this.date = new FormControl(new Date(this.myprofileResults[0].birthdate)); //it shows the date in a calendar 
+    this.date = new FormControl(new Date(this.myprofileResults[0].birthdate));*///it shows the date in a calendar 
   }
 
   /*Checks if the email form has been completed or if the email is valid*/
@@ -49,7 +50,7 @@ export class MyprofileComponent implements OnInit {
   }
   /*Updates the user's details in the database according to his changes*/
   change() {
-    this.content={'username':'eirini','email':'sdadasda'};
+    this.content={'name':this.firstName,'surname':this.lastName,'email':this.registrationEmail,'password':this.initialPassword,'repeatedPassword':this.repeatedPassword,'birthdate':this.date};
     this.myProfileService.postDetails(this.content).toPromise().then((data:any)=>{});
   }
   /*Shows modal message after click on delete account button*/

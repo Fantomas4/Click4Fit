@@ -14,11 +14,12 @@ def createWorkout():
 def displayMyprofile():
     user_id=request.get_json()
     #connection with mongo sending the user's id and modifying the profile's details
-    return jsonify({'id':2,'firstName':'eirini','lastName':'mitsa','date':'07/10/1997','registrationEmail':'eirinimitsa@gmail.com','initialPassword':'ei123456','repeatedPassword':'ei123456'})
+    return jsonify({'id':2,'name':'eirini','surname':'mitsa','email':'eirinimitsa@gmail.com','password':'ei12345','birthdate':'07/10/1997'})
 
 @app.route("/api/update-myprofile", methods=['POST'])
 def updateMyprofile():
     details=request.get_json() #get modifying details
+    print(details)
     #connection with mongo sending the details and modifying the profile's details
     return jsonify('OKEY')
 
