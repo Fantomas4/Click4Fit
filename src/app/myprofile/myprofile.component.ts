@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {MyProfileDeleteService} from './myprofile.delete.service';
+import {MyProfileService} from './myprofile.service';
 import {USERENTRIES} from '../mock-database';
 import {UserEntry} from '../user-entry';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 
 @Component({
   selector: 'app-myprofile',
@@ -24,10 +22,16 @@ export class MyprofileComponent implements OnInit {
   initialPassword: string;
   repeatedPassword: string;
   content;
+  results;
 
-  constructor(public deleteService: MyProfileDeleteService,private http: HttpClient) { }
+  constructor(public myProfileService: MyProfileService) { }
 
   ngOnInit(): void {
+    this.myProfileService.getDetails().subscribe((data:any)=>
+    {
+      this.results=data;
+      console.log(this.results);
+    });
     this.firstName = this.myprofileResults[0].name;
     this.lastName = this.myprofileResults[0].lastname;
     this.initialPassword = this.myprofileResults[0].password;
@@ -45,13 +49,11 @@ export class MyprofileComponent implements OnInit {
   }
   /*Updates the user's details in the database according to his changes*/
   change() {
-    this.content={'username':'eirini','email':'sdadasda'}
-    const headers = { 'content-type': 'application/json'}  
-    const jsonData=JSON.stringify(this.content);
-    this.http.post('http://localhost:5000/api/update-myprofile',jsonData,{'headers':headers}).toPromise().then((data:any)=>{});
+    this.content={'username':'eirini','email':'sdadasda'};
+    this.myProfileService.postDetails(this.content).toPromise().then((data:any)=>{});
   }
   /*Shows modal message after click on delete account button*/
   onClick() {
-    this.deleteService.openModal();
+    this.myProfileService.openModal();
   }
 }

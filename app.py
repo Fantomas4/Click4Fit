@@ -14,7 +14,7 @@ def createWorkout():
 def displayMyprofile():
     user_id=request.get_json()
     #connection with mongo sending the user's id and modifying the profile's details
-    return jsonify({'id':2,'name':'eirini','lastname':'mitsa'})
+    return jsonify({'id':2,'firstName':'eirini','lastName':'mitsa','date':'07/10/1997','registrationEmail':'eirinimitsa@gmail.com','initialPassword':'ei123456','repeatedPassword':'ei123456'})
 
 @app.route("/api/update-myprofile", methods=['POST'])
 def updateMyprofile():
@@ -53,43 +53,51 @@ def register():
     #connection with mongo sending user
     return jsonify('Okey')
 
-@app.route("/api/recover-password")
+#@app.route("/api/recover-password")
+#def recoverPassword():
 
 @app.route("/api/search", methods=['POST','GET'])
 def search():
      filters=request.get_json()
      #connection with mongo sending the fitlers and return the matched place
-     return jsonify({'result'})
+     return jsonify('result')
 
 @app.route("/api/manage-business-display-entry",methods=['POST','GET'])
+def manageBusinessDisplay():
     #connection with mongo getting all the existed business entries
-    return jsonify({'result'})
+    return jsonify({'what':'okey'})
 
 @app.route("/api/manage-business-add-entry",methods=['POST'])
+def manageBusinessAdd():
     entry=request.get_json()
     #connection with mongo getting the details for the new business 
     return jsonify('okey')
 
 @app.route("/api/manage-business-delete-entry",methods=['POST'])
+def manageBusinessDelete():
     entry_id=request.get_json()
     #connection with mongo sending the id 
     return jsonify('okey')
 
 @app.route("/api/manage-business-modify-entry",methods=['POST'])
+def manageBusinessModify():
     entry=request.get_json()
     #connection with mongo sending the details of modified business entry
     return jsonify('okey')
 
 @app.route("/api/manage-user-display-entry",methods=['POST','GET'])
+def manageUserDisplay():
     #connection with mongo getting the user entries
-    return jsonify({'result'})
+    return jsonify('result')
 
 @app.route("/api/manage-user-delete-entry",methods=['POST'])
+def manageUserDelete():
     entry_id=request.get_json()
     #connection with mongo sending the id
     return jsonify('okey')
 
 @app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
+def manageUserModify():
     entry=request.get_json()
     #connection with mongo sending the details of modified entry
     return jsonify('okey')

@@ -27,7 +27,7 @@ import { DetailsDialogComponent } from './search/details-dialog/details-dialog.c
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
-import {MyProfileDeleteService} from './myprofile/myprofile.delete.service';
+import {MyProfileService} from './myprofile/myprofile.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -99,7 +99,7 @@ import { WorkoutService } from './workout/workout.service';
     MatListModule,
     HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileDeleteService,WorkoutService],
+  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService],
   bootstrap: [AppComponent],
   entryComponents: [DialogMessageComponent]
 })
