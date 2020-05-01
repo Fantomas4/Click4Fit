@@ -54,27 +54,26 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    // Update loading flag value for mat-spinner
-    this.loading = true;
+    console.log(this.loginForm.get('email'));
+    console.log(this.loginForm.get('password'));
 
-    // console.log(this.loginForm.get('email'));
-    // console.log(this.loginForm.get('password'));
-    //
-    // if (!this.loginForm.get('email').hasError('required') &&
-    //   !this.loginForm.get('password').hasError('required')) {
-    //   this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
-    //   // this.alertMessage = 'Error: Could not authenticate';
-    //   this.alertSubscription.unsubscribe();
-    //   console.log(this.authenticationService.currentUserValue);
-    //   if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
-    //     // The user currently logged in has the access privilege level of a client
-    //     this.router.navigate(['/user']);
-    //   } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
-    //     this.alertSubscription.unsubscribe();
-    //     this.router.navigate(['/admin']);
-    //   }
-    // }
-    // this.loading = false;
+    if (!this.loginForm.get('email').hasError('required') &&
+      !this.loginForm.get('password').hasError('required')) {
+      // Update loading flag value for mat-spinner
+      this.loading = true;
+      this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
+      // this.alertMessage = 'Error: Could not authenticate';
+      this.alertSubscription.unsubscribe();
+      console.log(this.authenticationService.currentUserValue);
+      if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
+        // The user currently logged in has the access privilege level of a client
+        this.router.navigate(['/user']);
+      } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
+        this.alertSubscription.unsubscribe();
+        this.router.navigate(['/admin']);
+      }
+    }
+    this.loading = false;
   }
 }
 
