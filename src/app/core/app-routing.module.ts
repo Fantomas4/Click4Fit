@@ -14,7 +14,7 @@ import {ContactUsComponent} from '../contact-us/contact-us.component';
 import {HomeComponent} from '../home/home.component';
 import {ManageBusinessEntriesComponent} from '../manage-business-entries/manage-business-entries.component';
 import {ManageUserEntriesComponent} from '../manage-user-entries/manage-user-entries.component';
-import {AuthGuard} from '../auth.guard';
+import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

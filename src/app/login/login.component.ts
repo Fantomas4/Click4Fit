@@ -1,8 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import {AlertService} from '../core/alert.service';
+import {Subscription} from 'rxjs';
 
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -17,10 +19,11 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
     ]),
     password: new FormControl('', [
       Validators.required
@@ -28,25 +31,50 @@ export class LoginComponent implements OnInit {
   });
 
   customErrorMatcher = new CustomErrorStateMatcher();
-  authErrorMessage = '';
+  alertSubscription: Subscription;
+  alertMessage = '';
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
-  }
+  loading = false;
+
+  constructor(private router: Router, private authenticationService: AuthenticationService,
+              private alertService: AlertService) {}
 
   ngOnInit() {
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value.type === 'error') {
+        console.log(value.text);
+        this.alertMessage = value.text;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    console.log('DESTROYEDDD');
+    this.alertSubscription.unsubscribe();
   }
 
   onSubmit(): void {
+    // Update loading flag value for mat-spinner
+    this.loading = true;
 
-    console.log(this.loginForm.get('username'));
-    console.log(this.loginForm.get('password'));
-
-    if (!this.loginForm.get('username').hasError('required') &&
-      !this.loginForm.get('password').hasError('required')) {
-
-      this.authenticationService.login(this.loginForm.get('username').value, this.loginForm.get('password').value);
-      this.authErrorMessage = 'Error: Could not authenticate';
-    }
+    // console.log(this.loginForm.get('email'));
+    // console.log(this.loginForm.get('password'));
+    //
+    // if (!this.loginForm.get('email').hasError('required') &&
+    //   !this.loginForm.get('password').hasError('required')) {
+    //   this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
+    //   // this.alertMessage = 'Error: Could not authenticate';
+    //   this.alertSubscription.unsubscribe();
+    //   console.log(this.authenticationService.currentUserValue);
+    //   if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
+    //     // The user currently logged in has the access privilege level of a client
+    //     this.router.navigate(['/user']);
+    //   } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
+    //     this.alertSubscription.unsubscribe();
+    //     this.router.navigate(['/admin']);
+    //   }
+    // }
+    // this.loading = false;
   }
 }
 
