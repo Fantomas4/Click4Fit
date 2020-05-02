@@ -11,6 +11,7 @@ export class WorkoutComponent implements OnInit {
 
   isClicked = false;
   results;
+  content;
 
   constructor(private workoutService: WorkoutService,private resultCardService: ResultCard2Service) { }
 
@@ -20,11 +21,11 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    var content={categories:['legs','chest'],advisedFor:'women',level:'easy',equipment:'no'}
-    this.workoutService.postFilters(content).toPromise().then((data:any)=>{
+    this.content={categories:['legs','chest'],advisedFor:'women',level:'easy',equipment:'no'}
+    /*this.workoutService.postFilters(this.content).toPromise().then((data:any)=>{
       this.results=data;
-      this.resultCardService.getResults(this.results);
-    });
+      //this.resultCardService.getResults(this.results);
+    });*/
    
   }
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/

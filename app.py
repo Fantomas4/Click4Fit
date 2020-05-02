@@ -8,7 +8,9 @@ CORS(app)
 def createWorkout():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the filters and getting the matched workout
-    return jsonify({'id': 4, 'name': 'Dips on bench', 'advisedFor': 'Women', 'levelOfDifficulty': 'Medium', 'equipment': 'Yes', 'sets': '4x12', 'video': 'https://www.youtube.com/embed/dl8_opV0A0Y'})
+    return jsonify({'id': [4,5], 'name': ['Dips on bench','Obliques'], 'advisedFor': ['Women','Men'],
+    'levelOfDifficulty': ['Medium','Hard'], 'equipment': ['Yes','No'], 'sets': ['4x12','4x15'], 
+    'video': ['https://www.youtube.com/embed/dl8_opV0A0Y','https://www.youtube.com/embed/9Q0D6xAyrOI']})
 
 @app.route("/api/display-myprofile", methods=['POST','GET'])
 def displayMyprofile():

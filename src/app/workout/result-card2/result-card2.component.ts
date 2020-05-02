@@ -12,6 +12,8 @@ import {ResultCard2Service} from './result-card2.service';
 })
 export class ResultCard2Component implements OnInit {
   
+  @Input() filters ;
+
   legsWorkoutResults: LegsWorkoutEntry[];
   chestWorkoutResults: ChestWorkoutEntry[];
   backWorkoutResults: BackWorkoutEntry[];
@@ -29,13 +31,18 @@ export class ResultCard2Component implements OnInit {
   absIsEmpty=false;
   coreIsEmpty=false;
   results;
+  name:string;
 
   //DomSanitizer helps to pass url video safe
   constructor(public sanitizer: DomSanitizer,private workoutService: WorkoutService,private resultCardSrvice: ResultCard2Service){}
 
   ngOnInit(): void {
-    this.results=this.resultCardSrvice.passResults();
-    console.log(this.results);
+    //this.results=this.resultCardSrvice.passResults();
+    //console.log(this.filters);
+    this.resultCardSrvice.postFilters(this.filters).toPromise().then((data:any)=>{
+      this.results=data;
+      this.name=this.results.name[1];
+    });
     //gets all the results and adds them in a seperated array
     this.workoutService.getLegsResults().subscribe(results => this.legsWorkoutResults = results);
     this.workoutService.getBackResults().subscribe(results => this.backWorkoutResults = results);

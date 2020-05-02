@@ -46,7 +46,7 @@
         <div class="card-container">
             <!-- It is shown only when the user has clicked the search button -->
             <div *ngIf="isClicked">
-                <app-result-card2></app-result-card2>
+                <app-result-card2 [filters]="content"></app-result-card2>
             </div>
         </div>
     </mat-drawer-content>
