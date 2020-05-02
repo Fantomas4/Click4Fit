@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('DESTROYEDDD');
     this.alertSubscription.unsubscribe();
   }
 
@@ -57,8 +56,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     console.log(this.loginForm.get('email'));
     console.log(this.loginForm.get('password'));
 
-    if (!this.loginForm.get('email').hasError('required') &&
+    if (!(this.loginForm.get('email').hasError('required') &&
+      this.loginForm.get('email').hasError('email')) &&
       !this.loginForm.get('password').hasError('required')) {
+
       // Update loading flag value for mat-spinner
       this.loading = true;
       this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);

@@ -3,18 +3,20 @@
     <mat-card-title>Please provide your registration details:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form class="register-form">
-      <table class="example-full-width" cellspacing="0">
+    <form [formGroup]="registerForm" class="register-form">
+      <table cellspacing="0">
         <tr>
-          <mat-form-field class="example-full-width">
+          <mat-form-field>
             <mat-label>First name</mat-label>
-            <input matInput placeholder="e.g. George" [(ngModel)]="firstName" name="first-name" required>
+            <input matInput formControlName="firstName" placeholder="e.g. George"
+                   [errorStateMatcher]="customErrorMatcher" name="first-name" required>
           </mat-form-field>
         </tr>
         <tr>
-          <mat-form-field class="example-full-width">
+          <mat-form-field>
             <mat-label>Last name</mat-label>
-            <input matInput placeholder="e.g. Brown" [(ngModel)]="lastName" name="last-name" required>
+            <input matInput formControlName="lastName" placeholder="e.g. Brown" [errorStateMatcher]="customErrorMatcher"
+                   name="last-name" required>
           </mat-form-field>
         </tr>
         <tr>
@@ -28,26 +30,43 @@
       </table>
       <mat-form-field class="email-input-field">
         <mat-label>E-mail</mat-label>
-        <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
+        <input matInput formControlName="email" placeholder="address@example.com" [errorStateMatcher]="customErrorMatcher"
                type="email" name="registration-email" required>
-        <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error *ngIf="registerForm.get('email').hasError('required')">
+          Please enter your e-mail
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email').hasError('email')">
+          Please a valid email address
+        </mat-error>
       </mat-form-field>
       <table>
         <tr>
-          <mat-form-field>
-            <input matInput placeholder="Password" [(ngModel)]="initialPassword" type="password" name="initial-password" required>
+          <mat-form-field formGroupName="passwords">
+            <mat-label>Password</mat-label>
+            <div formGroupName="passwords">
+              <input matInput formControlName="password" [errorStateMatcher]="customErrorMatcher"
+                     type="password" name="initial-password" required>
+              <mat-error *ngIf="registerForm.get('passwords').hasError('passwordMismatch')">test</mat-error>
+            </div>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
-            <input matInput placeholder="Repeat password" [(ngModel)]="repeatedPassword" type="password" name="repeated-password" required>
+            <mat-label>Repeat Password</mat-label>
+            <div formGroupName="passwords">
+              <input matInput formControlName="repeatPassword"
+                     [errorStateMatcher]="customErrorMatcher" type="password" name="repeat-password" required>
+              <mat-error *ngIf="registerForm.get('passwords').hasError('passwordMismatch')">
+                Passwords do not match!
+              </mat-error>
+            </div>
           </mat-form-field>
         </tr>
       </table>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button id="registerButton" (click)="register" color="primary">Register</button>
+    <button mat-raised-button id="registerButton" (click)="onSubmit()" color="primary">Register</button>
   </mat-card-actions>
 </mat-card>
 
