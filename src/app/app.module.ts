@@ -26,7 +26,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
-import { DialogMessageComponent } from './dialog-message/dialog-message.component';
+import { DialogMessageComponent } from './myprofile/dialog-message/dialog-message.component';
 import {MyProfileService} from './myprofile/myprofile.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';

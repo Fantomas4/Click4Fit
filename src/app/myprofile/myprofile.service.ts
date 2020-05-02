@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {DialogMessageComponent} from '../dialog-message/dialog-message.component';
+import {DialogMessageComponent} from './dialog-message/dialog-message.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 
