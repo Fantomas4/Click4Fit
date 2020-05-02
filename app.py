@@ -1,7 +1,9 @@
 from flask import Flask, jsonify,request,json
 from flask_cors import CORS
+#from MongoDatabase.MongoDB import *
 
 app = Flask(__name__)
+#MongoDB=MongoDB()
 CORS(app)
 
 @app.route("/api/workout", methods=['POST','GET']) #when someone posts data to me
@@ -16,13 +18,20 @@ def createWorkout():
 def displayMyprofile():
     user_id=request.get_json()
     #connection with mongo sending the user's id and modifying the profile's details
+    #result=MondogDB.getUserById(user_id)
     return jsonify({'id':2,'name':'eirini','surname':'mitsa','email':'eirinimitsa@gmail.com','password':'ei12345','birthdate':'07/10/1997'})
 
 @app.route("/api/update-myprofile", methods=['POST'])
 def updateMyprofile():
+    """
+    In request expecting a json with myprofile details
+    return: a json with 'OKEY' message if everything is fine
+    or a json with the suitable message about the error
+    """
     details=request.get_json() #get modifying details
-    print(details)
+    print(details['repeatedPassword'])
     #connection with mongo sending the details and modifying the profile's details
+    #MongoDB.updateUser(details['name'],details['surname'],details['email'],details['password'],details['email'],[],"","")
     return jsonify('OKEY')
 
 @app.route("/api/favorite-workout", methods=['POST','GET'])
@@ -49,15 +58,14 @@ def login():
     user=request.get_json() #get username and password
     #connection with mongo sending user and getting answer if this user exists or not
     #according to this answer return yes or no
+    #MongoDB.logIn(user['email'],user['password'])
 
 @app.route("/api/register", methods=['POST'])
 def register():
     user=request.get_json()
     #connection with mongo sending user
+    #MongoDB.register(user['name'],user['surname'],user['emai'],user['password'],user['birthdate'],"")
     return jsonify('Okey')
-
-#@app.route("/api/recover-password")
-#def recoverPassword():
 
 @app.route("/api/search", methods=['POST','GET'])
 def search():
@@ -66,7 +74,13 @@ def search():
      return jsonify('result')
 
 @app.route("/api/manage-business-display-entry",methods=['POST','GET'])
-def manageBusinessDisplay():
+def manageOneBusinessDisplay():
+    entry_id=request.get_json()
+    #connection with mongo getting all current business entry
+    return jsonify({'what':'okey'})
+
+@app.route("/api/manage-business-display-entry",methods=['POST','GET'])
+def manageAllBusinessesDisplay():
     #connection with mongo getting all the existed business entries
     return jsonify({'what':'okey'})
 
@@ -89,20 +103,30 @@ def manageBusinessModify():
     return jsonify('okey')
 
 @app.route("/api/manage-user-display-entry",methods=['POST','GET'])
-def manageUserDisplay():
-    #connection with mongo getting the user entries
+def manageOneUserDisplay():
+    user_id=request.get_json()
+    #connection with mongo getting the current user entry
+    #MongoDB.getUserById(user_id)
+    return jsonify('result')
+
+@app.route("/api/manage-user-display-entry",methods=['POST','GET'])
+def manageAllUsersDisplay():
+    #connection with mongo getting all the existed user entries
+    #MongoDB.getUsers()
     return jsonify('result')
 
 @app.route("/api/manage-user-delete-entry",methods=['POST'])
 def manageUserDelete():
-    entry_id=request.get_json()
+    user_id=request.get_json()
     #connection with mongo sending the id
+    #MongoDB.deleteUser(user_id)
     return jsonify('okey')
 
 @app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
 def manageUserModify():
-    entry=request.get_json()
+    user=request.get_json()
     #connection with mongo sending the details of modified entry
+    #MongoDB.updateUser(user['name'],user['surname'],user['email'],user['password'],user['birthdate'],[],"","")
     return jsonify('okey')
 
 

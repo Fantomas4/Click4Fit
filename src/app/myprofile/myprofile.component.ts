@@ -10,11 +10,11 @@ import {MyProfileService} from './myprofile.service';
 export class MyprofileComponent implements OnInit {
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  firstName: string;
-  lastName: string;
-  date: FormControl;
-  registrationEmail: string;
-  initialPassword: string;
+  name: string;
+  surname: string;
+  birthdate: FormControl;
+  email: string;
+  password: string;
   repeatedPassword: string;
   content;
   results;
@@ -26,12 +26,12 @@ export class MyprofileComponent implements OnInit {
     this.myProfileService.getDetails().subscribe((data:any)=>
     {
       this.results=data;
-      this.firstName=this.results.name;
-      this.lastName=this.results.surname;
-      this.initialPassword=this.results.password;
+      this.name=this.results.name;
+      this.surname=this.results.surname;
+      this.password=this.results.password;
       this.repeatedPassword=this.results.password;
-      this.registrationEmail=this.results.email;
-      this.date=new FormControl(new Date(this.results.birthdate));
+      this.email=this.results.email;
+      this.birthdate=new FormControl(new Date(this.results.birthdate));
     });
     /*this.firstName = this.myprofileResults[0].name;
     this.lastName = this.myprofileResults[0].lastname;
@@ -50,7 +50,7 @@ export class MyprofileComponent implements OnInit {
   }
   /*Updates the user's details in the database according to his changes*/
   change() {
-    this.content={'name':this.firstName,'surname':this.lastName,'email':this.registrationEmail,'password':this.initialPassword,'repeatedPassword':this.repeatedPassword,'birthdate':this.date};
+    this.content={'name':this.name,'surname':this.surname,'email':this.email,'password':this.password,'birthdate':this.birthdate};
     this.myProfileService.postDetails(this.content).toPromise().then((data:any)=>{});
   }
   /*Shows modal message after click on delete account button*/
