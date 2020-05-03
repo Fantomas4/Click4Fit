@@ -13,11 +13,11 @@
       <mat-divider></mat-divider>
       <div mat-subheader class="filter-type-subheader">Location</div>
       <div class="location-container">
-        <app-location-autocomplete class="autocomplete-field" placeholderStr="Country name" [(ngModel)]="countryName" name="countryName"></app-location-autocomplete>
+        <app-location-autocomplete class="autocomplete-field" placeholderStr="Country name"></app-location-autocomplete>
         <app-location-autocomplete class="autocomplete-field" placeholderStr="City name"></app-location-autocomplete>  <!--[(ngModel)]="cityName" name="cityName"*/-->
         <mat-divider></mat-divider>
       </div>
-      <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
+      <button mat-raised-button id="done-button" (click)="sidenav.close();onClick()" color="primary">Done!</button>
     </mat-nav-list>
   </mat-drawer>
 

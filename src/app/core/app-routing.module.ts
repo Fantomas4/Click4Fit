@@ -27,6 +27,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserMainViewComponent,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'manage-user-entries', component: ManageUserEntriesComponent },
       { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
       {path: 'dashboard', component: DashboardComponent},

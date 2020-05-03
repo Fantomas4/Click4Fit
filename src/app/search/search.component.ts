@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,ViewChild} from '@angular/core';
 import {SearchService} from './search.service';
 import {BusinessEntry} from '../business-entry';
 import {MatTableDataSource} from '@angular/material/table';
+import {LocationAutocompleteComponent} from './location-autocomplete/location-autocomplete.component';
 
 @Component({
   selector: 'app-search',
@@ -9,12 +10,16 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+
+  @ViewChild(LocationAutocompleteComponent) locationAutocomplete;
+
   searchResults: BusinessEntry[]; // Array containing the BusinessEntry objects that were retrieved from the database.
   searchInput: string;
   countryName: string;
   cityName: string;
   selectionArray = new Array();
   dataSource = new MatTableDataSource(this.searchResults);
+  
   constructor(private searchService: SearchService) { }
 
   ngOnInit(): void {
@@ -59,6 +64,10 @@ export class SearchComponent implements OnInit {
     for (const a of v) {
       this.selectionArray.push(a.value);
     }
+  }
+  onClick(){
+    this.countryName=this.locationAutocomplete.location;
+    console.log(this.countryName);
   }
 
 }
