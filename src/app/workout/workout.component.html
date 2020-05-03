@@ -2,35 +2,35 @@
 <mat-drawer-container>
     <!-- The right sidenav with the filters -->
     <mat-drawer #sidenav mode="over" position="end" (openedChange)="onToggleSidenav()">
-        <mat-selection-list id="categories">
+        <mat-selection-list id="categories"  #categories (selectionChange)="onSelection($event, categories.selectedOptions.selected)">
             <div mat-subheader class="filter-type-subheader">Part of body</div>
-            <mat-list-option>Legs</mat-list-option>
-            <mat-list-option>Back</mat-list-option>
-            <mat-list-option>Chest</mat-list-option>
-            <mat-list-option>Shoulders</mat-list-option>
-            <mat-list-option>Biceps</mat-list-option>
-            <mat-list-option>Triceps</mat-list-option>
-            <mat-list-option>Abs</mat-list-option>
-            <mat-list-option>Core</mat-list-option>
+            <mat-list-option value ="Legs">Legs</mat-list-option>
+            <mat-list-option value ="Back">Back</mat-list-option>
+            <mat-list-option value ="Chest">Chest</mat-list-option>
+          <mat-list-option value ="Shoulders">Shoulders</mat-list-option>
+            <mat-list-option value ="Biceps">Biceps</mat-list-option>
+            <mat-list-option value ="Triceps">Triceps</mat-list-option>
+            <mat-list-option value ="Abs">Abs</mat-list-option>
+            <mat-list-option value ="Core">Core</mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list>
+        <mat-selection-list id="gender" #gender (selectionChange)="onSelection($event, gender.selectedOptions.selected)">
             <div mat-subheader class="filter-type-subheader">Advised for</div>
-            <mat-list-option>Men</mat-list-option>
-            <mat-list-option>Women</mat-list-option>
+            <mat-list-option value ="Men">Men</mat-list-option>
+            <mat-list-option value ="Women">Women</mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list>
+        <mat-selection-list id="difficulty"#difficulty (selectionChange)="onSelection($event, difficulty.selectedOptions.selected)">
             <div mat-subheader class="filter-type-subheader">Level of difficulty</div>
-            <mat-list-option>Easy</mat-list-option>
-            <mat-list-option>Medium</mat-list-option>
-            <mat-list-option>Hard</mat-list-option>
+            <mat-list-option value ="Easy">Easy</mat-list-option>
+            <mat-list-option value ="Medium">Medium</mat-list-option>
+            <mat-list-option value ="Hard">Hard </mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list>
+        <mat-selection-list id="equipment" #equipment (selectionChange)="onSelection($event, equipment.selectedOptions.selected)">
             <div mat-subheader class="filter-type-subheader">Equipment</div>
-            <mat-list-option>Yes</mat-list-option>
-            <mat-list-option>No</mat-list-option>
+            <mat-list-option value ="Yes">Yes</mat-list-option>
+            <mat-list-option value ="No">No</mat-list-option>
         </mat-selection-list>
         <div><button mat-raised-button id="searchButton" (click)="getResults();sidenav.close()">Search</button><br></div>
     </mat-drawer>

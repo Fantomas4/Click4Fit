@@ -1,0 +1,66 @@
+/*!* Error text of page styles *!*/
+h1 {
+  font-size: 60px;
+  font-style: italic;
+  font-weight: normal;
+  top:50%;
+  left:50%;
+  text-align: center;
+  color: black;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+}
+
+h2 {
+  font-size: 30px;
+  font-style: italic;
+  font-weight: normal;
+  top:50%;
+  left:50%;
+  text-align: center;
+  color: black;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+}
+/*!* The homepage button included in error text styles *!*/
+h3 {
+  font-size: 30px;
+  font-style: italic;
+  font-weight: normal;
+  top:50%;
+  left:50%;
+  text-align: center;
+  color: darkgreen;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+}
+
+/*!* Background image styles with the blur effect *!*/
+.error-image {
+  flex: 1;
+  background-image: url("../../assets/error-image.jpg");
+  background-color: #cccccc;
+  height: 100%;
+  opacity: unset;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
+
+/*!* Position text in the middle of the page and error-image, black opacity see-through frame for the error text *!*/
+.error-text {
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.4);
+  border: 3px solid darkgreen;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}

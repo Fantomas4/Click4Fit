@@ -14,18 +14,19 @@ import {ContactUsComponent} from '../contact-us/contact-us.component';
 import {HomeComponent} from '../home/home.component';
 import {ManageBusinessEntriesComponent} from '../manage-business-entries/manage-business-entries.component';
 import {ManageUserEntriesComponent} from '../manage-user-entries/manage-user-entries.component';
+import {ErrorPageComponent} from '../error-page/error-page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact-us', component: ContactUsComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'error-page', component: ErrorPageComponent},
   {path: 'recover-password', component: RecoverPasswordComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserMainViewComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'manage-user-entries', component: ManageUserEntriesComponent },
       { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
       {path: 'dashboard', component: DashboardComponent},
@@ -33,7 +34,7 @@ const routes: Routes = [
       {path: 'search', component: SearchComponent},
       {path: 'workout', component: WorkoutComponent }
     ]},
-  {path: 'about', component: AboutComponent}
+  {path: 'about', component: AboutComponent},
 ];
 
 @NgModule({

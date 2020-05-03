@@ -45,6 +45,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { HomepageComponent } from './homepage/homepage.component';
     UserDetailsEditDialogComponent,
     UserDetailsEditDialogComponent,
     FooterComponent,
-    HomepageComponent
+    HomepageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
