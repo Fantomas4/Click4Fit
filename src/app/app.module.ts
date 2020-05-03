@@ -46,6 +46,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
 import { WorkoutService } from './workout/workout.service';
+import { ContactUsService } from './contact-us/contact-us.service';
 
 
 @NgModule({
@@ -99,7 +100,7 @@ import { WorkoutService } from './workout/workout.service';
     MatListModule,
     HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService],
+  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,ContactUsService],
   bootstrap: [AppComponent],
   entryComponents: [DialogMessageComponent]
 })
