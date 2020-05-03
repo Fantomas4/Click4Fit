@@ -12,10 +12,24 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {Subscription} from 'rxjs';
 import {AlertService} from '../core/alert.service';
 
-export class CustomErrorStateMatcher implements ErrorStateMatcher {
+export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    // console.log(control);
+    // console.log(form);
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
+export class PasswordsErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    // console.log(control);
+    // console.log(form);
+    console.log('form.hasError(\'passwordMismatch\'): ' + form.hasError('passwordMismatch'));
+    console.log('return: ' + form.hasError('passwordMismatch'));
+
+    return form.hasError('passwordMismatch');
   }
 }
 
@@ -62,7 +76,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   );
 
-  customErrorMatcher = new CustomErrorStateMatcher();
+  genericErrorStateMatcher = new GenericErrorStateMatcher();
+  passwordsErrorStateMatcher = new PasswordsErrorStateMatcher();
   alertSubscription: Subscription;
   alertMessage = '';
 
@@ -110,7 +125,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     //   this.passwordsMatch()) {
     //
     // }
-    console.log('test: ' + this.registerForm.hasError('passwordMismatch'));
+    console.log('onSubmit() this.registerForm.get(\'passwords\').hasError(\'passwordMismatch\') : ' + this.registerForm.get('passwords').hasError('passwordMismatch'));
 
   }
 }
