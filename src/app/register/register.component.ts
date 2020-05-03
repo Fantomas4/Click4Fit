@@ -117,15 +117,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(): void {
-    // if (!this.registerForm.get('firstName').hasError('required') &&
-    //   !this.registerForm.get('lastName').hasError('required') &&
-    //   !(this.registerForm.get('email').hasError('required') &&
-    //   this.registerForm.get('email').hasError('email')) &&
-    //   this.passwordsMatch()) {
-    //
-    // }
-    console.log('onSubmit() this.registerForm.get(\'passwords\').hasError(\'passwordMismatch\') : ' + this.registerForm.get('passwords').hasError('passwordMismatch'));
+  // submitForms(): void {
+  //   document.getElementById('register-form').onsubmit;
+  //   document.getElementById('register-form').onsubmit;
+  // }
 
+  onSubmit(): void {
+    if (!this.registerForm.get('firstName').hasError('required') &&
+      !this.registerForm.get('lastName').hasError('required') &&
+      !(this.registerForm.get('email').hasError('required') &&
+      this.registerForm.get('email').hasError('email')) &&
+      this.passwordsMatch()) {
+
+    }
   }
 }
