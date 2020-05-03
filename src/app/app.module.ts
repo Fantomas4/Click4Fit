@@ -49,6 +49,7 @@ import { DialogMessage2Component } from './recover-password/dialog-message2/dial
 import { DialogMessage3Component } from './contact-us/dialog-message3/dialog-message3.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
 import { ContactUsService } from './contact-us/contact-us.service';
+import { DialogMessageBComponent } from './myprofile/dialog-message-b/dialog-message-b.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { ContactUsService } from './contact-us/contact-us.service';
     FooterComponent,
     HomepageComponent,
     DialogMessage2Component,
-    DialogMessage3Component
+    DialogMessage3Component,
+    DialogMessageBComponent
   ],
   imports: [
     BrowserModule,
@@ -105,6 +107,6 @@ import { ContactUsService } from './contact-us/contact-us.service';
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,RecoverPasswordService,ContactUsService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogMessageComponent,DialogMessage2Component,DialogMessage3Component]
+  entryComponents: [DialogMessageComponent,DialogMessageBComponent,DialogMessage2Component,DialogMessage3Component]
 })
 export class AppModule { }

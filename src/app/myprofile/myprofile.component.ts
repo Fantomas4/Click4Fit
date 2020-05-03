@@ -41,12 +41,12 @@ export class MyprofileComponent implements OnInit {
     }
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
   }
-  /*Updates the user's details in the database according to his changes*/
-  change() {
-
-  }
   /*Shows modal message after click on delete account button*/
-  onClick() {
-    this.myprofileService.openModal();
+  onClickDelete() {
+    this.myprofileService.openModalDelete();
+  }
+   /*Updates the user's details in the database according to his changes*/
+  onClickUpdate(){
+    this.myprofileService.openModalUpdate();
   }
 }
