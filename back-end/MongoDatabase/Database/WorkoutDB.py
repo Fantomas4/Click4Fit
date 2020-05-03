@@ -1,10 +1,11 @@
 import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\back-end")
+sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 from bson import ObjectId
 
 from DataModels.Workout import Workout, getWorkoutFromJson
 from MongoDatabase.Wrappers.WorkoutWrapper import WorkoutWrapper
+from MongoDatabase.Wrappers.WorkoutListWrapper import WorkoutListWrapper
 
 class WorkoutDB:
 
@@ -68,8 +69,9 @@ class WorkoutDB:
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
     
-    def getAllWorkoutes(self):
+    def getAllWorkouts(self):
         try:
-            return [getWorkoutFromJson(workout_json) for workout_json in self.db.find()]
+            return WorkoutListWrapper([getWorkoutFromJson(workout_json) for workout_json in self.db.find()],
+                                found=True, operationDone=True)
         except:
-            return []
+            return WorkoutListWrapper([], found=False, operationDone=False)

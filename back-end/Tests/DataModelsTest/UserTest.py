@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\back-end")
+sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 import unittest
 from DataModels.User import User, getUserFromJson
 

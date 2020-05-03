@@ -1,10 +1,11 @@
 import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\back-end")
+sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 from bson import ObjectId
 
 from DataModels.Business import Business, getBusinessFromJson
 from MongoDatabase.Wrappers.BusinessWrapper import BusinessWrapper
+from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper
 
 class BusinessDB:
 
@@ -63,7 +64,6 @@ class BusinessDB:
     
     def updateBusinessById(self, newBusiness: Business, business_id: str):
         if type(business_id) is not str: raise TypeError("business_id must be of type str")
-        if not business_id: raise ValueError("business_id is empty string")
         try:
             if bool(self.db.find_one({"_id": ObjectId(business_id)})):
                 newBusiness.id = business_id
@@ -76,7 +76,6 @@ class BusinessDB:
 
     def deleteBusinessById(self, business_id: str):
         if type(business_id) is not str: raise TypeError("business_id must be of type str")
-        if not business_id: raise ValueError("business_id is empty string")
         try:
             wrapper: BusinessWrapper = self.getBusinessById(business_id)
             if wrapper.business:
@@ -88,7 +87,8 @@ class BusinessDB:
     
     def getAllBusinesses(self):
         try:
-            return [getBusinessFromJson(business_json) for business_json in self.db.find()]
+            return BusinessListWrapper([getBusinessFromJson(business_json) for business_json in self.db.find()],
+                                    found=True, operationDone=True)
         except:
-            return []
+            return BusinessWrapper([], found=False, operationDone=False)
     

@@ -1,10 +1,11 @@
 import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\back-end")
+sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 import unittest
 
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.WorkoutWrapper import WorkoutWrapper
+from MongoDatabase.Wrappers.WorkoutListWrapper import WorkoutListWrapper
 from DataModels.Workout import Workout
 
 class WorkoutDBTest(unittest.TestCase):
@@ -82,19 +83,28 @@ class WorkoutDBTest(unittest.TestCase):
         self.assertEqual(workoutWrapper.workout, self.workout1)
         self.assertIsNone(self.connection.workoutDB.getWorkoutById(self.workout1.id).workout)
 
-    def test_getAllWorkoutes(self):
+    def test_getAllWorkouts(self):
         # testing on existend workouts
-        self.assertEqual([self.workout1], self.connection.workoutDB.getAllWorkoutes())
+        workoutListWrapper = self.connection.workoutDB.getAllWorkouts()
+        self.assertEqual([self.workout1], workoutListWrapper.workoutList)
+        self.assertTrue(workoutListWrapper.found)
+        self.assertTrue(workoutListWrapper.operationDone)
         # add workout2
         workoutWrapper = self.connection.workoutDB.createNewWorkout(self.workout2.name, self.workout2.muscle_groups,
                                     self.workout2.advised_for, self.workout2.difficulty, self.workout2.equipment,
                                     self.workout2.sets, self.workout2.video_url, self.workout2.id)
         self.assertTrue(workoutWrapper.operationDone)
         self.workout2.id = workoutWrapper.workout.id
-        self.assertEqual([self.workout1, self.workout2], self.connection.workoutDB.getAllWorkoutes())
+        workoutListWrapper =  self.connection.workoutDB.getAllWorkouts()
+        self.assertEqual([self.workout1, self.workout2], workoutListWrapper.workoutList)
+        self.assertTrue(workoutListWrapper.found)
+        self.assertTrue(workoutListWrapper.operationDone)
         # deleting all workouts
         self.connection.workoutDB.db.drop()
-        self.assertEqual([], self.connection.workoutDB.getAllWorkoutes())
+        workoutListWrapper =  self.connection.workoutDB.getAllWorkouts()
+        self.assertEqual([], workoutListWrapper.workoutList)
+        self.assertTrue(workoutListWrapper.found)
+        self.assertTrue(workoutListWrapper.operationDone)
 
 
     def test_value(self):

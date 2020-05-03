@@ -51,7 +51,6 @@ class User:
 
     def verify_password(self, provided_password: str):
         if type(provided_password) is not str: raise TypeError("provided_password must be of type str")
-        # TODO: Check password with regex or len
         salt = self.password[:64]
         stored_password = self.password[64:]
         pwdhash = hashlib.pbkdf2_hmac('sha512',

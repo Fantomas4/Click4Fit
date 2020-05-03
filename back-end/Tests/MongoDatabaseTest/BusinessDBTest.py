@@ -1,10 +1,11 @@
 import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\back-end")
+sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 import unittest
 
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.BusinessWrapper import BusinessWrapper
+from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper
 from DataModels.Business import Business
 
 class BusinessDBTest(unittest.TestCase):
@@ -90,7 +91,10 @@ class BusinessDBTest(unittest.TestCase):
 
     def test_getAllBusinesses(self):
         # testing on existend businesses
-        self.assertEqual([self.business1], self.connection.businessDB.getAllBusinesses())
+        businessListWrapper = self.connection.businessDB.getAllBusinesses()
+        self.assertEqual([self.business1], businessListWrapper.businessList)
+        self.assertTrue(businessListWrapper.found)
+        self.assertTrue(businessListWrapper.operationDone)
         # add business2
         businessWrapper = self.connection.businessDB.createNewBusiness(self.business2.name, self.business2.category,
                                         self.business2.country, self.business2.city, self.business2.address,
@@ -98,10 +102,17 @@ class BusinessDBTest(unittest.TestCase):
                                         self.business2.img_path, self.business2.services, self.business2.products)
         self.assertTrue(businessWrapper.operationDone)
         self.business2.id = businessWrapper.business.id
-        self.assertEqual([self.business1, self.business2], self.connection.businessDB.getAllBusinesses())
+        businessListWrapper = self.connection.businessDB.getAllBusinesses()
+        self.assertEqual([self.business1, self.business2], businessListWrapper.businessList)
+        self.assertTrue(businessListWrapper.found)
+        self.assertTrue(businessListWrapper.operationDone)
         # deleting all businesses
         self.connection.businessDB.db.drop()
-        self.assertEqual([], self.connection.businessDB.getAllBusinesses())
+        businessListWrapper = self.connection.businessDB.getAllBusinesses()
+        self.assertEqual([], businessListWrapper.businessList)
+        self.assertTrue(businessListWrapper.found)
+        self.assertTrue(businessListWrapper.operationDone)
+
     
     def test_value(self):
         #TODO: Test Errors
