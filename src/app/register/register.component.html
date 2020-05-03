@@ -49,12 +49,16 @@
           <mat-error *ngIf="registerForm.get('passwords').hasError('passwordMismatch')">test</mat-error>
         </mat-form-field>
 
+        <mat-form-field>
+          <mat-label>Repeat Password</mat-label>
+            <input matInput formControlName="repeatPassword"
+                   [errorStateMatcher]="passwordsErrorStateMatcher" type="password" name="repeat-password" required>
+            <mat-error *ngIf="registerForm.get('passwords').hasError('passwordMismatch')">
+              Passwords do not match!
+            </mat-error>
+        </mat-form-field>
+
       </form>
-
-
-
-
-
 
 <!--        <tr>-->
 <!--          <mat-form-field>-->
