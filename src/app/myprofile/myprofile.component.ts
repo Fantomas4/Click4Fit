@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {MyProfileDeleteService} from './myprofile.delete.service';
+import {MyProfileService} from './myprofile.service';
 import {USERENTRIES} from '../mock-database';
 import {UserEntry} from '../user-entry';
 
@@ -23,7 +23,7 @@ export class MyprofileComponent implements OnInit {
   initialPassword: string;
   repeatedPassword: string;
 
-  constructor(public deleteService: MyProfileDeleteService) { }
+  constructor(public myprofileService: MyProfileService) { }
 
   ngOnInit(): void {
     this.firstName = this.myprofileResults[0].name;
@@ -47,6 +47,6 @@ export class MyprofileComponent implements OnInit {
   }
   /*Shows modal message after click on delete account button*/
   onClick() {
-    this.deleteService.openModal();
+    this.myprofileService.openModal();
   }
 }

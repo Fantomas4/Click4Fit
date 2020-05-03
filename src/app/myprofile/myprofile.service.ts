@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {DialogMessageComponent} from '../dialog-message/dialog-message.component';
+import {DialogMessageComponent} from './dialog-message/dialog-message.component';
 
 /*This service is about showing an alert modal message to confirm the user's willing for deleting
 his account*/
 @Injectable()
-export class MyProfileDeleteService {
+export class MyProfileService {
 
     constructor(public dialog: MatDialog) { }
 
