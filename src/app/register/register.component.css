@@ -3,6 +3,10 @@
   margin: 10% auto;
 }
 
+#register-form {
+  padding-bottom: 3%;
+}
+
 .mat-card-title {
   font-size: 21px;
 }
@@ -11,9 +15,14 @@
   width: 80%
 }
 
+mat-card-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 #register-button{
-  margin:0 auto;
-  display:block;
+  margin-right: 2%
 }
 
 @media screen and (max-width:320px){

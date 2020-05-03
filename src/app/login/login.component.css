@@ -8,7 +8,7 @@
 }
 
 #login-form {
-  padding: 3%;
+  padding-bottom: 3%;
 }
 
 #alert-message {
@@ -25,6 +25,7 @@ mat-card-actions {
 #submit-button {
   margin-right: 2%
 }
+
 mat-spinner {
   margin-right: 2%
 }

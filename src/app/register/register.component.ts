@@ -25,7 +25,7 @@ export class PasswordsErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     // console.log(control);
-    console.log(form);
+    // console.log(form);
     // console.log('form.hasError(\'passwordMismatch\'): ' + form.hasError('passwordMismatch'));
     // console.log('return: ' + form.hasError('passwordMismatch'));
 
@@ -98,25 +98,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.alertSubscription.unsubscribe();
   }
 
-  passwordsMatch(): boolean {
-    if (!(this.registerForm.get('password').hasError('required') &&
-      this.registerForm.get('repeatPassword').hasError('required'))) {
-      // Check if password and repeat password match
-      console.log(this.registerForm.get('password').value);
-      console.log(this.registerForm.get('repeatPassword').value);
-      console.log('passwordsMatch(): ' + this.registerForm.get('password').value === this.registerForm.get('repeatPassword').value);
-      return this.registerForm.get('password').value === this.registerForm.get('repeatPassword').value;
-    }
-  }
-
   onSubmit(): void {
-    console.log('test232: ' + this.registerForm.get('passwords').hasError('required'));
-    // if (!this.registerForm.get('firstName').hasError('required') &&
-    //   !this.registerForm.get('lastName').hasError('required') &&
-    //   !(this.registerForm.get('email').hasError('required') &&
-    //   this.registerForm.get('email').hasError('email')) &&
-    //   this.passwordsMatch()) {
-    //
-    // }
+    if (this.registerForm.valid) {
+      this.loading = true;
+    }
+    // this.loading = false;
   }
 }
