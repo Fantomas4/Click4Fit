@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
   placeIsEmpty = false;
 
   CurrentTime: any;
+  favoriteWorkout;
+  favoritePlaces
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
@@ -28,6 +30,12 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.dashboardService.getFavoriteWorkout().subscribe((data:any)=>{
+      this.favoriteWorkout=data;
+    });
+    this.dashboardService.getFavoritePlaces().subscribe((data:any)=>{
+      this.favoritePlaces=data;
+    });
     //gets the favrorites workout results from dashboard.service and adds them to an array
     this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
     //gets the favorites places results from dashboard.service and adds them to an array

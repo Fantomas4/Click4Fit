@@ -79,7 +79,7 @@ def manageOneBusinessDisplay():
     #connection with mongo getting all current business entry
     return jsonify({'what':'okey'})
 
-@app.route("/api/manage-business-display-entry",methods=['POST','GET'])
+@app.route("/api/manage-business-display-entries",methods=['POST','GET'])
 def manageAllBusinessesDisplay():
     #connection with mongo getting all the existed business entries
     return jsonify({'what':'okey'})
@@ -109,7 +109,7 @@ def manageOneUserDisplay():
     #MongoDB.getUserById(user_id)
     return jsonify('result')
 
-@app.route("/api/manage-user-display-entry",methods=['POST','GET'])
+@app.route("/api/manage-user-display-entries",methods=['POST','GET'])
 def manageAllUsersDisplay():
     #connection with mongo getting all the existed user entries
     #MongoDB.getUsers()
