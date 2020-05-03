@@ -46,29 +46,31 @@
             </mat-error>
           </mat-form-field>
         </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" [errorStateMatcher]="passwordsErrorStateMatcher"
+                   type="password" name="initial-password" required>
+            <mat-error *ngIf="registerForm.get('password').hasError('required')">
+              Please enter your password
+            </mat-error>
+            <mat-error *ngIf="registerForm.hasError('passwordMismatch')"></mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Repeat Password</mat-label>
+            <input matInput formControlName="repeatPassword"
+                   [errorStateMatcher]="passwordsErrorStateMatcher" type="password" name="repeat-password" required>
+            <mat-error *ngIf="registerForm.get('repeatPassword').hasError('required')">
+              Please repeat your password
+            </mat-error>
+            <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+              Passwords do not match!
+            </mat-error>
+          </mat-form-field>
+        </tr>
       </table>
-      <form [formGroup]="registerForm.get('passwords')" id="passwords">
-        <table>
-          <tr>
-            <mat-form-field>
-              <mat-label>Password</mat-label>
-              <input matInput formControlName="password" [errorStateMatcher]="passwordsErrorStateMatcher"
-                     type="password" name="initial-password" required>
-              <mat-error *ngIf="registerForm.get('passwords').hasError('passwordMismatch')">test</mat-error>
-            </mat-form-field>
-          </tr>
-          <tr>
-            <mat-form-field>
-              <mat-label>Repeat Password</mat-label>
-              <input matInput formControlName="repeatPassword"
-                     [errorStateMatcher]="passwordsErrorStateMatcher" type="password" name="repeat-password" required>
-              <mat-error *ngIf="registerForm.get('passwords').hasError('passwordMismatch')">
-                Passwords do not match!
-              </mat-error>
-            </mat-form-field>
-          </tr>
-        </table>
-      </form>
     </form>
   </mat-card-content>
   <mat-card-actions>
