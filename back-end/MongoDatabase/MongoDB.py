@@ -2,6 +2,8 @@ import sys
 sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 from pymongo import MongoClient
+from pymongo.results import UpdateResult, InsertOneResult # remove
+from bson import ObjectId # remove
 
 from DataModels.User import User
 from DataModels.Business import Business
@@ -23,113 +25,58 @@ class MongoDB:
         self.validator = Validator()
     
     # register
-    def register(self, name: str, surname: str, email: str, password: str, 
-                birthdate: str, role = "client"):
+    def register(self, user_dict: dict):
         """
-        Inserts a new user to the database and returns a UserWrapper.
-        UserWrapper.user contains the inserted user if insterted succesfully.
-        UserWrapper.found will be true if this user already exists in the databse else false
-        UserWrapper.operationDone will be true if the insertion was successfull, else false
-
-        :param name: 2 <= name_length <= 25. Name can contain up to 2 first names, for example: Nikolas Kostas. Must contain only letters from a-z and A-Z
-        :param surname: 2 <= surname_length <= 25. Must contain only letters from a-z and A-Z
-        :param email: "must be of fromat local_part@domain_part, local_part can only contain these special characters: _.+-
-        :param password: password_length >= 8. Must contain only letters from a-z and A-Z and these special characters: @#$%^&+=
-        :param birthdate: must be of format dd.mm.yyyy or dd/mm/yyyy or dd-mm-yyyy or dd,mm,yyyy and must range between the year 1900 and 2099
-        :param role: must be one of these values : \"admin\", \"client\", \"business\"
-        :return: UserWrapper
+        :param user_dict:
+        :return:
         """
-        if type(name) is not str: raise TypeError("name must be of type str")
-        if type(surname) is not str: raise TypeError("surname must be of type str")
-        if type(email) is not str: raise TypeError("email must be of type str")
-        if type(password) is not str: raise TypeError("password must be of type str")
-        if type(birthdate) is not str: raise TypeError("birthdate must be of type str")
-        if type(role) is not str: raise TypeError("role must be of type str")
-        if not validator.valid_name(name): raise ValueError("ivalid name: " + self.validator.name_error_message)
-        if not validator.valid_surname(surname): raise ValueError("invalid surname: " + self.validator.name_error_message)
-        if not validator.valid_email(email): raise ValueError("invalid email" + self.validator.email_error_message)
-        if not validator.valid_password(password): raise ValueError("invalid password: " + self.validator.password_error_message)
-        if not validator.valid_date(birthdate): raise ValueError("invalid birthdate: " + self.validator.date_error_message)
-        if not validator.valid_role(role): raise ValueError("invalid role: " + self.validator.role_error_message)
-        return self.userDB.createNewUser(name, surname, email, password, birthdate, role)
+        self.validator.valid_user(user_dict)
+        for attribute in ["name", "surname", "email", "password", "birthdate"]:
+            if attribute not in user_dict:
+                raise ValueError("user_dict doesn't contain " + attribute + " attribute, which is needed for registration")
+        return self.userDB.createNewUser(user_dict)
 
     # login
-    def logIn(self, email: str, password: str):
+    def logIn(self, user_credentials: dict):
         """
-        Logs an existing user in and creates a new session id. Returns a UserWrapper
-        UserWrapper.user will contain loged in user with updated session id if log in was successfull
-        UserWrapper.found will be true if email was correct
-        UserWrapper.operationDone will be true if email and password were correct and log in successfull
-
-        :param email: email from registration
-        :param password: password from registration
-        :return UserWrapper:
+        :param user_credentials:
+        :return:
         """
-        if type(email) is not str: raise TypeError("email must be of type str")
-        if type(password) is not str: raise TypeError("password must be of type str")
-        return self.userDB.logInUser(email, password)
+        self.validator.valid_user(user_credentials)
+        for attribute in ["email", "password"]:
+            if attribute not in user_credentials:
+                raise ValueError("user_credentials doesn't contain " + attribute + " attribute, which is needed to log in")
+        return self.userDB.logInUser(user_credentials)
     
     # displayMyProfile, manageUserDisplay
-    def getUserById(self, user_id: str):
+    def getUser(self, user_id: str):
         """
-        Gets a user with user_id from the database and returns a UserWrapper
-        UserWrapper.user will contain the user with id == user_id
-        UserWrapper.found will be true if user with id == user_id could be found in the database else false
-        UserWrapper.operationDone will be true if the user could be returned successfully
-
-        :param user_id: users id
-        :return: UserWrapper
+        :param user_id:
+        :return:
         """
-        if type(user_id) is not str: raise TypeError("user_id must be of type str")
+        if type(user_id) is not str: raise TypeError("user_id must be of type str and got " + str(type(user_id)) + " instead")
+        if not user_id: raise ValueError("user_id[\"id\"] is empty")
         return self.userDB.getUserById(user_id)
     
     # updateMyProfile, manageUserModify
-    def updateUser(self,  name: str, surname: str, email: str, password: str, 
-                birthdate: str, favorites = [], role = "client", id = ""):
+    def updateUser(self, new_user: dict, user_id: str):
         """
-        If no id is given, updates existend user based on email else uses id to update and returns UserWrapper
-        UserWrapper.user will contain new user if update in database was successfull else None
-        UserWrapper.found will be true if such a user (based on id or email) exists in database else false
-        UserWrapper.operationDone will be true if user update was successfull else false
-
-        :param name: 2 <= name_length <= 25. Name can contain up to 2 first names, for example: Nikolas Kostas. Must contain only letters from a-z and A-Z
-        :param surname: 2 <= surname_length <= 25. Must contain only letters from a-z and A-Z
-        :param email: must be of fromat local_part@domain_part, local_part can only contain these special characters: _.+-
-        :param password: password_length >= 8. Must contain only letters from a-z and A-Z and these special characters: @#$%^&+=
-        :param birthdate: must be of format dd.mm.yyyy or dd/mm/yyyy or dd-mm-yyyy or dd,mm,yyyy and must range between the year 1900 and 2099
-        :param favorites: a list that contains users favorite businesses and workouts
-        :param role: must be one of these values : \"admin\", \"client\", \"business\"
-        :param id: users ObjectId string from the database
-        :return: UserWrapper
+        :param new_user:
+        :return:
         """
-        if type(name) is not str: raise TypeError("name must be of type str")
-        if type(surname) is not str: raise TypeError("surname must be of type str")
-        if type(email) is not str: raise TypeError("email must be of type str")
-        if type(password) is not str: raise TypeError("password must be of type str")
-        if type(birthdate) is not str: raise TypeError("birthdate must be of type str")
-        if type(favorites) is not list: raise TypeError("favorites must be of type list")
-        if type(role) is not str: raise TypeError("role must be of type str")
-        if type(id) is not str: raise TypeError("id must be of type str")
-        if not validator.valid_name(name): raise ValueError("ivalid name: " + self.validator.name_error_message)
-        if not validator.valid_surname(surname): raise ValueError("invalid surname: " + self.validator.name_error_message)
-        if not validator.valid_email(email): raise ValueError("invalid email" + self.validator.email_error_message)
-        if not validator.valid_password(password): raise ValueError("invalid password: " + self.validator.password_error_message)
-        if not validator.valid_date(birthdate): raise ValueError("invalid birthdate: " + self.validator.date_error_message)
-        if not validator.valid_role(role): raise ValueError("invalid role: " + self.validator.role_error_message)
-        return self.userDB.updateUser(User(name, surname, email, password, birthdate, role, favorites, id), id)
+        self.validator.valid_user(new_user)
+        if type(user_id) is not str: raise TypeError("user_id must be of type str and got " + str(type(user_id)) + " instead")
+        if not user_id: raise ValueError("user_id[\"id\"] is empty")
+        return self.userDB.updateUserById(new_user, user_id)
     
     # manageUserDelete
     def deleteUser(self, user_id: str):
         """
-        deletes a user from the database with id == user_id and returns deleted user in UserWrapper
-        UserWrapper.user deleted user from database if deleted successfully else None
-        UserWrapper.found will be true if user with id == user_id was found in database else false
-        UserWrapper.operationDone will be true if user with id == user_id was found and deleted successfully else false
-
-        :param user_id: users ObjectId string from database
-        :return: UserWrapper
+        :param user_id:
+        :return:
         """
-        if type(user_id) is not str: raise TypeError("user_id must be of type str")
+        if type(user_id) is not str: raise TypeError("user_id must be of type str and got " + str(type(user_id)) + " instead")
+        if not user_id: raise ValueError("user_id[\"id\"] is empty")
         return self.userDB.deleteUserById(user_id)
     
     # manageBusinessAdd
@@ -241,40 +188,17 @@ class MongoDB:
 
 
 
-# def my_func(name):
-#     if type(name) is not str: raise TypeError("name must be of type str")
-#     print(name)
+# url = "mongodb://localhost:27017/"
+# database = "test_database"
+# client = MongoClient(url)[database]
+# db = client.test_database
 
-# log = ""
+# db.drop()
 
-# try:
-#     my_func(1)
-# except TypeError as type_err:
-#     log += str(type_err)
-    
-# except:
-#     log += "some error"
+# user = {
+#     "id": "1",
+#     "name": "alex"
+# }
 
-# print("log: ", log)
 
-url = "mongodb://localhost:27017/"
-database = "test_database"
-client = MongoClient(url)[database]
-db = client.test_database
-
-db.drop()
-
-user = {
-    "id": "1",
-    "name": "alex"
-}
-
-id = db.insert_one(user).inserted_id
-print(id)
-jsonReturned = db.find_one({"_id": id})
-print(jsonReturned)
-db.update_one({"_id": id}, {"$set": {"name": "giorgos"}})
-jsonReturned = db.find_one({"_id": id})
-print(jsonReturned)
-
-db.drop()
+# db.insert_one(user)

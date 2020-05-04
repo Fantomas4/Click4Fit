@@ -1,7 +1,11 @@
 import sys
 sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
-from bson import ObjectId
+import secrets
+import hashlib, binascii, os
+
+from bson import 
+from pymongo.results import UpdateResult, InsertOneResult
 
 from DataModels.User import User, getUserFromJson
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
@@ -13,108 +17,138 @@ class UserDB:
         self.client = client
         self.db = self.client.userDB
 
+    def _createSessionId(self):
+        """
+        """
+        return secrets.token_urlsafe(16)
+    
+    def _hashPassword(self, password: str):
+        """
+        """
+        salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
+        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
+                                      salt, 100000)
+        pwdhash = binascii.hexlify(pwdhash)
+        return (salt + pwdhash).decode('ascii')
+
+    def _verifyPassword(self, user_password: str, provided_password: str):
+        """
+        """
+        salt = user_password[:64]
+        stored_password = user_password[64:]
+        pwdhash = hashlib.pbkdf2_hmac('sha512',
+                                      provided_password.encode('utf-8'),
+                                      salt.encode('ascii'),
+                                      100000)
+        pwdhash = binascii.hexlify(pwdhash).decode('ascii')
+        return pwdhash == stored_password
+
     def _findUserByMail(self, email: str):
-        if type(email) is not str: raise TypeError("email must be of type str")
+        """
+        """
         try:
-            jsonReturned: dict = self.db.find_one({"email": email})
-            if jsonReturned:
-                return getUserFromJson(jsonReturned)
-            return None
+            user_dict: dict = self.db.find_one({"email": email})
         except:
+            return None
+        else:
+            if user_dict:
+                del user_dict["_id"]
+                return user_dict
             return None
     
     def getUserBySessionId(self, session_id: str):
-        if type(session_id) is not str: raise TypeError("seesion_id must be of type str")
+        """
+        :param session_id:
+        :return:
+        """
         try:
-            jsonReturned: dict = self.db.find_one({"session_id": session_id})
-            if jsonReturned:
-                return UserWrapper(getUserFromJson(jsonReturned), found=True, operationDone=True)
+            user: dict = self.db.find_one({"session_id": session_id})
+            if user:
+                del user["_id"]
+                return UserWrapper(user, found=True, operationDone=True)
             return UserWrapper(None, found=False, operationDone=False)
         except:
             return UserWrapper(None, found=False, operationDone=False)
-            
 
     def getUserById(self, user_id: str):
-        if type(user_id) is not str: raise TypeError("user_id must be of type str")
+        """
+        :param user_id:
+        :return:
+        """
         try:
-            jsonReturned: dict = self.db.find_one({"_id": ObjectId(user_id)})
-            if jsonReturned:
-                return UserWrapper(getUserFromJson(jsonReturned), found=True, operationDone=True)
+            user: dict = self.db.find_one({"_id": ObjectId(user_id)})
+            if user:
+                del user["_id"]
+                return UserWrapper(user, found=True, operationDone=True)
             return UserWrapper(None, found=False, operationDone=False)
         except:
             return UserWrapper(None, found=False, operationDone=False)
     
-    def getUserByEmail(self, email: str):
-        if type(email) is not str: raise TypeError("email must be of type str")
-        user: User = self._findUserByMail(email)
-        return UserWrapper(user, found=bool(user), operationDone=bool(user))
     
-    def createNewUser(self, name: str, surname: str, email: str, password: str, 
-                birthdate: str, role = "client", favorites = [], id = ""):
-        if type(name) is not str: raise TypeError("name must be of type str")
-        if type(surname) is not str: raise TypeError("surname must be of type str")
-        if type(email) is not str: raise TypeError("email must be of type str")
-        if type(password) is not str: raise TypeError("password must be of type str")
-        if type(birthdate) is not str: raise TypeError("birthdate must be of type str")
-        if type(role) is not str: raise TypeError("role must be of type str")
-        if type(favorites) is not list: raise TypeError("favorites must be of type list")
-        if type(id) is not str: raise TypeError("id must be of type str")
-        try:        
-            if self._findUserByMail(email): # Checks if user already exists
-                return UserWrapper(None, found=True, operationDone=False)
-            user: User = User(name, surname, email, password, birthdate, role, favorites, id)
-            user_id: str = str(self.db.insert_one(user.toDict()).inserted_id) # Inserting user to db and storing _id
-            user.id = user_id # updating id
-            return UserWrapper(user, found=False, operationDone=bool(self.db.update_one({"_id": ObjectId(user_id)},
-                                                                    {"$set": {"id": user_id}}).matched_count))
+    def createNewUser(self, user_dict: dict):
+        """
+        :param user_dict:
+        :return:
+        """
+        _user: dict = self._findUserByMail(user_dict["email"])
+        if _user: # Checks if user already exists
+            return UserWrapper(_user, found=True, operationDone=False)
+        user_dict = {
+            "name" :     user_dict["name"],
+            "surname" :  user_dict["surname"],
+            "email":     user_dict["email"],
+            "password":  _hashPassword(user_dict["password"]), # hash and salt password
+            "birthdate": user_dict["birthdate"],
+            "role":      user_dict.get("role", "client"), # default value of "client"
+            "favorites": user_dict.get("favorites", []), # default value of []
+        }
+        try:
+            insert_result: InsertOneResult = self.db.insert_one(user_dict) # inserting user
+            if insert_result.acknowledged:
+                user_dict["id"] = str(insert_result.inserted_id) # storing _id as str
+                update_result: UpdateResult = self.db.update_one({"_id": ObjectId(user_dict["id"])}, 
+                                                                    {"$set": {"id": user_dict["id"]}}) # updating id field in db with _id string
+                if update_result.modified_count:
+                    return UserWrapper(user_dict, found=False, operationDone=True) # success!
+            return UserWrapper(None, found=False, operationDone=False)
         except:
             return UserWrapper(None, found=False, operationDone=False)
 
-    def logInUser(self, email: str, password: str):
-        if type(email) is not str: raise TypeError("email must be of type str")
-        if type(password) is not str: raise TypeError("password must be of type str")
-        user: User = self._findUserByMail(email)
-        if user is None:
+    def logInUser(self, user_credentials: dict):
+        """
+        :param user_credentials:
+        :return:
+        """
+        _user: dict = self._findUserByMail(user_credentials["email"])
+        if _user is None:
             return UserWrapper(None, found=False, operationDone=False) # user doesn't exist
-        if user.verify_password(password):
-            user.createSessionId() # update session id
-            return self.updateUser(user) # update session id in db and ready to log in
+        if self._verify_password(_user["password"], user_credentials["password"]):
+            _user["session_id"] = self._createSessionId() # update session id
+            return self.updateUserById(_user, _user["id"]) # update session id in db and ready to log in
         return UserWrapper(None, found=True, operationDone=False) # wrong password
 
-    def updateUser(self, newUser: User, user_id=""):
-        if type(newUser) is not User: raise TypeError("newUser must be of type User")
-        if type(user_id) is not str: raise TypeError("user_id must be of type str")
+    def updateUserById(self, new_user: dict, user_id: str):
+        """
+        :param new_user:
+        :param user_id:
+        :return:
+        """
         try:
-            if user_id:
-                newUser.id = user_id
-                return UserWrapper(newUser,
-                    found=bool(self.db.find_one({"_id": ObjectId(user_id)})),
-                    operationDone=bool(self.db.update_one({"_id": ObjectId(user_id)},
-                                        {'$set': newUser.toDict()}).matched_count))
-            old_user = self._findUserByMail(newUser.email)
-            if old_user:
-                newUser.id = old_user.id
-                return UserWrapper(newUser, found=True,
-                    operationDone=bool(self.db.update_one({"email": newUser.email},
-                                        {'$set': newUser.toDict()}).matched_count))
+            update_result: UpdateResult = self.db.update_one({"_id": ObjectId(user_id)}, {'$set': new_user})
+            if update_result.matched_count:
+                updated_user = self.db.find_one({"_id"}: ObjectId(user_id)})
+                del updated_user["_id"]
+                return UserWrapper(updated_user, found=True, operationDone=True)
             return UserWrapper(None, found=False, operationDone=False)
         except:
             return UserWrapper(None, found=False, operationDone=False)
 
-    def deleteUserByEmail(self, email: str):
-        if type(email) is not str: raise TypeError("email must be of type str")
-        #TODO: regex check mail
-        try:
-            user: User = self._findUserByMail(email)
-            if user is None:
-                return UserWrapper(None, found=False, operationDone=False)
-            return UserWrapper(user, found=True,
-                    operationDone=bool(self.db.delete_one({"email": email}).deleted_count))
-        except:
-            return UserWrapper(None, found=False, operationDone=False)
 
     def deleteUserById(self, user_id: str):
-        if type(user_id) is not str: raise TypeError("user_id must be of type str")
+        """
+        :param user_id:
+        :return:
+        """
         try:
             wrapper: UserWrapper = self.getUserById(user_id)
             if wrapper.operationDone:
