@@ -3,11 +3,11 @@ import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-dialog-message2',
-  templateUrl: './dialog-message2.component.html',
-  styleUrls: ['./dialog-message2.component.css']
+  selector: 'app-update-dialog-message',
+  templateUrl: './update-dialog-message.component.html',
+  styleUrls: ['./update-dialog-message.component.css']
 })
-export class DialogMessage2Component implements OnInit {
+export class UpdateDialogMessageComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 

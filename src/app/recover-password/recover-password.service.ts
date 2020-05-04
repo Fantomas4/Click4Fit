@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {DialogMessage2Component} from './dialog-message2/dialog-message2.component';
+import {RecoverDialogMessageComponent} from './recover-dialog-message/recover-dialog-message.component';
 
 @Injectable()
 export class RecoverPasswordService {
@@ -12,7 +12,7 @@ export class RecoverPasswordService {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.minWidth = 100;
-        const dialogRef = this.dialog.open(DialogMessage2Component, dialogConfig);
+        const dialogRef = this.dialog.open(RecoverDialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
       }
 }

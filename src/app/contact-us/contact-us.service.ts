@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {DialogMessage3Component} from './dialog-message3/dialog-message3.component';
+import {ContactUsDialogMessageComponent} from './contactus-dialog-message/contactus-dialog-message.component';
 
 @Injectable()
 export class ContactUsService {
@@ -12,7 +12,7 @@ export class ContactUsService {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.minWidth = 100;
-        const dialogRef = this.dialog.open(DialogMessage3Component, dialogConfig);
+        const dialogRef = this.dialog.open(ContactUsDialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
       }
 }

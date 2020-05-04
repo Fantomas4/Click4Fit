@@ -3,11 +3,11 @@ import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-dialog-message-b',
-  templateUrl: './dialog-message-b.component.html',
-  styleUrls: ['./dialog-message-b.component.css']
+  selector: 'app-recover-dialog-message',
+  templateUrl: './recover-dialog-message.component.html',
+  styleUrls: ['./recover-dialog-message.component.css']
 })
-export class DialogMessageBComponent implements OnInit {
+export class RecoverDialogMessageComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 

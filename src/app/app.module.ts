@@ -26,7 +26,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
-import { DialogMessageComponent } from './myprofile/dialog-message/dialog-message.component';
+import { DeleteDialogMessageComponent } from './myprofile/delete-dialog-message/delete-dialog-message.component';
 import {MyProfileService} from './myprofile/myprofile.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
@@ -45,11 +45,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
-import { DialogMessage2Component } from './recover-password/dialog-message2/dialog-message2.component';
-import { DialogMessage3Component } from './contact-us/dialog-message3/dialog-message3.component';
+import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
+import { ContactUsDialogMessageComponent } from './contact-us/contactus-dialog-message/contactus-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
 import { ContactUsService } from './contact-us/contact-us.service';
-import { DialogMessageBComponent } from './myprofile/dialog-message-b/dialog-message-b.component';
+import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/update-dialog-message.component';
 
 
 @NgModule({
@@ -70,7 +70,7 @@ import { DialogMessageBComponent } from './myprofile/dialog-message-b/dialog-mes
     ResultCard2Component,
     LocationAutocompleteComponent,
     DetailsDialogComponent,
-    DialogMessageComponent,
+    DeleteDialogMessageComponent,
     ManageBusinessEntriesComponent,
     BusinessDetailsEditDialogComponent,
     BusinessAddEntryDialogComponent,
@@ -79,9 +79,9 @@ import { DialogMessageBComponent } from './myprofile/dialog-message-b/dialog-mes
     UserDetailsEditDialogComponent,
     FooterComponent,
     HomepageComponent,
-    DialogMessage2Component,
-    DialogMessage3Component,
-    DialogMessageBComponent
+    RecoverDialogMessageComponent,
+    ContactUsDialogMessageComponent,
+    UpdateDialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -107,6 +107,6 @@ import { DialogMessageBComponent } from './myprofile/dialog-message-b/dialog-mes
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,RecoverPasswordService,ContactUsService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogMessageComponent,DialogMessageBComponent,DialogMessage2Component,DialogMessage3Component]
+  entryComponents: [DeleteDialogMessageComponent,UpdateDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
 })
 export class AppModule { }
