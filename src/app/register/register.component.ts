@@ -102,6 +102,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.registerForm.valid) {
       this.loading = true;
     }
-    // this.loading = false;
+    this.loading = false;
   }
 }
