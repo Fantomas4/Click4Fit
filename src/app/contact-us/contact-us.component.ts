@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ContactUsService} from './contact-us.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -8,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class ContactUsComponent implements OnInit {
   title = "Contact Us"
 
-  constructor() { }
+  constructor(public contanctUsService:ContactUsService) { }
 
   ngOnInit(): void {
   }
-
+  onClick() {
+    this. contanctUsService.openModal();
+  }
 }
