@@ -3,7 +3,6 @@ sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 from bson import ObjectId
 
-from DataModels.Workout import Workout, getWorkoutFromJson
 from MongoDatabase.Wrappers.WorkoutWrapper import WorkoutWrapper
 from MongoDatabase.Wrappers.WorkoutListWrapper import WorkoutListWrapper
 
@@ -13,65 +12,103 @@ class WorkoutDB:
         self.client = client
         self.db = self.client.WorkoutDB
 
-    def createNewWorkout(self, name: str, muscle_groups: list, advised_for: str,
-                    difficulty: str, equipment: bool, sets: str, video_url: str, id = ""):
-        if type(name) is not str: raise TypeError("name must be of type str")
-        if type(muscle_groups) is not list: raise TypeError("muscle_groups must be of type list")
-        if type(advised_for) is not str: raise TypeError("advised_for must be of type str")
-        if type(difficulty) is not str: raise TypeError("difficulty must be of type str")
-        if type(equipment) is not bool: raise TypeError("equipment must be of type bool")
-        if type(sets) is not str: raise TypeError("sets must be of type str")
-        if type(video_url) is not str: raise TypeError("video_url must be of type str")
-        if type(id) is not str: raise TypeError("id must be of type str")
-        #TODO: Add regex checks
+    def createNewWorkout(self, workout: dict):
+        """
+        :param workout:
+        :return:
+        """
+        _wrapper: dict = self.getWorkout(workout)
+        if _wrapper.found:
+            return WorkoutWrapper(_wrapper.workout, found=True, operationDone=False)
         try:
-            if self.getWorkoutById(id).found:
-                return WorkoutWrapper(None, found=True, operationDone=False)
-            workout: Workout = Workout(name, muscle_groups, advised_for, difficulty, equipment,
-                                        sets, video_url, id)
-            workout_id: str = str(self.db.insert_one(workout.toDict()).inserted_id)
-            workout.id = workout_id
-            return WorkoutWrapper(workout, found=False, operationDone=bool(self.db.update_one({"_id": ObjectId(workout_id)},
-                                                                    {"$set": {"id": workout_id}}).matched_count))
+            insert_result: InsertOneResult = self.db.insert_one(workout)
+            if insert_result.acknowledged:
+                workout["id"] = str(insert_result.inserted_id)
+                update_result: UpdateResult = self.db.update_one({"_id": ObjectId(workout["id"])}, 
+                                                                {"$set": {"id": workout["id"]}})
+            if update_result.modified_count:
+                return WorkoutWrapper(workout, found=False, operationDone=True)
+            return WorkoutWrapper({}, found=False, operationDone=False)
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
     
-    def getWorkoutById(self, workout_id: str):
-        if type(workout_id) is not str: raise TypeError("workout_id must be of type str")
+    def getWorkout(self, workout_query: dict):
+        """
+        :param workout_query:
+        :return:
+        """
         try:
-            jsonReturned: dict = self.db.find_one({"_id": ObjectId(workout_id)})
-            if jsonReturned:
-                return WorkoutWrapper(getWorkoutFromJson(jsonReturned), found=True, operationDone=True)
-            return WorkoutWrapper(None, found=False, operationDone=False)
+            workout: dict = self.db.find_one(workout_query)
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
+        else:
+            if workout:
+                del workout["_id"]
+                return WorkoutWrapper(workout, found=True, operationDone=True)
+            return WorkoutWrapper({}, found=False, operationDone=False)
     
-    def updateWorkoutById(self, newWorkout: Workout, workout_id: str):
-        if type(workout_id) is not str: raise TypeError("workout_id must be of type str")
+    def getWorkouts(self, workout_query: dict):
+        """
+        :param workout_query:
+        :return:
+        """
         try:
-            if self.getWorkoutById(workout_id).found:
-                newWorkout.id = workout_id
-                return WorkoutWrapper(newWorkout, found=True, operationDone=
-                        bool(self.db.update_one({"_id": ObjectId(workout_id)},
-                        {"$set": newWorkout.toDict()}).matched_count))
+            workout_list_cursor: Cursor = self.db.find(workout_query)
+        except:
             return WorkoutWrapper(None, found=False, operationDone=False)
+        else:
+            workout_list = []
+            for workout in workout_list_cursor:
+                del workout["_id"]
+                workout_list.append(workout)
+            return WorkoutWrapper(workout_list, found=bool(workout_list), operationDone=True)
+        
+    def getAllWorkouts(self):
+        """
+        :return:
+        """
+         try:
+            workout_list_cursor: Cursor = self.db.find()
+        except:
+            return WorkoutWrapper(None, found=False, operationDone=False)
+        else:
+            workout_list = []
+            for workout in workout_list_cursor:
+                del workout["_id"]
+                workout_list.append(workout)
+            return WorkoutWrapper(workout_list, found=bool(workout_list), operationDone=True)
+    
+    def updateWorkoutById(self, new_workout: dict, workout_id: str):
+        """
+        :param new_workout:
+        :param workout_id:
+        :return:
+        """
+        try:
+            update_result: UpdateResult = self.db.update_one({{"_id": ObjectId(workout_id)},
+                                                            {'$set': new_workout}})
+            if update_result.matched_count:
+                updated_workout: dict = self.db.find_one({"_id": ObjectId(workout_id)})
+                del updated_user["_id"]
+                return WorkoutWrapper(updated_workout, found=True, operationDone=True)
+            return WorkoutWrapper({}, found=False, operationDone=False)
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
 
     def deleteWorkoutById(self, workout_id: str):
-        if type(workout_id) is not str: raise TypeError("workout_id must be of type str")
+        """
+        :param workout_id:
+        :return:
+        """
         try:
-            wrapper: WorkoutWrapper = self.getWorkoutById(workout_id)
+            wrapper: WorkoutWrapper = self.getWorkout({"_id": ObjectId(workout_id)})
             if wrapper.workout:
                 return WorkoutWrapper(wrapper.workout, found=True,
-                        operationDone=bool(self.db.delete_one({"_id": ObjectId(workout_id)}).deleted_count))
+                        operationDone=bool(self.db.delete_one(
+                                            {"_id": ObjectId(workout_id)}
+                                                ).deleted_count))
             return wrapper
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
     
-    def getAllWorkouts(self):
-        try:
-            return WorkoutListWrapper([getWorkoutFromJson(workout_json) for workout_json in self.db.find()],
-                                found=True, operationDone=True)
-        except:
-            return WorkoutListWrapper([], found=False, operationDone=False)
+    
