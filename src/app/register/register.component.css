@@ -16,7 +16,15 @@
 }
 
 #alert-message {
-  color: #B71C1C;
+  margin-top: 2%;
+}
+.alert-error-text {
+  color: red;
+  font-weight: bold;
+}
+
+.alert-success-text {
+  color: green;
   font-weight: bold;
 }
 

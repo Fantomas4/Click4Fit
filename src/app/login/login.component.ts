@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NavigationStart, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
@@ -11,6 +11,14 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
+}
+
+/**
+ * Interface used to store received messages from alert service.
+ */
+interface AlertMessage {
+  type: string;
+  text: string;
 }
 
 @Component({
@@ -32,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   customErrorMatcher = new CustomErrorStateMatcher();
   alertSubscription: Subscription;
-  alertMessage = '';
+  alertMessage: AlertMessage;
 
   loading = false;
 
@@ -42,10 +50,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
-        if (value.type === 'error') {
-          console.log(value.text);
-          this.alertMessage = value.text;
-        }
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
       }
     });
   }
@@ -73,26 +81,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['/admin']);
       }
     }
-
-    // if (!(this.loginForm.get('email').hasError('required') &&
-    //   this.loginForm.get('email').hasError('email')) &&
-    //   !this.loginForm.get('password').hasError('required')) {
-    //
-    //   // Update loading flag value for mat-spinner
-    //   this.loading = true;
-    //   this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
-    //   // this.alertMessage = 'Error: Could not authenticate';
-    //   this.alertSubscription.unsubscribe();
-    //   console.log(this.authenticationService.currentUserValue);
-    //   if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
-    //     // The user currently logged in has the access privilege level of a client
-    //     this.router.navigate(['/user']);
-    //   } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
-    //     this.alertSubscription.unsubscribe();
-    //     this.router.navigate(['/admin']);
-    //   }
-    // }
-
     this.loading = false;
   }
 }

@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   FormGroupDirective,
   NgForm,
-  ValidatorFn,
   Validators
 } from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
@@ -41,6 +39,14 @@ function matchingPasswordsValidator(group: FormGroup): { [key: string]: boolean 
   return null;
 }
 
+/**
+ * Interface used to store received messages from alert service.
+ */
+interface AlertMessage {
+  type: string;
+  text: string;
+}
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -71,7 +77,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   genericErrorStateMatcher = new GenericErrorStateMatcher();
   passwordsErrorStateMatcher = new PasswordsErrorStateMatcher();
   alertSubscription: Subscription;
-  alertMessage = '';
+  alertMessage: AlertMessage;
 
   loading = false;
 
@@ -81,10 +87,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
-        if (value.type === 'error') {
-          console.log(value.text);
-          this.alertMessage = value.text;
-        }
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
       }
     });
   }

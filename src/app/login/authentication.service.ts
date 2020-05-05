@@ -47,6 +47,7 @@ export class AuthenticationService {
     sessionStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
 
+    // console.log('sdadsaadasd');
     // this.alertService.error('Error: Could not authenticate user');
   }
 
