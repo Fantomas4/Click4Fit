@@ -75,21 +75,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   loading = false;
 
-  // getErrorMessage() {
-  //   if (this.emailFormControl.hasError('required')) {
-  //     return 'You must enter a value';
-  //   }
-  //
-  //   return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
-  // }
 
   constructor(private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
-      if (value.type === 'error') {
-        console.log(value.text);
-        this.alertMessage = value.text;
+      if (value !== undefined) {
+        if (value.type === 'error') {
+          console.log(value.text);
+          this.alertMessage = value.text;
+        }
       }
     });
   }

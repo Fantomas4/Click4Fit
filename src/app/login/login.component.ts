@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
@@ -41,9 +41,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
-      if (value.type === 'error') {
-        console.log(value.text);
-        this.alertMessage = value.text;
+      if (value !== undefined) {
+        if (value.type === 'error') {
+          console.log(value.text);
+          this.alertMessage = value.text;
+        }
       }
     });
   }
