@@ -72,6 +72,7 @@
         </tr>
       </table>
     </form>
+    <div id="alert-message" *ngIf="alertMessage">{{alertMessage}}</div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button id="register-button" type="submit" form="register-form" color="primary">Register</button>
