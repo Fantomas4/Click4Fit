@@ -57,4 +57,8 @@ export class MyprofileComponent implements OnInit {
   onClick() {
     this.myProfileService.openModal();
   }
+   /*Updates the user's details in the database according to his changes*/
+  onClickUpdate(){
+    this.myprofileService.openModalUpdate();
+  }
 }
