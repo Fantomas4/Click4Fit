@@ -26,5 +26,6 @@ export class ContactUsComponent implements OnInit {
   onClick() {
     this.content={'fullname':this.fullName,'email':this.contactEmail,'telephone':this.telephone,'subject':this.subject,'text':this.textarea};
     this.contanctUsService.postDetails(this.content);
+    this.contanctUsService.openModal();
   }
 }

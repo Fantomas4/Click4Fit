@@ -20,10 +20,10 @@ export class MyprofileComponent implements OnInit {
   results;
   picker;
 
-  constructor(public myProfileService: MyProfileService) { }
+  constructor(public myprofileService: MyProfileService) { }
 
   ngOnInit(): void {
-    this.myProfileService.getDetails().subscribe((data:any)=>
+    this.myprofileService.getDetails().subscribe((data:any)=>
     {
       this.results=data;
       this.name=this.results.name;
@@ -48,17 +48,14 @@ export class MyprofileComponent implements OnInit {
     }
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
   }
-  /*Updates the user's details in the database according to his changes*/
-  change() {
-    this.content={'name':this.name,'surname':this.surname,'email':this.email,'password':this.password,'birthdate':this.birthdate};
-    this.myProfileService.postDetails(this.content).toPromise().then((data:any)=>{});
-  }
   /*Shows modal message after click on delete account button*/
-  onClick() {
-    this.myProfileService.openModal();
+  onClickDelete() {
+    this.myprofileService.openModalDelete();
   }
    /*Updates the user's details in the database according to his changes*/
   onClickUpdate(){
+    this.content={'name':this.name,'surname':this.surname,'email':this.email,'password':this.password,'birthdate':this.birthdate};
+    this.myprofileService.postDetails(this.content).toPromise().then((data:any)=>{});
     this.myprofileService.openModalUpdate();
   }
 }

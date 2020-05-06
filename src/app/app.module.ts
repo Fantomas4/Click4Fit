@@ -50,7 +50,6 @@ import { ContactUsService } from './contact-us/contact-us.service';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
 import { ContactUsDialogMessageComponent } from './contact-us/contactus-dialog-message/contactus-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
-import { ContactUsService } from './contact-us/contact-us.service';
 import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/update-dialog-message.component';
 
 

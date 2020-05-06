@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {DialogMessageComponent} from './dialog-message/dialog-message.component';
+import {DeleteDialogMessageComponent} from './delete-dialog-message/delete-dialog-message.component';
+import {UpdateDialogMessageComponent} from './update-dialog-message/update-dialog-message.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 
@@ -12,11 +13,18 @@ export class MyProfileService {
     constructor(public dialog: MatDialog,private http: HttpClient) { }
 
     /*Creates a modal message and determines its parameters */
-    openModal() {
+    openModalDelete() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        dialogConfig.minWidth = 100;
+        const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe();
+    }
+    openModalUpdate() {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.autoFocus = true;
       dialogConfig.minWidth = 100;
-      const dialogRef = this.dialog.open(DialogMessageComponent, dialogConfig);
+      const dialogRef = this.dialog.open(UpdateDialogMessageComponent, dialogConfig);
       dialogRef.afterClosed().subscribe();
     }
     getDetails(): Observable<any>{
