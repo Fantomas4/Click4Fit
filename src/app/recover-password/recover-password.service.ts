@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {DialogMessageComponent} from '../dialog-message/dialog-message.component';
+import {RecoverDialogMessageComponent} from './recover-dialog-message/recover-dialog-message.component';
 
-/*This service is about showing an alert modal message to confirm the user's willing for deleting
-his account*/
 @Injectable()
-export class MyProfileDeleteService {
+export class RecoverPasswordService {
 
     constructor(public dialog: MatDialog) { }
 
@@ -14,8 +12,7 @@ export class MyProfileDeleteService {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.minWidth = 100;
-        const dialogRef = this.dialog.open(DialogMessageComponent, dialogConfig);
+        const dialogRef = this.dialog.open(RecoverDialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
       }
 }
-
