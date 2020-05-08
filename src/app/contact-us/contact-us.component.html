@@ -10,28 +10,28 @@
                 <table class="form-content">
                     <!-- Name -->
                     <mat-form-field class="name-area">
-                        <input matInput placeholder="Name" required>
+                        <input matInput placeholder="Name" [(ngModel)]="fullName" name="fullname" required>
                         <mat-icon matSuffix>person</mat-icon>
                     </mat-form-field>
                     <!-- E-Mail -->
                     <mat-form-field class="email-area">
-                        <input matInput placeholder="Enter your email" required>
+                        <input matInput placeholder="Enter your email" [(ngModel)]="contactEmail" name="contactemail" required>
                         <mat-icon matSuffix>drafts</mat-icon>
                     </mat-form-field>
                     <!-- Phone Number -->
                     <mat-form-field class="telephone-area">
                         <span matPrefix>+30 &nbsp;</span>
-                        <input type="tel" matInput placeholder="Telephone" required>
+                        <input type="tel" matInput placeholder="Telephone" [(ngModel)]="telephone" name="telephone" required>
                         <mat-icon matSuffix>call</mat-icon>
                     </mat-form-field>
                     <!-- Subject -->
                     <mat-form-field class="subject-area">
-                        <input matInput placeholder="Subject" required>
+                        <input matInput placeholder="Subject" [(ngModel)]="subject" name="subject" required>
                         <mat-icon matSuffix>create</mat-icon>
                     </mat-form-field>
                     <!-- Text -->
                     <mat-form-field>
-                        <textarea matInput placeholder="Textarea" required cdkTextareaAutosize
+                        <textarea matInput placeholder="Textarea" [(ngModel)]="textarea" name="textarea" required cdkTextareaAutosize
                             #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="13"></textarea>
                         <mat-icon matSuffix>save</mat-icon>
                     </mat-form-field>

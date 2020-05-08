@@ -45,6 +45,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
 import { ContactUsDialogMessageComponent } from './contact-us/contactus-dialog-message/contactus-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
@@ -79,6 +80,7 @@ import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/
     UserDetailsEditDialogComponent,
     FooterComponent,
     HomepageComponent,
+    ErrorPageComponent,
     RecoverDialogMessageComponent,
     ContactUsDialogMessageComponent,
     UpdateDialogMessageComponent

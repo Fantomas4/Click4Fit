@@ -9,6 +9,7 @@ import { WorkoutService } from './workout.service';
 export class WorkoutComponent implements OnInit {
 
   isClicked = false;
+  selectionArray = new Array();
 
 
   constructor(private workoutService: WorkoutService) { }
@@ -26,6 +27,12 @@ export class WorkoutComponent implements OnInit {
       document.getElementById('filtersButton').innerText = 'Hide Filters';
     } else {
       document.getElementById('filtersButton').innerText = 'Show Filters';
+    }
+  }
+
+  onSelection(e, v) {
+    for (const a of v) {
+      this.selectionArray.push(a.value);
     }
   }
 }
