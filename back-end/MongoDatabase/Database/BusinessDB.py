@@ -3,7 +3,8 @@ sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 from bson import ObjectId
 
-from MongoDatabase.Wrappers import BusinessWrapper, BusinessListWrapper
+from MongoDatabase.Wrappers.BusinessWrapper import BusinessWrapper
+from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper
 
 class BusinessDB:
 
@@ -21,10 +22,7 @@ class BusinessDB:
         except:
             return None
         else:
-            if business:
-                del business["_id"]
-                return business
-            return {}
+            return business
 
     ####################################### Public Methods ########################################
 
@@ -33,20 +31,30 @@ class BusinessDB:
         :param business:
         :return:
         """
-        _business: dict = self._findByEmail(business["email"])
-        if _business:
+        if self._findByEmail(business["email"]): # Checks if user already exists
             return BusinessWrapper({}, found=True, operationDone=False)
+        business = {
+                "_id"          : str(ObjectId()),
+                "name"         : business["name"],
+                "category"     : business["category"],
+                "country"      : business["country"],
+                "city"         : business["city"],
+                "address"      : business["address"],
+                "postal_code"  : business["postal_code"],
+                "phone_number" : business["phone_number"],
+                "email"        : business["email"],
+                "img_path"     : business["img_path"],
+                "services"     : business["services"],
+                "products"     : business["products"]
+            }
         try:
             insert_result: InsertOneResult = self.db.insert_one(business)
-            if insert_result.acknowledged:
-                business["id"] = str(insert_result.inserted_id)
-                update_result: UpdateResult = self.db.update_one({"_id": ObjectId(business["id"])}, 
-                                                                {"$set": {"id": business["id"]}})
-                if update_result.modified_count:
-                    return BusinessWrapper(business, found=False, operationDone=True)
-            return BusinessWrapper({}, found=False, operationDone=False)
         except:
             return BusinessWrapper(None, found=False, operationDone=False)
+        else:
+            if insert_result.acknowledged:
+                return BusinessWrapper(business, found=False, operationDone=True)
+            return BusinessWrapper({}, found=False, operationDone=False)
 
     def get(self, business_query: dict):
         """
