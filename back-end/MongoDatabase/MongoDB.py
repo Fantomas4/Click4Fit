@@ -79,8 +79,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(new_user, "user")
-        if "id" not in new_user:
-            raise ValueError("new_user doesn't contain id attribute, which is needed for updating")
+        if "_id" not in new_user:
+            raise ValueError("new_user doesn't contain _id attribute, which is needed for updating")
         return self.userDB.update(new_user)
     
     def deleteUser(self, user: dict):
@@ -89,8 +89,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(user, "user")
-        if "id" not in user:
-            raise ValueError("user doesn't contain id attribute, which is needed for deletion")
+        if "_id" not in user:
+            raise ValueError("user doesn't contain _id attribute, which is needed for deletion")
         return self.userDB.delete(user)
     
     ####################################### Business Methods ########################################
@@ -136,8 +136,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(new_business, "business")
-        if "id" not in new_business:
-            raise ValueError("new_business doesn't contain id attribute, which is needed for updating")
+        if "_id" not in new_business:
+            raise ValueError("new_business doesn't contain _id attribute, which is needed for updating")
         return self.businessDB.update(new_business)
 
     def deleteBusiness(self, business: dict):
@@ -146,8 +146,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(business, "business")
-        if "id" not in business:
-            raise ValueError("business doesn't contain id attribute, which is needed for deletion")
+        if "_id" not in business:
+            raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
         return self.businessDB.delete(business)
     
     ####################################### Workout Methods ########################################
@@ -193,8 +193,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(new_workout, "workout")
-        if "id" not in new_workout:
-            raise ValueError("new_workout doesn't contain id, which is needed for updating")
+        if "_id" not in new_workout:
+            raise ValueError("new_workout doesn't contain _id, which is needed for updating")
         return self.workoutDB.update(new_workout)
     
     def deleteWorkout(self, workout: dict):
@@ -203,8 +203,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(workout, "workout")
-        if "id" not in workout:
-            raise ValueError("workout doesn't contain id, which is needed for deletion")
+        if "_id" not in workout:
+            raise ValueError("workout doesn't contain _id, which is needed for deletion")
         return self.workoutDB.delete(workout)
 
 
@@ -223,7 +223,7 @@ class MongoDB:
 # db.drop()
 
 # user = {
-#     "id": "1",
+#     "_id": "1",
 #     "name": "alex"
 # }
 
