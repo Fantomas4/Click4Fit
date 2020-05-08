@@ -71,7 +71,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
       // this.alertMessage = 'Error: Could not authenticate';
-      this.alertSubscription.unsubscribe();
       console.log(this.authenticationService.currentUserValue);
       if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
         // The user currently logged in has the access privilege level of a client
