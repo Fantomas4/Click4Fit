@@ -9,7 +9,7 @@ import {ContactUsService} from './contact-us.service';
   styleUrls: ['./contact-us.component.css']
 })
 export class ContactUsComponent implements OnInit {
-  title = 'Contact Us'
+  title = 'Contact Us';
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   fullName: string;
   telephone: string;
@@ -17,8 +17,9 @@ export class ContactUsComponent implements OnInit {
   contactEmail: string;
   textarea: string;
   subject: string;
-  
-  constructor(public contanctUsService:ContactUsService) { }
+
+  constructor(public contanctUsService: ContactUsService) {
+  }
 
   ngOnInit(): void {
   }
@@ -28,8 +29,9 @@ export class ContactUsComponent implements OnInit {
       return 'You must enter a value';
     }
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
+  }
 
   onClick() {
-    this. contanctUsService.openModal();
+    this.contanctUsService.openModal();
   }
 }
