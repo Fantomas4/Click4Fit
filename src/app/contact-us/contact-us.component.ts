@@ -18,7 +18,7 @@ export class ContactUsComponent implements OnInit {
   textarea: string;
   subject: string;
 
-  constructor(public contanctUsService: ContactUsService) {
+  constructor(public contactUsService: ContactUsService) {
   }
 
   ngOnInit(): void {
@@ -32,6 +32,6 @@ export class ContactUsComponent implements OnInit {
   }
 
   onClick() {
-    this.contanctUsService.openModal();
+    this.contactUsService.openModal();
   }
 }
