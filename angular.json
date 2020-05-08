@@ -122,8 +122,5 @@
       }
     }
   },
-  "defaultProject": "Click4Fit",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "Click4Fit"
 }
