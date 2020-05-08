@@ -17,7 +17,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
         return this.results;
     }*/
     postFilters(content): Observable<any>{
-      const headers = { 'content-type': 'application/json'}  
+      const headers = {'content-type':'application/json'}; 
       const jsonData=JSON.stringify(content);
       return this.http.post('http://localhost:5000/api/workout',jsonData,{'headers':headers});  
     }

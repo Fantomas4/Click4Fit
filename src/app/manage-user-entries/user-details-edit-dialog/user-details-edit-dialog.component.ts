@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {UserEntry} from '../../user-entry';
 import {FormControl, Validators} from '@angular/forms';
+import {UserDetailsEditDialogService} from './user-details-edit-dialog.service';
 
 
 @Component({
@@ -12,21 +13,22 @@ import {FormControl, Validators} from '@angular/forms';
 export class UserDetailsEditDialogComponent implements OnInit {
 
   id: number; // The displayed entry's id.
-  firstName: string; // The displayed entry's first name.
-  lastName: string; // The displayed entry's last name.
-  date: FormControl; // Form Control used to receive the user's birth date input.
+  name: string; // The displayed entry's first name.
+  surname: string; // The displayed entry's last name.
+  birthdate: FormControl; // Form Control used to receive the user's birth date input.
   // Form Control used to receive and validate the user's email input.
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  email;
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: UserEntry) { }
+              @Inject(MAT_DIALOG_DATA) public data: UserEntry, private editDetailsService: UserDetailsEditDialogService) { }
 
   ngOnInit(): void {
     // Extract the data from the payload and store it into the class properties
     this.id = this.data.id;
-    this.firstName = this.data.name;
-    this.lastName = this.data.lastname;
-    this.date = new FormControl(new Date(this.data.birthdate));
+    this.name = this.data.name;
+    this.surname = this.data.lastname;
+    this.birthdate = new FormControl(new Date(this.data.birthdate));
     this.emailFormControl.setValue(this.data.email);
 
   }
@@ -51,7 +53,15 @@ export class UserDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-
+    var content = {'id':this.id,'name':this.name,'surname':this.surname,'birthdate':this.birthdate,'email':this.email};
+    this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
+      if (data.response==200){
+        //show message everything has saved
+      }
+      else{
+        //show message with the error
+      }
+    });
   }
 
 }

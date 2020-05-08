@@ -12,6 +12,10 @@ export class WorkoutComponent implements OnInit {
   isClicked = false;
   results;
   content;
+  categories;
+  advisedFor;
+  level;
+  equipment;
 
   constructor(private workoutService: WorkoutService,private resultCardService: ResultCard2Service) { }
 
@@ -21,7 +25,7 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    this.content={categories:['legs','chest'],advisedFor:'women',level:'easy',equipment:'no'}
+    this.content={categories:this.categories,advisedFor:this.advisedFor,level:this.level,equipment:this.equipment}
     /*this.workoutService.postFilters(this.content).toPromise().then((data:any)=>{
       this.results=data;
       //this.resultCardService.getResults(this.results);

@@ -31,10 +31,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardService.getFavoriteWorkout().subscribe((data:any)=>{
-      this.favoriteWorkout=data;
+      if (data.response==200){
+        this.FavoritesWorkoutResults=data.workoutList;
+      }
     });
     this.dashboardService.getFavoritePlaces().subscribe((data:any)=>{
-      this.favoritePlaces=data;
+      if (data.response==200){
+        this.FavoritesPlaceResults=data.placesList;
+      }
     });
     //gets the favrorites workout results from dashboard.service and adds them to an array
     this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);

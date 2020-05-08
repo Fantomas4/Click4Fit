@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {DeleteDialogMessageComponent} from './delete-dialog-message/delete-dialog-message.component';
 import {UpdateDialogMessageComponent} from './update-dialog-message/update-dialog-message.component';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 
 /*This service is about showing an alert modal message to confirm the user's willing for deleting
@@ -27,11 +27,13 @@ export class MyProfileService {
       const dialogRef = this.dialog.open(UpdateDialogMessageComponent, dialogConfig);
       dialogRef.afterClosed().subscribe();
     }
-    getDetails(): Observable<any>{
-      return this.http.get('http://localhost:5000/api/display-myprofile');
+    postUser(userId): Observable<any>{
+      const headers = {'content-type':'application/json'};
+      const jsonData=JSON.stringify(userId);
+      return this.http.post('http://localhost:5000/api/display-myprofile',jsonData,{'headers':headers});
     }
-    postDetails(content): Observable<any>{
-      const headers = { 'content-type': 'application/json'}  
+    postChanges(content): Observable<any>{
+      const headers = {'content-type':'application/json'};
       const jsonData=JSON.stringify(content);
       return this.http.post('http://localhost:5000/api/update-myprofile',jsonData,{'headers':headers});
     }

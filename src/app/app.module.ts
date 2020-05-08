@@ -51,6 +51,9 @@ import { RecoverDialogMessageComponent } from './recover-password/recover-dialog
 import { ContactUsDialogMessageComponent } from './contact-us/contactus-dialog-message/contactus-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
 import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/update-dialog-message.component';
+import { BusinessAddEntryDialogService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
+import { BusinessDetailsEditDialogService} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.service';
+import { UserDetailsEditDialogService} from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.service';
 
 
 @NgModule({
@@ -107,7 +110,8 @@ import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/
     MatListModule,
     HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService],
+  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService,
+              BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialogMessageComponent,UpdateDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
 })

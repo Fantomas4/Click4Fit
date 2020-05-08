@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {BusinessEntry} from '../../business-entry';
 import {FormControl, Validators} from '@angular/forms';
+import {BusinessDetailsEditDialogService} from './business-details-edit-dialog.service';
 
 @Component({
   selector: 'app-details-edit-dialogue',
@@ -20,12 +21,13 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   phoneNumber: string; // The displayed entry's phone number.
   availableServProd: string[]; // List containing the titles of the available products and services offered by the displayed entry.
   imgPath: string; // String containing the path for the preview image of the displayed entry.
+  email;
 
   // Form Control used to receive and validate the user's email input.
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(public dialogRef: MatDialogRef<BusinessDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
+              @Inject(MAT_DIALOG_DATA) public data: BusinessEntry, private editDetailsService: BusinessDetailsEditDialogService) {}
 
   ngOnInit(): void {
     // Extract the data from the payload and store it into the class properties
@@ -62,6 +64,16 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-
+    var content = {'id':this.id,'name':this.name,'category':this.category,'country':this.country,
+    'city':this.city,'address':this.address,'postalCode':this.postalCode,'phoneNumber':this.phoneNumber,
+    'email':this.email};
+    this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
+      if (data.response==200){
+        //show message everything has saved
+      }
+      else{
+        //show message with the error
+      }
+    });
   }
 }

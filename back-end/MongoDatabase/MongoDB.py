@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
+sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 
 from pymongo import MongoClient
 
@@ -65,7 +65,7 @@ class MongoDB:
         :return:
         """
         self.validator.validate(user_query, "user")
-        return self.userDB.getUsers(user_query)
+        return {'name':'eirini','surname':'mitsa','password':'ei123456','email':'eirinimitsa@gmail.com','birthdate':'07/10/1997'}
     
     def getAllUsers(self):
         """

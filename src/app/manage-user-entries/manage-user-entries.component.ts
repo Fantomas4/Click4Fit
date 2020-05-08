@@ -32,7 +32,7 @@ export class ManageUserEntriesComponent implements OnInit {
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size
 
   detailsEditDialogRef: MatDialogRef<UserDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
-
+  selected = []; //List with selected checkboxes
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog) { }
 
   /** Method used to change the dialog's height and width according to
@@ -85,8 +85,14 @@ export class ManageUserEntriesComponent implements OnInit {
    */
   getUsersEntries() {
 
-    this.manageUserEntriesService.getResults()
-      .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });
+    /*this.manageUserEntriesService.getResults()
+      .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
+      this.manageUserEntriesService.getResults().toPromise().then((data:any)=>{
+        if (data.response==200){
+          this.userData=data.userList;
+          this.dataSource.data=this.userData;
+        }
+      })
   }
 
   /** Checks whether the number of selected elements matches the total number of rows. */
@@ -112,5 +118,17 @@ export class ManageUserEntriesComponent implements OnInit {
     });
   }
 
+  deleteEntries(){
+    this.selected=this.selection.selected;
+    this.manageUserEntriesService.deleteEntries(this.selected).toPromise().then((data:any)=>
+    {
+      if (data.response==200){
+        //show message everything is okey
+      }
+      else{
+        //show message for error
+      }
+    });
+  }
 }
 

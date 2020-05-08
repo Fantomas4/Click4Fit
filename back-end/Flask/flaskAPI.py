@@ -1,8 +1,13 @@
+import os
 from flask import Flask, jsonify,request,json
 from flask_cors import CORS
-from MongoDatabase.MongoDB import *
+import sys
+sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+from MongoDatabase.MongoDB import MongoDB
+from MongoDatabase.Wrappers import *
 
 app = Flask(__name__)
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 MongoDB=MongoDB()
 CORS(app)
 
@@ -72,6 +77,7 @@ def displayFavoritePlaces():
 @app.route("/api/display-myprofile", methods=['POST','GET'])
 def displayMyprofile():
     user_id=request.get_json()
+    print(user_id)
     #connection with mongo sending the user's id and modifying the profile's details
     try:
         user_wrapper: UserWrapper = MongoDB.getUser(user_id)
@@ -101,14 +107,16 @@ def updateMyprofile():
     else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
+        if not user_wrapper.operationDone:
+            return jsonify(response=404)
     return jsonify(response=200, msg="Everything is okey")
 
 ####################################### Search #######################################
 @app.route("/api/search", methods=['POST','GET'])
 def search():
-     filters=request.get_json()
-     #connection with mongo sending the fitlers and return the matched place
-     try:
+    filters=request.get_json()
+    #connection with mongo sending the fitlers and return the matched place
+    try:
         business_wrapper_list : BusinessListWrapper = MongoDB.getBusinesses(filters)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
@@ -126,7 +134,7 @@ def search():
 def getWorkout():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the filters and getting the matched workout
-     try:
+    try:
         workout_wrapper_list : WorkoutListWrapper = MongoDB.getWorkouts(filters)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
@@ -144,7 +152,7 @@ def getWorkout():
 def manageOneBusinessDisplay():
     entry_id=request.get_json()
     #connection with mongo getting all current business entry
-     try:
+    try:
         business_wrapper : BusinessWrapper = MongoDB.getBusiness(entry_id)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
@@ -190,7 +198,7 @@ def manageBusinessAdd():
             return jsonify(response=500, msg="Something is wrong with the database")
     return jsonify(response=200, msg="Everything is okey")
 
-@app.route("/api/manage-business-delete-entry",methods=['POST'])
+@app.route("/api/manage-business-delete-entries",methods=['POST'])
 def manageBusinessDelete():
     entry_id=request.get_json()
     #connection with mongo sending the id 
@@ -259,7 +267,7 @@ def manageAllUsersDisplay():
             return jsonify(response=500, msg="Something is wrong with the database")
     return jsonify(response=200, users=user_wrapper_list.userList)
 
-@app.route("/api/manage-user-delete-entry",methods=['POST'])
+@app.route("/api/manage-user-delete-entries",methods=['POST'])
 def manageUserDelete():
     user_id=request.get_json()
     #connection with mongo sending the id

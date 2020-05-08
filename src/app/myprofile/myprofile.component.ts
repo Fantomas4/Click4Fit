@@ -23,15 +23,17 @@ export class MyprofileComponent implements OnInit {
   constructor(public myprofileService: MyProfileService) { }
 
   ngOnInit(): void {
-    this.myprofileService.getDetails().subscribe((data:any)=>
+    this.myprofileService.postUser(1).subscribe((data:any)=>
     {
-      this.results=data;
-      this.name=this.results.name;
-      this.surname=this.results.surname;
-      this.password=this.results.password;
-      this.repeatedPassword=this.results.password;
-      this.email=this.results.email;
-      this.birthdate=new FormControl(new Date(this.results.birthdate));
+      if (data.response==200){
+        this.results=data.user;
+        this.name=this.results.name;
+        this.surname=this.results.surname;
+        this.password=this.results.password;
+        this.repeatedPassword=this.results.password;
+        this.email=this.results.email;
+        this.birthdate=new FormControl(new Date(this.results.birthdate));
+      }
     });
     /*this.firstName = this.myprofileResults[0].name;
     this.lastName = this.myprofileResults[0].lastname;
@@ -55,7 +57,7 @@ export class MyprofileComponent implements OnInit {
    /*Updates the user's details in the database according to his changes*/
   onClickUpdate(){
     this.content={'name':this.name,'surname':this.surname,'email':this.email,'password':this.password,'birthdate':this.birthdate};
-    this.myprofileService.postDetails(this.content).toPromise().then((data:any)=>{});
+    this.myprofileService.postChanges(this.content).toPromise().then((data:any)=>{});
     this.myprofileService.openModalUpdate();
   }
 }

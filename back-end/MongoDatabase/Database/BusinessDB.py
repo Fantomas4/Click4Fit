@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
+sys.path.insert(0,  "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 
 from bson import ObjectId
 

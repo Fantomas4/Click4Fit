@@ -37,6 +37,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
   detailsEditDialogRef: MatDialogRef<BusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<BusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
 
+  selected=[]; //List with selected checkboxes
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog) {}
 
   /** Method used to change the dialog's height and width according to
@@ -88,8 +89,14 @@ export class ManageBusinessEntriesComponent implements OnInit {
    */
   getBusinessEntries() {
 
-    this.manageBusinessEntriesService.getResults()
-      .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });
+    /*this.manageBusinessEntriesService.getResults()
+      .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
+      this.manageBusinessEntriesService.getResults().toPromise().then((data:any)=>{
+        if (data.response==200){
+          this.businessData=data.businessList;
+          this.dataSource.data=this.businessData;
+        }
+      })
   }
 
   /** Checks whether the number of selected elements matches the total number of rows. */
@@ -123,5 +130,19 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(BusinessAddEntryDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')});
+  }
+
+  /** Click on delete button */
+  deleteEntries(){
+    this.selected=this.selection.selected;
+    this.manageBusinessEntriesService.deleteEntries(this.selected).toPromise().then((data:any)=>
+    {
+      if (data.response==200){
+        //show message everything is okey
+      }
+      else{
+        //show message for error
+      }
+    })
   }
 }

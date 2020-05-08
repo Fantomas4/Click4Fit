@@ -32,6 +32,7 @@ export class ResultCard2Component implements OnInit {
   coreIsEmpty=false;
   results;
   name:string;
+  i:number;
 
   //DomSanitizer helps to pass url video safe
   constructor(public sanitizer: DomSanitizer,private workoutService: WorkoutService,private resultCardSrvice: ResultCard2Service){}
@@ -40,8 +41,35 @@ export class ResultCard2Component implements OnInit {
     //this.results=this.resultCardSrvice.passResults();
     //console.log(this.filters);
     this.resultCardSrvice.postFilters(this.filters).toPromise().then((data:any)=>{
-      this.results=data;
-      this.name=this.results.name[1];
+      if (data.response==200){
+        this.results=data.workoutList;
+        for (this.i=0;this.i<this.results.length;this.i++){
+          if (this.results.categories[this.i]=='Legs'){
+            this.legsWorkoutResults[this.i]=this.results[this.i];
+          }
+          if (this.results.categories[this.i]=='Back'){
+            this.backWorkoutResults[this.i]=this.results[this.i];
+          }
+          if (this.results.categories[this.i]=='Chest'){
+            this.chestWorkoutResults[this.i]=this.results[this.i];
+          }
+          if (this.results.categories[this.i]=='Shoulders'){
+            this.shouldersWorkoutResults[this.i]=this.results[this.i];
+          }
+          if (this.results.categories[this.i]=='Biceps'){
+            this.bicepsWorkoutResults[this.i]=this.results[this.i];
+          }
+          if (this.results.categories[this.i]=='Triceps'){
+            this.tricepsWorkoutResults[this.i]=this.results[this.i];
+          }
+          if (this.results.categories[this.i]=='Abs'){
+            this.absWorkoutResults[this.i]=this.results[this.i];
+          }
+          if (this.results.categories[this.i]=='Core'){
+            this.coreWorkoutResults[this.i]=this.results[this.i];
+          }
+        }
+      }
     });
     //gets all the results and adds them in a seperated array
     this.workoutService.getLegsResults().subscribe(results => this.legsWorkoutResults = results);
