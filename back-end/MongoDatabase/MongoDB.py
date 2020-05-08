@@ -37,7 +37,7 @@ class MongoDB:
             if attribute not in user:
                 raise ValueError("user doesn't contain " + attribute + 
                                 " attribute, which is needed for registration")
-        return self.userDB.createNewUser(user)
+        return self.userDB.create(user)
 
     def logIn(self, user_credentials: dict):
         """
@@ -49,7 +49,7 @@ class MongoDB:
             if attribute not in user_credentials:
                 raise ValueError("user_credentials doesn't contain " + attribute +
                                 " attribute, which is needed to log in")
-        return self.userDB.logInUser(user_credentials)
+        return self.userDB.logIn(user_credentials)
     
     def getUser(self, user_query: dict):
         """
@@ -57,7 +57,7 @@ class MongoDB:
         :return:
         """
         self.validator.validate(user_query, "user")
-        return self.userDB.getUser(user_query)
+        return self.userDB.get(user_query)
     
     def getUsers(self, user_query: dict):
         """
@@ -65,34 +65,33 @@ class MongoDB:
         :return:
         """
         self.validator.validate(user_query, "user")
-        return self.userDB.getUsers(user_query)
+        return self.userDB.getList(user_query)
     
     def getAllUsers(self):
         """
         :return:
         """
-        return self.userDB.getAllUsers()
+        return self.userDB.getAll()
     
-    def updateUser(self, new_user: dict, user_id: str):
+    def updateUser(self, new_user: dict):
         """
         :param new_user:
         :return:
         """
         self.validator.validate(new_user, "user")
-        if type(user_id) is not str: raise TypeError("user_id must be of type str and got "
-                                                     + str(type(user_id)) + " instead")
-        if not user_id: raise ValueError("user_id is empty")
-        return self.userDB.updateUserById(new_user, user_id)
+        if "id" not in new_user:
+            raise ValueError("new_user doesn't contain id attribute, which is needed for updating")
+        return self.userDB.update(new_user)
     
-    def deleteUser(self, user_id: str):
+    def deleteUser(self, user: dict):
         """
-        :param user_id:
+        :param user:
         :return:
         """
-        if type(user_id) is not str: raise TypeError("user_id must be of type str and got "
-                                                    + str(type(user_id)) + " instead")
-        if not user_id: raise ValueError("user_id is empty")
-        return self.userDB.deleteUserById(user_id)
+        self.validator.validate(user, "user")
+        if "id" not in user:
+            raise ValueError("user doesn't contain id attribute, which is needed for deletion")
+        return self.userDB.delete(user)
     
     ####################################### Business Methods ########################################
     
@@ -107,7 +106,7 @@ class MongoDB:
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
-        return self.businessDB.createNewBusiness(business)
+        return self.businessDB.create(business)
     
     def getBusiness(self, business_query: dict):
         """
@@ -115,7 +114,7 @@ class MongoDB:
         :return:
         """
         self.validator.validate(business_query, "business")
-        return self.businessDB.getBusiness(business_query)
+        return self.businessDB.get(business_query)
     
     def getBusinesses(self, business_query: dict):
         """
@@ -123,35 +122,33 @@ class MongoDB:
         :return:
         """
         self.validator.validate(business_query, "business")
-        return self.businessDB.getBusinesses(business_query)
+        return self.businessDB.getList(business_query)
 
     def getAllBusinesses(self):
         """
         :return:
         """
-        return self.businessDB.getAllBusinesses
+        return self.businessDB.getAll()
 
-    def updateBusiness(self, new_business: dict, business_id: str):
+    def updateBusiness(self, new_business: dict):
         """
         :param new_business:
-        :param businessid:
         :return:
         """
         self.validator.validate(new_business, "business")
-        if type(business_id) is not str: raise TypeError("business_id must be of type str and got "
-                                                     + str(type(business_id)) + " instead")
-        if not business_id: raise ValueError("business_id is empty")
-        return self.businessDB.updateBusiness(new_business, business_id)
+        if "id" not in new_business:
+            raise ValueError("new_business doesn't contain id attribute, which is needed for updating")
+        return self.businessDB.update(new_business)
 
-    def deleteBusiness(self, business_id: str):
+    def deleteBusiness(self, business: dict):
         """
-        :param business_id:
+        :param business:
         :return:
         """
-        if type(business_id) is not str: raise TypeError("business_id must be of type str and got "
-                                                    + str(type(business_id)) + " instead")
-        if not business_id: raise ValueError("business_id is empty")
-        return self.businessDB.deleteBusinessById(business_id)
+        self.validator.validate(business, "business")
+        if "id" not in business:
+            raise ValueError("business doesn't contain id attribute, which is needed for deletion")
+        return self.businessDB.delete(business)
     
     ####################################### Workout Methods ########################################
     
@@ -166,7 +163,7 @@ class MongoDB:
             if attribute not in workout:
                 raise ValueError("workout doesn't contain " + attribute +
                                 " attribute, which is needed for creation")
-        return self.workoutDB.createNewWorkout(workout)
+        return self.workoutDB.create(workout)
     
     def getWorkout(self, workout_query: dict):
         """
@@ -174,7 +171,7 @@ class MongoDB:
         :return:
         """
         self.validator.validate(workout_query, "workout")
-        return self.workoutDB.getWorkout(workout_query)
+        return self.workoutDB.get(workout_query)
     
     def getWorkouts(self, workout_query: dict):
         """
@@ -182,35 +179,33 @@ class MongoDB:
         :return:
         """
         self.validator.validate(workout_query, "workout")
-        return self.workoutDB.getWorkouts(workout_query)
+        return self.workoutDB.getList(workout_query)
     
     def getAllWorkouts(self):
         """
         :return:
         """
-        return self.workoutDB.getAllWorkouts
+        return self.workoutDB.getAll()
     
-    def updateWorkout(self, new_workout: dict, workout_id):
+    def updateWorkout(self, new_workout: dict):
         """
         :param new_workout:
-        :param workout_id:
         :return:
         """
         self.validator.validate(new_workout, "workout")
-        if type(workout_id) is not str: raise TypeError("workout_id must be of type str and got "
-                                                    + str(type(workout_id)) + " instead")
-        if not workout_id: raise ValueError("workout_id is empty")
-        return self.workoutDB.updateWorkoutById(new_workout, workout_id)
+        if "id" not in new_workout:
+            raise ValueError("new_workout doesn't contain id, which is needed for updating")
+        return self.workoutDB.update(new_workout)
     
-    def deleteWorkout(self, workout_id: str):
+    def deleteWorkout(self, workout: dict):
         """
-        :param workout_id:
+        :param workout:
         :return:
         """
-        if type(workout_id) is not str: raise TypeError("workout_id must be of type str and got "
-                                                    + str(type(workout_id)) + " instead")
-        if not workout_id: raise ValueError("workout_id is empty")
-        return self.workoutDB.deleteWorkoutById(workout_id)
+        self.validator.validate(workout, "workout")
+        if "id" not in workout:
+            raise ValueError("workout doesn't contain id, which is needed for deletion")
+        return self.workoutDB.delete(workout)
 
 
         

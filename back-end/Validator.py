@@ -7,15 +7,16 @@ class Validator:
         "user" : {
             "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "role", "favorites", "id", "session_id"],
             "type" : {
-                "name"       : str,
-                "surname"    : str,
-                "email"      : str,
-                "password"   : str,
-                "birthdate"  : str,
-                "role"       : str,
-                "favorites"  : list,
-                "id"         : str,
-                "session_id" : str
+                "_id"                : str,
+                "name"               : str,
+                "surname"            : str,
+                "email"              : str,
+                "password"           : str,
+                "birthdate"          : str,
+                "role"               : str,
+                "favorite_business"  : list,
+                "favorite_workout"   : list,
+                "session_id"         : str
             },
             "regex" : {
                 "name"      : r"[A-Za-z]{2,25}( [A-Za-z]{2,25})?",
@@ -38,6 +39,7 @@ class Validator:
             "legal-attributes" : ["name", "category", "country", "city", "address", "postal_code", "phone_number",
                                     "email", "img_path", "services", "products", "id"],
             "type" : {
+                "_id"          : str,
                 "name"         : str,
                 "category"     : str,
                 "country"      : str,
@@ -48,8 +50,7 @@ class Validator:
                 "email"        : str,
                 "img_path"     : str,
                 "services"     : list,
-                "products"     : list,
-                "id"           : str
+                "products"     : list
             },
             "regex" : {
                 "email"    : r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
@@ -64,14 +65,14 @@ class Validator:
             "legal-attributes" : ["name", "muscle_groups", "advised_for", "difficulty",
                                 "equipment", "sets", "video_url", "id"],
             "type" : {
+                "_id"           : str,
                 "name"          : str,
                 "muscle_groups" : str, 
                 "advised_for"   : str,
                 "difficulty"    : str,
                 "equipment"     : bool,
                 "sets"          : str,
-                "video_url"     : str, 
-                "id"            : str,
+                "video_url"     : str 
             },
             "regex" : {
                 "advised_for" : r"(men|women)",

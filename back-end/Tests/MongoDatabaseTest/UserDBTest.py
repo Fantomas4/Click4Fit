@@ -5,156 +5,264 @@ import unittest
 
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
-from DataModels.User import User
+from MongoDatabase.Wrappers.UserListWrapper import UserListWrapper
+
 
 class UserDBTest(unittest.TestCase):
 
     def setUp(self):
         self.connection = MongoDB()
-
-        self.user1 = User("Alexandros", "Wawaroutas", "alexvava@csd.auth.gr",
-            "secure_password", "27/02/1997", "admin")
-        self.user2 = User("Georgios Alexandros", "Vavaroutas", "alexvava@csd.auth.gr",
-            "unhackable_password", "27/02/1997", "admin") # same email
-        self.user3 = User("Dimitrios", "Vrakas", "dvrakas@csd.auth.gr",
-            "frappe", "10/05/1977", "client") # new user
+        # self.connection.userDB.db.drop()
+        self.user1 = {
+            "name" :     "Alexandros",
+            "surname" :  "Wawaroutas",
+            "email":     "alexvava@csd.auth.gr",
+            "password":  "secure_password",
+            "birthdate": "27/02/1997",
+            "role":      "admin"
+        }
+        self.user2 = {
+            "name" :     "Georgios Alexandros",
+            "surname" :  "Vavaroutas",
+            "email":     "alexvava@csd.auth.gr", # same email
+            "password":  "unhackable_password",
+            "birthdate": "27/02/1997",
+            "role":      "admin"
+        }
+        self.user3 = { # new user
+            "name" :     "Dimitrios",
+            "surname" :  "Vrakas",
+            "email":     "dvrakas@csd.auth.gr",
+            "password":  "frappe",
+            "birthdate": "10/05/1977",
+            "role":      "admin"
+        }
         
-        userWrapper = self.connection.userDB.createNewUser(self.user1.name, self.user1.surname,
-                        self.user1.email, self.user1.password, self.user1.birthdate, self.user1.role)
-        self.assertTrue(userWrapper.operationDone)
-        self.user1.id = userWrapper.user.id
-        self.user1.session_id = userWrapper.user.session_id
+        user_wrapper = self.connection.userDB.create(self.user1)
+        self.assertTrue(user_wrapper.operationDone)
+        self.user1["_id"] = user_wrapper.user["_id"]
+        self.assertTrue(self.connection.userDB._verifyPassword(
+                    user_wrapper.user["password"], self.user1["password"]))
+        self.user1["password"] = user_wrapper.user["password"]
     
-    def test_createNewUser(self):
+    def test_create(self):
         # add user with same email
-        userWrapper = self.connection.userDB.createNewUser(self.user2.name, self.user2.surname,
-                        self.user2.email, self.user2.password, self.user2.birthdate, self.user2.role)
-        self.assertIsNone(userWrapper.user)
-        self.assertTrue(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
+        user_wrapper = self.connection.userDB.create(self.user2)
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual({}, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertFalse(user_wrapper.operationDone)
         # add new user
-        userWrapper = self.connection.userDB.createNewUser(self.user3.name, self.user3.surname,
-                        self.user3.email, self.user3.password, self.user3.birthdate, self.user3.role)
-        self.assertFalse(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-        self.user3.id = userWrapper.user.id
-        self.user3.session_id = userWrapper.user.session_id
-        self.assertEqual(userWrapper.user, self.user3)
+        user_wrapper = self.connection.userDB.create(self.user3)
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertTrue(self.connection.userDB._verifyPassword(
+                    user_wrapper.user["password"], self.user3["password"]))
+        self.user3["password"] = user_wrapper.user["password"]
+        self.user3["_id"] = user_wrapper.user["_id"]
+        self.assertEqual(self.user3, user_wrapper.user)
+        self.assertFalse(user_wrapper.found)
+        self.assertTrue(user_wrapper.operationDone)
+        # deleting user3 from db
+        self.connection.userDB.delete(self.user3)
     
-    def test_logInUser(self):
+    def test_logIn(self):
         # log in non existend user
-        userWrapper = self.connection.userDB.logInUser(self.user3.email, self.user3.password)
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
+        user_wrapper = self.connection.userDB.logIn({
+            "email"    : self.user3["email"],
+            "password" : self.user3["password"]
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual({}, user_wrapper.user)
+        self.assertFalse(user_wrapper.found)
+        self.assertFalse(user_wrapper.operationDone)
         # log in existend user but wrong password
-        userWrapper = self.connection.userDB.logInUser(self.user1.email, "wrong_password")
-        self.assertIsNone(userWrapper.user)
-        self.assertTrue(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
+        user_wrapper = self.connection.userDB.logIn({
+            "email"    : self.user1["email"],
+            "password" : "wrong_password"
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual({}, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertFalse(user_wrapper.operationDone)
         # log in with correct credentials
-        userWrapper = self.connection.userDB.logInUser(self.user1.email, self.user1.password)
-        self.assertNotEqual(userWrapper.user.session_id, self.user1.session_id) # session id should have changed
-        self.user1.session_id = userWrapper.user.session_id
-        self.assertEqual(userWrapper.user, self.user1)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-
-    def test_getUserById(self):
+        user_wrapper = self.connection.userDB.logIn({
+            "email"    : self.user1["email"],
+            "password" : "secure_password"
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertTrue(user_wrapper.user["session_id"])
+        self.user1["session_id"] = user_wrapper.user["session_id"]
+        self.assertEqual(self.user1, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertTrue(user_wrapper.operationDone)
+        
+    def test_get(self):
         # non existend id
-        userWrapper = self.connection.userDB.getUserById("14m4wr0ngUs3r1dh1h1")
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
+        user_wrapper = self.connection.userDB.get({
+            "_id" : "14m4wr0ngUs3r1dh1h1"
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual({}, user_wrapper.user)
+        self.assertFalse(user_wrapper.found)
+        self.assertFalse(user_wrapper.operationDone)
         # empty id
-        userWrapper = self.connection.userDB.getUserById("")
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
+        user_wrapper = self.connection.userDB.get({
+            "_id" : ""
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual({}, user_wrapper.user)
+        self.assertFalse(user_wrapper.found)
+        self.assertFalse(user_wrapper.operationDone)
         # existend id
-        userWrapper = self.connection.userDB.getUserById(self.user1.id)
-        self.assertEqual(userWrapper.user, self.user1)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-    
-    def test_getUserByEmail(self):
-        # get non existend user
-        userWrapper = self.connection.userDB.getUserByEmail(self.user3.email)
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
-        # get existend user
-        userWrapper = self.connection.userDB.getUserByEmail(self.user1.email)
-        self.assertEqual(userWrapper.user, self.user1)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-    
-    def test_updateUser(self):
-        # update non existend user with email
-        userWrapper = self.connection.userDB.updateUser(self.user3)
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
-        # update existend user with wrong id
-        userWrapper = self.connection.userDB.updateUser(self.user1, "14m4wr0ngUs3r1dh1h1")
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
-        # update existend users name with email
-        self.user1.name = "James"
-        userWrapper = self.connection.userDB.updateUser(self.user1)
-        self.assertEqual(userWrapper.user, self.user1)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-        # update existend users surname with id
-        self.user1.surname = "Bond"
-        userWrapper = self.connection.userDB.updateUser(self.user1, self.user1.id)
-        self.assertEqual(userWrapper.user, self.user1)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-        # update existend user with new User object that doesn't contain id field
-        userWrapper = self.connection.userDB.updateUser(self.user2)
-        self.assertEqual(userWrapper.user, self.user2)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
+        user_wrapper = self.connection.userDB.get({
+            "_id" : self.user1["_id"]
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual(self.user1, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertTrue(user_wrapper.operationDone)
+        # existend email
+        user_wrapper = self.connection.userDB.get({
+            "email" : self.user1["email"]
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual(self.user1, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertTrue(user_wrapper.operationDone)
 
-    def test_deleteUserByEmail(self):
-        # delete non existend user
-        userWrapper = self.connection.userDB.deleteUserByEmail(self.user3.email)
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
+    def test_getList(self):
+        # non existend id
+        user_list_wrapper = self.connection.userDB.getList({
+            "_id" : "14m4wr0ngUs3r1dh1h1"
+        })
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertEqual([], user_list_wrapper.user_list)
+        self.assertFalse(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+        # empty id
+        user_list_wrapper = self.connection.userDB.getList({
+            "_id" : ""
+        })
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertEqual([], user_list_wrapper.user_list)
+        self.assertFalse(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+        # existend id
+        user_list_wrapper = self.connection.userDB.getList({
+            "_id" : self.user1["_id"]
+        })
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertEqual([self.user1], user_list_wrapper.user_list)
+        self.assertTrue(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+        # existend email
+        user_list_wrapper = self.connection.userDB.getList({
+            "email" : self.user1["email"]
+        })
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertEqual([self.user1], user_list_wrapper.user_list)
+        self.assertTrue(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+
+        # adding another user
+        user_wrapper = self.connection.userDB.create(self.user3)
+        self.assertTrue(user_wrapper.operationDone)
+        self.user3["_id"] = user_wrapper.user["_id"]
+
+        # existend id
+        user_list_wrapper = self.connection.userDB.getList({
+            "_id" : self.user3["_id"]
+        })
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertTrue(self.connection.userDB._verifyPassword(
+                user_list_wrapper.user_list[0]["password"], self.user3["password"]))
+        self.user3["password"] = user_list_wrapper.user_list[0]["password"]
+        self.assertEqual([self.user3], user_list_wrapper.user_list)
+        self.assertTrue(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+        # admin role
+        user_list_wrapper = self.connection.userDB.getList({
+            "role" : "admin"
+        })
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertEqual([self.user1, self.user3], user_list_wrapper.user_list)
+        self.assertTrue(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+        # deleting user3 from db
+        self.connection.userDB.delete(self.user3)
+
+    def test_getAll(self):
+        user_list_wrapper = self.connection.userDB.getAll()
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertEqual([self.user1], user_list_wrapper.user_list)
+        self.assertTrue(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+
+        self.tearDown() # deleting all users
+
+        user_list_wrapper = self.connection.userDB.getAll()
+        self.assertIsNotNone(user_list_wrapper.user_list)
+        self.assertEqual([], user_list_wrapper.user_list)
+        self.assertFalse(user_list_wrapper.found)
+        self.assertTrue(user_list_wrapper.operationDone)
+
+    def test_update(self):
+        # update with wrong id
+        user_wrapper = self.connection.userDB.update({
+            "email" : self.user1["email"],
+            "_id"   : "14m4wr0ngUs3r1dh1h1"
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual({}, user_wrapper.user)
+        self.assertFalse(user_wrapper.found)
+        self.assertFalse(user_wrapper.operationDone)
+        # update existend users name with valid id
+        self.user1["name"] = "James"
+        user_wrapper = self.connection.userDB.update({
+            "name"  : "James",
+            "_id"   : self.user1["_id"]
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual(self.user1, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertTrue(user_wrapper.operationDone)
+        # update existend users surname and email with valid id
+        self.user1["surname"] = "Bond"
+        self.user1["email"] = "shaken@not.stirred.com"
+        user_wrapper = self.connection.userDB.update({
+            "surname" : "Bond",
+            "email"   : "shaken@not.stirred.com",
+            "_id"     : self.user1["_id"]
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual(self.user1, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertTrue(user_wrapper.operationDone)
+
+    def test_delete(self):
+        # delete with wrong id
+        user_wrapper = self.connection.userDB.delete({
+            "email" : self.user1["email"],
+            "_id"   : "14m4wr0ngUs3r1dh1h1"
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual({}, user_wrapper.user)
+        self.assertFalse(user_wrapper.found)
+        self.assertFalse(user_wrapper.operationDone)
         # delete existend user
-        userWrapper = self.connection.userDB.deleteUserByEmail(self.user1.email)
-        self.assertEqual(userWrapper.user, self.user1)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-        self.assertIsNone(self.connection.userDB._findUserByMail(userWrapper.user.email))
-
-    def test_deleteUserById(self):
-        # delete with non existend id
-        userWrapper = self.connection.userDB.deleteUserById("14m4wr0ngUs3r1dh1h1")
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
-        # delete with empty id
-        userWrapper = self.connection.userDB.deleteUserById("")
-        self.assertIsNone(userWrapper.user)
-        self.assertFalse(userWrapper.found)
-        self.assertFalse(userWrapper.operationDone)
-        # delete existend user
-        userWrapper = self.connection.userDB.deleteUserById(self.user1.id)
-        self.assertEqual(userWrapper.user, self.user1)
-        self.assertTrue(userWrapper.found)
-        self.assertTrue(userWrapper.operationDone)
-        self.assertIsNone(self.connection.userDB._findUserByMail(userWrapper.user.email))
-
-    def test_value(self):
-        #TODO: Test Errors
-        pass
+        user_wrapper = self.connection.userDB.delete({
+            "_id" : self.user1["_id"]
+        })
+        self.assertIsNotNone(user_wrapper.user)
+        self.assertEqual(self.user1, user_wrapper.user)
+        self.assertTrue(user_wrapper.found)
+        self.assertTrue(user_wrapper.operationDone)
+        self.assertEqual([], self.connection.userDB.getAll().user_list)
 
     def tearDown(self):
-        self.connection.userDB.db.drop()
+        # self.connection.userDB.db.drop()
+        self.connection.userDB.delete(self.user1)
+        self.assertEqual([], self.connection.userDB.getAll().user_list)
 
 if __name__ == '__main__':
     unittest.main()
