@@ -3,7 +3,8 @@ sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 from bson import ObjectId
 
-from MongoDatabase.Wrappers import WorkoutWrapper, WorkoutListWrapper
+from MongoDatabase.Wrappers.WorkoutWrapper import WorkoutWrapper
+from MongoDatabase.Wrappers.WorkoutListWrapper import WorkoutListWrapper
 
 
 class WorkoutDB:
@@ -17,20 +18,27 @@ class WorkoutDB:
         :param workout:
         :return:
         """
-        _wrapper: dict = self.get(workout)
-        if _wrapper.found:
+        if self.get(workout).found:
             return WorkoutWrapper({}, found=True, operationDone=False)
+        workout = {
+            "_id"           : str(ObjectId()),
+            "name"          : workout["name"],
+            "main_group"    : workout["main_group"],
+            "muscle_groups" : workout["muscle_groups"], 
+            "advised_for"   : workout["advised_for"],
+            "difficulty"    : workout["difficulty"],
+            "equipment"     : workout["equipment"],
+            "sets"          : workout["sets"],
+            "video_url"     : workout["video_url"] 
+        }
         try:
             insert_result: InsertOneResult = self.db.insert_one(workout)
-            if insert_result.acknowledged:
-                workout["id"] = str(insert_result.inserted_id)
-                update_result: UpdateResult = self.db.update_one({"_id": ObjectId(workout["id"])}, 
-                                                                {"$set": {"id": workout["id"]}})
-            if update_result.modified_count:
-                return WorkoutWrapper(workout, found=False, operationDone=True)
-            return WorkoutWrapper({}, found=False, operationDone=False)
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
+        else:
+            if insert_result.acknowledged:
+                return WorkoutWrapper(workout, found=False, operationDone=True)
+            return WorkoutWrapper({}, found=False, operationDone=False)
     
     def get(self, workout_query: dict):
         """
@@ -43,7 +51,6 @@ class WorkoutDB:
             return WorkoutWrapper(None, found=False, operationDone=False)
         else:
             if workout:
-                del workout["_id"]
                 return WorkoutWrapper(workout, found=True, operationDone=True)
             return WorkoutWrapper({}, found=False, operationDone=False)
     
@@ -57,11 +64,9 @@ class WorkoutDB:
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)
         else:
-            workout_list = []
-            for workout in workout_list_cursor:
-                del workout["_id"]
-                workout_list.append(workout)
-            return WorkoutListWrapper(workout_list, found=bool(workout_list), operationDone=True)
+            workout_list = [workout for workout in workout_list_cursor]
+            success = bool(workout_list)
+            return WorkoutListWrapper(workout_list, found=success, operationDone=success)
         
     def getAll(self):
         """
@@ -72,11 +77,9 @@ class WorkoutDB:
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)
         else:
-            workout_list = []
-            for workout in workout_list_cursor:
-                del workout["_id"]
-                workout_list.append(workout)
-            return WorkoutListWrapper(workout_list, found=bool(workout_list), operationDone=True)
+            workout_list = [workout for workout in workout_list_cursor]
+            success = bool(workout_list)
+            return WorkoutListWrapper(workout_list, found=success, operationDone=success)
     
     def update(self, new_workout: dict):
         """
@@ -84,11 +87,10 @@ class WorkoutDB:
         :return:
         """
         try:
-            update_result: UpdateResult = self.db.update_one({{"_id": ObjectId(new_workout["id"])},
-                                                            {'$set': new_workout}})
+            update_result: UpdateResult = self.db.update_one({"_id": new_workout["_id"]},
+                                                            {'$set': new_workout})
             if update_result.matched_count:
-                updated_workout: dict = self.db.find_one({"_id": ObjectId(new_workout["id"])})
-                del updated_user["_id"]
+                updated_workout: dict = self.db.find_one({"_id": new_workout["_id"]})
                 return WorkoutWrapper(updated_workout, found=True, operationDone=True)
             return WorkoutWrapper({}, found=False, operationDone=False)
         except:
@@ -100,12 +102,11 @@ class WorkoutDB:
         :return:
         """
         try:
-            wrapper: WorkoutWrapper = self.get({"_id": ObjectId(workout["id"])})
-            if wrapper.workout:
+            wrapper: WorkoutWrapper = self.get({"_id": workout["_id"]})
+            if wrapper.operationDone:
                 return WorkoutWrapper(wrapper.workout, found=True,
-                        operationDone=bool(self.db.delete_one(
-                                            {"_id": ObjectId(workout["id"])}
-                                                ).deleted_count))
+                        operationDone=bool(
+                            self.db.delete_one({"_id": workout["_id"]}).deleted_count))
             return wrapper
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)

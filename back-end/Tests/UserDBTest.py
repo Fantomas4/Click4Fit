@@ -138,7 +138,7 @@ class UserDBTest(unittest.TestCase):
         self.assertIsNotNone(user_list_wrapper.user_list)
         self.assertEqual([], user_list_wrapper.user_list)
         self.assertFalse(user_list_wrapper.found)
-        self.assertTrue(user_list_wrapper.operationDone)
+        self.assertFalse(user_list_wrapper.operationDone)
         # empty id
         user_list_wrapper = self.connection.userDB.getList({
             "_id" : ""
@@ -146,7 +146,7 @@ class UserDBTest(unittest.TestCase):
         self.assertIsNotNone(user_list_wrapper.user_list)
         self.assertEqual([], user_list_wrapper.user_list)
         self.assertFalse(user_list_wrapper.found)
-        self.assertTrue(user_list_wrapper.operationDone)
+        self.assertFalse(user_list_wrapper.operationDone)
         # existend id
         user_list_wrapper = self.connection.userDB.getList({
             "_id" : self.user1["_id"]
@@ -206,7 +206,7 @@ class UserDBTest(unittest.TestCase):
         self.assertIsNotNone(user_list_wrapper.user_list)
         self.assertEqual([], user_list_wrapper.user_list)
         self.assertFalse(user_list_wrapper.found)
-        self.assertTrue(user_list_wrapper.operationDone)
+        self.assertFalse(user_list_wrapper.operationDone)
 
     def test_update(self):
         # update with wrong id

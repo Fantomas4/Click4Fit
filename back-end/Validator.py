@@ -68,7 +68,7 @@ class Validator:
                 "_id"           : str,
                 "name"          : str,
                 "main_group"    : str,
-                "muscle_groups" : str, 
+                "muscle_groups" : list, 
                 "advised_for"   : str,
                 "difficulty"    : str,
                 "equipment"     : bool,

@@ -6,113 +6,189 @@ import unittest
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.WorkoutWrapper import WorkoutWrapper
 from MongoDatabase.Wrappers.WorkoutListWrapper import WorkoutListWrapper
-from DataModels.Workout import Workout
+
 
 class WorkoutDBTest(unittest.TestCase):
 
     def setUp(self):
         self.connection = MongoDB()
-        self.workout1 = Workout('Squat with weight', ["Quads", "Glutes", "Core"], 'Women',
-                                'Hard', True, '4x15 10kg+10kg', 'https://www.youtube.com/embed/MVMNk0HiTMg')
-        self.workout2 = Workout('Kickbacks', ["Triceps"], 'Men', 'Medium', True,
-                                '4x15 8kg+8kg', 'https://www.youtube.com/embed/ShCYaoHmWmk')
 
-        workoutWrapper = self.connection.workoutDB.createNewWorkout(self.workout1.name, self.workout1.muscle_groups,
-                                    self.workout1.advised_for, self.workout1.difficulty, self.workout1.equipment,
-                                    self.workout1.sets, self.workout1.video_url, self.workout1.id)        
-        self.assertTrue(workoutWrapper.operationDone)
-        self.workout1.id = workoutWrapper.workout.id
+        self.workout1 = {
+            "name"          : 'Squat with weight',
+            "main_group"    : 'Legs',
+            "muscle_groups" : ["Quads", "Glutes", "Core"], 
+            "advised_for"   : 'Women',
+            "difficulty"    : 'Hard',
+            "equipment"     : True,
+            "sets"          : '4x15 10kg+10kg',
+            "video_url"     : 'https://www.youtube.com/embed/MVMNk0HiTMg'
+        }
+        self.workout2 = {
+            "name"          : 'Kickbacks',
+            "main_group"    : 'Arms',
+            "muscle_groups" : ["Triceps"], 
+            "advised_for"   : 'Men',
+            "difficulty"    : 'Medium',
+            "equipment"     : True,
+            "sets"          : '4x15 8kg+8kg',
+            "video_url"     : 'https://www.youtube.com/embed/ShCYaoHmWmk'
+        }
 
-    def test_createNewWorkout(self):
-         # existend id
-        workoutWrapper = self.connection.workoutDB.createNewWorkout(self.workout2.name, self.workout2.muscle_groups,
-                                    self.workout2.advised_for, self.workout2.difficulty, self.workout2.equipment,
-                                    self.workout2.sets, self.workout2.video_url, self.workout1.id)
-        self.assertIsNone(workoutWrapper.workout)
-        self.assertTrue(workoutWrapper.found)
-        self.assertFalse(workoutWrapper.operationDone)
-        # add non existend workout
-        workoutWrapper = self.connection.workoutDB.createNewWorkout(self.workout2.name, self.workout2.muscle_groups,
-                                    self.workout2.advised_for, self.workout2.difficulty, self.workout2.equipment,
-                                    self.workout2.sets, self.workout2.video_url, self.workout2.id)
-        self.assertFalse(workoutWrapper.found)
-        self.assertTrue(workoutWrapper.operationDone)
-        self.workout2.id = workoutWrapper.workout.id
-        self.assertEqual(workoutWrapper.workout, self.workout2)
+        workout_wrapper = self.connection.workoutDB.create(self.workout1)     
+        self.assertTrue(workout_wrapper.operationDone)
+        self.workout1["_id"] = workout_wrapper.workout["_id"]
 
-    def test_getWorkoutById(self):
-        # non existend id
-        workoutWrapper = self.connection.workoutDB.getWorkoutById("14m4wr0ngW0rK0uT1dh0h0")
-        self.assertIsNone(workoutWrapper.workout)
-        self.assertFalse(workoutWrapper.found)
-        self.assertFalse(workoutWrapper.operationDone)
-        # empty id
-        workoutWrapper = self.connection.workoutDB.getWorkoutById("")
-        self.assertIsNone(workoutWrapper.workout)
-        self.assertFalse(workoutWrapper.found)
-        self.assertFalse(workoutWrapper.operationDone)
+    def test_create(self):
         # existend id
-        workoutWrapper = self.connection.workoutDB.getWorkoutById(self.workout1.id)
-        self.assertEqual(workoutWrapper.workout, self.workout1)
-        self.assertTrue(workoutWrapper.found)
-        self.assertTrue(workoutWrapper.operationDone)
+        workout_wrapper = self.connection.workoutDB.create(self.workout1)
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual({}, workout_wrapper.workout)
+        self.assertTrue(workout_wrapper.found)
+        self.assertFalse(workout_wrapper.operationDone)
+        # add new workout
+        workout_wrapper = self.connection.workoutDB.create(self.workout2)
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.workout2["_id"] = workout_wrapper.workout["_id"]
+        self.assertFalse(workout_wrapper.found)
+        self.assertTrue(workout_wrapper.operationDone)
+        # delete workout2
+        self.connection.workoutDB.delete({"_id": self.workout2["_id"]})
+    
+    def test_get(self):
+        # non existend id
+        workout_wrapper = self.connection.workoutDB.get({
+            "_id" : "14m4wr0ngW0rK0uT1dh0h0"
+        })
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual({}, workout_wrapper.workout)
+        self.assertFalse(workout_wrapper.found)
+        self.assertFalse(workout_wrapper.operationDone)
+        # empty id
+        workout_wrapper = self.connection.workoutDB.get({
+            "_id" : ""
+        })
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual({}, workout_wrapper.workout)
+        self.assertFalse(workout_wrapper.found)
+        self.assertFalse(workout_wrapper.operationDone)
+        # existend id
+        workout_wrapper = self.connection.workoutDB.get({
+            "_id" : self.workout1["_id"]
+        })
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual(self.workout1, workout_wrapper.workout)
+        self.assertTrue(workout_wrapper.found)
+        self.assertTrue(workout_wrapper.operationDone)
 
-    def test_updateWorkoutById(self):
-        # update existend workout with wrong id
-        workoutWrapper = self.connection.workoutDB.updateWorkoutById(self.workout2, "14m4wr0ngW0rK0uT1dh0h0")
-        self.assertIsNone(workoutWrapper.workout)
-        self.assertFalse(workoutWrapper.found)
-        self.assertFalse(workoutWrapper.operationDone)
-        # update existend workout with correct id
-        self.workout1.name = "Netflix'n Chill"
-        workoutWrapper = self.connection.workoutDB.updateWorkoutById(self.workout1, self.workout1.id)
-        self.assertEqual(workoutWrapper.workout, self.workout1)
-        self.assertTrue(workoutWrapper.found)
-        self.assertTrue(workoutWrapper.operationDone)
+    def test_getList(self):
+        # non existend id
+        workout_list_wrapper = self.connection.workoutDB.getList({
+            "_id" : "14m4wr0ngW0rK0uT1dh0h0"
+        })
+        self.assertIsNotNone(workout_list_wrapper.workout_list)
+        self.assertEqual([], workout_list_wrapper.workout_list)
+        self.assertFalse(workout_list_wrapper.found)
+        self.assertFalse(workout_list_wrapper.operationDone)
+        # empty id
+        workout_list_wrapper = self.connection.workoutDB.getList({
+            "_id" : ""
+        })
+        self.assertIsNotNone(workout_list_wrapper.workout_list)
+        self.assertEqual([], workout_list_wrapper.workout_list)
+        self.assertFalse(workout_list_wrapper.found)
+        self.assertFalse(workout_list_wrapper.operationDone)
+        # existend id
+        workout_list_wrapper = self.connection.workoutDB.getList({
+            "_id" : self.workout1["_id"]
+        })
+        self.assertIsNotNone(workout_list_wrapper.workout_list)
+        self.assertEqual([self.workout1], workout_list_wrapper.workout_list)
+        self.assertTrue(workout_list_wrapper.found)
+        self.assertTrue(workout_list_wrapper.operationDone)
+        # adding another workout
+        workout_wrapper = self.connection.workoutDB.create(self.workout2)
+        self.assertTrue(workout_wrapper.operationDone)
+        self.workout2["_id"] = workout_wrapper.workout["_id"]
 
-    def test_deleteWorkoutById(self):
-        # delete non existend workout
-        workoutWrapper = self.connection.workoutDB.deleteWorkoutById("14m4wr0ngW0rK0uT1dh0h0")
-        self.assertIsNone(workoutWrapper.workout)
-        self.assertFalse(workoutWrapper.found)
-        self.assertFalse(workoutWrapper.operationDone)
+        # existend id
+        workout_list_wrapper = self.connection.workoutDB.getList({
+            "_id" : self.workout2["_id"]
+        })
+        self.assertIsNotNone(workout_list_wrapper.workout_list)
+        self.assertEqual([self.workout2], workout_list_wrapper.workout_list)
+        self.assertTrue(workout_list_wrapper.found)
+        self.assertTrue(workout_list_wrapper.operationDone)
+        # needing equipment
+        workout_list_wrapper = self.connection.workoutDB.getList({
+            "equipment" : True
+        })
+        self.assertIsNotNone(workout_list_wrapper.workout_list)
+        self.assertEqual([self.workout1, self.workout2], workout_list_wrapper.workout_list)
+        self.assertTrue(workout_list_wrapper.found)
+        self.assertTrue(workout_list_wrapper.operationDone)
+
+        # deleting workout2
+        self.connection.workoutDB.delete({"_id": self.workout2["_id"]})
+
+    def test_getAll(self):
+        workout_list_wrapper = self.connection.workoutDB.getAll()
+        self.assertIsNotNone(workout_list_wrapper.workout_list)
+        self.assertEqual([self.workout1], workout_list_wrapper.workout_list)
+        self.assertTrue(workout_list_wrapper.found)
+        self.assertTrue(workout_list_wrapper.operationDone)
+
+        # deleting workout from db
+        self.tearDown()
+
+        workout_list_wrapper = self.connection.workoutDB.getAll()
+        self.assertIsNotNone(workout_list_wrapper.workout_list)
+        self.assertEqual([], workout_list_wrapper.workout_list)
+        self.assertFalse(workout_list_wrapper.found)
+        self.assertFalse(workout_list_wrapper.operationDone)
+    
+    def test_update(self):
+        # update with wrong id
+        workout_wrapper = self.connection.workoutDB.update({
+            "name" : 'Squat with weight',
+            "_id"  : "14m4wr0ngW0rK0uT1dh0h0"
+        })
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual({}, workout_wrapper.workout)
+        self.assertFalse(workout_wrapper.found)
+        self.assertFalse(workout_wrapper.operationDone)
+        # update with correct id
+        self.workout1["name"] = "Netflix'n Chill"
+        workout_wrapper = self.connection.workoutDB.update({
+            "name" : "Netflix'n Chill",
+            "_id"  : self.workout1["_id"]
+        })
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual(self.workout1, workout_wrapper.workout)
+        self.assertTrue(workout_wrapper.found)
+        self.assertTrue(workout_wrapper.operationDone)
+    
+    def test_delete(self):
+        # delete with wrong id
+        workout_wrapper = self.connection.workoutDB.delete({
+            "name" : 'Squat with weight',
+            "_id"  : "14m4wr0ngW0rK0uT1dh0h0"
+        })
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual({}, workout_wrapper.workout)
+        self.assertFalse(workout_wrapper.found)
+        self.assertFalse(workout_wrapper.operationDone)
         # delete existend workout
-        workoutWrapper = self.connection.workoutDB.deleteWorkoutById(self.workout1.id)
-        self.assertTrue(workoutWrapper.found)
-        self.assertTrue(workoutWrapper.operationDone)
-        self.assertEqual(workoutWrapper.workout, self.workout1)
-        self.assertIsNone(self.connection.workoutDB.getWorkoutById(self.workout1.id).workout)
-
-    def test_getAllWorkouts(self):
-        # testing on existend workouts
-        workoutListWrapper = self.connection.workoutDB.getAllWorkouts()
-        self.assertEqual([self.workout1], workoutListWrapper.workoutList)
-        self.assertTrue(workoutListWrapper.found)
-        self.assertTrue(workoutListWrapper.operationDone)
-        # add workout2
-        workoutWrapper = self.connection.workoutDB.createNewWorkout(self.workout2.name, self.workout2.muscle_groups,
-                                    self.workout2.advised_for, self.workout2.difficulty, self.workout2.equipment,
-                                    self.workout2.sets, self.workout2.video_url, self.workout2.id)
-        self.assertTrue(workoutWrapper.operationDone)
-        self.workout2.id = workoutWrapper.workout.id
-        workoutListWrapper =  self.connection.workoutDB.getAllWorkouts()
-        self.assertEqual([self.workout1, self.workout2], workoutListWrapper.workoutList)
-        self.assertTrue(workoutListWrapper.found)
-        self.assertTrue(workoutListWrapper.operationDone)
-        # deleting all workouts
-        self.connection.workoutDB.db.drop()
-        workoutListWrapper =  self.connection.workoutDB.getAllWorkouts()
-        self.assertEqual([], workoutListWrapper.workoutList)
-        self.assertTrue(workoutListWrapper.found)
-        self.assertTrue(workoutListWrapper.operationDone)
-
-
-    def test_value(self):
-        #TODO: Test Errors
-        pass
+        workout_wrapper = self.connection.workoutDB.delete({
+            "_id" : self.workout1["_id"]
+        })
+        self.assertIsNotNone(workout_wrapper.workout)
+        self.assertEqual(self.workout1, workout_wrapper.workout)
+        self.assertTrue(workout_wrapper.found)
+        self.assertTrue(workout_wrapper.operationDone)
+        self.assertFalse(self.connection.workoutDB.get(self.workout1).found)
 
     def tearDown(self):
-        self.connection.workoutDB.db.drop()
+        self.connection.workoutDB.delete({"_id": self.workout1["_id"]})
 
 if __name__ == '__main__':
     unittest.main()

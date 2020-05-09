@@ -5,8 +5,6 @@ import secrets # to generate session id
 import hashlib, binascii, os # to hash and salt password
 
 from bson import ObjectId
-from pymongo.results import UpdateResult, InsertOneResult
-# from pymongo.cursor.Cursor import Cursor
 
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 from MongoDatabase.Wrappers.UserListWrapper import UserListWrapper
@@ -66,13 +64,13 @@ class UserDB:
         if self._findByEmail(user["email"]): # Checks if user already exists
             return UserWrapper({}, found=True, operationDone=False)
         user = {
-            "_id":       str(ObjectId()),
-            "name":      user["name"],
-            "surname":   user["surname"],
-            "email":     user["email"],
-            "password":  self._hashPassword(user["password"]), # hash and salt password
-            "birthdate": user["birthdate"],
-            "role":      user.get("role", "client") # default value of "client"
+            "_id"       : str(ObjectId()),
+            "name"      : user["name"],
+            "surname"   : user["surname"],
+            "email"     : user["email"],
+            "password"  : self._hashPassword(user["password"]), # hash and salt password
+            "birthdate" : user["birthdate"],
+            "role"      : user.get("role", "client") # default value of "client"
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(user) # inserting user
@@ -123,7 +121,8 @@ class UserDB:
             return UserListWrapper(None, found=False, operationDone=False)
         else:
             user_list = [user for user in user_list_cursor]
-            return UserListWrapper(user_list, found=bool(user_list), operationDone=True)
+            success = bool(user_list)
+            return UserListWrapper(user_list, found=success, operationDone=success)
       
     def getAll(self):
         """
@@ -135,7 +134,8 @@ class UserDB:
             return UserListWrapper(None, found=False, operationDone=False)
         else:
             user_list = [user for user in user_list_cursor]
-            return UserListWrapper(user_list, found=bool(user_list), operationDone=True)
+            success = bool(user_list)
+            return UserListWrapper(user_list, found=success, operationDone=success)
     
     
     def update(self, new_user: dict):

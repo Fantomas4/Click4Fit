@@ -34,19 +34,19 @@ class BusinessDB:
         if self._findByEmail(business["email"]): # Checks if user already exists
             return BusinessWrapper({}, found=True, operationDone=False)
         business = {
-                "_id"          : str(ObjectId()),
-                "name"         : business["name"],
-                "category"     : business["category"],
-                "country"      : business["country"],
-                "city"         : business["city"],
-                "address"      : business["address"],
-                "postal_code"  : business["postal_code"],
-                "phone_number" : business["phone_number"],
-                "email"        : business["email"],
-                "img_path"     : business["img_path"],
-                "services"     : business["services"],
-                "products"     : business["products"]
-            }
+            "_id"          : str(ObjectId()),
+            "name"         : business["name"],
+            "category"     : business["category"],
+            "country"      : business["country"],
+            "city"         : business["city"],
+            "address"      : business["address"],
+            "postal_code"  : business["postal_code"],
+            "phone_number" : business["phone_number"],
+            "email"        : business["email"],
+            "img_path"     : business["img_path"],
+            "services"     : business["services"],
+            "products"     : business["products"]
+        }
         try:
             insert_result: InsertOneResult = self.db.insert_one(business)
         except:
@@ -81,7 +81,8 @@ class BusinessDB:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:
             business_list = [business for business in business_list_cursor]
-            return BusinessListWrapper(business_list, found=bool(business_list), operationDone=True)
+            success = bool(business_list)
+            return BusinessListWrapper(business_list, found=success, operationDone=success)
 
     def getAll(self):
         """
@@ -93,7 +94,8 @@ class BusinessDB:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:
             business_list = [business for business in business_list_cursor]
-            return BusinessListWrapper(business_list, found=bool(business_list), operationDone=True)
+            success = bool(business_list)
+            return BusinessListWrapper(business_list, found=success, operationDone=success)
     
     def update(self, new_business: dict):
         """

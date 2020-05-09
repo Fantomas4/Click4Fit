@@ -107,7 +107,7 @@ class BusinessDBTest(unittest.TestCase):
         self.assertIsNotNone(business_list_wrapper.business_list)
         self.assertEqual([], business_list_wrapper.business_list)
         self.assertFalse(business_list_wrapper.found)
-        self.assertTrue(business_list_wrapper.operationDone)
+        self.assertFalse(business_list_wrapper.operationDone)
         # empty id
         business_list_wrapper = self.connection.businessDB.getList({
             "_id" : ""
@@ -115,7 +115,7 @@ class BusinessDBTest(unittest.TestCase):
         self.assertIsNotNone(business_list_wrapper.business_list)
         self.assertEqual([], business_list_wrapper.business_list)
         self.assertFalse(business_list_wrapper.found)
-        self.assertTrue(business_list_wrapper.operationDone)
+        self.assertFalse(business_list_wrapper.operationDone)
         # existend id
         business_list_wrapper = self.connection.businessDB.getList({
             "_id" : self.business1["_id"]
@@ -172,7 +172,7 @@ class BusinessDBTest(unittest.TestCase):
         self.assertIsNotNone(business_list_wrapper.business_list)
         self.assertEqual([], business_list_wrapper.business_list)
         self.assertFalse(business_list_wrapper.found)
-        self.assertTrue(business_list_wrapper.operationDone)
+        self.assertFalse(business_list_wrapper.operationDone)
         
     def test_update(self):
         # update with wrong id
