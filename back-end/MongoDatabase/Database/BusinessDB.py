@@ -67,7 +67,6 @@ class BusinessDB:
             return BusinessWrapper(None, found=False, operationDone=False)
         else:
             if business:
-                del business["_id"]
                 return BusinessWrapper(business, found=True, operationDone=True)
             return BusinessWrapper({}, found=False, operationDone=False)
     
@@ -81,10 +80,7 @@ class BusinessDB:
         except:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:
-            business_list = []
-            for business in business_list_cursor:
-                del business["_id"]
-                business_list.append(business)
+            business_list = [business for business in business_list_cursor]
             return BusinessListWrapper(business_list, found=bool(business_list), operationDone=True)
 
     def getAll(self):
@@ -96,10 +92,7 @@ class BusinessDB:
         except:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:
-            business_list = []
-            for business in business_list_cursor:
-                del business["_id"]
-                business_list.append(business)
+            business_list = [business for business in business_list_cursor]
             return BusinessListWrapper(business_list, found=bool(business_list), operationDone=True)
     
     def update(self, new_business: dict):
@@ -108,11 +101,10 @@ class BusinessDB:
         :return:
         """
         try:
-            update_result: UpdateResult = self.db.update_one({{"_id": ObjectId(new_business["id"])},
-                                                            {'$set': new_business}})
+            update_result: UpdateResult = self.db.update_one({"_id": new_business["_id"]},
+                                                            {'$set': new_business})
             if update_result.matched_count:
-                updated_business: dict = self.db.find_one({"_id": ObjectId(new_business["id"])})
-                del updated_user["_id"]
+                updated_business: dict = self.db.find_one({"_id": new_business["_id"]})
                 return BusinessWrapper(updated_business, found=True, operationDone=True)
             return BusinessWrapper({}, found=False, operationDone=False)
         except:
@@ -124,12 +116,11 @@ class BusinessDB:
         :return:
         """
         try:
-            wrapper: BusinessWrapper = self.get({"_id": ObjectId(business["id"])})
-            if wrapper.business:
+            wrapper: BusinessWrapper = self.get({"_id": business["_id"]})
+            if wrapper.operationDone:
                 return BusinessWrapper(wrapper.business, found=True,
-                        operationDone=bool(self.db.delete_one(
-                                            {"_id": ObjectId(business["id"])}
-                                                ).deleted_count))
+                        operationDone=bool(
+                            self.db.delete_one({"_id": business["_id"]}).deleted_count))
             return wrapper
         except:
             return BusinessWrapper(None, found=False, operationDone=False)

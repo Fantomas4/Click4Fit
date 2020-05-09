@@ -158,8 +158,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(workout, "workout")
-        for attribute in ["name", "muscle_groups", "advised_for", "difficulty",
-                            "equipment", "sets", "video_url"]:
+        for attribute in ["name", "main_group", "muscle_groups", "advised_for",
+                            "difficulty", "equipment", "sets", "video_url"]:
             if attribute not in workout:
                 raise ValueError("workout doesn't contain " + attribute +
                                 " attribute, which is needed for creation")

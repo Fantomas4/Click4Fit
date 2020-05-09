@@ -12,7 +12,7 @@ class UserDBTest(unittest.TestCase):
 
     def setUp(self):
         self.connection = MongoDB()
-        # self.connection.userDB.db.drop()
+
         self.user1 = {
             "name" :     "Alexandros",
             "surname" :  "Wawaroutas",
@@ -188,6 +188,7 @@ class UserDBTest(unittest.TestCase):
         self.assertEqual([self.user1, self.user3], user_list_wrapper.user_list)
         self.assertTrue(user_list_wrapper.found)
         self.assertTrue(user_list_wrapper.operationDone)
+
         # deleting user3 from db
         self.connection.userDB.delete(self.user3)
 
@@ -198,7 +199,8 @@ class UserDBTest(unittest.TestCase):
         self.assertTrue(user_list_wrapper.found)
         self.assertTrue(user_list_wrapper.operationDone)
 
-        self.tearDown() # deleting all users
+        # deleting user from db
+        self.tearDown()
 
         user_list_wrapper = self.connection.userDB.getAll()
         self.assertIsNotNone(user_list_wrapper.user_list)
@@ -219,8 +221,8 @@ class UserDBTest(unittest.TestCase):
         # update existend users name with valid id
         self.user1["name"] = "James"
         user_wrapper = self.connection.userDB.update({
-            "name"  : "James",
-            "_id"   : self.user1["_id"]
+            "name" : "James",
+            "_id"  : self.user1["_id"]
         })
         self.assertIsNotNone(user_wrapper.user)
         self.assertEqual(self.user1, user_wrapper.user)
@@ -257,12 +259,10 @@ class UserDBTest(unittest.TestCase):
         self.assertEqual(self.user1, user_wrapper.user)
         self.assertTrue(user_wrapper.found)
         self.assertTrue(user_wrapper.operationDone)
-        self.assertEqual([], self.connection.userDB.getAll().user_list)
+        self.assertFalse(self.connection.userDB.get(self.user1).found)
 
     def tearDown(self):
-        # self.connection.userDB.db.drop()
         self.connection.userDB.delete(self.user1)
-        self.assertEqual([], self.connection.userDB.getAll().user_list)
 
 if __name__ == '__main__':
     unittest.main()
