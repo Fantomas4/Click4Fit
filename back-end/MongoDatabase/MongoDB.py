@@ -33,39 +33,12 @@ class MongoDB:
         While inserting the user gets an unique identifier attribute _id, which will be contained in the user dict
         returned in the UserWrapper. This process will hash the users password before inserting it in the database.
 
-        :param user: a dictionary containing at least valid "name", "surname", "email", "password" and "birthdate"
-                     fields. If no role is provided, "client" will be used as default.
-                     Valid keys:    Valid value types:                   Valid format:
-                     "_id"                str         
-
-                     "name"               str         letters from a-z and A-Z and can be 
-                                                      from 2 to 25 characters long. Also accepts two names. 
-                                                      example: Georgios Alexandros        
-
-                     "surname"            str         letters from a-z and A-Z and can be 
-                                                      from 2 to 25 characters long
-
-                     "email"              str         local_part@domain_part, local_part can only 
-                                                      contain these special characters: _.+-
-
-                     "password"           str         letters from a-z and A-Z, numbers and at least 8 chars long
-                                                      speceial characters: @#$%^&+=
-
-                     "birthdate"          str         dd.mm.yyyy or dd/mm/yyyy or dd-mm-yyyy or dd,mm,yyyy and year
-                                                      must range between the year 1900 and 2099
-
-                     "role"               str         "admin", "client", "business"
-
-                     "favorite_business"  list     
-
-                     "favorite_workout"   list      
-
-                     "session_id"         str         
+        :param user: a dictionary containing at least valid "name", "surname", "email", "password" and "birthdate"   
         :return: UserWrapper
-                 .user: containing created user dict if inserted, else containing empty dict.
-                        Will contain None if something failed inside mongo.
-                 .found: will be true if a user with such an email exists in the database, else false
-                 .operationDone: will be true if insertion was successfull, else false
+                .user: containing created user dict if inserted, else empty dict.
+                       Will contain None if something failed inside mongo.
+                .found: will be true if a user with such an email exists in the database, else false
+                .operationDone: will be true if insertion was successfull, else false
         """
         self.validator.validate(user, "user")
         for attribute in ["name", "surname", "email", "password", "birthdate"]:
@@ -76,8 +49,15 @@ class MongoDB:
 
     def logIn(self, user_credentials: dict):
         """
-        :param user_credentials:
-        :return:
+        Logs a user in, by checking if for a given email the correct password is provided.
+        In successfull log in the user gets a new "session_id".
+
+        :param user_credentials: a dictionary containing users email and password
+        :return: UserWrapper
+                .user: containing logged in user if log in was successfull, else empty dict.
+                       Will contain None if something failed inside mongo.
+                .found: will be true if a user with such an email exists in the database, else false
+                .operationDone: will be true if log in was successfull, else false
         """
         self.validator.validate(user_credentials, "user")
         for attribute in ["email", "password"]:
@@ -88,30 +68,53 @@ class MongoDB:
     
     def getUser(self, user_query: dict):
         """
-        :param user_query:
-        :return:
+        Gets first user which has the same attribute-value pairs as user_query
+
+        :param user_query: a dict containing attributes and values based on which user will be returned
+        :return: UserWrapper
+                .user: a dict containing the first user matching user_query
+                       Will contain None if something failed inside mongo.
+                .found: will be true if such a user was found, else false
+                .operationDone: will be true if found is true, else false
         """
         self.validator.validate(user_query, "user")
         return self.userDB.get(user_query)
     
     def getUsers(self, user_query: dict):
         """
-        :param user_query:
-        :return:
+        Gets all users which have same attribute-value pairs as user_query
+
+        :param user_query: a dict containing attributes and values based on which users will be returned
+        :return: UserListWrapper
+                .user_list: a list containing all users matching user_query
+                            Will contain None if something failed inside mongo.
+                .found: will be true if user_list is not empty, else false
+                .operationDone: will be true if found is true, else false
         """
         self.validator.validate(user_query, "user")
         return self.userDB.getList(user_query)
     
     def getAllUsers(self):
         """
-        :return:
+        Gets all users
+
+        :return: UserListWrapper
+                .user_list: a list containing all users. Will contain None if something failed inside mongo.
+                .found: will be true if user_list is not empty, else false
+                .operationDone: will be true if found is true, else false
         """
         return self.userDB.getAll()
     
     def updateUser(self, new_user: dict):
         """
-        :param new_user:
-        :return:
+        Updates a user based on _id
+
+        :param new_user: a dict containing an _id attribute-value pair and all attributes that have to change
+        :return: UserWrapper
+                .user: a dict containing updated user if updated successfully, else empty dict.
+                        Will be None if something failed inside mongo.
+                .found: will be true if user with that _id could be found, else false
+                .operationDone: will be true if update was successfull, else false
         """
         self.validator.validate(new_user, "user")
         if "_id" not in new_user:
@@ -120,8 +123,14 @@ class MongoDB:
     
     def deleteUser(self, user: dict):
         """
-        :param user:
-        :return:
+        Deletes a user based on _id
+
+        :param user: a dict containing _id attribute-value pair
+        :return: UserWrapper
+                .user: a dict containing deleted user if deleted successfully, else empty dict
+                        Will be None if something failed inside mongo.
+                .found: will be true if user iwth that _id could be found, else false
+                .operationDone: will be true if deletion was successfull, else false
         """
         self.validator.validate(user, "user")
         if "_id" not in user:
@@ -193,7 +202,7 @@ class MongoDB:
         :return:
         """
         self.validator.validate(workout, "workout")
-        for attribute in ["name", "main_group", "muscle_groups", "advised_for",
+        for attribute in ["name", "category", "muscle_groups", "advised_for",
                             "difficulty", "equipment", "sets", "video_url"]:
             if attribute not in workout:
                 raise ValueError("workout doesn't contain " + attribute +
