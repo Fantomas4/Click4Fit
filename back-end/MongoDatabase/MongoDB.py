@@ -25,7 +25,7 @@ class MongoDB:
         self.workoutDB = WorkoutDB(self.client[database])
         self.validator = Validator()
 
-    ####################################### User Methods ########################################
+    ################################################# User Methods ##################################################
 
     def register(self, user: dict):
         """
@@ -93,7 +93,7 @@ class MongoDB:
             raise ValueError("user doesn't contain _id attribute, which is needed for deletion")
         return self.userDB.delete(user)
     
-    ####################################### Business Methods ########################################
+    ################################################# Business Methods ##################################################
     
     def createNewBusiness(self, business: dict):
         """
@@ -150,7 +150,7 @@ class MongoDB:
             raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
         return self.businessDB.delete(business)
     
-    ####################################### Workout Methods ########################################
+    ################################################# Workout Methods ##################################################
     
     def createNewWorkout(self, workout: dict):
         """

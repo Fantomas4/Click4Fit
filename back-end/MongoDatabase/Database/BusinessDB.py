@@ -12,7 +12,7 @@ class BusinessDB:
         self.client = client
         self.db = self.client.BusinessDB
 
-    ####################################### Private Methods ########################################
+    ################################################# Private Methods ##################################################
 
     def _findByEmail(self, email: str):
         """
@@ -24,7 +24,7 @@ class BusinessDB:
         else:
             return business
 
-    ####################################### Public Methods ########################################
+    ################################################# Public Methods ##################################################
 
     def create(self, business: dict):
         """
