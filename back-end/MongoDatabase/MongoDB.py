@@ -29,8 +29,43 @@ class MongoDB:
 
     def register(self, user: dict):
         """
-        :param user:
-        :return:
+        Creates a new user in the database. If a user with the same email exists in the database this will fail.
+        While inserting the user gets an unique identifier attribute _id, which will be contained in the user dict
+        returned in the UserWrapper. This process will hash the users password before inserting it in the database.
+
+        :param user: a dictionary containing at least valid "name", "surname", "email", "password" and "birthdate"
+                     fields. If no role is provided, "client" will be used as default.
+                     Valid keys:    Valid value types:                   Valid format:
+                     "_id"                str         
+
+                     "name"               str         letters from a-z and A-Z and can be 
+                                                      from 2 to 25 characters long. Also accepts two names. 
+                                                      example: Georgios Alexandros        
+
+                     "surname"            str         letters from a-z and A-Z and can be 
+                                                      from 2 to 25 characters long
+
+                     "email"              str         local_part@domain_part, local_part can only 
+                                                      contain these special characters: _.+-
+
+                     "password"           str         letters from a-z and A-Z, numbers and at least 8 chars long
+                                                      speceial characters: @#$%^&+=
+
+                     "birthdate"          str         dd.mm.yyyy or dd/mm/yyyy or dd-mm-yyyy or dd,mm,yyyy and year
+                                                      must range between the year 1900 and 2099
+
+                     "role"               str         "admin", "client", "business"
+
+                     "favorite_business"  list     
+
+                     "favorite_workout"   list      
+
+                     "session_id"         str         
+        :return: UserWrapper
+                 .user: containing created user dict if inserted, else containing empty dict.
+                        Will contain None if something failed inside mongo.
+                 .found: will be true if a user with such an email exists in the database, else false
+                 .operationDone: will be true if insertion was successfull, else false
         """
         self.validator.validate(user, "user")
         for attribute in ["name", "surname", "email", "password", "birthdate"]:

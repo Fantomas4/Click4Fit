@@ -5,7 +5,8 @@ class Validator:
 
     valid = {
         "user" : {
-            "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "role", "favorites", "id", "session_id"],
+            "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "role",
+                                "favorite_business", "favorite_workout", "id", "session_id"],
             "type" : {
                 "_id"                : str,
                 "name"               : str,
