@@ -15,7 +15,7 @@ class WorkoutDBTest(unittest.TestCase):
 
         self.workout1 = {
             "name"          : 'Squat with weight',
-            "main_group"    : 'Legs',
+            "category"      : 'Legs',
             "muscle_groups" : ["Quads", "Glutes", "Core"], 
             "advised_for"   : 'Women',
             "difficulty"    : 'Hard',
@@ -25,7 +25,7 @@ class WorkoutDBTest(unittest.TestCase):
         }
         self.workout2 = {
             "name"          : 'Kickbacks',
-            "main_group"    : 'Arms',
+            "category"      : 'Arms',
             "muscle_groups" : ["Triceps"], 
             "advised_for"   : 'Men',
             "difficulty"    : 'Medium',

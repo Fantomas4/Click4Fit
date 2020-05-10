@@ -90,6 +90,40 @@ class Validator:
             }
         }
 
+    def validate_search(self, search_query: dict, db: str):
+        if type(search_query) is not dict:
+            raise TypeError("search_query must be of type dict and got " + str(type(search_query)))
+        if not search_query:
+            raise ValueError("search_query is empty")
+        if type(db) is not str:
+            raise TypeError("db must be of type str and got " + str(type(db)))
+        if db not in ["user", "business", "workout"]:
+            raise ValueError("db can only take one of these values (user, business, workout) and got: "
+                                + db + " instead")
+        for key in search_query.keys():
+            # checking attribute type
+            if type(key) is not str:
+                raise TypeError(db + " attribute names must be of type str and got " + str(type(key)))
+            # checking that values are in a list
+            if type(search_query[key]) is not list:
+                raise TypeError("search query values must be of type list and got "
+                                + str(type(search_query[key])))
+            # checking for illegal attributes
+            if key not in self.valid[db]["legal-attributes"]:
+                raise ValueError(db + " contains invalid attribute name: " + key)
+            for value in search_query[key]:
+                # checking value type
+                if type(value) is not self.valid[db]["type"][key]:
+                    raise TypeError("""
+                    {} attribute must contain value of type {} and got {} instead
+                    """.format(key, str(self.valid[db]["type"][key]), str(type(value))))
+                # checking value format if available reggex available
+                if type(value) is str:
+                    if not re.fullmatch(self.valid[db]["regex"].get(key, r".*"), value):
+                        raise ValueError("""
+                        invalid {0} ({2}): {0} {1}
+                        """.format(key, self.valid[db]["regex-error"][key], value))
+
     
     def validate(self, json_dict: dict, db: str):
         if type(json_dict) is not dict:
@@ -112,7 +146,7 @@ class Validator:
             # checking value type
             if type(json_dict[key]) is not self.valid[db]["type"][key]:
                 raise TypeError("""
-                {} attribute must be of type {} and got {} instead
+                {} attribute must contain value of type {} and got {} instead
                 """.format(key, str(self.valid[db]["type"][key]), str(type(json_dict[key]))))
             # checking value format if available reggex available
             if type(json_dict[key]) is str:

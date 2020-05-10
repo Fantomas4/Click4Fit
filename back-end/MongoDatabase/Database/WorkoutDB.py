@@ -60,11 +60,10 @@ class WorkoutDB:
         :return:
         """
         try:
-            workout_list_cursor: Cursor = self.db.find(workout_query)
+            workout_list = list(self.db.find(workout_query))
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)
         else:
-            workout_list = [workout for workout in workout_list_cursor]
             success = bool(workout_list)
             return WorkoutListWrapper(workout_list, found=success, operationDone=success)
         
@@ -73,13 +72,28 @@ class WorkoutDB:
         :return:
         """
         try:
-            workout_list_cursor: Cursor = self.db.find()
+            workout_list = list(self.db.find())
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)
         else:
-            workout_list = [workout for workout in workout_list_cursor]
             success = bool(workout_list)
             return WorkoutListWrapper(workout_list, found=success, operationDone=success)
+    
+    def search(self, search_query: dict):
+        """
+        :param search_query:
+        :return:
+        """
+        results: list = list()
+        try:
+            for key in search_query.keys():
+                for value in search_query[key]:
+                    results += list(self.db.find({key: value}))
+            success = bool(results)
+            return WorkoutListWrapper(results, found=success, operationDone=success)
+        except:
+            return WorkoutListWrapper(None, found=False, operationDone=False)
+
     
     def update(self, new_workout: dict):
         """

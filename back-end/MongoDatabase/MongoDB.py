@@ -215,6 +215,14 @@ class MongoDB:
                 raise ValueError("workout doesn't contain " + attribute +
                                 " attribute, which is needed for creation")
         return self.workoutDB.create(workout)
+
+    def workoutSearch(self, search_query: dict):
+        """
+        :param search_query:
+        :return:
+        """
+        self.validator.validate_search(search_query, "workout")
+        return self.workoutDB.search(search_query)
     
     def getWorkout(self, workout_query: dict):
         """
@@ -286,18 +294,10 @@ class MongoDB:
                 print("Could not insert workout: " + str(workout))
         return returned_data
 
-
-mongo = MongoDB()
-mongo.dropDatabases()
-print(mongo.createMockDatabase())
-
-
-
-        
-
-
-
-
+# mongo = MongoDB()
+# mongo.dropDatabases()
+# print(mongo.createMockDatabase())
+# print(len(mongo.workoutSearch({"advised_for" : ["men", "women"]}).workout_list))
 
 
 # url = "mongodb://localhost:27017/"
