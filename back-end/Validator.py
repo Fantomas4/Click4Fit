@@ -115,10 +115,11 @@ class Validator:
                 {} attribute must be of type {} and got {} instead
                 """.format(key, str(self.valid[db]["type"][key]), str(type(json_dict[key]))))
             # checking value format if available reggex available
-            if not re.fullmatch(self.valid[db]["regex"].get(key, r"."), json_dict[key]):
-                raise ValueError("""
-                invalid {0} ({2}): {0} {1}
-                """.format(key, self.valid[db]["regex-error"][key], json_dict[key]))
+            if type(json_dict[key]) is str:
+                if not re.fullmatch(self.valid[db]["regex"].get(key, r".*"), json_dict[key]):
+                    raise ValueError("""
+                    invalid {0} ({2}): {0} {1}
+                    """.format(key, self.valid[db]["regex-error"][key], json_dict[key]))
 
 
 

@@ -7,6 +7,8 @@ from MongoDatabase.Database.UserDB import UserDB
 from MongoDatabase.Database.BusinessDB import BusinessDB
 from MongoDatabase.Database.WorkoutDB import WorkoutDB
 
+from mock_data import data
+
 from Validator import Validator
 
 class MongoDB:
@@ -24,6 +26,11 @@ class MongoDB:
         self.businessDB = BusinessDB(self.client[database])
         self.workoutDB = WorkoutDB(self.client[database])
         self.validator = Validator()
+    
+    def dropDatabases(self):
+        self.userDB.db.drop()
+        self.businessDB.db.drop()
+        self.workoutDB.db.drop()
 
     ################################################# User Methods ##################################################
 
@@ -250,6 +257,40 @@ class MongoDB:
         if "_id" not in workout:
             raise ValueError("workout doesn't contain _id, which is needed for deletion")
         return self.workoutDB.delete(workout)
+    
+    ################################################# Mock Database ##################################################
+
+    def createMockDatabase(self):
+        returned_data = {
+            "user"     : list(),
+            "business" : list(),
+            "workout"  : list()
+        }
+        for user in data["user"]:
+            user_wrapper = self.register(user)
+            if (user_wrapper.operationDone):
+                returned_data["user"].append(user_wrapper.user)
+            else:
+                print("Could not insert user: " + str(user))
+        for business in data["business"]:
+            business_wrapper = self.createNewBusiness(business)
+            if (business_wrapper.operationDone):
+                returned_data["business"].append(business_wrapper.business)
+            else:
+                print("Could not insert business: " + str(business))
+        for workout in data["workout"]:
+            workout_wrapper = self.createNewWorkout(workout)
+            if (workout_wrapper.operationDone):
+                returned_data["workout"].append(workout_wrapper.workout)
+            else:
+                print("Could not insert workout: " + str(workout))
+        return returned_data
+
+
+mongo = MongoDB()
+mongo.dropDatabases()
+print(mongo.createMockDatabase())
+
 
 
         

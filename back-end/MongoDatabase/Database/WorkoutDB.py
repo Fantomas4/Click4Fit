@@ -23,7 +23,7 @@ class WorkoutDB:
         workout = {
             "_id"           : str(ObjectId()),
             "name"          : workout["name"],
-            "main_group"    : workout["main_group"],
+            "category"      : workout["category"],
             "muscle_groups" : workout["muscle_groups"], 
             "advised_for"   : workout["advised_for"],
             "difficulty"    : workout["difficulty"],
