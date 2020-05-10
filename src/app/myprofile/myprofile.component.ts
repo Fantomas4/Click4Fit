@@ -23,7 +23,7 @@ export class MyprofileComponent implements OnInit {
   constructor(public myprofileService: MyProfileService) { }
 
   ngOnInit(): void {
-    this.myprofileService.postUser(1).subscribe((data:any)=>
+    this.myprofileService.postUser(this.email).subscribe((data:any)=>
     {
       if (data.response==200){
         this.results=data.user;
@@ -52,7 +52,8 @@ export class MyprofileComponent implements OnInit {
   }
   /*Shows modal message after click on delete account button*/
   onClickDelete() {
-    this.myprofileService.openModalDelete();
+    console.log(this.email);
+    this.myprofileService.openModalDelete(this.email);
   }
    /*Updates the user's details in the database according to his changes*/
   onClickUpdate(){

@@ -13,10 +13,11 @@ export class MyProfileService {
     constructor(public dialog: MatDialog,private http: HttpClient) { }
 
     /*Creates a modal message and determines its parameters */
-    openModalDelete() {
+    openModalDelete(email) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.minWidth = 100;
+        dialogConfig.data=email;
         const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
     }
@@ -27,9 +28,9 @@ export class MyProfileService {
       const dialogRef = this.dialog.open(UpdateDialogMessageComponent, dialogConfig);
       dialogRef.afterClosed().subscribe();
     }
-    postUser(userId): Observable<any>{
+    postUser(email): Observable<any>{
       const headers = {'content-type':'application/json'};
-      const jsonData=JSON.stringify(userId);
+      const jsonData=JSON.stringify(email);
       return this.http.post('http://localhost:5000/api/display-myprofile',jsonData,{'headers':headers});
     }
     postChanges(content): Observable<any>{
