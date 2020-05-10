@@ -1,16 +1,58 @@
 import sys
 sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
+
 import unittest
+
 from Validator import Validator
+
 
 class ValidatorTest(unittest.TestCase):
 
     def setUp(self):
         self.validator = Validator()
 
-    def test_attribute_type(self):
-        self.assertRaises(TypeError, self.validator.validate, {1 : "alex"}, "user")
+    def test_values(self):
+        self.assertRaisesRegex(TypeError, r"json_dict must be of type dict and got ",
+                                 self.validator.validate, "name", "user")
+        self.assertRaisesRegex(ValueError, r"json_dict is empty",
+                                 self.validator.validate, {}, "user")
+        self.assertRaisesRegex(TypeError, r"db must be of type str and got ",
+                                 self.validator.validate, {"name" : "alex"}, True)
+        self.assertRaisesRegex(ValueError, r"db can only take one of these values \(user, business, workout\) and got: ",
+                                 self.validator.validate, {"name" : "alex"}, "User")
 
+
+    def test_json_dict_attribute_type(self):
+        self.assertRaisesRegex(TypeError, r"user attribute names must be of type str and got ",
+                                 self.validator.validate, {1 : "alex"}, "user")
+        self.assertRaisesRegex(TypeError, r"user attribute names must be of type str and got ",
+                                 self.validator.validate, {"name" : "alex", True : "admin"}, "user")
+        self.assertRaisesRegex(TypeError, r"user attribute names must be of type str and got ",
+                                 self.validator.validate, {str : "alex"}, "user")
+    
+    def test_json_dict_illegal_attributes(self):
+        self.assertRaisesRegex(ValueError, r" contains invalid attribute name: ",
+                                 self.validator.validate, {"first_name" : "alex"}, "user")
+        self.assertRaisesRegex(ValueError, r" contains invalid attribute name: ",
+                                 self.validator.validate, {"session_id" : "alex"}, "business")
+        self.assertRaisesRegex(ValueError, r" contains invalid attribute name: ",
+                                 self.validator.validate, {"password" : "alex"}, "workout")
+
+    def test_json_dict_value_type(self):
+        self.assertRaisesRegex(TypeError, r" attribute must be of type ",
+                                 self.validator.validate, {"favorite_business" : "FitWorld"}, "user")
+        self.assertRaisesRegex(TypeError, r" attribute must be of type ",
+                                 self.validator.validate, {"name" : 12}, "business")
+        self.assertRaisesRegex(TypeError, r" attribute must be of type ",
+                                 self.validator.validate, {"equipment" : "yes"}, "workout")
+    
+    def test_json_dict_value_format(self):
+        self.assertRaisesRegex(ValueError, r"invalid ",
+                                 self.validator.validate, {"name" : "xaea-12"}, "user")
+        self.assertRaisesRegex(ValueError, r"invalid ",
+                                 self.validator.validate, {"category" : "Gym"}, "business")
+        self.assertRaisesRegex(ValueError, r"invalid ",
+                                 self.validator.validate, {"advised_for" : "xaea-12"}, "workout")
 
 if __name__ == "__main__":
     unittest.main()

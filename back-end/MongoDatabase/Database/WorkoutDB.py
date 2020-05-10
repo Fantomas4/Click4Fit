@@ -6,33 +6,41 @@ from bson import ObjectId
 from MongoDatabase.Wrappers.WorkoutWrapper import WorkoutWrapper
 from MongoDatabase.Wrappers.WorkoutListWrapper import WorkoutListWrapper
 
+
 class WorkoutDB:
 
     def __init__(self, client):
         self.client = client
         self.db = self.client.WorkoutDB
 
-    def createNewWorkout(self, workout: dict):
+    def create(self, workout: dict):
         """
         :param workout:
         :return:
         """
-        _wrapper: dict = self.getWorkout(workout)
-        if _wrapper.found:
-            return WorkoutWrapper(_wrapper.workout, found=True, operationDone=False)
+        if self.get(workout).found:
+            return WorkoutWrapper({}, found=True, operationDone=False)
+        workout = {
+            "_id"           : str(ObjectId()),
+            "name"          : workout["name"],
+            "category"      : workout["category"],
+            "muscle_groups" : workout["muscle_groups"], 
+            "advised_for"   : workout["advised_for"],
+            "difficulty"    : workout["difficulty"],
+            "equipment"     : workout["equipment"],
+            "sets"          : workout["sets"],
+            "video_url"     : workout["video_url"] 
+        }
         try:
             insert_result: InsertOneResult = self.db.insert_one(workout)
-            if insert_result.acknowledged:
-                workout["id"] = str(insert_result.inserted_id)
-                update_result: UpdateResult = self.db.update_one({"_id": ObjectId(workout["id"])}, 
-                                                                {"$set": {"id": workout["id"]}})
-            if update_result.modified_count:
-                return WorkoutWrapper(workout, found=False, operationDone=True)
-            return WorkoutWrapper({}, found=False, operationDone=False)
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
+        else:
+            if insert_result.acknowledged:
+                return WorkoutWrapper(workout, found=False, operationDone=True)
+            return WorkoutWrapper({}, found=False, operationDone=False)
     
-    def getWorkout(self, workout_query: dict):
+    def get(self, workout_query: dict):
         """
         :param workout_query:
         :return:
@@ -43,70 +51,76 @@ class WorkoutDB:
             return WorkoutWrapper(None, found=False, operationDone=False)
         else:
             if workout:
-                del workout["_id"]
                 return WorkoutWrapper(workout, found=True, operationDone=True)
             return WorkoutWrapper({}, found=False, operationDone=False)
     
-    def getWorkouts(self, workout_query: dict):
+    def getList(self, workout_query: dict):
         """
         :param workout_query:
         :return:
         """
         try:
-            workout_list_cursor: Cursor = self.db.find(workout_query)
+            workout_list = list(self.db.find(workout_query))
         except:
-            return WorkoutWrapper(None, found=False, operationDone=False)
+            return WorkoutListWrapper(None, found=False, operationDone=False)
         else:
-            workout_list = []
-            for workout in workout_list_cursor:
-                del workout["_id"]
-                workout_list.append(workout)
-            return WorkoutWrapper(workout_list, found=bool(workout_list), operationDone=True)
+            success = bool(workout_list)
+            return WorkoutListWrapper(workout_list, found=success, operationDone=success)
         
-    def getAllWorkouts(self):
+    def getAll(self):
         """
-        :return:
-        """
-         try:
-            workout_list_cursor: Cursor = self.db.find()
-        except:
-            return WorkoutWrapper(None, found=False, operationDone=False)
-        else:
-            workout_list = []
-            for workout in workout_list_cursor:
-                del workout["_id"]
-                workout_list.append(workout)
-            return WorkoutWrapper(workout_list, found=bool(workout_list), operationDone=True)
-    
-    def updateWorkoutById(self, new_workout: dict, workout_id: str):
-        """
-        :param new_workout:
-        :param workout_id:
         :return:
         """
         try:
-            update_result: UpdateResult = self.db.update_one({{"_id": ObjectId(workout_id)},
-                                                            {'$set': new_workout}})
+            workout_list = list(self.db.find())
+        except:
+            return WorkoutListWrapper(None, found=False, operationDone=False)
+        else:
+            success = bool(workout_list)
+            return WorkoutListWrapper(workout_list, found=success, operationDone=success)
+    
+    def search(self, search_query: dict):
+        """
+        :param search_query:
+        :return:
+        """
+        results: list = list()
+        try:
+            for key in search_query.keys():
+                for value in search_query[key]:
+                    results += list(self.db.find({key: value}))
+            success = bool(results)
+            return WorkoutListWrapper(results, found=success, operationDone=success)
+        except:
+            return WorkoutListWrapper(None, found=False, operationDone=False)
+
+    
+    def update(self, new_workout: dict):
+        """
+        :param new_workout:
+        :return:
+        """
+        try:
+            update_result: UpdateResult = self.db.update_one({"_id": new_workout["_id"]},
+                                                            {'$set': new_workout})
             if update_result.matched_count:
-                updated_workout: dict = self.db.find_one({"_id": ObjectId(workout_id)})
-                del updated_user["_id"]
+                updated_workout: dict = self.db.find_one({"_id": new_workout["_id"]})
                 return WorkoutWrapper(updated_workout, found=True, operationDone=True)
             return WorkoutWrapper({}, found=False, operationDone=False)
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
 
-    def deleteWorkoutById(self, workout_id: str):
+    def delete(self, workout: dict):
         """
-        :param workout_id:
+        :param workout:
         :return:
         """
         try:
-            wrapper: WorkoutWrapper = self.getWorkout({"_id": ObjectId(workout_id)})
-            if wrapper.workout:
+            wrapper: WorkoutWrapper = self.get({"_id": workout["_id"]})
+            if wrapper.operationDone:
                 return WorkoutWrapper(wrapper.workout, found=True,
-                        operationDone=bool(self.db.delete_one(
-                                            {"_id": ObjectId(workout_id)}
-                                                ).deleted_count))
+                        operationDone=bool(
+                            self.db.delete_one({"_id": workout["_id"]}).deleted_count))
             return wrapper
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
