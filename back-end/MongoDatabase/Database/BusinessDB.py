@@ -76,11 +76,10 @@ class BusinessDB:
         :return:
         """
         try:
-            business_list_cursor: Cursor = self.db.find(business_query)
+            business_list = list(self.db.find(business_query))
         except:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:
-            business_list = [business for business in business_list_cursor]
             success = bool(business_list)
             return BusinessListWrapper(business_list, found=success, operationDone=success)
 
@@ -89,13 +88,27 @@ class BusinessDB:
         :return:
         """
         try:
-            business_list_cursor: Cursor = self.db.find()
+            business_list = list(self.db.find())
         except:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:
-            business_list = [business for business in business_list_cursor]
             success = bool(business_list)
             return BusinessListWrapper(business_list, found=success, operationDone=success)
+
+    def search(self, search_query: dict):
+        """
+        :param search_query:
+        :return:
+        """
+        results: list = list()
+        try:
+            for key in search_query.keys():
+                for value in search_query[key]:
+                    results += list(self.db.find({key: value}))
+            success = bool(results)
+            return BusinessListWrapper(results, found=success, operationDone=success)
+        except:
+            return BusinessListWrapper(None, found=False, operationDone=False)
     
     def update(self, new_business: dict):
         """

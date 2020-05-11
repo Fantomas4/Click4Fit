@@ -72,10 +72,30 @@ class MongoDB:
                 raise ValueError("user_credentials doesn't contain " + attribute +
                                 " attribute, which is needed to log in")
         return self.userDB.logIn(user_credentials)
+
+    def userSearch(self, search_query: dict):
+        """
+        Returns users matching attribute-value pairs with OR.
+        Example: {"name": ["Nikos"], "birthdate": ["02.02.2020"]}
+        Will return all users that have name Nikos OR birthdate 02.02.2020.
+        But they don't need to have both at the same time.
+
+        :param search_query: a dictionary containing attribute and a list of values to search for
+        :return: UserListWrapper
+                .user_list: a list with all users matching search_query filters
+                            Will contain None if something failed inside mongo.
+                .found: will be true if user_list is not empty, else false
+                .operationDone: will be true if found is true, else false 
+        """
+        self.Validator.validate_search(search_query, "user")
+        return self.userDB.search(search_query)
     
     def getUser(self, user_query: dict):
         """
-        Gets first user which has the same attribute-value pairs as user_query
+        Gets first user which has the same attribute-value pairs as user_query.
+        Example: {"name": ["Nikos"], "birthdate": ["02.02.2020"]}
+        Will return all users that have name Nikos AND birthdate 02.02.2020.
+        The user need to have both to match the pattern
 
         :param user_query: a dict containing attributes and values based on which user will be returned
         :return: UserWrapper
@@ -111,6 +131,24 @@ class MongoDB:
                 .operationDone: will be true if found is true, else false
         """
         return self.userDB.getAll()
+    
+    def getFavoriteBusiness(self, user: dict):
+        """
+        :param user: a dict containing a unique identifier to find the user. Example: _id, email
+        :return: a list with favorite businesses of user
+                Will be None if something failed inside mongo.
+        """
+        self.validator.validate(user, "user")
+        return self.userDB.getFavorite(user, "favorite_business")
+    
+    def getFavoriteWorkout(self, user: dict):
+        """
+        :param user: a dict containing a unique identifier to find the user. Example: _id, email
+        :return: a list with favorite businesses of user
+                Will be None if something failed inside mongo.
+        """
+        self.validator.validate(user, "user")
+        return self.userDB.getFavorite(user, "favorite_workout")
     
     def updateUser(self, new_user: dict):
         """
@@ -158,6 +196,14 @@ class MongoDB:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
         return self.businessDB.create(business)
+
+    def businessSearch(self, search_query: dict):
+        """
+        :param search_query:
+        :return:
+        """
+        self.validator.validate_search(search_query, "business")
+        return self.businessDB.search(search_query)
     
     def getBusiness(self, business_query: dict):
         """
@@ -298,6 +344,7 @@ class MongoDB:
 # mongo.dropDatabases()
 # print(mongo.createMockDatabase())
 # print(len(mongo.workoutSearch({"advised_for" : ["men", "women"]}).workout_list))
+# print(mongo.getFavoriteWorkout({'email': 'nikosalex@gmail.com'}))
 
 
 # url = "mongodb://localhost:27017/"

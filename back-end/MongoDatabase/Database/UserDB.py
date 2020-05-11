@@ -64,13 +64,15 @@ class UserDB:
         if self._findByEmail(user["email"]): # Checks if user already exists
             return UserWrapper({}, found=True, operationDone=False)
         user = {
-            "_id"       : str(ObjectId()),
-            "name"      : user["name"],
-            "surname"   : user["surname"],
-            "email"     : user["email"],
-            "password"  : self._hashPassword(user["password"]), # hash and salt password
-            "birthdate" : user["birthdate"],
-            "role"      : user.get("role", "client") # default value of "client"
+            "_id"               : str(ObjectId()),
+            "name"              : user["name"],
+            "surname"           : user["surname"],
+            "email"             : user["email"],
+            "password"          : self._hashPassword(user["password"]), # hash and salt password
+            "birthdate"         : user["birthdate"],
+            "role"              : user.get("role", "client"), # default value of "client"
+            "favorite_workout"  : user.get("favorite_workout", []),
+            "favorite_business" : user.get("favorite_business", [])
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(user) # inserting user
@@ -116,11 +118,10 @@ class UserDB:
         :return:
         """
         try:
-            user_list_cursor: Cursor = self.db.find(user_query)
+            user_list = list(self.db.find(user_query))
         except:
             return UserListWrapper(None, found=False, operationDone=False)
         else:
-            user_list = [user for user in user_list_cursor]
             success = bool(user_list)
             return UserListWrapper(user_list, found=success, operationDone=success)
       
@@ -129,14 +130,42 @@ class UserDB:
         :return:
         """
         try:
-            user_list_cursor: Cursor = self.db.find()
+            user_list = list(self.db.find())
         except:
             return UserListWrapper(None, found=False, operationDone=False)
         else:
             user_list = [user for user in user_list_cursor]
             success = bool(user_list)
             return UserListWrapper(user_list, found=success, operationDone=success)
+
+    def search(self, search_query: dict):
+        """
+        :param search_query:
+        :return:
+        """
+        results: list = list()
+        try:
+            for key in search_query.keys():
+                for value in search_query[key]:
+                    results += list(self.db.find({key: value}))
+            success = bool(results)
+            return UserListWrapper(results, found=success, operationDone=success)
+        except:
+            return UserListWrapper(None, found=False, operationDone=False)
     
+    def getFavorite(self, user: dict, favorite: str):
+        """
+        :param user:
+        :param favorite: "favorite_workout" or "favorite_business"
+        :return:
+        """
+        try:
+            favorites = self.db.find_one(user, {"_id": 0, favorite: 1}).get(favorite, [])
+        except:
+            return None
+        else:
+            return favorites
+
     
     def update(self, new_user: dict):
         """
