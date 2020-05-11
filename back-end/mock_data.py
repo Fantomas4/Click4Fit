@@ -1,7 +1,7 @@
 data = {
     'user': [
        { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'gp123456', 'birthdate': '16.04.1997',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'role': 'client', 'favorite_workout': ["push ups"], 'favorite_business': [] },
 
        { 'name': 'Giorgos', 'surname': 'Andrianakis', 'email': 'gandrian@gmail.com',  'password': 'ga123456', 'birthdate': '02.06.1961' ,
         'role': 'client', 'favorite_workout': [], 'favorite_business': []},

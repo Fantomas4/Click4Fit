@@ -22,12 +22,12 @@ export class ManageBusinessEntriesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
 
   // Holds a SelectionModel<BusinessEntry> object used to get the table checkboxes' state.
-  selection = new SelectionModel<BusinessEntry>(true, []);
+  selection = new SelectionModel<any>(true, []);
 
   // Determines the columns to be displayed in the table's header row.
-  displayedColumns = ['checkboxes', 'id', 'name', 'category', 'buttons'];
+  displayedColumns = ['checkboxes', 'name', 'category', 'buttons'];
 
-  businessData: BusinessEntry[]; // An array of BusinessEntry objects retrieved from the database.
+  businessData=[]; // An array of BusinessEntry objects retrieved from the database.
   dataSource = new MatTableDataSource(this.businessData); // MatTableDataSource<BusinessEntry> used as the table's data source.
 
   dialogHeight: number; // Height of the dialog window.
@@ -93,7 +93,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
       this.manageBusinessEntriesService.getResults().toPromise().then((data:any)=>{
         if (data.response==200){
-          this.businessData=data.businessList;
+          this.businessData=data.businesses;
           this.dataSource.data=this.businessData;
         }
       })
@@ -114,14 +114,14 @@ export class ManageBusinessEntriesComponent implements OnInit {
   }
 
   /** Spawns the "Details/Edit" dialog window */
-  openDetailsEditDialog(element: BusinessEntry): void {
+  openDetailsEditDialog(element: any): void {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
     this.detailsEditDialogRef = this.dialog.open(BusinessDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
       data: {id: element.id, name: element.name, category: element.category, country: element.country,
-      city: element.city, address: element.address, postalCode: element.postalCode, phoneNumbers:
-      element.phoneNumber, email: element.email, availableServProd: element.availableServProd,
-      imgPath: element.imgPath}
+      city: element.city, address: element.address, postal_code: element.postal_code, phone_number:
+      element.phone_number, email: element.email, services: element.services, products: element.products,
+      img_path: element.img_path}
     });
   }
 

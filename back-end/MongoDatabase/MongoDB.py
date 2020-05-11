@@ -2,6 +2,7 @@ import sys
 sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 
 from pymongo import MongoClient
+from pprint import pprint
 
 from MongoDatabase.Database.UserDB import UserDB
 from MongoDatabase.Database.BusinessDB import BusinessDB
@@ -99,11 +100,7 @@ class MongoDB:
                 .operationDone: will be true if found is true, else false
         """
         self.validator.validate(user_query, "user")
-<<<<<<< HEAD
-        return {'name':'eirini','surname':'mitsa','password':'ei123456','email':'eirinimitsa@gmail.com','birthdate':'07/10/1997'}
-=======
         return self.userDB.getList(user_query)
->>>>>>> mongo
     
     def getAllUsers(self):
         """

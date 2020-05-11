@@ -42,9 +42,9 @@ import {LegsWorkoutEntry,BackWorkoutEntry,ChestWorkoutEntry,ShouldersWorkoutEntr
     getCoreResults(): Observable<CoreWorkoutEntry[]> {
       return of(COREWORKOUTENTRIES);
     }
-    postFilters(content): Observable<any>{
+    /*postFilters(content): Observable<any>{
       const headers = { 'content-type': 'application/json'}  
       const jsonData=JSON.stringify(content);
-      return this.http.post('http://localhost:5000/api/workout',jsonData,{'headers':headers});  
-    }
+      return this.http.post('http://localhost:5000/api/display-workout',jsonData,{'headers':headers});  
+    }*/
   }

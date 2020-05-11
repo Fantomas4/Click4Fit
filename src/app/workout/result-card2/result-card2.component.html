@@ -11,13 +11,14 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advisedFor}}</mat-chip>
-                        <mat-chip>Equipment {{entry.equipment}}</mat-chip>
-                        <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip *ngIf="!entry.equipment">No Equipment</mat-chip>
+                        <mat-chip *ngIf="entry.equipment">With Equipment</mat-chip>
+                        <mat-chip>{{entry.difficulty}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>

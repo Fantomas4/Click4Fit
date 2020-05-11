@@ -54,7 +54,7 @@ import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/
 import { BusinessAddEntryDialogService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
 import { BusinessDetailsEditDialogService} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.service';
 import { UserDetailsEditDialogService} from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.service';
-
+import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/delete-dialog-message.service';
 
 @NgModule({
   declarations: [
@@ -111,7 +111,7 @@ import { UserDetailsEditDialogService} from './manage-user-entries/user-details-
     HttpClientModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService,
-              BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService],
+              BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService, DeleteDialogMessageService],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialogMessageComponent,UpdateDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
 })

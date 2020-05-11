@@ -8,9 +8,9 @@ export class DeleteDialogMessageService {
 
     constructor(private http: HttpClient) { }
 
-    postProfile(email):Observable<any>{
+    postProfile(content):Observable<any>{
         const headers = {'content-type':'application/json'};
-        const jsonData=JSON.stringify(email);
+        const jsonData=JSON.stringify(content);
         return this.http.post('http://localhost:5000/api/delete-myprofile',jsonData,{'headers':headers});
     }
 }

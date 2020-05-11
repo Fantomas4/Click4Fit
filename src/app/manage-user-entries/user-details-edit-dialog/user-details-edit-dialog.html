@@ -4,18 +4,15 @@
     <form class="form">
       <table class="table" cellspacing="0">
         <tr>
-          <p id="user-id">User ID: {{this.id}}</p>
-        </tr>
-        <tr>
           <mat-form-field>
             <mat-label>Name</mat-label>
-            <input matInput placeholder="e.g. George" [(ngModel)]="this.name" name="name" required>
+            <input matInput placeholder="e.g. George" [(ngModel)]="name" name="name" required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>Last Name</mat-label>
-            <input matInput placeholder="e.g. Brown" [(ngModel)]="this.surname" name="surname" required>
+            <input matInput placeholder="e.g. Brown" [(ngModel)]="surname" name="surname" required>
           </mat-form-field>
         </tr>
         <tr>

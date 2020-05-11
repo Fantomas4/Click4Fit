@@ -19,12 +19,12 @@ export class ManageUserEntriesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
 
   // Holds a SelectionModel<UserEntry> object used to get the table checkboxes' state.
-  selection = new SelectionModel<UserEntry>(true, []);
+  selection = new SelectionModel<any>(true, []);
 
   // Determines the columns to be displayed in the table's header row.
-  displayedColumns = ['checkboxes', 'id', 'name', 'last-name', 'buttons'];
+  displayedColumns = ['checkboxes', 'name', 'last-name', 'buttons'];
 
-  userData: UserEntry[]; // An array of UserEntry objects retrieved from the database.
+  userData=[]; // An array of UserEntry objects retrieved from the database.
   dataSource = new MatTableDataSource(this.userData); // MatTableDataSource<UserEntry> used as the table's data source.
 
   dialogHeight: number; // Height of the dialog window.
@@ -88,8 +88,10 @@ export class ManageUserEntriesComponent implements OnInit {
     /*this.manageUserEntriesService.getResults()
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
       this.manageUserEntriesService.getResults().toPromise().then((data:any)=>{
+        console.log(data.msg);
         if (data.response==200){
-          this.userData=data.userList;
+          this.userData=data.users;
+          console.log(this.userData);
           this.dataSource.data=this.userData;
         }
       })
@@ -110,11 +112,11 @@ export class ManageUserEntriesComponent implements OnInit {
   }
 
   /** Spawns the "Details/Edit" dialog window */
-  openDetailsEditDialog(element: UserEntry): void {
+  openDetailsEditDialog(element: any): void {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
-      data: {id: element.id, name: element.name, lastname: element.lastname, birthdate: element.birthdate, email: element.email}
+      data: {id: element.id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email}
     });
   }
 

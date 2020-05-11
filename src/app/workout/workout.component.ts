@@ -25,7 +25,7 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    this.content={'category':this.categories,'advisedFor':this.advisedFor,'level':this.level,'equipment':this.equipment}
+    this.content={"category":["legs"],"advised_for":["women"],"difficulty":["hard"],"equipment": [true]};
     /*this.workoutService.postFilters(this.content).toPromise().then((data:any)=>{
       this.results=data;
       //this.resultCardService.getResults(this.results);

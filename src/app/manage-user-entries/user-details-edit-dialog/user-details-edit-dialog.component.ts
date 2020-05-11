@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UserEntry} from '../../user-entry';
 import {FormControl, Validators} from '@angular/forms';
 import {UserDetailsEditDialogService} from './user-details-edit-dialog.service';
 
@@ -21,16 +20,15 @@ export class UserDetailsEditDialogComponent implements OnInit {
   email;
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: UserEntry, private editDetailsService: UserDetailsEditDialogService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private editDetailsService: UserDetailsEditDialogService) { }
 
   ngOnInit(): void {
     // Extract the data from the payload and store it into the class properties
-    this.id = this.data.id;
+    this.id = this.data._id;
     this.name = this.data.name;
-    this.surname = this.data.lastname;
+    this.surname = this.data.surname;
     this.birthdate = new FormControl(new Date(this.data.birthdate));
-    this.emailFormControl.setValue(this.data.email);
-
+    this.email=this.data.email;
   }
 
   /**
@@ -53,13 +51,13 @@ export class UserDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    var content = {'id':this.id,'name':this.name,'surname':this.surname,'birthdate':this.birthdate,'email':this.email};
+    var content = {"_id":this.id,"name":this.name,"surname":this.surname,"birthdate":this.data.birthdate,"email":this.email};
     this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
       if (data.response==200){
-        //show message everything has saved
+        //alert service okey
       }
       else{
-        //show message with the error
+        //alert service error
       }
     });
   }

@@ -37,12 +37,17 @@
         <table>
           <tr>
             <mat-form-field>
-              <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="initial-password" required>
+              <input matInput placeholder="Old password" [(ngModel)]="password" type="password" name="old-password" required>
             </mat-form-field>
           </tr>
           <tr>
             <mat-form-field>
-              <input matInput placeholder="Repeat password" [(ngModel)]="repeatedPassword" type="password" name="repeated-password" required>
+              <input matInput placeholder="New password" [(ngModel)]="newPassword" type="password" name="new-password" required>
+            </mat-form-field>
+          </tr>
+          <tr>
+            <mat-form-field>
+              <input matInput placeholder="New repeated password" [(ngModel)]="newRepeatedPassword" type="password" name="new-repeated-password" required>
             </mat-form-field>
           </tr>
         </table>

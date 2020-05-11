@@ -1,6 +1,8 @@
 import os
 from flask import Flask, jsonify,request,json
 from flask_cors import CORS
+from pprint import pprint
+
 import sys
 sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 from MongoDatabase.MongoDB import MongoDB
@@ -38,7 +40,7 @@ def login():
             return jsonify(response=404, msg="Couldn't find user with email: " + user['email'])
         if not user_wrapper.operationDone: 
             return jsonify(response=400, msg="Wrong password")
-        return jsonify(response=200, user=user_wrapper.user)
+    return jsonify(response=200, user=user_wrapper.user)
 
 ####################################### Register #####################################
 @app.route("/api/register", methods=['POST'])
@@ -50,7 +52,7 @@ def register():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -61,17 +63,6 @@ def register():
     return jsonify(response=200, msg="Everything is okey")
 
 ####################################### Dashboard ####################################
-@app.route("/api/favorite-workout", methods=['POST','GET'])
-def displayFavoriteWorkout():
-    user_id=request.get_json() #get user's id only
-    #connection with mongo sending the user's id and getting his favorite workout
-    return jsonify({'id':5,'name':'Lunges', 'advisedFor':'Women', 'difficulty':'Hard','equipment':false,'set':'4x12','video_url':'https://www.youtube.com/embed/dl8_opV0A0Y'})
-
-@app.route("/api/favorite-places", methods=['POST','GET'])
-def displayFavoritePlaces():
-    user_id=request.get_json() #get user's id only
-    #connection with mongo sending the user's id and getting his favorite place
-    return jsonify({'id':5,'name':'CrossFit Gym', 'category':'Gym'})
 
 ####################################### My Profile ###################################
 @app.route("/api/display-myprofile", methods=['POST','GET'])
@@ -83,13 +74,35 @@ def displayMyprofile():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
     return jsonify(response=200, user=user_wrapper.user)
+
+@app.route("/api/confirm-password-myprofile", methods=['POST','GET'])
+def confirmPasswordMyprofile():
+    user=request.get_json()
+    #connection with mongo sending the user and modifying the profile's details
+    try:
+        user_wrapper: UserWrapper = MongoDB.confirm(user)
+    except TypeError as type_err: #Checking for errors
+        return jsonify(response=500, msg=str(type_err))
+    except ValueError as value_err:
+        return jsonify(response=500, msg=str(value_err))
+    except:
+        return jsonify(response=500, msg="Bad error")
+    else:
+        if type(user_wrapper.user) is not dict:
+            return jsonify(response=500, msg="Something is wrong with the database")
+        if not user_wrapper.found: 
+            return jsonify(response=404, msg="Couldn't find user with email: " + user['email'])
+        if not user_wrapper.operationDone: 
+            return jsonify(response=400, msg="Wrong password")
+    return jsonify(response=200, msg="Everything is okey")
+
 
 @app.route("/api/update-myprofile", methods=['POST','GET'])
 def updateMyprofile():
@@ -100,14 +113,14 @@ def updateMyprofile():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
         if not user_wrapper.operationDone:
-            return jsonify(response=404)
+            return jsonify(response=404, msg="")
     return jsonify(response=200, msg="Everything is okey")
 
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
@@ -119,7 +132,7 @@ def deleteMyprofile():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -139,13 +152,13 @@ def search():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
         if type(business_wrapper_list.businessList) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, businessList=business_wrapper_list.businessList)
+    return jsonify(response=200, businessList=business_wrapper_list.business_list)
 
 ####################################### Workout ######################################
 @app.route("/api/display-workout", methods=['POST','GET']) 
@@ -153,20 +166,18 @@ def getWorkout():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the filters and getting the matched workout
     try:
-        workout_wrapper_list : WorkoutListWrapper = MongoDB.getWorkouts(filters)
+        workout_wrapper_list : WorkoutListWrapper = MongoDB.workoutSearch(filters)
+        print(workout_wrapper_list.workout_list)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
-    else:
-        if type(workout_wrapper_list.workoutList) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, workoutList=workout_wrapper_list.workoutList)
+    return jsonify(response=200, workoutList=workout_wrapper_list.workout_list)
 
 @app.route("/api/create-workout", methods=['POST','GET'])
-def getWorkout():
+def createWorkout():
     workout=request.get_json() #get new workout
     #connection with mongo sending the filters and creating the workout
     try:
@@ -174,7 +185,7 @@ def getWorkout():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -183,7 +194,7 @@ def getWorkout():
     return jsonify(response=200, msg="Everything is okey")
 
 @app.route("/api/delete-workout", methods=['POST','GET']) 
-def getWorkout():
+def deleteWorkout():
     workout=request.get_json() #get workout for delete
     #connection with mongo sending the filters and deleting the workout
     try:
@@ -191,7 +202,7 @@ def getWorkout():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -209,13 +220,11 @@ def manageOneBusinessDisplay():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
-        if type(business_wrapper.business) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, business=business_wrapper.business)
+        return jsonify(response=200, business=business_wrapper.business)
 
 @app.route("/api/manage-business-display-entries",methods=['POST','GET'])
 def manageAllBusinessesDisplay():
@@ -225,13 +234,11 @@ def manageAllBusinessesDisplay():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
-        if type(business_wrapper_list.businessList) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, business=business_wrapper_list.businessList)
+        return jsonify(response=200, businesses=business_wrapper_list.business_list)
 
 @app.route("/api/manage-business-add-entry",methods=['POST','GET'])
 def manageBusinessAdd():
@@ -242,7 +249,7 @@ def manageBusinessAdd():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -259,7 +266,7 @@ def manageBusinessDelete():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -277,7 +284,7 @@ def manageBusinessModify():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -295,13 +302,11 @@ def manageOneUserDisplay():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
-        if type(user_wrapper.user) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, user=user_wrapper.user)
+        return jsonify(response=200, user=user_wrapper.user)
 
 @app.route("/api/manage-user-display-entries",methods=['POST','GET'])
 def manageAllUsersDisplay():
@@ -311,13 +316,13 @@ def manageAllUsersDisplay():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
-        if type(user_wrapper_list.userList) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, users=user_wrapper_list.userList)
+        return jsonify(response=200, users=user_wrapper_list.user_list)
+    #MongoDB.userDB.db.drop()
+    #return jsonify(response=500, msg="Bad error")
 
 @app.route("/api/manage-user-delete-entries",methods=['POST','GET'])
 def manageUserDelete():
@@ -328,7 +333,7 @@ def manageUserDelete():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -345,7 +350,7 @@ def manageUserModify():
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
-        return jsonigy(response=500, msg=str(value_err))
+        return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
     else:
@@ -358,3 +363,4 @@ def manageUserModify():
 if __name__ == '__main__':
     app.debug = True
     app.run()
+    MongoDB.createMockDatabase()

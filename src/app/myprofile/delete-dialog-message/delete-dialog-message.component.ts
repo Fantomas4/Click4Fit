@@ -12,18 +12,20 @@ export class DeleteDialogMessageComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,private deleteService:DeleteDialogMessageService) {}
 
-  email:string;
+  content;
   ngOnInit(): void {
-    this.email=this.data;
+    this.content=this.data
   }
   deleteProfile(){
-    this.deleteService.postProfile(this.email).toPromise().then((data:any)=>
+    this.deleteService.postProfile(this.content).toPromise().then((data:any)=>
     {
+      console.log(data.msg);
       if (data.response==200){
-
+        //allert service 
+        console.log('okey');
       }
       else{
-
+        //alert service
       }
     })
   }

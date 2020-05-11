@@ -13,11 +13,11 @@ export class MyProfileService {
     constructor(public dialog: MatDialog,private http: HttpClient) { }
 
     /*Creates a modal message and determines its parameters */
-    openModalDelete(email) {
+    openModalDelete(content) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.minWidth = 100;
-        dialogConfig.data=email;
+        dialogConfig.data=content;
         const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
         dialogRef.afterClosed().subscribe();
     }
@@ -32,6 +32,11 @@ export class MyProfileService {
       const headers = {'content-type':'application/json'};
       const jsonData=JSON.stringify(email);
       return this.http.post('http://localhost:5000/api/display-myprofile',jsonData,{'headers':headers});
+    }
+    postPassword(password):Observable<any>{
+      const headers = {'content-type':'application/json'};
+      const jsonData=JSON.stringify(password);
+      return this.http.post('http://localhost:5000/api/confirm-password-myprofile',jsonData,{'headers':headers});
     }
     postChanges(content): Observable<any>{
       const headers = {'content-type':'application/json'};
