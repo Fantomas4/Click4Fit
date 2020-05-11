@@ -143,15 +143,15 @@ class UserDB:
         :param search_query:
         :return:
         """
-        results: list = list()
         try:
-            for key in search_query.keys():
-                for value in search_query[key]:
-                    results += list(self.db.find({key: value}))
-            success = bool(results)
-            return UserListWrapper(results, found=success, operationDone=success)
+            results = list(self.db.find(
+                        {key: {"$in": search_query[key]} for key in search_query.keys()}
+                        ))
         except:
             return UserListWrapper(None, found=False, operationDone=False)
+        else:
+            success = bool(results)
+            return UserListWrapper(results, found=success, operationDone=success)
     
     def getFavorite(self, user: dict, favorite: str):
         """
@@ -166,7 +166,22 @@ class UserDB:
         else:
             return favorites
 
-    
+    def changePassword(self, user: dict, new_password: str):
+        """
+        :param user:
+        :param new_password:
+        :return:
+        """
+        old_password = user["password"]
+        del user["password"]
+        user_wrapper: UserWrapper = self.get(user)
+        if user_wrapper.operationDone:
+            if self._verifyPassword(user_wrapper.user["password"], old_password):
+                user_wrapper.user["password"] = self._hashPassword(new_password)
+                return self.update(user_wrapper.user) # update db with new hashed password
+            return UserWrapper({}, found=True, operationDone=False) # wrong old password
+        return UserWrapper({}, found=False, operationDone=False) # couldn't find user
+
     def update(self, new_user: dict):
         """
         :param new_user:
@@ -181,7 +196,6 @@ class UserDB:
             return UserWrapper({}, found=False, operationDone=False)
         except:
             return UserWrapper(None, found=False, operationDone=False)
-
 
     def delete(self, user: dict):
         """

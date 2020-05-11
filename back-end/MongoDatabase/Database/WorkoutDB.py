@@ -84,15 +84,15 @@ class WorkoutDB:
         :param search_query:
         :return:
         """
-        results: list = list()
         try:
-            for key in search_query.keys():
-                for value in search_query[key]:
-                    results += list(self.db.find({key: value}))
-            success = bool(results)
-            return WorkoutListWrapper(results, found=success, operationDone=success)
+            results = list(self.db.find(
+                        {key: {"$in": search_query[key]} for key in search_query.keys()}
+                        ))
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)
+        else:
+            success = bool(results)
+            return WorkoutListWrapper(results, found=success, operationDone=success)
 
     
     def update(self, new_workout: dict):

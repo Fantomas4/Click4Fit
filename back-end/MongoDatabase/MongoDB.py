@@ -2,12 +2,13 @@ import sys
 sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
 
 from pymongo import MongoClient
+from re import fullmatch # for new password validation
 
 from MongoDatabase.Database.UserDB import UserDB
 from MongoDatabase.Database.BusinessDB import BusinessDB
 from MongoDatabase.Database.WorkoutDB import WorkoutDB
 
-from mock_data import data
+from mock_data import data # mock database entries
 
 from Validator import Validator
 
@@ -72,6 +73,50 @@ class MongoDB:
                 raise ValueError("user_credentials doesn't contain " + attribute +
                                 " attribute, which is needed to log in")
         return self.userDB.logIn(user_credentials)
+    
+    def changeUserPassword(self, change_query: dict):
+        """
+        Changes a users password.
+
+        :param change_query: a dict containing 2 attributes: The user and the new_password.
+                            Example: change_query = {
+                                        "user": {
+                                            "email"    : 'nikosalex@gmail.com',
+                                            "password" : 'gp123456'
+                                        },
+                                        "new_password": "kodikoss"
+                                    }
+                            user must contain an unique identifier (_id or email) and old password
+                            new_password should contain the new password as a string
+        :return: UserWrapper
+                .user: a dict containing the updated user with the new password (hashed) if successfull, else
+                        empty dict. Will contain None if something failed in mongo
+                .found: will be true if a user could be found with the unique identifier, else false
+                .operationDOne: will be true if password was changed successfully, else false
+        """
+        if "user" not in change_query:
+            raise ValueError("change_query doesn't contain user")
+        if "new_password" not in change_query:
+            raise ValueError("change_query doesn't contain new password")
+
+        user: dict = change_query["user"]
+        new_password: str = change_query["new_password"]
+
+        # validate user
+        self.validator.validate(user, "user")
+
+        # make sure necessary attributes exist and are correct
+        if "email" not in user and "_id" not in user:
+            raise ValueError("user doesn't contain a unique identifier (email or _id)")
+        if "password" not in user:
+            raise ValueError("user doesn't contain old password")
+        if type(new_password) is not str:
+            raise TypeError("new_password must be of type str and got: "
+                            + str(type(new_password)))
+        if not fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', new_password):
+            raise ValueError("""invalid new_password ({}): new password {}""".format(
+                            new_password, self.validator.valid["user"]["regex-error"]["password"]))
+        return self.userDB.changePassword(user, new_password)
 
     def userSearch(self, search_query: dict):
         """
@@ -340,11 +385,36 @@ class MongoDB:
                 print("Could not insert workout: " + str(workout))
         return returned_data
 
+
+
+
+# from pprint import pprint
+
 # mongo = MongoDB()
 # mongo.dropDatabases()
-# print(mongo.createMockDatabase())
-# print(len(mongo.workoutSearch({"advised_for" : ["men", "women"]}).workout_list))
-# print(mongo.getFavoriteWorkout({'email': 'nikosalex@gmail.com'}))
+# returned_data = mongo.createMockDatabase()
+# pprint(returned_data)
+
+# pprint(mongo.getUser({"email": 'nikosalex@gmail.com'}).user)
+
+# change_query = {
+#     "user": {
+#         "email"    : 'nikosalex@gmail.com',
+#         "password" : 'gp123456'
+#     },
+#     "new_password": "kodikoss"
+# }
+
+# user_wrapper = mongo.changeUserPassword(change_query)
+# pprint(user_wrapper.user)
+
+# user_wrapper = mongo.logIn({"email": 'nikosalex@gmail.com', "password": "kodikoss"})
+# pprint(user_wrapper.user)
+# print(user_wrapper.found)
+# print(user_wrapper.operationDone)
+
+
+
 
 
 # url = "mongodb://localhost:27017/"
