@@ -2,13 +2,13 @@ import sys
 sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 
 from pymongo import MongoClient
-from pprint import pprint
+from re import fullmatch # for new password validation
 
 from MongoDatabase.Database.UserDB import UserDB
 from MongoDatabase.Database.BusinessDB import BusinessDB
 from MongoDatabase.Database.WorkoutDB import WorkoutDB
 
-from mock_data import data
+from mock_data import data # mock database entries
 
 from Validator import Validator
 
@@ -74,9 +74,73 @@ class MongoDB:
                                 " attribute, which is needed to log in")
         return self.userDB.logIn(user_credentials)
     
+    def changeUserPassword(self, change_query: dict):
+        """
+        Changes a users password.
+
+        :param change_query: a dict containing 2 attributes: The user and the new_password.
+                            Example: change_query = {
+                                        "user": {
+                                            "email"    : 'nikosalex@gmail.com',
+                                            "password" : 'gp123456'
+                                        },
+                                        "new_password": "kodikoss"
+                                    }
+                            user must contain an unique identifier (_id or email) and old password
+                            new_password should contain the new password as a string
+        :return: UserWrapper
+                .user: a dict containing the updated user with the new password (hashed) if successfull, else
+                        empty dict. Will contain None if something failed in mongo
+                .found: will be true if a user could be found with the unique identifier, else false
+                .operationDOne: will be true if password was changed successfully, else false
+        """
+        if "user" not in change_query:
+            raise ValueError("change_query doesn't contain user")
+        if "new_password" not in change_query:
+            raise ValueError("change_query doesn't contain new password")
+
+        user: dict = change_query["user"]
+        new_password: str = change_query["new_password"]
+
+        # validate user
+        self.validator.validate(user, "user")
+
+        # make sure necessary attributes exist and are correct
+        if "email" not in user and "_id" not in user:
+            raise ValueError("user doesn't contain a unique identifier (email or _id)")
+        if "password" not in user:
+            raise ValueError("user doesn't contain old password")
+        if type(new_password) is not str:
+            raise TypeError("new_password must be of type str and got: "
+                            + str(type(new_password)))
+        if not fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', new_password):
+            raise ValueError("""invalid new_password ({}): new password {}""".format(
+                            new_password, self.validator.valid["user"]["regex-error"]["password"]))
+        return self.userDB.changePassword(user, new_password)
+
+    def userSearch(self, search_query: dict):
+        """
+        Returns users matching attribute-value pairs with OR.
+        Example: {"name": ["Nikos"], "birthdate": ["02.02.2020"]}
+        Will return all users that have name Nikos OR birthdate 02.02.2020.
+        But they don't need to have both at the same time.
+
+        :param search_query: a dictionary containing attribute and a list of values to search for
+        :return: UserListWrapper
+                .user_list: a list with all users matching search_query filters
+                            Will contain None if something failed inside mongo.
+                .found: will be true if user_list is not empty, else false
+                .operationDone: will be true if found is true, else false 
+        """
+        self.validator.validate_filter(search_query, "user")
+        return self.userDB.search(search_query)
+    
     def getUser(self, user_query: dict):
         """
-        Gets first user which has the same attribute-value pairs as user_query
+        Gets first user which has the same attribute-value pairs as user_query.
+        Example: {"name": ["Nikos"], "birthdate": ["02.02.2020"]}
+        Will return all users that have name Nikos AND birthdate 02.02.2020.
+        The user need to have both to match the pattern
 
         :param user_query: a dict containing attributes and values based on which user will be returned
         :return: UserWrapper
@@ -113,6 +177,24 @@ class MongoDB:
         """
         return self.userDB.getAll()
     
+    def getFavoriteBusiness(self, user: dict):
+        """
+        :param user: a dict containing a unique identifier to find the user. Example: _id, email
+        :return: a list with favorite businesses of user
+                Will be None if something failed inside mongo.
+        """
+        self.validator.validate(user, "user")
+        return self.userDB.getFavorite(user, "favorite_business")
+    
+    def getFavoriteWorkout(self, user: dict):
+        """
+        :param user: a dict containing a unique identifier to find the user. Example: _id, email
+        :return: a list with favorite businesses of user
+                Will be None if something failed inside mongo.
+        """
+        self.validator.validate(user, "user")
+        return self.userDB.getFavorite(user, "favorite_workout")
+    
     def updateUser(self, new_user: dict):
         """
         Updates a user based on _id
@@ -144,6 +226,19 @@ class MongoDB:
         if "_id" not in user:
             raise ValueError("user doesn't contain _id attribute, which is needed for deletion")
         return self.userDB.delete(user)
+
+    def deleteUsers(self, delete_query: dict):
+        """
+        :param delete_query: a dictionary containing attribute and a list of values
+                            Example: 
+                            delete_query = {
+                                "name": ["Kostas", "Nikos"]
+                            }
+                            Will delete all users named Kostas and Nikos
+        :return: True if deletion was successfull, else False
+        """
+        self.validator.validate_filter(delete_query, "user")
+        return self.userDB.deleteMany(delete_query)
     
     ################################################# Business Methods ##################################################
     
@@ -159,6 +254,14 @@ class MongoDB:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
         return self.businessDB.create(business)
+
+    def businessSearch(self, search_query: dict):
+        """
+        :param search_query:
+        :return:
+        """
+        self.validator.validate_filter(search_query, "business")
+        return self.businessDB.search(search_query)
     
     def getBusiness(self, business_query: dict):
         """
@@ -201,6 +304,14 @@ class MongoDB:
         if "_id" not in business:
             raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
         return self.businessDB.delete(business)
+
+    def deleteBusinesses(self, delete_query: dict):
+        """
+        :param business:
+        :return:
+        """
+        self.validator.validate_filter(delete_query, "business")
+        return self.businessDB.deleteMany(delete_query)
     
     ################################################# Workout Methods ##################################################
     
@@ -222,7 +333,7 @@ class MongoDB:
         :param search_query:
         :return:
         """
-        self.validator.validate_search(search_query, "workout")
+        self.validator.validate_filter(search_query, "workout")
         return self.workoutDB.search(search_query)
     
     def getWorkout(self, workout_query: dict):
@@ -266,6 +377,14 @@ class MongoDB:
         if "_id" not in workout:
             raise ValueError("workout doesn't contain _id, which is needed for deletion")
         return self.workoutDB.delete(workout)
+
+    def deleteWorkouts(self, delete_query: dict):
+        """
+        :param delete_query:
+        :return:
+        """
+        self.validator.validate_filter(delete_query, "workout")
+        return self.workoutDB.deleteMany(delete_query)
     
     ################################################# Mock Database ##################################################
 
@@ -295,10 +414,48 @@ class MongoDB:
                 print("Could not insert workout: " + str(workout))
         return returned_data
 
+
+
+
+# from pprint import pprint
+
 # mongo = MongoDB()
 # mongo.dropDatabases()
-# print(mongo.createMockDatabase())
-# print(len(mongo.workoutSearch({"advised_for" : ["men", "women"]}).workout_list))
+# returned_data = mongo.createMockDatabase()
+
+
+# delete_query = {
+#     "name": ["Kostas", "Nikos"]
+# }
+
+# pprint(mongo.userSearch(delete_query).user_list)
+# if mongo.deleteUsers(delete_query): print("DELETED")
+# pprint(mongo.userSearch(delete_query).user_list)
+
+
+
+# pprint(returned_data)
+
+# pprint(mongo.getUser({"email": 'nikosalex@gmail.com'}).user)
+
+# change_query = {
+#     "user": {
+#         "email"    : 'nikosalex@gmail.com',
+#         "password" : 'gp123456'
+#     },
+#     "new_password": "kodikoss"
+# }
+
+# user_wrapper = mongo.changeUserPassword(change_query)
+# pprint(user_wrapper.user)
+
+# user_wrapper = mongo.logIn({"email": 'nikosalex@gmail.com', "password": "kodikoss"})
+# pprint(user_wrapper.user)
+# print(user_wrapper.found)
+# print(user_wrapper.operationDone)
+
+
+
 
 
 # url = "mongodb://localhost:27017/"

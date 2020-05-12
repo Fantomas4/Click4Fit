@@ -84,15 +84,15 @@ class WorkoutDB:
         :param search_query:
         :return:
         """
-        results: list = list()
         try:
-            for key in search_query.keys():
-                for value in search_query[key]:
-                    results += list(self.db.find({key: value}))
-            success = bool(results)
-            return WorkoutListWrapper(results, found=success, operationDone=success)
+            results = list(self.db.find(
+                        {key: {"$in": search_query[key]} for key in search_query.keys()}
+                        ))
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)
+        else:
+            success = bool(results)
+            return WorkoutListWrapper(results, found=success, operationDone=success)
 
     
     def update(self, new_workout: dict):
@@ -125,4 +125,16 @@ class WorkoutDB:
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
     
+    def deleteMany(self, delete_query: dict):
+        """
+        :param delete_query:
+        :return:
+        """
+        delete_query = {key: {"$in": delete_query[key]} for key in delete_query.keys()}
+        try:
+            self.db.delete_many(delete_query)
+        except:
+            return False
+        else:
+            return bool(self.db.find(delete_query))
     

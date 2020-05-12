@@ -8,7 +8,7 @@ class Validator:
         self.valid = {
             "user" : {
                 "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "role",
-                                    "favorite_business", "favorite_workout", "id", "session_id"],
+                                    "favorite_business", "favorite_workout", "_id", "session_id"],
                 "type" : {
                     "_id"                : str,
                     "name"               : str,
@@ -40,7 +40,7 @@ class Validator:
             },
             "business" : {
                 "legal-attributes" : ["name", "category", "country", "city", "address", "postal_code", "phone_number",
-                                        "email", "img_path", "services", "products", "id"],
+                                        "email", "img_path", "services", "products", "_id"],
                 "type" : {
                     "_id"          : str,
                     "name"         : str,
@@ -66,7 +66,7 @@ class Validator:
             },
             "workout" : {
                 "legal-attributes" : ["name", "category", "muscle_groups", "advised_for", "difficulty",
-                                    "equipment", "sets", "video_url", "id"],
+                                    "equipment", "sets", "video_url", "_id"],
                 "type" : {
                     "_id"           : str,
                     "name"          : str,
@@ -90,7 +90,7 @@ class Validator:
             }
         }
 
-    def validate_search(self, search_query: dict, db: str):
+    def validate_filter(self, search_query: dict, db: str):
         if type(search_query) is not dict:
             raise TypeError("search_query must be of type dict and got " + str(type(search_query)))
         if not search_query:
