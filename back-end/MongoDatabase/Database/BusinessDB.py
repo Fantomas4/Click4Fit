@@ -140,4 +140,15 @@ class BusinessDB:
         except:
             return BusinessWrapper(None, found=False, operationDone=False)
     
-    
+    def deleteMany(self, delete_query: dict):
+        """
+        :param delete_query:
+        :return:
+        """
+        delete_query = {key: {"$in": delete_query[key]} for key in delete_query.keys()}
+        try:
+            self.db.delete_many(delete_query)
+        except:
+            return False
+        else:
+            return bool(self.db.find(delete_query))

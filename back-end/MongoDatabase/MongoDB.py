@@ -132,7 +132,7 @@ class MongoDB:
                 .found: will be true if user_list is not empty, else false
                 .operationDone: will be true if found is true, else false 
         """
-        self.Validator.validate_search(search_query, "user")
+        self.validator.validate_filter(search_query, "user")
         return self.userDB.search(search_query)
     
     def getUser(self, user_query: dict):
@@ -226,6 +226,19 @@ class MongoDB:
         if "_id" not in user:
             raise ValueError("user doesn't contain _id attribute, which is needed for deletion")
         return self.userDB.delete(user)
+
+    def deleteUsers(self, delete_query: dict):
+        """
+        :param delete_query: a dictionary containing attribute and a list of values
+                            Example: 
+                            delete_query = {
+                                "name": ["Kostas", "Nikos"]
+                            }
+                            Will delete all users named Kostas and Nikos
+        :return: True if deletion was successfull, else False
+        """
+        self.validator.validate_filter(delete_query, "user")
+        return self.userDB.deleteMany(delete_query)
     
     ################################################# Business Methods ##################################################
     
@@ -247,7 +260,7 @@ class MongoDB:
         :param search_query:
         :return:
         """
-        self.validator.validate_search(search_query, "business")
+        self.validator.validate_filter(search_query, "business")
         return self.businessDB.search(search_query)
     
     def getBusiness(self, business_query: dict):
@@ -291,6 +304,14 @@ class MongoDB:
         if "_id" not in business:
             raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
         return self.businessDB.delete(business)
+
+    def deleteBusinesses(self, delete_query: dict):
+        """
+        :param business:
+        :return:
+        """
+        self.validator.validate_filter(delete_query, "business")
+        return self.businessDB.deleteMany(delete_query)
     
     ################################################# Workout Methods ##################################################
     
@@ -312,7 +333,7 @@ class MongoDB:
         :param search_query:
         :return:
         """
-        self.validator.validate_search(search_query, "workout")
+        self.validator.validate_filter(search_query, "workout")
         return self.workoutDB.search(search_query)
     
     def getWorkout(self, workout_query: dict):
@@ -356,6 +377,14 @@ class MongoDB:
         if "_id" not in workout:
             raise ValueError("workout doesn't contain _id, which is needed for deletion")
         return self.workoutDB.delete(workout)
+
+    def deleteWorkouts(self, delete_query: dict):
+        """
+        :param delete_query:
+        :return:
+        """
+        self.validator.validate_filter(delete_query, "workout")
+        return self.workoutDB.deleteMany(delete_query)
     
     ################################################# Mock Database ##################################################
 
@@ -393,6 +422,18 @@ class MongoDB:
 # mongo = MongoDB()
 # mongo.dropDatabases()
 # returned_data = mongo.createMockDatabase()
+
+
+# delete_query = {
+#     "name": ["Kostas", "Nikos"]
+# }
+
+# pprint(mongo.userSearch(delete_query).user_list)
+# if mongo.deleteUsers(delete_query): print("DELETED")
+# pprint(mongo.userSearch(delete_query).user_list)
+
+
+
 # pprint(returned_data)
 
 # pprint(mongo.getUser({"email": 'nikosalex@gmail.com'}).user)

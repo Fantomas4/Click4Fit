@@ -90,7 +90,7 @@ class Validator:
             }
         }
 
-    def validate_search(self, search_query: dict, db: str):
+    def validate_filter(self, search_query: dict, db: str):
         if type(search_query) is not dict:
             raise TypeError("search_query must be of type dict and got " + str(type(search_query)))
         if not search_query:
