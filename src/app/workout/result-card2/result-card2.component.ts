@@ -38,8 +38,6 @@ export class ResultCard2Component implements OnInit {
   constructor(public sanitizer: DomSanitizer,private workoutService: WorkoutService,private resultCardSrvice: ResultCard2Service){}
 
   ngOnInit(): void {
-    //this.results=this.resultCardSrvice.passResults();
-    //console.log(this.filters);
     this.resultCardSrvice.postFilters(this.filters).toPromise().then((data:any)=>{
       if (data.response==200){
         this.results=data.workoutList;
@@ -98,16 +96,6 @@ export class ResultCard2Component implements OnInit {
         console.log(data.msg);
       }
     });
-    //gets all the results and adds them in a seperated array
-    /*this.workoutService.getLegsResults().subscribe(results => this.legsWorkoutResults = results);
-    this.workoutService.getBackResults().subscribe(results => this.backWorkoutResults = results);
-    this.workoutService.getChestResults().subscribe(results => this.chestWorkoutResults = results);
-    this.workoutService.getShouldersResults().subscribe(results => this.shouldersWorkoutResults = results);
-    this.workoutService.getBicepsResults().subscribe(results => this.bicepsWorkoutResults = results);
-    this.workoutService.getTricepsResults().subscribe(results => this.tricepsWorkoutResults = results);
-    this.workoutService.getAbsResults().subscribe(results => this.absWorkoutResults = results);
-    this.workoutService.getCoreResults().subscribe(results => this.coreWorkoutResults = results);*/
-    //in the case of zero workout results
   
   }
 

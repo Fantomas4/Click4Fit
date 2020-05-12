@@ -66,12 +66,13 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    var content = {'id':this.id,'name':this.name,'category':this.category,'country':this.country,
-    'city':this.city,'address':this.address,'postal_code':this.postal_code,'phone_number':this.phone_number,
-    'email':this.email};
+    var content = {"_id":this.id,"name":this.name,"category":this.category,"country":this.country,
+    "city":this.city,"address":this.address,"postal_code":this.postal_code,"phone_number":this.phone_number,
+    "email":this.email};
     this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
       if (data.response==200){
-        //show message everything has saved
+        //alert service
+        console.log('okey');
       }
       else{
         //show message with the error

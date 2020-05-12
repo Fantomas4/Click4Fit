@@ -31,6 +31,7 @@ class BusinessDB:
         :param business:
         :return:
         """
+        print(business)
         if self._findByEmail(business["email"]): # Checks if user already exists
             return BusinessWrapper({}, found=True, operationDone=False)
         business = {
@@ -42,10 +43,10 @@ class BusinessDB:
             "address"      : business["address"],
             "postal_code"  : business["postal_code"],
             "phone_number" : business["phone_number"],
-            "email"        : business["email"],
-            "img_path"     : business["img_path"],
-            "services"     : business["services"],
-            "products"     : business["products"]
+            "email"        : business["email"]
+            #"img_path"     : business["img_path"],
+            #"services"     : business["services"],
+            #"products"     : business["products"]
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(business)

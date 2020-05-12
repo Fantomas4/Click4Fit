@@ -33,11 +33,6 @@ export class MyProfileService {
       const jsonData=JSON.stringify(email);
       return this.http.post('http://localhost:5000/api/display-myprofile',jsonData,{'headers':headers});
     }
-    postPassword(password):Observable<any>{
-      const headers = {'content-type':'application/json'};
-      const jsonData=JSON.stringify(password);
-      return this.http.post('http://localhost:5000/api/confirm-password-myprofile',jsonData,{'headers':headers});
-    }
     postChanges(content): Observable<any>{
       const headers = {'content-type':'application/json'};
       const jsonData=JSON.stringify(content);

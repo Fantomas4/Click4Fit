@@ -88,10 +88,8 @@ export class ManageUserEntriesComponent implements OnInit {
     /*this.manageUserEntriesService.getResults()
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
       this.manageUserEntriesService.getResults().toPromise().then((data:any)=>{
-        console.log(data.msg);
         if (data.response==200){
           this.userData=data.users;
-          console.log(this.userData);
           this.dataSource.data=this.userData;
         }
       })
@@ -116,7 +114,7 @@ export class ManageUserEntriesComponent implements OnInit {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
-      data: {id: element.id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email}
+      data: {_id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email}
     });
   }
 

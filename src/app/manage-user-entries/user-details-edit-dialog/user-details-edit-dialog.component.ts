@@ -2,12 +2,23 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
 import {UserDetailsEditDialogService} from './user-details-edit-dialog.service';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 
 @Component({
   selector: 'app-details-user-edit',
   templateUrl: './user-details-edit-dialog.html',
-  styleUrls: ['./user-details-edit-dialog.css']
+  styleUrls: ['./user-details-edit-dialog.css'],
+   providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 export class UserDetailsEditDialogComponent implements OnInit {
 
@@ -18,11 +29,13 @@ export class UserDetailsEditDialogComponent implements OnInit {
   // Form Control used to receive and validate the user's email input.
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   email;
+  picker;
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private editDetailsService: UserDetailsEditDialogService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private editDetailsService: UserDetailsEditDialogService,private _adapter: DateAdapter<any>) { }
 
   ngOnInit(): void {
+    this._adapter.setLocale('en');
     // Extract the data from the payload and store it into the class properties
     this.id = this.data._id;
     this.name = this.data.name;
@@ -54,6 +67,7 @@ export class UserDetailsEditDialogComponent implements OnInit {
     var content = {"_id":this.id,"name":this.name,"surname":this.surname,"birthdate":this.data.birthdate,"email":this.email};
     this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
       if (data.response==200){
+        console.log('okey');
         //alert service okey
       }
       else{

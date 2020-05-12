@@ -10,14 +10,13 @@ import {DashboardService} from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-  FavoritesWorkoutResults: FavoriteWorkout[];
-  FavoritesPlaceResults: FavoritePlace[];
+  favoriteWorkoutResults=[];
+  favoritePlacesResults=[];
   workoutIsEmpty = false;
   placeIsEmpty = false;
 
   CurrentTime: any;
-  favoriteWorkout;
-  favoritePlaces
+  user;
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
@@ -30,27 +29,34 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.dashboardService.getFavoriteWorkout().subscribe((data:any)=>{
+    this.user={"email":"nikosalex@gmail.com"}
+    this.dashboardService.getFavoriteWorkout(this.user).subscribe((data:any)=>{
       if (data.response==200){
-        this.FavoritesWorkoutResults=data.workoutList;
+        this.favoriteWorkoutResults=data.workoutList;
+      }
+      else{
+        //alert service
       }
     });
-    this.dashboardService.getFavoritePlaces().subscribe((data:any)=>{
+    this.dashboardService.getFavoritePlaces(this.user).subscribe((data:any)=>{
       if (data.response==200){
-        this.FavoritesPlaceResults=data.placesList;
+        this.favoritePlacesResults=data.businessList;
+      }
+      else{
+        //alert service
       }
     });
-    //gets the favrorites workout results from dashboard.service and adds them to an array
-    this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
-    //gets the favorites places results from dashboard.service and adds them to an array
-    this.dashboardService.getFAVPResults().subscribe(results => this.FavoritesPlaceResults = results);
-    //in the case of zero favorites results
-    if (this.FavoritesWorkoutResults.length == 0) {
+    if (this.favoriteWorkoutResults.length == 0) {
       this.workoutIsEmpty = true;
     }
-    if (this.FavoritesPlaceResults.length == 0) {
+    if (this.favoritePlacesResults.length == 0) {
       this.placeIsEmpty = true;
     }
+    //gets the favrorites workout results from dashboard.service and adds them to an array
+    //this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
+    //gets the favorites places results from dashboard.service and adds them to an array
+    //this.dashboardService.getFAVPResults().subscribe(results => this.FavoritesPlaceResults = results);
+    //in the case of zero favorites results
   }
 
 

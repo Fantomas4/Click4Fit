@@ -18,13 +18,14 @@
                 </mat-card-title><br>
                 <mat-card-content>
                     <!--The subcard of each favorite -->
-                    <mat-card *ngFor="let entry of FavoritesWorkoutResults" class="sub-card">
+                    <mat-card *ngFor="let entry of favoriteWorkoutResults" class="sub-card">
                         <mat-card-title class="title">
                             {{entry.name}}<br>
                             <mat-chip-list>
-                                <mat-chip>{{entry.advisedFor}}</mat-chip>
-                                <mat-chip>Equipment {{entry.equipment}}</mat-chip>
-                                <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                                <mat-chip>{{entry.advised_for}}</mat-chip>
+                                <mat-chip *ngIf="entry.equipment">With Equipment</mat-chip>
+                                <mat-chip *ngIf="!entry.equipment">No Equipment</mat-chip>
+                                <mat-chip>{{entry.difficulty}}</mat-chip>
                             </mat-chip-list>
                         </mat-card-title>
                         <mat-card-content>
@@ -44,7 +45,7 @@
                 </mat-card-title><br>
                 <mat-card-content>
                     <!-- The subcard of each favorite -->
-                    <mat-card *ngFor="let entry of FavoritesPlaceResults" class="sub-card">
+                    <mat-card *ngFor="let entry of favoritePlacesResults" class="sub-card">
                         <mat-card-header>
                             <mat-card-title class="title">{{entry.name}}</mat-card-title>
                             <mat-card-subtitle>{{entry.category}}</mat-card-subtitle>
@@ -59,7 +60,6 @@
                     </mat-card>
                 </mat-card-content>
             </mat-card><br>
-
         </mat-card-content>
     </mat-card>
 </div>
