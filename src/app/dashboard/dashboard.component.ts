@@ -10,27 +10,53 @@ import {DashboardService} from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-  FavoritesWorkoutResults: FavoriteWorkout[];
-  FavoritesPlaceResults: FavoritePlace[];
+  favoriteWorkoutResults=[];
+  favoritePlacesResults=[];
   workoutIsEmpty = false;
   placeIsEmpty = false;
-  cardImagePath: string;
+
+  CurrentTime: any;
+  user;
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
+    setInterval(() => {
+      this.CurrentTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' +  new Date().getSeconds(); }, 1);
+
   }
 
-  today: number = Date.now();
+  today: number = Date.now(); //gets the current date
+
 
 
   ngOnInit(): void {
-    this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
-    this.dashboardService.getFAVPResults().subscribe(results => this.FavoritesPlaceResults = results);
-    if (this.FavoritesWorkoutResults.length == 0) {
+    this.user={"email":"nikosalex@gmail.com"}
+    this.dashboardService.getFavoriteWorkout(this.user).subscribe((data:any)=>{
+      if (data.response==200){
+        this.favoriteWorkoutResults=data.workoutList;
+      }
+      else{
+        //alert service
+      }
+    });
+    this.dashboardService.getFavoritePlaces(this.user).subscribe((data:any)=>{
+      if (data.response==200){
+        this.favoritePlacesResults=data.businessList;
+      }
+      else{
+        //alert service
+      }
+    });
+    if (this.favoriteWorkoutResults.length == 0) {
       this.workoutIsEmpty = true;
     }
-    if (this.FavoritesPlaceResults.length == 0) {
+    if (this.favoritePlacesResults.length == 0) {
       this.placeIsEmpty = true;
     }
+    //gets the favrorites workout results from dashboard.service and adds them to an array
+    //this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
+    //gets the favorites places results from dashboard.service and adds them to an array
+    //this.dashboardService.getFAVPResults().subscribe(results => this.FavoritesPlaceResults = results);
+    //in the case of zero favorites results
   }
 
 

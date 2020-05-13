@@ -3,17 +3,20 @@ import { LEGSWORKOUTENTRIES,BACKWORKOUTENTRIES,
   CHESTWORKOUTENTRIES,SHOULDERSWORKOUTENTRIES,
   BICEPSWORKOUTENTRIES,TRICEPSWORKOUTENTRIES,
   ABSWORKOUTENTRIES,COREWORKOUTENTRIES} from '../mock-database';
-  import {LegsWorkoutEntry,BackWorkoutEntry,ChestWorkoutEntry,ShouldersWorkoutEntry,
+import {LegsWorkoutEntry,BackWorkoutEntry,ChestWorkoutEntry,ShouldersWorkoutEntry,
   BicepsWorkoutEntry,TricepsWorkoutEntry,AbsWorkoutEntry,CoreWorkoutEntry} from '../workout-entry';
-  
-import {Observable, of} from 'rxjs';
+  import {Observable, of} from 'rxjs';
+  import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+
+/* This service is about getting workout entries from mock-database and displaying them */
 @Injectable({
     providedIn: 'root'
   })
   export class WorkoutService {
   
-    constructor() { }
+    results;
+    constructor(private http: HttpClient) { }
   
     getLegsResults(): Observable<LegsWorkoutEntry[]> {
       return of(LEGSWORKOUTENTRIES);
@@ -39,4 +42,9 @@ import {Observable, of} from 'rxjs';
     getCoreResults(): Observable<CoreWorkoutEntry[]> {
       return of(COREWORKOUTENTRIES);
     }
+    /*postFilters(content): Observable<any>{
+      const headers = { 'content-type': 'application/json'}  
+      const jsonData=JSON.stringify(content);
+      return this.http.post('http://localhost:5000/api/display-workout',jsonData,{'headers':headers});  
+    }*/
   }

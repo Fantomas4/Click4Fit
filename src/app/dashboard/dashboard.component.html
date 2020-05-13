@@ -1,26 +1,31 @@
 <h1>Dashboard</h1>
+<!-- The first card about date -->
 <mat-card class="date">
-    <p class="medium">{{today | date:'fullDate'}}</p>
-    <p class="mini">{{today | date:'h:mm a z'}}</p>
+   <p class="medium">{{today | date:'fullDate'}}</p>
+   <p class="mini">{{CurrentTime}}</p>
 </mat-card><br>
-<div class="flex">
+<div class="flex"><!-- The class flex aplies its configuration only on mobile view -->
+    <!-- THe second card about favorites -->
     <mat-card class="favorites">
         <mat-card-title class="favorites-title">
             Favorites <mat-icon class="icon">favorite</mat-icon>
         </mat-card-title><br>
         <mat-card-content class="content">
+            <!-- The subcard of favorite workout -->
             <mat-card class="workout" *ngIf="!workoutIsEmpty">
                 <mat-card-title class="category-title">
-                    Your Workouts
+                    Your Workout
                 </mat-card-title><br>
                 <mat-card-content>
-                    <mat-card *ngFor="let entry of FavoritesWorkoutResults" class="sub-card">
+                    <!--The subcard of each favorite -->
+                    <mat-card *ngFor="let entry of favoriteWorkoutResults" class="sub-card">
                         <mat-card-title class="title">
                             {{entry.name}}<br>
                             <mat-chip-list>
-                                <mat-chip>{{entry.advisedFor}}</mat-chip>
-                                <mat-chip>Equipment {{entry.equipment}}</mat-chip>
-                                <mat-chip>{{entry.levelOfDifficulty}}</mat-chip>
+                                <mat-chip>{{entry.advised_for}}</mat-chip>
+                                <mat-chip *ngIf="entry.equipment">With Equipment</mat-chip>
+                                <mat-chip *ngIf="!entry.equipment">No Equipment</mat-chip>
+                                <mat-chip>{{entry.difficulty}}</mat-chip>
                             </mat-chip-list>
                         </mat-card-title>
                         <mat-card-content>
@@ -33,13 +38,14 @@
                     </mat-card><br>
                 </mat-card-content>
             </mat-card><br>
-
+            <!-- The subcard of favorite places -->
             <mat-card class="places" *ngIf="!placeIsEmpty">
                 <mat-card-title class="category-title">
                     Your Places
                 </mat-card-title><br>
                 <mat-card-content>
-                    <mat-card *ngFor="let entry of FavoritesPlaceResults" class="sub-card">
+                    <!-- The subcard of each favorite -->
+                    <mat-card *ngFor="let entry of favoritePlacesResults" class="sub-card">
                         <mat-card-header>
                             <mat-card-title class="title">{{entry.name}}</mat-card-title>
                             <mat-card-subtitle>{{entry.category}}</mat-card-subtitle>
@@ -54,7 +60,6 @@
                     </mat-card>
                 </mat-card-content>
             </mat-card><br>
-
         </mat-card-content>
     </mat-card>
 </div>

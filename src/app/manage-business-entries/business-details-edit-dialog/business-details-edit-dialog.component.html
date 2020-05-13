@@ -1,0 +1,64 @@
+<div class="main-container">
+  <h1 mat-dialog-title>Business Details</h1>
+  <div mat-dialog-content class="field-list">
+    <form class="form">
+      <table class="table" cellspacing="0">
+        <tr>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="e.g. George Brown" [(ngModel)]="name" name="name" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Category</mat-label>
+            <input matInput placeholder="e.g. Gym" [(ngModel)]="category" name="category" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <input matInput placeholder="e.g. Greece" [(ngModel)]="country" name="country" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput placeholder="e.g. Thessaloniki" [(ngModel)]="city" name="city" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="e.g. Grigoriou Lampraki 105, Ano Toumpa" [(ngModel)]="address" name="address" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Postal Code</mat-label>
+            <input matInput placeholder="e.g. 555 55" [(ngModel)]="postal_code" name="postal-code" required>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field class="phone-number-field">
+            <!--          <span matPrefix>+30 &nbsp;</span>-->
+            <input type="tel" matInput placeholder="Telephone" [(ngModel)]="phone_number" name="phone-number" required>
+            <mat-icon matSuffix>call</mat-icon>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field class="email-input-field">
+            <mat-label>E-mail</mat-label>
+            <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
+                   type="email" name="registration-email" required [(ngModel)]="email">
+            <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onSaveClick()">Save</button>
+    <button mat-raised-button color="primary" (click)="onCloseClick()">Close</button>
+  </div>
+</div>

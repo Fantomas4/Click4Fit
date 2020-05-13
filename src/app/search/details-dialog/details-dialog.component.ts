@@ -10,12 +10,13 @@ import {BusinessEntry} from '../../business-entry';
 export class DetailsDialogComponent implements OnInit {
   previewImagePath = './assets/image_placeholder.jpg';
 
-  constructor(
-    public dialogRef: MatDialogRef<DetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
+  constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
 
+  /**
+   * Method called when the "Close" button is pressed.
+   */
   onCloseClick(): void {
-    // method is called when the "Close" button is pressed
     this.dialogRef.close();
   }
 

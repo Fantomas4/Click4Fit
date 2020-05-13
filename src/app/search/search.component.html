@@ -1,11 +1,6 @@
-<!--filters:-->
-<!--Category: Gym, Personal Trainer, Fitness Shop-->
-<!--Country:-->
-<!--City: -->
 <mat-drawer-container>
   <mat-drawer mode="over" #sidenav (openedChange)="onToggleSidenav()" position="end">
     <mat-nav-list id="filter-list" title="Category">
-<!--      https://material.angular.io/components/list/overview-->
       <div class="category-container">
         <div mat-subheader class="filter-type-subheader">Category</div>
         <mat-selection-list #categories>
@@ -25,35 +20,22 @@
     </mat-nav-list>
   </mat-drawer>
 
-
-
   <mat-drawer-content>
     <h1>Search</h1>
     <form class="search-form">
       <input matInput placeholder="Search..." class="search-input" name="search-input">
-      <!--      <button>Go</button>-->
       <button id="search-button" (click)="getResults()">Go!</button>
     </form>
     <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">
       Show Filters
     </button>
 
-
-
     <!--    /*Card deck component */-->
     <div class="card-deck-container">
-<!--      <app-result-card></app-result-card>-->
       <div *ngFor="let entry of searchResults" class="card-item">
         <app-result-card [businessData]="entry"></app-result-card>
       </div>
-
-<!--      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
-
     </div>
-
-
-
-
 
   </mat-drawer-content>
 </mat-drawer-container>
