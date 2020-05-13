@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WorkoutService } from './workout.service';
 import {ResultCard2Service} from './result-card2/result-card2.service';
+import { MatListOption } from '@angular/material/list/selection-list';
 
 @Component({
   selector: 'app-workout',
@@ -16,6 +17,18 @@ export class WorkoutComponent implements OnInit {
   advisedFor;
   level;
   equipment;
+  categoriesFilters:string[]=['legs','back','chest','shoulders','biceps','tricpes','abs','core'];
+  advisedForFilters:string[]=['women','men'];
+  difficultyFilters:string[]=['easy','medium','hard'];
+  equipmentFilters:string[]=['yes','no'];
+  selectedCategories=[];
+  selectedAdvisedFor=[];
+  selectedDifficulty=[];
+  selectedEquipment=[];
+  selectedOptionsCategories;
+  selectedOptionsAdvisedFor;
+  selectedOptionsDifficulty;
+  selectedOptionsEquipment;
 
   constructor(private workoutService: WorkoutService,private resultCardService: ResultCard2Service) { }
 
@@ -25,12 +38,7 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    this.content={"category":["legs"],"advised_for":["women"],"difficulty":["hard"],"equipment": [true]};
-    /*this.workoutService.postFilters(this.content).toPromise().then((data:any)=>{
-      this.results=data;
-      //this.resultCardService.getResults(this.results);
-    });*/
-   
+    this.content={"category":this.selectedOptionsCategories,"advised_for":this.selectedOptionsAdvisedFor,"difficulty":this.selectedOptionsDifficulty,"equipment": [this.selectedOptionsEquipment]};
   }
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {
@@ -40,5 +48,23 @@ export class WorkoutComponent implements OnInit {
       document.getElementById('filtersButton').innerText = 'Show Filters';
     }
   }
+  onNgModelChangeCategories($event){
+    this.selectedOptionsCategories=$event;
+  }
+  onNgModelChangeAdvisedFor($event){
+    this.selectedOptionsAdvisedFor=$event;
+  }
+  onNgModelChangeDifficulty($event){
+    this.selectedOptionsDifficulty=$event;
+  }
+  onNgModelChangeEquipment($event){
+    if ($event=='yes'){
+      this.selectedOptionsEquipment=true;
+    }
+    else{
+      this.selectedOptionsEquipment=false;
+    }
+  }
+  
 }
 

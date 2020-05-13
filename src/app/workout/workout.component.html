@@ -1,36 +1,25 @@
 <!-- The general container -->
 <mat-drawer-container>
     <!-- The right sidenav with the filters -->
-    <mat-drawer #sidenav mode="over" position="end" (openedChange)="onToggleSidenav()">
-        <mat-selection-list id="categories">
+    <mat-drawer #sidenav mode="over" position="end">
+        <mat-selection-list id="categories" [(ngModel)]="selectedCategories" (ngModelChange)="onNgModelChangeCategories($event)">
             <div mat-subheader class="filter-type-subheader">Part of body</div>
-            <mat-list-option>Legs</mat-list-option>
-            <mat-list-option>Back</mat-list-option>
-            <mat-list-option>Chest</mat-list-option>
-            <mat-list-option>Shoulders</mat-list-option>
-            <mat-list-option>Biceps</mat-list-option>
-            <mat-list-option>Triceps</mat-list-option>
-            <mat-list-option>Abs</mat-list-option>
-            <mat-list-option>Core</mat-list-option>
+            <mat-list-option *ngFor="let category of categoriesFilters" [value]="category">{{category}}</mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list>
+        <mat-selection-list [(ngModel)]="selectedAdvisedFor" (ngModelChange)="onNgModelChangeAdvisedFor($event)">
             <div mat-subheader class="filter-type-subheader">Advised for</div>
-            <mat-list-option>Men</mat-list-option>
-            <mat-list-option>Women</mat-list-option>
+            <mat-list-option *ngFor="let advisedFor of advisedForFilters" [value]="advisedFor">{{advisedFor}}</mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list>
+        <mat-selection-list [(ngModel)]="selectedDifficulty" (ngModelChange)="onNgModelChangeDifficulty($event)">
             <div mat-subheader class="filter-type-subheader">Level of difficulty</div>
-            <mat-list-option>Easy</mat-list-option>
-            <mat-list-option>Medium</mat-list-option>
-            <mat-list-option>Hard</mat-list-option>
+            <mat-list-option *ngFor="let difficulty of difficultyFilters" [value]="difficulty">{{difficulty}}</mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list>
+        <mat-selection-list [(ngModel)]="selectedEquipment" (ngModelChange)="onNgModelChangeEquipment($event)">
             <div mat-subheader class="filter-type-subheader">Equipment</div>
-            <mat-list-option>Yes</mat-list-option>
-            <mat-list-option>No</mat-list-option>
+            <mat-list-option *ngFor="let equipment of equipmentFilters" [value]="equipment">{{equipment}}</mat-list-option>
         </mat-selection-list>
         <div><button mat-raised-button id="searchButton" (click)="getResults();sidenav.close()">Search</button><br></div>
     </mat-drawer>

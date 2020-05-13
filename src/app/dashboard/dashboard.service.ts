@@ -12,18 +12,22 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getFAVWResults(): Observable<FavoriteWorkout[]> {
+  /*getFAVWResults(): Observable<FavoriteWorkout[]> {
     return of(FAVORITEWORKOUT);
   }
 
   getFAVPResults(): Observable<FavoritePlace[]> {
     return of(FAVORITEPLACES);
+  }*/
+  getFavoriteWorkout(user):Observable<any>{
+    const headers = {'content-type':'application/json'};
+    const jsonData=JSON.stringify(user);
+    return this.http.post('http://localhost:5000/api/favorite-workout',jsonData,{'headers':headers});
   }
-  getFavoriteWorkout():Observable<any>{
-    return this.http.get('http://localhost:5000/api/favorite-workout');
-  }
-  getFavoritePlaces():Observable<any>{
-    return this.http.get('http://localhost:5000/api/favorite-places');
+  getFavoritePlaces(user):Observable<any>{
+    const headers = {'content-type':'application/json'};
+    const jsonData=JSON.stringify(user);
+    return this.http.post('http://localhost:5000/api/favorite-places',jsonData,{'headers':headers});
   }
 
 }

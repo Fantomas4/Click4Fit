@@ -118,7 +118,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
     this.detailsEditDialogRef = this.dialog.open(BusinessDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
-      data: {id: element.id, name: element.name, category: element.category, country: element.country,
+      data: {_id: element._id, name: element.name, category: element.category, country: element.country,
       city: element.city, address: element.address, postal_code: element.postal_code, phone_number:
       element.phone_number, email: element.email, services: element.services, products: element.products,
       img_path: element.img_path}

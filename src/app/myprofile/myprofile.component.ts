@@ -1,11 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MyProfileService} from './myprofile.service';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
-  styleUrls: ['./myprofile.component.css']
+  styleUrls: ['./myprofile.component.css'],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 export class MyprofileComponent implements OnInit {
 
@@ -23,16 +34,17 @@ export class MyprofileComponent implements OnInit {
   emailuser;
   id:string;
 
-  constructor(public myprofileService: MyProfileService) { }
+  constructor(public myprofileService: MyProfileService,private _adapter: DateAdapter<any>) { }
 
   ngOnInit(): void {
-    this.emailuser={"email":"gandrian@gmail.com"};
+    this._adapter.setLocale('en');
+    this.emailuser={"email":"angath@gmail.com"};
     this.myprofileService.postUser(this.emailuser).subscribe((data:any)=>
     {
       if (data.response==200){
         this.results=data.user;
+        console.log(this.results.password);
         this.id=this.results._id;
-        console.log(this.id);
         this.name=this.results.name;
         this.surname=this.results.surname;
         this.email=this.results.email;
@@ -61,23 +73,22 @@ export class MyprofileComponent implements OnInit {
   }
    /*Updates the user's details in the database according to his changes*/
   onClickUpdate(){
-    this.myprofileService.postPassword(this.password).toPromise().then((data:any)=>{
-      if (data.response==200){
-        if (this.newPassword==this.newRepeatedPassword){
-          this.content={"_id":this.id,"name":this.name,"surname":this.surname,"email":this.email,"password":this.newPassword,"birthdate":this.birthdate};
-          this.myprofileService.postChanges(this.content).toPromise().then((data:any)=>{
-            if (data.response==200){
-              this.myprofileService.openModalUpdate();
-            }
-          });
+    if (this.newPassword==this.newRepeatedPassword){
+      this.content={"user": {"email":this.email,"password":this.password}, "new_password":this.newPassword};
+      this.myprofileService.postChanges(this.content).toPromise().then((data:any)=>{
+        console.log(data.msg);
+        if (data.response==200){
+            this.myprofileService.openModalUpdate();
         }
         else{
-          //alert service for new password
+          console.log('wrong');
+          //alert service for wrong old password
         }
-      }
-      else{
-          //alert service for old password
-      }
-    });
+      });  
+    }
+    else{
+      console.log('newpassword!=newRepeatedPassowrd');
+      //alert service for wrong new password and new repeated
+    }
   }
 }

@@ -4,6 +4,7 @@ sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 from pymongo import MongoClient
 from re import fullmatch # for new password validation
 
+
 from MongoDatabase.Database.UserDB import UserDB
 from MongoDatabase.Database.BusinessDB import BusinessDB
 from MongoDatabase.Database.WorkoutDB import WorkoutDB
@@ -77,7 +78,7 @@ class MongoDB:
     def changeUserPassword(self, change_query: dict):
         """
         Changes a users password.
-
+        
         :param change_query: a dict containing 2 attributes: The user and the new_password.
                             Example: change_query = {
                                         "user": {
@@ -189,7 +190,7 @@ class MongoDB:
     def getFavoriteWorkout(self, user: dict):
         """
         :param user: a dict containing a unique identifier to find the user. Example: _id, email
-        :return: a list with favorite businesses of user
+        :return: a list with favorite workout of user
                 Will be None if something failed inside mongo.
         """
         self.validator.validate(user, "user")
@@ -249,7 +250,7 @@ class MongoDB:
         """
         self.validator.validate(business, "business")
         for attribute in ["name", "category", "country", "city", "address", "postal_code",
-                            "phone_number","email", "img_path"]:
+                            "phone_number","email"]: #img_path
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
