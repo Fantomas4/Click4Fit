@@ -11,8 +11,7 @@ export class UserMainViewComponent implements OnInit {
 
   logo = './assets/logo.png';
 
-  isAdmin = false;
-  isClient = true;
+  privilegeLevel: string;
   screenWidth: number;
 
   constructor(private router: Router) {
@@ -21,7 +20,10 @@ export class UserMainViewComponent implements OnInit {
       this.screenWidth = window.innerWidth;
     };
   }
+
   ngOnInit(): void {
+    this.privilegeLevel = JSON.parse(sessionStorage.getItem('currentUser')).privilegeLevel;
+
   }
- 
+
 }
