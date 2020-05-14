@@ -4,14 +4,16 @@ from flask_cors import CORS
 from pprint import pprint
 
 import sys
-sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
 from MongoDatabase.MongoDB import MongoDB
-from MongoDatabase.Wrappers import *
+from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 MongoDB=MongoDB()
 CORS(app)
+
+
 
 ####################################### Contact Us ###################################
 @app.route("/api/contactus",methods=['POST','GET'])
@@ -24,23 +26,31 @@ def getContact():
 @app.route("/api/login",methods=['POST','GET'])
 def login():
     user=request.get_json() #get username and password
+
     #connection with mongo sending user and getting answer if this user exists or not
     try:
-        user_wrapper: UserWrapper = MongoDB.logIn(user) 
+        print("mpika try")
+        user_wrapper: UserWrapper = MongoDB.logIn(user)
+        print("mpika try2")
+        print(user_wrapper.found)
     except TypeError as type_err: # Checking for errors
+        print("except 1")
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
+        print("except 2")
         return jsonify(response=500, msg=str(value_err))
+        print("except 2b")
     except:
+        print("except 3")
         return jsonify(response=500, msg="Bad error")
-    else: 
+    else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-        if not user_wrapper.found: 
+        if not user_wrapper.found:
             return jsonify(response=404, msg="Couldn't find user with email: " + user['email'])
-        if not user_wrapper.operationDone: 
+        if not user_wrapper.operationDone:
             return jsonify(response=400, msg="Wrong password")
-    return jsonify(response=200, user=user_wrapper.user)
+        return jsonify(response=200, user=user_wrapper.user)
 
 ####################################### Register #####################################
 @app.route("/api/register", methods=['POST'])
@@ -60,7 +70,7 @@ def register():
             return jsonify(response=500, msg="Something is wrong with the database")
         if not user_wrapper.found:
             return jsonify(response=400, msg="User exists")
-    return jsonify(response=200, msg="Everything is okey")
+        return jsonify(response=200, msg="Everything is okey")
 
 ####################################### Dashboard ####################################
 @app.route("/api/favorite-workout", methods=['POST','GET'])
@@ -172,7 +182,7 @@ def search():
     return jsonify(response=200, businessList=business_wrapper_list.business_list)
 
 ####################################### Workout ######################################
-@app.route("/api/display-workout", methods=['POST','GET']) 
+@app.route("/api/display-workout", methods=['POST','GET'])
 def getWorkout():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the filters and getting the matched workout
@@ -203,7 +213,7 @@ def createWorkout():
             return jsonify(response=500, msg="Something is wrong with the database")
     return jsonify(response=200, msg="Everything is okey")
 
-@app.route("/api/delete-workout", methods=['POST','GET']) 
+@app.route("/api/delete-workout", methods=['POST','GET'])
 def deleteWorkout():
     workout=request.get_json() #get workout for delete
     #connection with mongo sending the filters and deleting the workout
@@ -253,7 +263,7 @@ def manageAllBusinessesDisplay():
 @app.route("/api/manage-business-add-entry",methods=['POST','GET'])
 def manageBusinessAdd():
     entry=request.get_json() #get new entry
-    #connection with mongo getting the details for the new business 
+    #connection with mongo getting the details for the new business
     try:
         business_wrapper : BusinessWrapper = MongoDB.createNewBusiness(entry)
     except TypeError as type_err: #Checking for errors
@@ -371,4 +381,4 @@ def manageUserModify():
 if __name__ == '__main__':
     app.debug = True
     app.run()
-    MongoDB.createMockDatabase()
+    print(MongoDB.createMockDatabase())

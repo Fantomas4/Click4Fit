@@ -1,94 +1,94 @@
 data = {
     'user': [
        { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'gp123456', 'birthdate': '16.04.1997',
-        'role': 'client', 'favorite_workout': ["push ups"], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': ["push ups"], 'favorite_business': [] },
 
        { 'name': 'Giorgos', 'surname': 'Andrianakis', 'email': 'gandrian@gmail.com',  'password': 'ga123456', 'birthdate': '02.06.1961' ,
-        'role': 'client', 'favorite_workout': [], 'favorite_business': []},
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': []},
 
        { 'name': 'Angelina', 'surname': 'Athanasiou', 'email': 'angath@gmail.com', 'password':'an123456','birthdate': '07.01.1991',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': []},
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': []},
 
        { 'name': 'Kostas', 'surname': 'Bakirtzis', 'email': 'kostasba@gmail.com', 'password':'an123456', 'birthdate': '25.01.1998' ,
-        'role': 'client', 'favorite_workout': [], 'favorite_business': []},
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': []},
 
        { 'name': 'Eirini', 'surname': 'Christoforou', 'email': 'chriseir@hotmail.com', 'password':'ec123456',  'birthdate': '03.08.1967',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': []},
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': []},
 
        { 'name': 'Agapi', 'surname': 'Christoyannopoulou', 'email': 'chrisagapi@gmail.com', 'password':'ac123456', 'birthdate': '30.04.2003',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': []},
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': []},
 
        { 'name': 'Giannis', 'surname': 'Chronis', 'email': 'giannis@gmail.com', 'password':'gc123456', 'birthdate': '05.03.1977' ,
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Vasilis', 'surname': 'Calimeris', 'email': 'vcalime@gmail.com', 'password':'vc123456', 'birthdate': '22.05.2000',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Panagiotis', 'surname': 'Danielopoulos', 'email': 'pandaniel@gmail.com', 'password':'pd123456', 'birthdate': '10.09.1991',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': []},
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': []},
 
        { 'name': 'Sakis', 'surname': 'Rouvas', 'email': 'sakisr@gmail.com', 'password':'sr123456', 'birthdate': '22.07.2000',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': []  },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': []  },
 
        { 'name': 'Alexandros', 'surname': 'Diamandis', 'email': 'diamalex@gmail.com', 'password':'ad123456', 'birthdate': '17.11.1995',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Nicolas', 'surname': 'Economos', 'email': 'nikecon@gmail.com', 'password':'ne123456', 'birthdate': '22.08.1980',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Maria', 'surname': 'Papadopoulou', 'email': 'mariapap@hotmail.com', 'password':'mp123456', 'birthdate': '12.04.2002',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Heleni', 'surname': 'Frangopoulou', 'email': 'helenfrang@gmail.com', 'password':'hf123456', 'birthdate': '12.11.1969',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Dimitris', 'surname': 'Ganas', 'email': 'dimigan@gmail.com', 'password':'dg123456', 'birthdate': '28.12.1988',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Olga', 'surname': 'Hatzi', 'email': 'hatziolg@gmail.com', 'password':'oh123456', 'birthdate': '06.06.1981',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Giannis', 'surname': 'Iraklidis', 'email': 'iraklg@gmail.com', 'password':'gi123456', 'birthdate': '03.02.1990',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Giorgos', 'surname': 'Iordanou', 'email': 'iordgiorg@gmail.com', 'password':'gi123456', 'birthdate': '21.06.1991',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Dimitris', 'surname': 'Karras', 'email': 'dimkarras@gmail.com', 'password':'dk123456', 'birthdate': '24.06.1982',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Athanasios', 'surname': 'Karagiannis', 'email': 'athkara@gmail.com', 'password':'ak123456', 'birthdate': '09.10.1998',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Maria', 'surname': 'Metaxa', 'email': 'mariamet@gmail.com', 'password':'mm123456', 'birthdate': '25.07.1989',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Marianna', 'surname': 'Nikolaou', 'email': 'marianik@gmail.com', 'password':'mn123456', 'birthdate': '07.05.2003',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Kostas', 'surname': 'Papazoglou', 'email': 'kostpap@hotmail.com', 'password':'kp123456', 'birthdate': '02.10.1974',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Apostolos', 'surname': 'Sarris', 'email': 'aposarr@gmail.com', 'password':'as123456', 'birthdate': '19.04.2004',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Sofia', 'surname': 'Yiannopoulou', 'email': 'sofiay@gmail.com', 'password':'sy123456', 'birthdate': '10.07.2000',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Heleni', 'surname': 'Zika', 'email': 'hzika@gmail.com', 'password':'hz123456', 'birthdate': '27.08.1966',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Stella', 'surname': 'Zafeiriou', 'email': 'zafeistella@gmail.com', 'password':'sz123456', 'birthdate': '03.01.1993',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Vasillis', 'surname': 'Vasilakis', 'email': 'vasillisvas@gmail.com', 'password':'vv123456', 'birthdate': '02.02.2001',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Varvara', 'surname': 'Stefanopoulou', 'email': 'stefvar@gmail.com', 'password':'vs123456', 'birthdate': '30.06.1973',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Silvia', 'surname': 'Sideri', 'email': 'sidersilv@gmail.com', 'password':'ss123456', 'birthdate': '25.05.1969',
-        'role': 'client', 'favorite_workout': [], 'favorite_business': [] }
+        'privilege_level': 'client', 'favorite_workout': [], 'favorite_business': [] }
     ],
     'business': [
          { 'name': 'FitClub', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'diagora 20', 'postal_code': '567 55',

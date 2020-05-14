@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(this.loginForm.get('email'));
-    console.log(this.loginForm.get('password'));
+    // console.log(this.loginForm.get('email'));
+    // console.log(this.loginForm.get('password'));
 
     if (this.loginForm.valid) {
       // Update loading flag value for mat-spinner

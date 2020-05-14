@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0,  "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
 
 import secrets # to generate session id
 import hashlib, binascii, os # to hash and salt password
@@ -11,18 +11,18 @@ from MongoDatabase.Wrappers.UserListWrapper import UserListWrapper
 
 
 class UserDB:
-    
+
     def __init__(self, client):
         self.client = client
         self.db = self.client.userDB
-    
+
     ################################################# Private Methods ##################################################
 
     def _createSessionId(self):
         """
         """
         return secrets.token_urlsafe(16)
-    
+
     def _hashPassword(self, password: str):
         """
         """
@@ -53,9 +53,9 @@ class UserDB:
             return None
         else:
             return user
-    
+
     ################################################# Public Methods ##################################################
-    
+
     def create(self, user: dict):
         """
         :param user:
@@ -70,7 +70,7 @@ class UserDB:
             "email"             : user["email"],
             "password"          : self._hashPassword(user["password"]), # hash and salt password
             "birthdate"         : user["birthdate"],
-            "role"              : user.get("role", "client"), # default value of "client"
+            "privilege_level"              : user.get("privilege_level", "client"), # default value of "client"
             "favorite_workout"  : user.get("favorite_workout", []),
             "favorite_business" : user.get("favorite_business", [])
         }
@@ -95,7 +95,7 @@ class UserDB:
             # update session id
             _user["session_id"] = self._createSessionId()
             # update session id in db and ready to log in
-            return self.update(_user) 
+            return self.update(_user)
         return UserWrapper({}, found=True, operationDone=False) # wrong password
 
     def get(self, user_query: dict):
@@ -111,7 +111,7 @@ class UserDB:
             if user:
                 return UserWrapper(user, found=True, operationDone=True)
             return UserWrapper({}, found=False, operationDone=False)
-  
+
     def getList(self, user_query: dict):
         """
         :param user_query:
@@ -124,7 +124,7 @@ class UserDB:
         else:
             success = bool(user_list)
             return UserListWrapper(user_list, found=success, operationDone=success)
-      
+
     def getAll(self):
         """
         :return:
@@ -152,7 +152,7 @@ class UserDB:
         else:
             success = bool(results)
             return UserListWrapper(results, found=success, operationDone=success)
-    
+
     def getFavorite(self, user: dict, favorite: str):
         """
         :param user:
@@ -211,7 +211,7 @@ class UserDB:
             return wrapper
         except:
             return UserWrapper(None, found=False, operationDone=False)
-    
+
     def deleteMany(self, delete_query: dict):
         """
         :param delete_query:

@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0,  "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+import sys
+sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
 
 from bson import ObjectId
 
@@ -70,7 +71,7 @@ class BusinessDB:
             if business:
                 return BusinessWrapper(business, found=True, operationDone=True)
             return BusinessWrapper({}, found=False, operationDone=False)
-    
+
     def getList(self, business_query: dict):
         """
         :param business_query:
@@ -110,7 +111,7 @@ class BusinessDB:
         else:
             success = bool(results)
             return BusinesstListWrapper(results, found=success, operationDone=success)
-    
+
     def update(self, new_business: dict):
         """
         :param new_business:
@@ -140,7 +141,7 @@ class BusinessDB:
             return wrapper
         except:
             return BusinessWrapper(None, found=False, operationDone=False)
-    
+
     def deleteMany(self, delete_query: dict):
         """
         :param delete_query:

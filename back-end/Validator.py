@@ -7,8 +7,8 @@ class Validator:
 
         self.valid = {
             "user" : {
-                "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "role",
-                                    "favorite_business", "favorite_workout", "_id", "session_id"],
+                "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "privilegeLevel",
+                                    "favoriteBusiness", "favoriteWorkout", "_id", "token"],
                 "type" : {
                     "_id"                : str,
                     "name"               : str,
@@ -16,7 +16,7 @@ class Validator:
                     "email"              : str,
                     "password"           : str,
                     "birthdate"          : str,
-                    "role"               : str,
+                    "privilege_level"               : str,
                     "favorite_business"  : list,
                     "favorite_workout"   : list,
                     "session_id"         : str
@@ -27,7 +27,7 @@ class Validator:
                     "email"     : r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
                     "password"  : r'[A-Za-z0-9@#$%^&+=]{8,}',
                     "birthdate" : r"^([1-9]|0?[1-9]|1[0-9]|2[0-9]|3[0-1])(/|\.|-|,)([1-9]|0?[1-9]|1[0-2])(/|\.|-|,)(20[0-9][0-9]|1[0-9][0-9][0-9])$",
-                    "role"      : r"(admin|client|business)"
+                    "privilege_level"      : r"(admin|client|business)"
                 },
                 "regex-error" : {
                     "name"      : "must only contain letters from a-z and A-Z and length can be from 2 to 25 characters also accepts two names eg. Georgios Alexandros",
@@ -35,7 +35,7 @@ class Validator:
                     "email"     : "must be of fromat local_part@domain_part, local_part can only contain these special characters: _.+-",
                     "password"  : "must be at least of length 8 and contain letters from a-z and A-Z numbers and speceial characters: @#$%^&+=",
                     "birthdate" : "must be of format dd.mm.yyyy or dd/mm/yyyy or dd-mm-yyyy or dd,mm,yyyy and must range between the year 1900 and 2099",
-                    "role"      : "can only take one of these values : \"admin\", \"client\", \"business\""
+                    "privilege_level"      : "can only take one of these values : \"admin\", \"client\", \"business\""
                 }
             },
             "business" : {
@@ -48,10 +48,10 @@ class Validator:
                     "country"      : str,
                     "city"         : str,
                     "address"      : str,
-                    "postal_code"  : str,
-                    "phone_number" : str,
+                    "postalCode"  : str,
+                    "phoneNumber" : str,
                     "email"        : str,
-                    "img_path"     : str,
+                    "imgPath"     : str,
                     "services"     : list,
                     "products"     : list
                 },
@@ -71,19 +71,19 @@ class Validator:
                     "_id"           : str,
                     "name"          : str,
                     "category"      : str,
-                    "muscle_groups" : list, 
-                    "advised_for"   : str,
+                    "muscleGroups" : list,
+                    "advisedFor"   : str,
                     "difficulty"    : str,
                     "equipment"     : bool,
                     "sets"          : str,
-                    "video_url"     : str 
+                    "videoUrl"     : str
                 },
                 "regex" : {
-                    "advised_for" : r"(men|women)",
+                    "advisedFor" : r"(men|women)",
                     "difficulty"  : r"(easy|medium|hard)",
                 },
                 "regex-error" : {
-                    "advised_for" : "can only be one of these values: \"men\", \"women\"",
+                    "advisedFor" : "can only be one of these values: \"men\", \"women\"",
                     "difficulty"  : "can only be one of these values: \"easy\", \"medium\", \"hard\""
                 }
 
@@ -124,7 +124,7 @@ class Validator:
                         invalid {0} ({2}): {0} {1}
                         """.format(key, self.valid[db]["regex-error"][key], value))
 
-    
+
     def validate(self, json_dict: dict, db: str):
         if type(json_dict) is not dict:
             raise TypeError("json_dict must be of type dict and got " + str(type(json_dict)))
@@ -186,7 +186,7 @@ class Validator:
 
     # def valid_name(self, name: str):
     #     return bool(re.fullmatch(r"[A-Za-z]{2,25}( [A-Za-z]{2,25})?", name))
-    
+
     # def valid_surname(self, surname: str):
     #     return bool(re.fullmatch(r"[A-Za-z]{2,25}", surname))
 
@@ -195,7 +195,7 @@ class Validator:
 
     # def valid_role(self, role: str):
     #     return role in ["admin", "client", "business"]
-    
+
     # def valid_category(self, category: str):
     #     return category in ["gym", "personal trainer", "fitness shop"]
 
@@ -230,7 +230,7 @@ class Validator:
     #             "role" : valid_role(user[key])
     #         }.get(key, False):
     #             raise ValueError("""invalid {0} ({2}): {0} {1}""".format(key, user_attribute_format[key], user[key]))
-    
+
 
     # def valid_business(self, business: json_dict):
     #     if type(business) is not json_dict: raise TypeError("business: expected json_dict and got " + str(type(business)))
@@ -294,7 +294,7 @@ class Validator:
     #     "role" : "can only take one of these values : \"admin\", \"client\", \"business\""
     # }
     # category_error_message = "category can only take one of these value:  \"gym\", \"personal trainer\", \"fitness shop\""
-    
+
     # valid_format = {
     #     "user" : {
     #         "name" :      valid_name(user[key]),
