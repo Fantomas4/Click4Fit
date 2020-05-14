@@ -21,8 +21,7 @@ class MongoDB:
     to the low level classes is checked.
     """
 
-    def __init__(self, database="Click4Fit"):
-        url = "mongodb://localhost:27017/"
+    def __init__(self, database="Click4Fit", url = "mongodb://localhost:27017/"):
         self.client = MongoClient(url)[database]
         self.userDB = UserDB(self.client[database])
         self.businessDB = BusinessDB(self.client[database])
@@ -423,6 +422,7 @@ class MongoDB:
 # mongo = MongoDB()
 # mongo.dropDatabases()
 # returned_data = mongo.createMockDatabase()
+# pprint(returned_data)
 
 
 # delete_query = {
