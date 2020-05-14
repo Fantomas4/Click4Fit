@@ -1,7 +1,10 @@
 data = {
     'user': [
+      { 'name': 'Paulos', 'surname': 'Kostopoulos', 'email':'pauloskostop@gmail.com', 'password':'pk123456','birthdate': '28.06.1980',
+        'role':'admin', 'favorite_workout':[], 'favorite_business':[] },
+
        { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'gp123456', 'birthdate': '16.04.1997',
-        'role': 'client', 'favorite_workout': ["push ups"], 'favorite_business': [] },
+        'role': 'client', 'favorite_workout': [], 'favorite_business': [] },
 
        { 'name': 'Giorgos', 'surname': 'Andrianakis', 'email': 'gandrian@gmail.com',  'password': 'ga123456', 'birthdate': '02.06.1961' ,
         'role': 'client', 'favorite_workout': [], 'favorite_business': []},
@@ -144,7 +147,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Fitclub Bootcamps', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Petrou Ralli Street 77', 'postal_code': '667 00',
-           'phone_number': '202-555-0747', 'email': 'fitclub@gmail.com', 'img_path': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
+           'phone_number': '202-555-0747', 'email': 'fitclubbootcamps@gmail.com', 'img_path': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Your Wellbeing', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Voreou Street 66', 'postal_code': '888 32',
@@ -168,7 +171,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'PureGym', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Stavrou Street 17', 'postal_code': '564 32',
-           'phone_number': '307-555-0184', 'email': 'yourwellbeing@gmail.com', 'img_path': './assets/gym-preview.JPG',  'services': ['service_1', 'service_2'],
+           'phone_number': '307-555-0184', 'email': 'puregym@gmail.com', 'img_path': './assets/gym-preview.JPG',  'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']}
     ],
     "workout": [

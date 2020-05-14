@@ -134,7 +134,6 @@ class UserDB:
         except:
             return UserListWrapper(None, found=False, operationDone=False)
         else:
-            #user_list = [user for user in user_list_cursor]
             success = bool(user_list)
             return UserListWrapper(user_list, found=success, operationDone=success)
 

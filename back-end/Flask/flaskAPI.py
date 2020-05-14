@@ -18,7 +18,7 @@ CORS(app)
 def getContact():
     details=request.get_json() #get all the details of form
     #connection with mongo sending details and adding contact message
-    return jsonify('Okey')
+    return jsonify(respone=200,msg="Everything is okey")
 
 ####################################### Login ########################################
 @app.route("/api/login",methods=['POST','GET'])
@@ -68,7 +68,7 @@ def displayFavoriteWorkout():
     user=request.get_json()
     #connection wit mongo sending the user and getting his favorite workout
     try:
-        workout_wrapper_list: WorkoutListWrapper = Mongo.getFavoriteWorkout(user)
+        workout_wrapper_list: WorkoutListWrapper = MongoDB.getFavoriteWorkout(user)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
@@ -78,14 +78,14 @@ def displayFavoriteWorkout():
     else:
         if type(workout_wrapper_list.workout_list) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, workoutList=workout_wrapper_list.workout_list)
+    return jsonify(response=200, msg="okey")
 
 @app.route("/api/favorite-places", methods=['POST','GET'])
 def displayFavoritePlaces():
     user=request.get_json()
     #connection wit mongo sending the user and getting his favorite places
     try:
-        business_wrapper_list: BusinessListWrapper = Mongo.getFavoriteBusiness(user)
+        business_wrapper_list: BusinessListWrapper = MongoDB.getFavoriteBusiness(user)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
@@ -95,7 +95,7 @@ def displayFavoritePlaces():
     else:
         if type(business_wrapper_list.business_list) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, businessList=business_wrapper_list.business_list)
+    return jsonify(response=200, msg="okey")
 
 ####################################### My Profile ###################################
 @app.route("/api/display-myprofile", methods=['POST','GET'])
@@ -113,7 +113,8 @@ def displayMyprofile():
     else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-    return jsonify(response=200, user=user_wrapper.user)
+        else:
+            return jsonify(response=200, user=user_wrapper.user)
 
 @app.route("/api/update-myprofile", methods=['POST','GET'])
 def updateMyprofile():
@@ -130,9 +131,12 @@ def updateMyprofile():
     else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-        if not user_wrapper.operationDone:
-            return jsonify(response=404, msg="")
-    return jsonify(response=200, msg="Everything is okey")
+        if not user_wrapper.operationDone and not user_wrapper.found:
+            return jsonify(response=404, msg="Couldn't find user")
+        if not user_wrapper.operationDone and user_wrapper.found:
+            return jsonify(response=404, msg="Wrong old password")
+        else:
+            return jsonify(response=200, msg="Everything is okey")
 
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
 def deleteMyprofile():
@@ -149,9 +153,12 @@ def deleteMyprofile():
     else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-        if not user_wrapper.operationDone:
-            return jsonify(response=404)
-    return jsonify(response=200, msg="Everything is okey")
+        if not user_wrapper.found and not user_wrapper.operationDone:
+            return jsonify(response=404,msg="Couldn't find user")
+        if user_wrapper.found and not user_wrapper.operationDone:
+            return jsonify(response=404,msg="Couldn't delete")
+        else:
+            return jsonify(response=200, msg="Everything is okey")
 
 ####################################### Search #######################################
 @app.route("/api/search", methods=['POST','GET'])
