@@ -42,8 +42,8 @@ class BusinessDB:
             "country"      : business["country"],
             "city"         : business["city"],
             "address"      : business["address"],
-            "postal_code"  : business["postal_code"],
-            "phone_number" : business["phone_number"],
+            "postalCode"  : business["postalCode"],
+            "phoneNumber" : business["phoneNumber"],
             "email"        : business["email"]
             #"img_path"     : business["img_path"],
             #"services"     : business["services"],

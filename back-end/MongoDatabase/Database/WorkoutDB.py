@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
+sys.path.insert(0,  "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 
 from bson import ObjectId
 
@@ -24,12 +24,12 @@ class WorkoutDB:
             "_id"           : str(ObjectId()),
             "name"          : workout["name"],
             "category"      : workout["category"],
-            "muscle_groups" : workout["muscle_groups"],
-            "advised_for"   : workout["advised_for"],
+            "muscleGroups" : workout["muscleGroups"], 
+            "advisedFor"   : workout["advisedFor"],
             "difficulty"    : workout["difficulty"],
             "equipment"     : workout["equipment"],
             "sets"          : workout["sets"],
-            "video_url"     : workout["video_url"]
+            "videoUrl"     : workout["videoUrl"] 
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(workout)
@@ -39,7 +39,7 @@ class WorkoutDB:
             if insert_result.acknowledged:
                 return WorkoutWrapper(workout, found=False, operationDone=True)
             return WorkoutWrapper({}, found=False, operationDone=False)
-
+    
     def get(self, workout_query: dict):
         """
         :param workout_query:
@@ -53,7 +53,7 @@ class WorkoutDB:
             if workout:
                 return WorkoutWrapper(workout, found=True, operationDone=True)
             return WorkoutWrapper({}, found=False, operationDone=False)
-
+    
     def getList(self, workout_query: dict):
         """
         :param workout_query:
@@ -66,7 +66,7 @@ class WorkoutDB:
         else:
             success = bool(workout_list)
             return WorkoutListWrapper(workout_list, found=success, operationDone=success)
-
+        
     def getAll(self):
         """
         :return:
@@ -78,7 +78,7 @@ class WorkoutDB:
         else:
             success = bool(workout_list)
             return WorkoutListWrapper(workout_list, found=success, operationDone=success)
-
+    
     def search(self, search_query: dict):
         """
         :param search_query:
@@ -94,7 +94,7 @@ class WorkoutDB:
             success = bool(results)
             return WorkoutListWrapper(results, found=success, operationDone=success)
 
-
+    
     def update(self, new_workout: dict):
         """
         :param new_workout:
@@ -124,7 +124,7 @@ class WorkoutDB:
             return wrapper
         except:
             return WorkoutWrapper(None, found=False, operationDone=False)
-
+    
     def deleteMany(self, delete_query: dict):
         """
         :param delete_query:
@@ -137,3 +137,4 @@ class WorkoutDB:
             return False
         else:
             return bool(self.db.find(delete_query))
+    
