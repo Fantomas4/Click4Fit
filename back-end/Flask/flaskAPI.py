@@ -37,7 +37,7 @@ def login():
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
         if not user_wrapper.found: 
-            return jsonify(response=404, msg="Couldn't find user with email: " + user['email'])
+            return jsonify(response=404, msg="Couldn't find user")
         if not user_wrapper.operationDone: 
             return jsonify(response=400, msg="Wrong password")
     return jsonify(response=200, user=user_wrapper.user)
