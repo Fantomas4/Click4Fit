@@ -7,8 +7,8 @@ class Validator:
 
         self.valid = {
             "user" : {
-                "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "role",
-                                    "favorite_business", "favorite_workout", "_id", "session_id"],
+                "legal-attributes" : ["name", "surname", "email", "password", "birthdate", "privilegeLevel",
+                                    "favoriteBusiness", "favoriteWorkout", "_id", "token"],
                 "type" : {
                     "_id"                : str,
                     "name"               : str,
@@ -16,10 +16,10 @@ class Validator:
                     "email"              : str,
                     "password"           : str,
                     "birthdate"          : str,
-                    "role"               : str,
-                    "favorite_business"  : list,
-                    "favorite_workout"   : list,
-                    "session_id"         : str
+                    "privilegeLevel"               : str,
+                    "favoriteBusiness"  : list,
+                    "favoriteWorkout"   : list,
+                    "token"         : str
                 },
                 "regex" : {
                     "name"      : r"[A-Za-z]{2,25}( [A-Za-z]{2,25})?",
@@ -27,7 +27,7 @@ class Validator:
                     "email"     : r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
                     "password"  : r'[A-Za-z0-9@#$%^&+=]{8,}',
                     "birthdate" : r"^([1-9]|0?[1-9]|1[0-9]|2[0-9]|3[0-1])(/|\.|-|,)([1-9]|0?[1-9]|1[0-2])(/|\.|-|,)(20[0-9][0-9]|1[0-9][0-9][0-9])$",
-                    "role"      : r"(admin|client|business)"
+                    "privilegeLevel"      : r"(admin|client|business)"
                 },
                 "regex-error" : {
                     "name"      : "must only contain letters from a-z and A-Z and length can be from 2 to 25 characters also accepts two names eg. Georgios Alexandros",
@@ -35,12 +35,12 @@ class Validator:
                     "email"     : "must be of fromat local_part@domain_part, local_part can only contain these special characters: _.+-",
                     "password"  : "must be at least of length 8 and contain letters from a-z and A-Z numbers and speceial characters: @#$%^&+=",
                     "birthdate" : "must be of format dd.mm.yyyy or dd/mm/yyyy or dd-mm-yyyy or dd,mm,yyyy and must range between the year 1900 and 2099",
-                    "role"      : "can only take one of these values : \"admin\", \"client\", \"business\""
+                    "privilegeLevel"      : "can only take one of these values : \"admin\", \"client\", \"business\""
                 }
             },
             "business" : {
-                "legal-attributes" : ["name", "category", "country", "city", "address", "postal_code", "phone_number",
-                                        "email", "img_path", "services", "products", "_id"],
+                "legal-attributes" : ["name", "category", "country", "city", "address", "postalCode", "phoneNumber",
+                                        "email", "imgPath", "services", "products", "_id"],
                 "type" : {
                     "_id"          : str,
                     "name"         : str,
@@ -48,10 +48,10 @@ class Validator:
                     "country"      : str,
                     "city"         : str,
                     "address"      : str,
-                    "postal_code"  : str,
-                    "phone_number" : str,
+                    "postalCode"  : str,
+                    "phoneNumber" : str,
                     "email"        : str,
-                    "img_path"     : str,
+                    "imgPath"     : str,
                     "services"     : list,
                     "products"     : list
                 },
@@ -65,25 +65,25 @@ class Validator:
                 }
             },
             "workout" : {
-                "legal-attributes" : ["name", "category", "muscle_groups", "advised_for", "difficulty",
-                                    "equipment", "sets", "video_url", "_id"],
+                "legal-attributes" : ["name", "category", "muscleGroups", "advisedFor", "difficulty",
+                                    "equipment", "sets", "videoUrl", "_id"],
                 "type" : {
                     "_id"           : str,
                     "name"          : str,
                     "category"      : str,
-                    "muscle_groups" : list, 
-                    "advised_for"   : str,
+                    "muscleGroups" : list, 
+                    "advisedFor"   : str,
                     "difficulty"    : str,
                     "equipment"     : bool,
                     "sets"          : str,
-                    "video_url"     : str 
+                    "videoUrl"     : str 
                 },
                 "regex" : {
-                    "advised_for" : r"(men|women)",
+                    "advisedFor" : r"(men|women)",
                     "difficulty"  : r"(easy|medium|hard)",
                 },
                 "regex-error" : {
-                    "advised_for" : "can only be one of these values: \"men\", \"women\"",
+                    "advisedFor" : "can only be one of these values: \"men\", \"women\"",
                     "difficulty"  : "can only be one of these values: \"easy\", \"medium\", \"hard\""
                 }
 
@@ -193,8 +193,8 @@ class Validator:
     # def valid_password(self, password: str):
     #     return bool(re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', password))
 
-    # def valid_role(self, role: str):
-    #     return role in ["admin", "client", "business"]
+    # def valid_role(self, privilegeLevel: str):
+    #     return privilegeLevel in ["admin", "client", "business"]
     
     # def valid_category(self, category: str):
     #     return category in ["gym", "personal trainer", "fitness shop"]
@@ -207,7 +207,7 @@ class Validator:
     #     if not user: raise ValueError("user is empty")
     #     for key in user.keys():
     #         if type(key) is not str: raise TypeError("user attribute names must be of type str and got " + str(type(key)))
-    #         if key not in ["name", "surname", "email", "password", "birthdate", "role", "favorites", "id", "session_id"]:
+    #         if key not in ["name", "surname", "email", "password", "birthdate", "privilegeLevel", "favorites", "id", "token"]:
     #             raise ValueError("user contains invalid attribute name: " + key)
     #         if {
     #             "name" : type(user[key]) is not user_attribute_type[key],
@@ -215,10 +215,10 @@ class Validator:
     #             "email" : type(user[key]) is not user_attribute_type[key],
     #             "password" : type(user[key]) is not user_attribute_type[key],
     #             "birthdate" : type(user[key]) is not user_attribute_type[key],
-    #             "role" : type(user[key]) is not user_attribute_type[key],
+    #             "privilegeLevel" : type(user[key]) is not user_attribute_type[key],
     #             "favorites" : type(user[key]) is not user_attribute_type[key],
     #             "id" : type(user[key]) is not user_attribute_type[key],
-    #             "session_id" : type(user[key]) is not user_attribute_type[key]
+    #             "token" : type(user[key]) is not user_attribute_type[key]
     #         }[key]:
     #             raise TypeError("""{} attribute must be of type {} and got {} instead""".format(key, user_attribute_type[key], str(type(user[key]))))
     #         if {
@@ -227,7 +227,7 @@ class Validator:
     #             "email" : valid_email(user[key]),
     #             "password" : valid_password(user[key]),
     #             "birthdate" : valid_date(user[key]),
-    #             "role" : valid_role(user[key])
+    #             "privilegeLevel" : valid_role(user[key])
     #         }.get(key, False):
     #             raise ValueError("""invalid {0} ({2}): {0} {1}""".format(key, user_attribute_format[key], user[key]))
     
@@ -237,8 +237,8 @@ class Validator:
     #     if not business: raise ValueError("business is empty")
     #     for key in business.keys():
     #         if type(key) is not str: raise TypeError("business attribute names must be of type str and got " + str(type(key)))
-    #         if key not in ["name", "category", "country", "city", "address", "postal_code", "phone_number",
-    #                         "email", "img_path", "services", "products"]:
+    #         if key not in ["name", "category", "country", "city", "address", "postalCode", "phoneNumber",
+    #                         "email", "imgPath", "services", "products"]:
     #             raise ValueError("business contains invalid attribute name: " + key)
     #         if {
     #             "name" : type(business[key]) is not business_attribute_type[key],
@@ -246,10 +246,10 @@ class Validator:
     #             "country" : type(business[key]) is not business_attribute_type[key],
     #             "city" : type(business[key]) is not business_attribute_type[key],
     #             "address" : type(business[key]) is not business_attribute_type[key],
-    #             "postal_code" : type(business[key]) is not business_attribute_type[key],
-    #             "phone_number" : type(business[key]) is not business_attribute_type[key],
+    #             "postalCode" : type(business[key]) is not business_attribute_type[key],
+    #             "phoneNumber" : type(business[key]) is not business_attribute_type[key],
     #             "email" : type(business[key]) is not business_attribute_type[key],
-    #             "img_path" : type(business[key]) is not business_attribute_type[key],
+    #             "imgPath" : type(business[key]) is not business_attribute_type[key],
     #             "services" : type(business[key]) is not business_attribute_type[key],
     #             "products" : type(business[key]) is not business_attribute_type[key],
     #             "favorites" : type(business[key]) is not business_attribute_type[key],
@@ -263,10 +263,10 @@ class Validator:
     #     "email" : str,
     #     "password" : str,
     #     "birthdate" : str,
-    #     "role" : str,
+    #     "privilegeLevel" : str,
     #     "favorites" : list,
     #     "id" : str,
-    #     "session_id" : str
+    #     "token" : str
     # }
 
     # business_attribute_type = {
@@ -275,10 +275,10 @@ class Validator:
     #     "country" : str,
     #     "city" : str,
     #     "address" : str,
-    #     "postal_code" : str,
-    #     "phone_number" : str,
+    #     "postalCode" : str,
+    #     "phoneNumber" : str,
     #     "email" : str,
-    #     "img_path" : str,
+    #     "imgPath" : str,
     #     "services" : list,
     #     "products" : list,
     #     "favorites" : list,
@@ -291,7 +291,7 @@ class Validator:
     #     "email" :   "must be of fromat local_part@domain_part, local_part can only contain these special characters: _.+-",
     #     "password" : "must be at least of length 8 and contain letters from a-z and A-Z numbers and speceial characters: @#$%^&+=",
     #     "birthdate" : "must be of format dd.mm.yyyy or dd/mm/yyyy or dd-mm-yyyy or dd,mm,yyyy and must range between the year 1900 and 2099",
-    #     "role" : "can only take one of these values : \"admin\", \"client\", \"business\""
+    #     "privilegeLevel" : "can only take one of these values : \"admin\", \"client\", \"business\""
     # }
     # category_error_message = "category can only take one of these value:  \"gym\", \"personal trainer\", \"fitness shop\""
     
@@ -302,7 +302,7 @@ class Validator:
     #         "email" :     valid_email(user[key]),
     #         "password" :  valid_password(user[key]),
     #         "birthdate" : valid_date(user[key]),
-    #         "role" :      valid_role(user[key])
+    #         "privilegeLevel" :      valid_role(user[key])
     #     },
     #     "business" : {
     #         "email" :    valid_email()

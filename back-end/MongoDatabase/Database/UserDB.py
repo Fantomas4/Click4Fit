@@ -70,9 +70,9 @@ class UserDB:
             "email"             : user["email"],
             "password"          : self._hashPassword(user["password"]), # hash and salt password
             "birthdate"         : user["birthdate"],
-            "role"              : user.get("role", "client"), # default value of "client"
-            "favorite_workout"  : user.get("favorite_workout", []),
-            "favorite_business" : user.get("favorite_business", [])
+            "privilegeLevel"   : user.get("privilegeLevel", "client"), # default value of "client"
+            "favoriteWorkout"  : user.get("favoriteWorkout", []),
+            "favoriteBusiness" : user.get("favoriteBusiness", [])
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(user) # inserting user
@@ -93,7 +93,7 @@ class UserDB:
             return UserWrapper({}, found=False, operationDone=False) # user doesn't exist
         if self._verifyPassword(_user["password"], user_credentials["password"]):
             # update session id
-            _user["session_id"] = self._createSessionId()
+            _user["token"] = self._createSessionId()
             # update session id in db and ready to log in
             return self.update(_user) 
         return UserWrapper({}, found=True, operationDone=False) # wrong password
@@ -156,7 +156,7 @@ class UserDB:
     def getFavorite(self, user: dict, favorite: str):
         """
         :param user:
-        :param favorite: "favorite_workout" or "favorite_business"
+        :param favorite: "favoriteWorkout" or "favoriteBusiness"
         :return:
         """
         try:

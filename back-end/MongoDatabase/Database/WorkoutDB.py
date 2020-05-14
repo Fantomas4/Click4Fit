@@ -24,12 +24,12 @@ class WorkoutDB:
             "_id"           : str(ObjectId()),
             "name"          : workout["name"],
             "category"      : workout["category"],
-            "muscle_groups" : workout["muscle_groups"], 
-            "advised_for"   : workout["advised_for"],
+            "muscleGroups" : workout["muscleGroups"], 
+            "advisedFor"   : workout["advisedFor"],
             "difficulty"    : workout["difficulty"],
             "equipment"     : workout["equipment"],
             "sets"          : workout["sets"],
-            "video_url"     : workout["video_url"] 
+            "videoUrl"     : workout["videoUrl"] 
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(workout)
