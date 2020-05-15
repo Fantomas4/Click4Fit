@@ -38,7 +38,7 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    this.content={"category":this.selectedOptionsCategories,"advised_for":this.selectedOptionsAdvisedFor,"difficulty":this.selectedOptionsDifficulty,"equipment": [this.selectedOptionsEquipment]};
+    this.content={"category":this.selectedOptionsCategories,"advisedFor":this.selectedOptionsAdvisedFor,"difficulty":this.selectedOptionsDifficulty,"equipment": [this.selectedOptionsEquipment]};
   }
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {

@@ -93,7 +93,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
       this.manageBusinessEntriesService.getResults().toPromise().then((data:any)=>{
         if (data.response==200){
-          this.businessData=data.businesses;
+          this.businessData=data.businessList;
           this.dataSource.data=this.businessData;
         }
       })
@@ -119,9 +119,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.detailsEditDialogRef = this.dialog.open(BusinessDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
       data: {_id: element._id, name: element.name, category: element.category, country: element.country,
-      city: element.city, address: element.address, postal_code: element.postal_code, phone_number:
-      element.phone_number, email: element.email, services: element.services, products: element.products,
-      img_path: element.img_path}
+      city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
+      element.phoneNumber, email: element.email, services: element.services, products: element.products,
+      imgPath: element.imgPath}
     });
   }
 

@@ -19,12 +19,12 @@ export class DeleteDialogMessageComponent implements OnInit {
   deleteProfile(){
     this.deleteService.postProfile(this.content).toPromise().then((data:any)=>
     {
-      console.log(data.msg);
       if (data.response==200){
         //allert service 
         console.log('okey');
       }
       else{
+        console.log(data.msg);
         //alert service
       }
     })

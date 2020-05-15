@@ -184,7 +184,7 @@ class MongoDB:
                 Will be None if something failed inside mongo.
         """
         self.validator.validate(user, "user")
-        return self.userDB.getFavorite(user, "favorite_business")
+        return self.userDB.getFavorite(user, "favoriteBusiness")
     
     def getFavoriteWorkout(self, user: dict):
         """
@@ -193,7 +193,7 @@ class MongoDB:
                 Will be None if something failed inside mongo.
         """
         self.validator.validate(user, "user")
-        return self.userDB.getFavorite(user, "favorite_workout")
+        return self.userDB.getFavorite(user, "favoriteWorkout")
     
     def updateUser(self, new_user: dict):
         """

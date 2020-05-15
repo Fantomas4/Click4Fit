@@ -29,13 +29,17 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.user={"email":"nikosalex@gmail.com"}
+    this.user={"email":"pauloskostop@gmail.com"}
     this.dashboardService.getFavoriteWorkout(this.user).subscribe((data:any)=>{
       if (data.response==200){
         this.favoriteWorkoutResults=data.workoutList;
       }
       else{
         //alert service
+        console.log(data.msg);
+        if (this.favoriteWorkoutResults.length == 0) {
+          this.workoutIsEmpty = true;
+        }
       }
     });
     this.dashboardService.getFavoritePlaces(this.user).subscribe((data:any)=>{
@@ -44,14 +48,11 @@ export class DashboardComponent implements OnInit {
       }
       else{
         //alert service
+        if (this.favoritePlacesResults.length == 0) {
+          this.placeIsEmpty = true;
+        }
       }
     });
-    if (this.favoriteWorkoutResults.length == 0) {
-      this.workoutIsEmpty = true;
-    }
-    if (this.favoritePlacesResults.length == 0) {
-      this.placeIsEmpty = true;
-    }
     //gets the favrorites workout results from dashboard.service and adds them to an array
     //this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
     //gets the favorites places results from dashboard.service and adds them to an array

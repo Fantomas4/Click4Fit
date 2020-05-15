@@ -1,5 +1,5 @@
 <!-- The general container with all cards-->
-<div class="flex">
+<div class="flex" *ngIf="!noResults">
     <!-- It is shown only when the array with legs exercises are not empty -->
     <div *ngIf="!legsIsEmpty">
         <mat-card class="category">
@@ -11,15 +11,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>
@@ -38,15 +38,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>
@@ -65,15 +65,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>
@@ -92,15 +92,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>
@@ -119,15 +119,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>
@@ -146,15 +146,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>
@@ -173,15 +173,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>
@@ -200,15 +200,15 @@
                 <mat-card-title class="exercise-title">
                     {{entry.name}}<br>
                     <mat-chip-list>
-                        <mat-chip>{{entry.advised_for}}</mat-chip>
+                        <mat-chip>{{entry.advisedFor}}</mat-chip>
                         <mat-chip *ngIf="!entry.equipment">no equipment</mat-chip>
                         <mat-chip *ngIf="entry.equipment">with equipment</mat-chip>
                         <mat-chip>{{entry.difficulty}}</mat-chip>
-                        <mat-chip *ngFor="let muscleGroup of entry.muscle_groups">{{muscleGroup}}</mat-chip>
+                        <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title>
                 <mat-card-content>
-                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.video_url)' frameborder="0"
+                    <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)' frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     <p class="sets">Recommended sets: {{entry.sets}}</p>

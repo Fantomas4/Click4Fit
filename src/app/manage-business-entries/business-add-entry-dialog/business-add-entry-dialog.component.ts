@@ -43,7 +43,7 @@ export class BusinessAddEntryDialogComponent implements OnInit {
 
   onSaveClick(): void {
     var content = {"_id":this.id,"name":this.name,"category":this.category,"country":this.country,
-    "city":this.city,"address":this.address,"postal_code":this.postalCode,"phone_number":this.phoneNumber,
+    "city":this.city,"address":this.address,"postalCode":this.postalCode,"phoneNumber":this.phoneNumber,
     "email":this.email};
     this.addEntryService.postDetails(content).toPromise().then((data:any)=>{
       console.log(data.msg);

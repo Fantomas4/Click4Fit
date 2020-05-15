@@ -30,6 +30,7 @@ export class ResultCard2Component implements OnInit {
   tricepsIsEmpty=false;
   absIsEmpty=false;
   coreIsEmpty=false;
+  noResults=false;
   results;
   name:string;
   i:number;
@@ -94,6 +95,7 @@ export class ResultCard2Component implements OnInit {
       }
       else{
         console.log(data.msg);
+        this.noResults=true;
       }
     });
   

@@ -31,7 +31,6 @@ class BusinessDB:
         :param business:
         :return:
         """
-        print(business)
         if self._findByEmail(business["email"]): # Checks if user already exists
             return BusinessWrapper({}, found=True, operationDone=False)
         business = {

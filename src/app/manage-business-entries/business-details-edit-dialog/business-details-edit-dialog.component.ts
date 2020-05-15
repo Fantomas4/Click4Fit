@@ -17,11 +17,11 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   country: string; // The displayed entry's country location.
   city: string; // The displayed entry's city location.
   address: string; // The displayed entry's address location.
-  postal_code: string; // The displayed entry's postalCode location.
-  phone_number: string; // The displayed entry's phone number.
+  postalCode: string; // The displayed entry's postalCode location.
+  phoneNumber: string; // The displayed entry's phone number.
   services: string[]; // List containing the titles of the available services offered by the displayed entry.
   products: string[]; //List containing the titles of the available products offered by the displayed entry.
-  img_path: string; // String containing the path for the preview image of the displayed entry.
+  imgPath: string; // String containing the path for the preview image of the displayed entry.
   email:string; //The displayes entry's email.
 
   // Form Control used to receive and validate the user's email input.
@@ -38,12 +38,12 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
     this.country = this.data.country;
     this.city = this.data.city;
     this.address = this.data.address;
-    this.postal_code = this.data.postal_code;
-    this.phone_number = this.data.phone_number;
+    this.postalCode = this.data.postalCode;
+    this.phoneNumber = this.data.phoneNumber;
     this.email=this.data.email;
     this.services=this.data.services;
     this.products=this.data.products;
-    this.img_path = this.data.img_path;
+    this.imgPath = this.data.imgPath;
   }
 
   /**
@@ -67,7 +67,7 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
 
   onSaveClick(): void {
     var content = {"_id":this.id,"name":this.name,"category":this.category,"country":this.country,
-    "city":this.city,"address":this.address,"postal_code":this.postal_code,"phone_number":this.phone_number,
+    "city":this.city,"address":this.address,"postalCode":this.postalCode,"phoneNumber":this.phoneNumber,
     "email":this.email};
     this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
       if (data.response==200){

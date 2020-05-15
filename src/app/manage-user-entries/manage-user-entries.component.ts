@@ -89,7 +89,7 @@ export class ManageUserEntriesComponent implements OnInit {
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
       this.manageUserEntriesService.getResults().toPromise().then((data:any)=>{
         if (data.response==200){
-          this.userData=data.users;
+          this.userData=data.userList;
           this.dataSource.data=this.userData;
         }
       })
