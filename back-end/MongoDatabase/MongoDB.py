@@ -183,7 +183,7 @@ class MongoDB:
                 Will be None if something failed inside mongo.
         """
         self.validator.validate(user, "user")
-        return self.userDB.getFavorite(user, "favorite_business")
+        return self.userDB.getFavorite(user, "favoriteBusiness")
     
     def getFavoriteWorkout(self, user: dict):
         """
@@ -192,7 +192,7 @@ class MongoDB:
                 Will be None if something failed inside mongo.
         """
         self.validator.validate(user, "user")
-        return self.userDB.getFavorite(user, "favorite_workout")
+        return self.userDB.getFavorite(user, "favoriteWorkout")
     
     def updateUser(self, new_user: dict):
         """
@@ -247,8 +247,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(business, "business")
-        for attribute in ["name", "category", "country", "city", "address", "postal_code",
-                            "phone_number","email", "img_path"]:
+        for attribute in ["name", "category", "country", "city", "address", "postalCode",
+                            "phoneNumber","email", "imgPath"]:
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
@@ -320,8 +320,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(workout, "workout")
-        for attribute in ["name", "category", "muscle_groups", "advised_for",
-                            "difficulty", "equipment", "sets", "video_url"]:
+        for attribute in ["name", "category", "muscleGroups", "advisedFor",
+                            "difficulty", "equipment", "sets", "videoUrl"]:
             if attribute not in workout:
                 raise ValueError("workout doesn't contain " + attribute +
                                 " attribute, which is needed for creation")
