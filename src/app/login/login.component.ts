@@ -66,20 +66,52 @@ export class LoginComponent implements OnInit, OnDestroy {
     // console.log(this.loginForm.get('email'));
     // console.log(this.loginForm.get('password'));
 
-    if (this.loginForm.valid) {
-      // Update loading flag value for mat-spinner
-      this.loading = true;
-      this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
-      // this.alertMessage = 'Error: Could not authenticate';
-      console.log(this.authenticationService.currentUserValue);
-      if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
-        // The user currently logged in has the access privilege level of a client
-        this.router.navigate(['/user']);
-      } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
-        this.alertSubscription.unsubscribe();
-        this.router.navigate(['/admin']);
+    // if (this.loginForm.valid) {
+    //   // Update loading flag value for mat-spinner
+    //   this.loading = true;
+    //   this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
+    //   // this.alertMessage = 'Error: Could not authenticate';
+    //   console.log(this.authenticationService.currentUserValue);
+    //   if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
+    //     // The user currently logged in has the access privilege level of a client
+    //     this.router.navigate(['/user']);
+    //   } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
+    //     this.alertSubscription.unsubscribe();
+    //     this.router.navigate(['/admin']);
+    //   }
+    // }
+
+
+    // START - DEBUGGING ONLY
+    this.loading = true;
+
+    this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(
+      res => {
+        console.log('POINT 1 - res: ', res);
+        if (res.status === 200) {
+          console.log('POINT 2 - currentUserValue: ', this.authenticationService.currentUserValue);
+          if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
+            // The user currently logged in has the access privilege level of a client
+            console.log('login check 2');
+            this.router.navigate(['/user']);
+          } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
+            console.log('login check 3');
+            this.alertSubscription.unsubscribe();
+            this.router.navigate(['/admin']);
+          }
+        } else {
+          this.alertService.error(res.msg);
+        }
       }
-    }
+    );
+
+    // if (this.authenticationService.currentUserValue != null) {
+    //   console.log('login check 1');
+    //
+    // }
+
+    // END - DEBUGGING ONLY
+
     this.loading = false;
   }
 }

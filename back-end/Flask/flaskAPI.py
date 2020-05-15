@@ -25,32 +25,54 @@ def getContact():
 ####################################### Login ########################################
 @app.route("/api/login",methods=['POST','GET'])
 def login():
-    user=request.get_json() #get username and password
+    # user=request.get_json() #get username and password
+    #
+    # #connection with mongo sending user and getting answer if this user exists or not
+    # try:
+    #     print("mpika try")
+    #     user_wrapper: UserWrapper = MongoDB.logIn(user)
+    #     print("mpika try2")
+    #     print(user_wrapper.found)
+    # except TypeError as type_err: # Checking for errors
+    #     print("except 1")
+    #     return jsonify(response=500, msg=str(type_err))
+    # except ValueError as value_err:
+    #     print("except 2")
+    #     return jsonify(response=500, msg=str(value_err))
+    #     print("except 2b")
+    # except:
+    #     print("except 3")
+    #     return jsonify(response=500, msg="Bad error")
+    # else:
+    #     if type(user_wrapper.user) is not dict:
+    #         return jsonify(response=500, msg="Something is wrong with the database")
+    #     if not user_wrapper.found:
+    #         return jsonify(response=404, msg="Couldn't find user with email: " + user['email'])
+    #     if not user_wrapper.operationDone:
+    #         return jsonify(response=400, msg="Wrong password")
+    #     return jsonify(response=200, user=user_wrapper.user)
 
-    #connection with mongo sending user and getting answer if this user exists or not
+    user = request.get_json()  # get username and password
+
+    # connection with mongo sending user and getting answer if this user exists or not
     try:
         print("mpika try")
         user_wrapper: UserWrapper = MongoDB.logIn(user)
-        print("mpika try2")
         print(user_wrapper.found)
-    except TypeError as type_err: # Checking for errors
-        print("except 1")
-        return jsonify(response=500, msg=str(type_err))
+    except TypeError as type_err:  # Checking for errors
+        return jsonify(msg=str(type_err)), 500
     except ValueError as value_err:
-        print("except 2")
-        return jsonify(response=500, msg=str(value_err))
-        print("except 2b")
+        return jsonify(msg=str(value_err)), 500
     except:
-        print("except 3")
-        return jsonify(response=500, msg="Bad error")
+        return jsonify(msg="Bad error"), 500
     else:
         if type(user_wrapper.user) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
+            return jsonify(msg="Something is wrong with the database"), 500
         if not user_wrapper.found:
-            return jsonify(response=404, msg="Couldn't find user with email: " + user['email'])
+            return jsonify(msg="User does not exist"), 500
         if not user_wrapper.operationDone:
-            return jsonify(response=400, msg="Wrong password")
-        return jsonify(response=200, user=user_wrapper.user)
+            return jsonify(msg="Wrong password"), 400
+        return jsonify(user=user_wrapper.user), 200
 
 ####################################### Register #####################################
 @app.route("/api/register", methods=['POST'])
