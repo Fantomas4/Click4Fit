@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {DeleteDialogMessageService} from './delete-dialog-message.service';
 
 @Component({
@@ -10,9 +10,10 @@ import {DeleteDialogMessageService} from './delete-dialog-message.service';
 })
 export class DeleteDialogMessageComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private deleteService:DeleteDialogMessageService) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data:any,private deleteService:DeleteDialogMessageService) {}
 
   content;
+  message;
   ngOnInit(): void {
     this.content=this.data
   }
@@ -28,6 +29,9 @@ export class DeleteDialogMessageComponent implements OnInit {
         //alert service
       }
     })
+  }
+  passAlert(){
+    return this.message;
   }
 }
 

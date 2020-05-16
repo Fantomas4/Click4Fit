@@ -248,8 +248,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(business, "business")
-        for attribute in ["name", "category", "country", "city", "address", "postal_code",
-                            "phone_number","email"]: #img_path
+        for attribute in ["name", "category", "country", "city", "address", "postalCode",
+                            "phoneNumber","email"]: #img_path
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
@@ -321,8 +321,8 @@ class MongoDB:
         :return:
         """
         self.validator.validate(workout, "workout")
-        for attribute in ["name", "category", "muscle_groups", "advised_for",
-                            "difficulty", "equipment", "sets", "video_url"]:
+        for attribute in ["name", "category", "muscleGroups", "advisedFor",
+                            "difficulty", "equipment", "sets", "videoUrl"]:
             if attribute not in workout:
                 raise ValueError("workout doesn't contain " + attribute +
                                 " attribute, which is needed for creation")

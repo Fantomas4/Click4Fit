@@ -185,6 +185,26 @@ def search():
         else:
             return jsonify(response=200, businessList=business_wrapper_list.business_list)
 
+@app.route("/api/add-favorite-place", methods=['POST','GET'])
+def addFavoritePlace():
+    place=request.get_json() #get favorite place
+    #connection with mongo sending the place and adding to favorites
+    try:
+        business_wrapper: BusinessWrapper = MongoDB.createWorkout(place)
+    except TypeError as type_err: #Checking for errors
+        return jsonify(response=500, msg=str(type_err))
+    except ValueError as value_err:
+        return jsonify(response=500, msg=str(value_err))
+    except:
+        return jsonify(response=500, msg="Bad error")
+    else:
+        if business_wrapper.business is None:
+            return jsonify(response=500, msg="Something is wrong with the database")
+        elif type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
+            return jsonify(response=401,msg="Couldn't add business")
+        else:
+            return jsonify(response=200, business=business_wrapper.business)
+
 ####################################### Workout ######################################
 @app.route("/api/display-workout", methods=['POST','GET']) 
 def getWorkout():
@@ -207,7 +227,7 @@ def createWorkout():
     workout=request.get_json() #get new workout
     #connection with mongo sending the filters and creating the workout
     try:
-        workout_wrapper_list : WorkoutListWrapper = MongoDB.createWorkout(workout)
+        workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
@@ -215,9 +235,29 @@ def createWorkout():
     except:
         return jsonify(response=500, msg="Bad error")
     else:
-        if workout_wrapper_list.workout_list is None:
+        if workout_wrapper.workout is None:
             return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(workout_wrapper_list.workout_list) is dict and not workout_wrapper_list.found and not workout_wrapper_list.operationDone:
+        elif type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
+            return jsonify(response=404, msg="Couldn't insert workout entry")
+        else:
+            return jsonify(response=200, msg="Everything is okey")
+
+@app.route("/api/add-favorite-workout", methods=['POST','GET'])
+def addFavoriteWorkout():
+    workout=request.get_json() #get new workout
+    #connection with mongo sending the filters and creating the workout
+    try:
+        workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
+    except TypeError as type_err: #Checking for errors
+        return jsonify(response=500, msg=str(type_err))
+    except ValueError as value_err:
+        return jsonify(response=500, msg=str(value_err))
+    except:
+        return jsonify(response=500, msg="Bad error")
+    else:
+        if workout_wrapper.workout is None:
+            return jsonify(response=500, msg="Something is wrong with the database")
+        elif type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
             return jsonify(response=404, msg="Couldn't insert workout entry")
         else:
             return jsonify(response=200, msg="Everything is okey")
@@ -227,7 +267,7 @@ def deleteWorkout():
     workout=request.get_json() #get workout for delete
     #connection with mongo sending the filters and deleting the workout
     try:
-        workout_wrapper_list : WorkoutListWrapper = MongoDB.deleteWorkout(workout)
+        workout_wrapper : WorkoutWrapper = MongoDB.deleteWorkout(workout)
     except TypeError as type_err: #Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
@@ -235,9 +275,9 @@ def deleteWorkout():
     except:
         return jsonify(response=500, msg="Bad error")
     else:
-        if workout_wrapper_list.workout_list is None:
+        if workout_wrapper.workout is None:
             return jsonify(response=500, msg="Something is wrong with the database")
-        elif workout_wrapper_list.found and not workout_wrapper_list.operationDone:
+        elif workout_wrapper.found and not workout_wrapper.operationDone:
             return jsonify(response=404,msg="Couldn't delete user")
         else:
             return jsonify(response=200, msg="Everything is okey")

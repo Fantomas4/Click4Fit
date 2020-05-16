@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MyProfileService} from './myprofile.service';
+import {DeleteDialogMessageService} from './delete-dialog-message/delete-dialog-message.service';
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {AlertService} from '../core/alert.service';
+import {Subscription} from 'rxjs';
 
+
+interface AlertMessage {
+  type: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-myprofile',
@@ -36,11 +44,23 @@ export class MyprofileComponent implements OnInit {
   picker;
   emailuser;
   id:string;
+  message;
+  alertMessage: AlertMessage;
+  alertSubscription: Subscription;
 
-  constructor(public myprofileService: MyProfileService,private _adapter: DateAdapter<any>) { }
+  constructor(public myprofileService: MyProfileService,private _adapter: DateAdapter<any>,
+    private deleteService:DeleteDialogMessageService,private alertService: AlertService) { }
 
   ngOnInit(): void {
     this._adapter.setLocale('en');
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
     this.emailuser={"email":"gandrian@gmail.com"};
     this.myprofileService.postUser(this.emailuser).subscribe((data:any)=>
     {
@@ -66,27 +86,24 @@ export class MyprofileComponent implements OnInit {
   onClickDelete() {
     this.content={"_id":this.id,"name":this.name,"surname":this.surname,"email":this.email,"password":this.newPassword,"birthdate":this.results.birthdate};
     this.myprofileService.openModalDelete(this.content);
+
   }
    /*Updates the user's details in the database according to his changes*/
   onClickUpdate(){
-    console.log(this.newPassword);
-    console.log(this.newRepeatedPassword);
     if (this.newPassword==this.newRepeatedPassword){
       this.content={"user": {"email":this.email,"password":this.password}, "new_password":this.newPassword};
       this.myprofileService.postChanges(this.content).toPromise().then((data:any)=>{
-        console.log(data.msg);
         if (data.response==200){
-            this.myprofileService.openModalUpdate();
+          this.alertService.success(data.msg);
         }
         else{
-          console.log('wrong');
-          //alert service for wrong old password
+          this.alertService.error(data.msg);
         }
       });  
     }
     else{
-      console.log('newpassword!=newRepeatedPassowrd');
-      //alert service for wrong new password and new repeated
+      this.alertService.error('New password and new repeated password are not same');
     }
   }
 }
+

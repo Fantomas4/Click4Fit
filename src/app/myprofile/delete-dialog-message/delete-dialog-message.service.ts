@@ -5,7 +5,7 @@ import {Observable, of} from 'rxjs';
 @Injectable()
 export class DeleteDialogMessageService {
 
-
+    alertMessage;
     constructor(private http: HttpClient) { }
 
     postProfile(content):Observable<any>{
