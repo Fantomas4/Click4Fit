@@ -9,8 +9,8 @@ import {
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Subscription} from 'rxjs';
 import {AlertService} from '../core/alert.service';
-import {RegistrationService} from "./registration.service";
-import {first} from "rxjs/operators";
+import {RegistrationService} from './registration.service';
+import {first} from 'rxjs/operators';
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -120,7 +120,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerForm.get('password').value
         ).pipe(first()).subscribe(
           data => {
-            console.log('POINT 1 - res: ', data);
+            this.alertService.success(data.body);
             this.loading = false;
           },
           error => {
