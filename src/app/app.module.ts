@@ -38,7 +38,7 @@ import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-en
 import { UserDetailsEditDialogComponent } from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -55,6 +55,8 @@ import { BusinessAddEntryDialogService} from './manage-business-entries/business
 import { BusinessDetailsEditDialogService} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.service';
 import { UserDetailsEditDialogService} from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.service';
 import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/delete-dialog-message.service';
+import {JwtInterceptor} from './core/jwt.interceptor';
+import {ErrorInterceptor} from './core/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -110,8 +112,13 @@ import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/del
     MatListModule,
     HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService,
-              BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService, DeleteDialogMessageService],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService,
+    BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService, DeleteDialogMessageService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+  ],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialogMessageComponent,UpdateDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
 })

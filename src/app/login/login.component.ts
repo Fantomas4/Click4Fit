@@ -5,6 +5,7 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {ErrorStateMatcher} from '@angular/material/core';
 import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
+import {first} from 'rxjs/operators';
 
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -69,26 +70,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     // if (this.loginForm.valid) {
     //   // Update loading flag value for mat-spinner
     //   this.loading = true;
-    //   this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
-    //   // this.alertMessage = 'Error: Could not authenticate';
-    //   console.log(this.authenticationService.currentUserValue);
-    //   if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
-    //     // The user currently logged in has the access privilege level of a client
-    //     this.router.navigate(['/user']);
-    //   } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
-    //     this.alertSubscription.unsubscribe();
-    //     this.router.navigate(['/admin']);
-    //   }
+    //
+    //
+    //   this.loading = false;
     // }
 
-
-    // START - DEBUGGING ONLY
-    this.loading = true;
-
-    this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(
-      res => {
-        console.log('POINT 1 - res: ', res);
-        if (res.status === 200) {
+    this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value).
+    pipe(first()).subscribe(
+      data => {
+        console.log('POINT 1 - res: ', data);
+        if (data.status === 200) {
           console.log('POINT 2 - currentUserValue: ', this.authenticationService.currentUserValue);
           if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
             // The user currently logged in has the access privilege level of a client
@@ -99,20 +90,14 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.alertSubscription.unsubscribe();
             this.router.navigate(['/admin']);
           }
-        } else {
-          this.alertService.error(res.msg);
         }
+      },
+      error => {
+        this.alertService.error(error);
+        this.loading = false;
       }
     );
 
-    // if (this.authenticationService.currentUserValue != null) {
-    //   console.log('login check 1');
-    //
-    // }
-
-    // END - DEBUGGING ONLY
-
-    this.loading = false;
   }
 }
 

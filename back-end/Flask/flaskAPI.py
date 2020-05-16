@@ -60,18 +60,19 @@ def login():
         user_wrapper: UserWrapper = MongoDB.logIn(user)
         print(user_wrapper.found)
     except TypeError as type_err:  # Checking for errors
-        return jsonify(msg=str(type_err)), 500
+        return str(type_err), 500
     except ValueError as value_err:
-        return jsonify(msg=str(value_err)), 500
+        return str(value_err), 500
     except:
-        return jsonify(msg="Bad error"), 500
+        return "Bad error", 500
     else:
         if type(user_wrapper.user) is not dict:
-            return jsonify(msg="Something is wrong with the database"), 500
+            return "Something is wrong with the database", 500
         if not user_wrapper.found:
-            return jsonify(msg="User does not exist"), 500
+            return "User does not exist", 500
         if not user_wrapper.operationDone:
-            return jsonify(msg="Wrong password"), 400
+            print("CASE - wrong password: ", user_wrapper.operationDone)
+            return "Wrong password", 400
         return jsonify(user=user_wrapper.user), 200
 
 ####################################### Register #####################################
