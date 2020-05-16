@@ -51,6 +51,7 @@ def login():
 ####################################### Register #####################################
 @app.route("/api/register", methods=['POST'])
 def register():
+    print(request.get_json())
     user = request.get_json() #get all the user's details
     #connection with mongo sending user
     try:
@@ -67,7 +68,7 @@ def register():
         if user_wrapper.found:
             return "User already exists", 409
         if user_wrapper.operationDone:
-            return "Registration successful!", 201
+            return jsonify("Registration successful!"), 200
         return "Unexpected Error!", 500
 
 ####################################### Dashboard ####################################
