@@ -67,19 +67,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     // console.log(this.loginForm.get('email'));
     // console.log(this.loginForm.get('password'));
 
-    // if (this.loginForm.valid) {
-    //   // Update loading flag value for mat-spinner
-    //   this.loading = true;
-    //
-    //
-    //   this.loading = false;
-    // }
+    if (this.loginForm.valid) {
+      // Update loading flag value for mat-spinner
+      this.loading = true;
 
-    this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value).
-    pipe(first()).subscribe(
-      data => {
-        console.log('POINT 1 - res: ', data);
-        if (data.status === 200) {
+      this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value).
+      pipe(first()).subscribe(
+        data => {
+          console.log('POINT 1 - res: ', data);
           console.log('POINT 2 - currentUserValue: ', this.authenticationService.currentUserValue);
           if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
             // The user currently logged in has the access privilege level of a client
@@ -90,14 +85,13 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.alertSubscription.unsubscribe();
             this.router.navigate(['/admin']);
           }
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
         }
-      },
-      error => {
-        this.alertService.error(error);
-        this.loading = false;
-      }
-    );
-
+      );
+    }
   }
 }
 

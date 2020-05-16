@@ -29,26 +29,17 @@ export class AuthenticationService {
     // nikosalex@gmail.com
     // gp123456
     // DEBUGGING ONLY!!!!!!
-    email = 'nikosalex@gmail.com';
-    password = 'gp123456a';
+    // email = 'nikosalex@gmail.com';
+    // password = 'gp123456';
 
     return this.http.post<any>(`${environment.apiUrl}/login`, JSON.stringify({email, password}),
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
             console.log('RECEIVED 1: ', res);
-            if (res.status === 200) {
-              // console.log('RECEIVED 2');
-              // console.log('RECEIVED 2 - res.user: ', res.user);
-              // console.log('RECEIVED 2 - res.user.token: ', res.user.token);
-              const data = res.body;
-              if (data.user && data.user.token) {
-                console.log('RECEIVED 3');
-
-                sessionStorage.setItem('currentUser', JSON.stringify(data.user));
-                this.currentUserSubject.next(data.user);
-                console.log('CHECK! currentUserSubject: ', this.currentUserSubject);
-              }
+            const data = res.body;
+            if (data.user && data.user.token) {
+              sessionStorage.setItem('currentUser', JSON.stringify(data.user));
+              this.currentUserSubject.next(data.user);
             }
-            console.log('RETURNING FROM login()....');
             return res;
     }));
 
