@@ -102,6 +102,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (this.registerForm.valid) {
       this.loading = true;
+
+      // Collect the user's registration data in a dictionary
+      const registrationData = {
+        firstName: this.registerForm.get('firstName').value,
+        lastName: this.registerForm.get('lastName').value,
+        email: this.registerForm.get('email').value,
+        password: this.registerForm.get('password').value
+      };
+
+
     }
     this.loading = false;
   }
