@@ -78,22 +78,22 @@ def login():
 ####################################### Register #####################################
 @app.route("/api/register", methods=['POST'])
 def register():
-    user=request.get_json() #get all the user's details
+    user = request.get_json() #get all the user's details
     #connection with mongo sending user
     try:
         user_wrapper: UserWrapper = MongoDB.register(user)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 500
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 500
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if type(user_wrapper.user) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
+            return "Something is wrong with the database", 500
         if not user_wrapper.found:
-            return jsonify(response=400, msg="User exists")
-        return jsonify(response=200, msg="Everything is okey")
+            return "User already exists", 400
+        return "Registration successful!", 200
 
 ####################################### Dashboard ####################################
 @app.route("/api/favorite-workout", methods=['POST','GET'])

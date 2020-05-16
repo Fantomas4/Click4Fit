@@ -57,6 +57,8 @@ import { UserDetailsEditDialogService} from './manage-user-entries/user-details-
 import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/delete-dialog-message.service';
 import {JwtInterceptor} from './core/jwt.interceptor';
 import {ErrorInterceptor} from './core/error.interceptor';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
@@ -117,6 +119,8 @@ import {ErrorInterceptor} from './core/error.interceptor';
     BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService, DeleteDialogMessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: MAT_DATE_LOCALE, useValue: 'fr'},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
 
   ],
   bootstrap: [AppComponent],
