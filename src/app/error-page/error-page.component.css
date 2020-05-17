@@ -7,7 +7,7 @@ h1 {
   left:50%;
   text-align: center;
   color: black;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 1px rgba(0,0,0,1.0);
   opacity: 0.8;
 }
 
@@ -19,7 +19,7 @@ h2 {
   left:50%;
   text-align: center;
   color: black;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 1px rgba(0,0,0,1.0);
   opacity: 0.8;
 }
 /*!* The homepage button included in error text styles *!*/
@@ -30,32 +30,30 @@ h3 {
   top:50%;
   left:50%;
   text-align: center;
-  color: darkgreen;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  opacity: 0.8;
+  color: rgba(0,255,0,1.0);
+  text-shadow: 0 5px 5px rgba(0,0,0,1.0);
+  opacity: 1.0;
 }
 
 /*!* Background image styles with the blur effect *!*/
 .error-image {
   flex: 1;
-  background-image: url("../../assets/error-image.jpg");
-  background-color: #cccccc;
+  background: url("../../assets/error-image.jpg");
   height: 100%;
-  opacity: unset;
+  opacity: 80%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  filter: blur(3px);
+  filter:  blur(3px) ;
   -webkit-filter: blur(3px);
 }
 
 /*!* Position text in the middle of the page and error-image, black opacity see-through frame for the error text *!*/
 .error-text {
   background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0, 0.4);
-  border: 3px solid darkgreen;
-  position: absolute;
+  background-color: rgba(192,192,192,0.0);
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
