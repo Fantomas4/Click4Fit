@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {UserEntry} from './user-entry';
+import {Router} from '@angular/router';
+import {AuthenticationService} from './login/authentication.service';
+
 
 
 @Component({
@@ -8,7 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
   constructor(private router: Router) {
     // any misspelled or non existing url/error that occurs, redirects to error-page
     this.router.errorHandler = (error: any) => {

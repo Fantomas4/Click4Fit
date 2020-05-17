@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {ContactUsService} from './contact-us.service';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-contact-us',
@@ -9,7 +10,9 @@ import {ContactUsService} from './contact-us.service';
   styleUrls: ['./contact-us.component.css']
 })
 export class ContactUsComponent implements OnInit {
-  title = 'Contact Us';
+  title = "Contact Us"
+  content;
+
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   fullName: string;
   telephone: string;
@@ -24,14 +27,9 @@ export class ContactUsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getErrorMessage() {
-    if (this.emailFormControl.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
-  }
-
   onClick() {
-    this.contactUsService.openModal();
+    this.content={'fullname':this.fullName,'email':this.contactEmail,'telephone':this.telephone,'subject':this.subject,'text':this.textarea};
+    this.contanctUsService.postDetails(this.content);
+    this.contanctUsService.openModal();
   }
 }

@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {BusinessEntry} from '../../business-entry';
+import {BusinessAddEntryDialogService} from './business-add-entry-dialog.service';
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -21,8 +22,9 @@ export class BusinessAddEntryDialogComponent implements OnInit {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   availableServProd: string[];
   imgPath: string;
+  email;
 
-  constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>,private addEntryService: BusinessAddEntryDialogService) {}
 
   ngOnInit(): void {}
 
@@ -40,7 +42,19 @@ export class BusinessAddEntryDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-
+    var content = {"_id":this.id,"name":this.name,"category":this.category,"country":this.country,
+    "city":this.city,"address":this.address,"postal_code":this.postalCode,"phone_number":this.phoneNumber,
+    "email":this.email};
+    this.addEntryService.postDetails(content).toPromise().then((data:any)=>{
+      console.log(data.msg);
+      if (data.response==200){
+        //alert service
+        console.log('okey');
+      }
+      else{
+        //show message with the error
+      }
+    });
   }
 
 }

@@ -1,34 +1,47 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UserEntry} from '../../user-entry';
 import {FormControl, Validators} from '@angular/forms';
+import {UserDetailsEditDialogService} from './user-details-edit-dialog.service';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 
 @Component({
   selector: 'app-details-user-edit',
   templateUrl: './user-details-edit-dialog.html',
-  styleUrls: ['./user-details-edit-dialog.css']
+  styleUrls: ['./user-details-edit-dialog.css'],
+   providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 export class UserDetailsEditDialogComponent implements OnInit {
 
   id: number; // The displayed entry's id.
-  firstName: string; // The displayed entry's first name.
-  lastName: string; // The displayed entry's last name.
-  date: FormControl; // Form Control used to receive the user's birth date input.
+  name: string; // The displayed entry's first name.
+  surname: string; // The displayed entry's last name.
+  birthdate: FormControl; // Form Control used to receive the user's birth date input.
   // Form Control used to receive and validate the user's email input.
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  email;
+  picker;
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: UserEntry) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private editDetailsService: UserDetailsEditDialogService,private _adapter: DateAdapter<any>) { }
 
   ngOnInit(): void {
+    this._adapter.setLocale('en');
     // Extract the data from the payload and store it into the class properties
-    this.id = this.data.id;
-    this.firstName = this.data.name;
-    this.lastName = this.data.lastname;
-    this.date = new FormControl(new Date(this.data.birthdate));
-    this.emailFormControl.setValue(this.data.email);
-
+    this.id = this.data._id;
+    this.name = this.data.name;
+    this.surname = this.data.surname;
+    this.birthdate = new FormControl(new Date(this.data.birthdate));
+    this.email=this.data.email;
   }
 
   /**
@@ -51,7 +64,16 @@ export class UserDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-
+    var content = {"_id":this.id,"name":this.name,"surname":this.surname,"birthdate":this.data.birthdate,"email":this.email};
+    this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
+      if (data.response==200){
+        console.log('okey');
+        //alert service okey
+      }
+      else{
+        //alert service error
+      }
+    });
   }
 
 }

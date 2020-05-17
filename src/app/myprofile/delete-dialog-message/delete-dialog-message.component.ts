@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {DeleteDialogMessageService} from './delete-dialog-message.service';
 
 @Component({
   selector: 'app-delete-dialog-message',
@@ -9,9 +10,24 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DeleteDialogMessageComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private deleteService:DeleteDialogMessageService) {}
 
+  content;
   ngOnInit(): void {
+    this.content=this.data
+  }
+  deleteProfile(){
+    this.deleteService.postProfile(this.content).toPromise().then((data:any)=>
+    {
+      console.log(data.msg);
+      if (data.response==200){
+        //allert service 
+        console.log('okey');
+      }
+      else{
+        //alert service
+      }
+    })
   }
 }
 
