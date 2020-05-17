@@ -35,11 +35,13 @@ export class WorkoutComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
     this.content={"category":this.selectedOptionsCategories,"advised_for":this.selectedOptionsAdvisedFor,"difficulty":this.selectedOptionsDifficulty,"equipment": [this.selectedOptionsEquipment]};
   }
+  
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {
     if (document.getElementById('filtersButton').innerText === 'Show Filters') {
@@ -48,6 +50,7 @@ export class WorkoutComponent implements OnInit {
       document.getElementById('filtersButton').innerText = 'Show Filters';
     }
   }
+  
   onNgModelChangeCategories($event){
     this.selectedOptionsCategories=$event;
   }
@@ -65,6 +68,5 @@ export class WorkoutComponent implements OnInit {
       this.selectedOptionsEquipment=false;
     }
   }
-  
 }
 

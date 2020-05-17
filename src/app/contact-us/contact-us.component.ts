@@ -1,4 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
 import {ContactUsService} from './contact-us.service';
 import {FormControl, Validators} from '@angular/forms';
 
@@ -10,6 +12,7 @@ import {FormControl, Validators} from '@angular/forms';
 export class ContactUsComponent implements OnInit {
   title = "Contact Us"
   content;
+
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   fullName: string;
   telephone: string;
@@ -18,7 +21,8 @@ export class ContactUsComponent implements OnInit {
   textarea: string;
   subject: string;
 
-  constructor(public contanctUsService:ContactUsService) { }
+  constructor(public contactUsService: ContactUsService) {
+  }
 
   ngOnInit(): void {
   }

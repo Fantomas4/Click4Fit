@@ -15,9 +15,10 @@ import {HomeComponent} from '../home/home.component';
 import {ManageBusinessEntriesComponent} from '../manage-business-entries/manage-business-entries.component';
 import {ManageUserEntriesComponent} from '../manage-user-entries/manage-user-entries.component';
 import {AuthGuard} from './auth.guard';
+import {ErrorPageComponent} from '../error-page/error-page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact-us', component: ContactUsComponent},
@@ -38,8 +39,9 @@ const routes: Routes = [
       { path: 'manage-user-entries', component: ManageUserEntriesComponent },
       { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
     ]},
-  {path: 'about', component: AboutComponent},
+  {path: 'error-page', component: ErrorPageComponent},
   { path: '**', redirectTo: '' } // If any other path is given, redirect to '' (home)
+
 ];
 
 @NgModule({
