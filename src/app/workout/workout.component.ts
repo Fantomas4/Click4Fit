@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { WorkoutService } from './workout.service';
 import {ResultCard2Service} from './result-card2/result-card2.service';
-import { MatListOption } from '@angular/material/list/selection-list';
+import { ResultCard2Component } from './result-card2/result-card2.component';
 
 @Component({
   selector: 'app-workout',
@@ -9,6 +9,8 @@ import { MatListOption } from '@angular/material/list/selection-list';
   styleUrls: ['./workout.component.css']
 })
 export class WorkoutComponent implements OnInit {
+
+  @ViewChild(ResultCard2Component, { static: false }) resultCard: ResultCard2Component;
 
   isClicked = false;
   results;
@@ -39,6 +41,7 @@ export class WorkoutComponent implements OnInit {
   getResults() {
     this.isClicked = true;
     this.content={"category":this.selectedOptionsCategories,"advisedFor":this.selectedOptionsAdvisedFor,"difficulty":this.selectedOptionsDifficulty,"equipment": [this.selectedOptionsEquipment]};
+    //this.resultCard.ngOnInit();
   }
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {

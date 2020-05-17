@@ -50,11 +50,9 @@ import { ContactUsService } from './contact-us/contact-us.service';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
 import { ContactUsDialogMessageComponent } from './contact-us/contactus-dialog-message/contactus-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
-import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/update-dialog-message.component';
 import { BusinessAddEntryDialogService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
 import { BusinessDetailsEditDialogService} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.service';
 import { UserDetailsEditDialogService} from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.service';
-import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/delete-dialog-message.service';
 
 @NgModule({
   declarations: [
@@ -84,8 +82,7 @@ import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/del
     FooterComponent,
     HomepageComponent,
     RecoverDialogMessageComponent,
-    ContactUsDialogMessageComponent,
-    UpdateDialogMessageComponent
+    ContactUsDialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -111,8 +108,8 @@ import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/del
     HttpClientModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService,
-              BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService, DeleteDialogMessageService],
+              BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogMessageComponent,UpdateDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
+  entryComponents: [DeleteDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
 })
 export class AppModule { }

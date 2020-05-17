@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {DeleteDialogMessageService} from './delete-dialog-message.service';
 
 @Component({
   selector: 'app-delete-dialog-message',
@@ -10,28 +9,20 @@ import {DeleteDialogMessageService} from './delete-dialog-message.service';
 })
 export class DeleteDialogMessageComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any,private deleteService:DeleteDialogMessageService) {}
+  constructor(public dialogRef: MatDialogRef<DeleteDialogMessageComponent>,
+    @Inject(MAT_DIALOG_DATA) public data:any) {}
 
-  content;
-  message;
-  ngOnInit(): void {
-    this.content=this.data
+  clickedYes:boolean=false;
+
+  ngOnInit(): void {}
+
+  onCloseClick(): void {
+    // method is called when the "Close" button is pressed
+    this.dialogRef.close();
   }
   deleteProfile(){
-    this.deleteService.postProfile(this.content).toPromise().then((data:any)=>
-    {
-      if (data.response==200){
-        //allert service 
-        console.log('okey');
-      }
-      else{
-        console.log(data.msg);
-        //alert service
-      }
-    })
-  }
-  passAlert(){
-    return this.message;
+    this.clickedYes=true;
+    this.dialogRef.close(this.clickedYes);
   }
 }
 

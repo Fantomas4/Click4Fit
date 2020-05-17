@@ -23,5 +23,9 @@ export class ManageBusinessEntriesService {
     const jsonData=JSON.stringify(id);
     return this.http.post('http://localhost:5000/api/manage-business-delete-entry',jsonData,{'headers':headers});
   }
-
+  updateEntry(content): Observable<any>{
+    const headers = {'content-type':'application/json'};  
+    const jsonData=JSON.stringify(content);
+    return this.http.post('http://localhost:5000/api/manage-business-modify-entry',jsonData,{'headers':headers});
+}
 }

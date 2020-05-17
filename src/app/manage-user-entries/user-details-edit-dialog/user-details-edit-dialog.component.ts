@@ -30,6 +30,7 @@ export class UserDetailsEditDialogComponent implements OnInit {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   email;
   picker;
+  clickedSave:boolean;
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, private editDetailsService: UserDetailsEditDialogService,private _adapter: DateAdapter<any>) { }
@@ -65,15 +66,8 @@ export class UserDetailsEditDialogComponent implements OnInit {
 
   onSaveClick(): void {
     var content = {"_id":this.id,"name":this.name,"surname":this.surname,"birthdate":this.data.birthdate,"email":this.email};
-    this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
-      if (data.response==200){
-        console.log('okey');
-        //alert service okey
-      }
-      else{
-        //alert service error
-      }
-    });
+    this.clickedSave=true;
+    this.dialogRef.close({'save':this.clickedSave,'details':content});
   }
 
 }

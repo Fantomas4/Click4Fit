@@ -70,16 +70,16 @@ def displayFavoriteWorkout():
     try:
         workout_list = MongoDB.getFavoriteWorkout(user)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if workout_list is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
+            return "Something is wrong with the database", 500
         else:
-            return jsonify(response=200, workoutList=workout_list)
+            return jsonify(workoutList=workout_list), 200
 
 @app.route("/api/favorite-places", methods=['POST','GET'])
 def displayFavoritePlaces():
@@ -88,16 +88,16 @@ def displayFavoritePlaces():
     try:
         business_list = MongoDB.getFavoriteBusiness(user)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_list is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
+            return "Something is wrong with the database", 500
         else:
-            return jsonify(response=200, businessList=business_list)
+            return jsonify(businessList=business_list),200
 
 ####################################### My Profile ###################################
 @app.route("/api/display-myprofile", methods=['POST','GET'])
@@ -107,18 +107,17 @@ def displayMyprofile():
     try:
         user_wrapper: UserWrapper = MongoDB.getUser(user)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if user_wrapper.user is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(user_wrapper.user) is dict and not user_wrapper.found and not user_wrapper.operationDone:
-            return jsonify(response=404, msg="Couldn't find user")
-        else:
-            return jsonify(response=200, user=user_wrapper.user)
+            return "Something is wrong with the database", 500
+        if type(user_wrapper.user) is dict and not user_wrapper.found and not user_wrapper.operationDone:
+            return "User does not exist", 404
+        return jsonify(user=user_wrapper.user), 200
 
 @app.route("/api/update-myprofile", methods=['POST','GET'])
 def updateMyprofile():
@@ -127,20 +126,19 @@ def updateMyprofile():
     try:
         user_wrapper: UserWrapper = MongoDB.changeUserPassword(details)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if user_wrapper.user is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif not user_wrapper.operationDone and not user_wrapper.found:
-            return jsonify(response=404, msg="Couldn't find user")
-        elif not user_wrapper.operationDone and user_wrapper.found:
-            return jsonify(response=404, msg="Wrong old password")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if not user_wrapper.operationDone and not user_wrapper.found:
+            return "User does not exist", 404
+        if not user_wrapper.operationDone and user_wrapper.found:
+            return "Wrong old password", 401
+        return jsonify("Save successful"), 200
 
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
 def deleteMyprofile():
@@ -149,20 +147,19 @@ def deleteMyprofile():
     try:
         user_wrapper: UserWrapper = MongoDB.deleteUser(user)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if user_wrapper.user is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif not user_wrapper.found and not user_wrapper.operationDone:
-            return jsonify(response=404,msg="Couldn't find user")
-        elif user_wrapper.found and not user_wrapper.operationDone:
-            return jsonify(response=404,msg="Couldn't delete user")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if not user_wrapper.found and not user_wrapper.operationDone:
+            return "User does not exist", 404
+        if user_wrapper.found and not user_wrapper.operationDone:
+            return "Couldn't delete user", 500
+        return jsonify("Delete successful"), 200
 
 ####################################### Search #######################################
 @app.route("/api/search", methods=['POST','GET'])
@@ -172,18 +169,17 @@ def search():
     try:
         business_wrapper_list : BusinessListWrapper = MongoDB.getBusinesses(filters)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_wrapper_list.business_list is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(business_wrapper_list.business_list) is list and not business_wrapper_list.found and not business_wrapper_list.operationDone:
-            return jsonify(response=404, msg="Couldn't find businesses with these filters")
-        else:
-            return jsonify(response=200, businessList=business_wrapper_list.business_list)
+            return "Something is wrong with the database", 500
+        if type(business_wrapper_list.business_list) is list and not business_wrapper_list.found and not business_wrapper_list.operationDone:
+            return "Couldn't find businesses with these filters", 404
+        return jsonify(businessList=business_wrapper_list.business_list), 200
 
 @app.route("/api/add-favorite-place", methods=['POST','GET'])
 def addFavoritePlace():
@@ -192,18 +188,17 @@ def addFavoritePlace():
     try:
         business_wrapper: BusinessWrapper = MongoDB.createWorkout(place)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_wrapper.business is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return jsonify(response=401,msg="Couldn't add business")
-        else:
-            return jsonify(response=200, business=business_wrapper.business)
+            return "Something is wrong with the database", 500
+        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
+            return "Couldn't add business", 500
+        return jsonify(business=business_wrapper.business), 200
 
 ####################################### Workout ######################################
 @app.route("/api/display-workout", methods=['POST','GET']) 
@@ -213,14 +208,13 @@ def getWorkout():
     try:
         workout_wrapper_list : WorkoutListWrapper = MongoDB.workoutSearch(filters)
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if workout_wrapper_list.workout_list is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(workout_wrapper_list.workout_list) is list and not workout_wrapper_list.found and not workout_wrapper_list.operationDone:
-            return jsonify(response=404, msg="Couldn't find workout with these filters")
-        else:
-            return jsonify(response=200, workoutList=workout_wrapper_list.workout_list)
+            return "Something is wrong with the database", 500
+        if type(workout_wrapper_list.workout_list) is list and not workout_wrapper_list.found and not workout_wrapper_list.operationDone:
+            return "Couldn't find workout with these filters", 404
+        return jsonify(workoutList=workout_wrapper_list.workout_list), 200
 
 @app.route("/api/create-workout", methods=['POST','GET'])
 def createWorkout():
@@ -229,18 +223,17 @@ def createWorkout():
     try:
         workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if workout_wrapper.workout is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
-            return jsonify(response=404, msg="Couldn't insert workout entry")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
+            return  "Couldn't insert workout entry", 500
+        return jsonify("Creation successful"), 200
 
 @app.route("/api/add-favorite-workout", methods=['POST','GET'])
 def addFavoriteWorkout():
@@ -249,18 +242,17 @@ def addFavoriteWorkout():
     try:
         workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if workout_wrapper.workout is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
-            return jsonify(response=404, msg="Couldn't insert workout entry")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
+            return "Couldn't insert workout entry", 500
+        return jsonify("Addition successful"), 200
 
 @app.route("/api/delete-workout", methods=['POST','GET']) 
 def deleteWorkout():
@@ -269,18 +261,17 @@ def deleteWorkout():
     try:
         workout_wrapper : WorkoutWrapper = MongoDB.deleteWorkout(workout)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if workout_wrapper.workout is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif workout_wrapper.found and not workout_wrapper.operationDone:
-            return jsonify(response=404,msg="Couldn't delete user")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if workout_wrapper.found and not workout_wrapper.operationDone:
+            return "Couldn't delete user", 500
+        return jsonify("Delete successful"), 200
 
 ####################################### Manage business ##############################
 @app.route("/api/manage-business-display-entry",methods=['POST','GET'])
@@ -290,18 +281,17 @@ def manageOneBusinessDisplay():
     try:
         business_wrapper : BusinessWrapper = MongoDB.getBusiness(entry)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_wrapper.business is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return jsonify(response=401,msg="Couldn't find business")
-        else:
-            return jsonify(response=200, business=business_wrapper.business)
+            return "Something is wrong with the database", 500
+        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
+            return "Couldn't find business", 500
+        return jsonify(business=business_wrapper.business), 200
 
 @app.route("/api/manage-business-display-entries",methods=['POST','GET'])
 def manageAllBusinessesDisplay():
@@ -309,14 +299,13 @@ def manageAllBusinessesDisplay():
     try:
         business_wrapper_list : BusinessWrapper = MongoDB.getAllBusinesses()
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_wrapper_list.business_list is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(business_wrapper_list.business_list) is list and not business_wrapper_list.found and not business_wrapper_list.operationDone:
-            return jsonify(response=401,msg="Couldn't get businesses")
-        else:
-            return jsonify(response=200, businessList=business_wrapper_list.business_list)
+            return "Something is wrong with the database", 500
+        if type(business_wrapper_list.business_list) is list and not business_wrapper_list.found and not business_wrapper_list.operationDone:
+            return "Couldn't get businesses", 500
+        return jsonify(businessList=business_wrapper_list.business_list), 200
 
 @app.route("/api/manage-business-add-entry",methods=['POST','GET'])
 def manageBusinessAdd():
@@ -325,18 +314,17 @@ def manageBusinessAdd():
     try:
         business_wrapper : BusinessWrapper = MongoDB.createNewBusiness(entry)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_wrapper.business is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return jsonify(response=401, msg="Couldn't insert business entry")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
+            return "Couldn't insert business entry", 500
+        return jsonify("Creation successful"), 200
 
 @app.route("/api/manage-business-delete-entries",methods=['POST','GET'])
 def manageBusinessDelete():
@@ -345,18 +333,17 @@ def manageBusinessDelete():
     try:
         business_wrapper : BusinessWrapper =  MongoDB.deleteBusinesses(entries)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_wrapper.business is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif business_wrapper.found and not business_wrapper.operationDone:
-            return jsonify(response=401, msg="Coudn't delete business entry")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if business_wrapper.found and not business_wrapper.operationDone:
+            return "Coudn't delete business entry", 500
+        return jsonify("Delete successful"), 200
 
 @app.route("/api/manage-business-modify-entry",methods=['POST','GET'])
 def manageBusinessModify():
@@ -365,18 +352,17 @@ def manageBusinessModify():
     try:
         business_wrapper : BusinessWrapper =  MongoDB.updateBusiness(entry)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if business_wrapper.business is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return jsonify(response=401,msg="Couln't update business entry")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
+            return "Couln't update business entry", 500
+        return jsonify("Save successful"), 200
 
 ####################################### Manage user ##################################
 @app.route("/api/manage-user-display-entry",methods=['POST','GET'])
@@ -386,18 +372,17 @@ def manageOneUserDisplay():
     try:
         user_wrapper: UserWrapper = MongoDB.getUser(user_id)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if user_wrapper.user is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
-            return jsonify(response=401,msg="Couldn't find user")
-        else:
-            return jsonify(response=200, user=user_wrapper.user)
+            return "Something is wrong with the database", 500
+        if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
+            return "Couldn't find user", 500
+        return jsonify(user=user_wrapper.user), 200
 
 @app.route("/api/manage-user-display-entries",methods=['POST','GET'])
 def manageAllUsersDisplay():
@@ -405,14 +390,13 @@ def manageAllUsersDisplay():
     try:
         user_wrapper_list: UserListWrapper = MongoDB.getAllUsers()
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if user_wrapper_list.user_list is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(user_wrapper_list.user_list) is list and not user_wrapper_list.found and not user_wrapper_list.operationDone:
-            return jsonify(response=401,msg="Couldn't get users")
-        else:
-            return jsonify(response=200, userList=user_wrapper_list.user_list)
+            return "Something is wrong with the database", 500
+        if type(user_wrapper_list.user_list) is list and not user_wrapper_list.found and not user_wrapper_list.operationDone:
+            return "Couldn't get users", 500
+        return jsonify(userList=user_wrapper_list.user_list), 200
 
 @app.route("/api/manage-user-delete-entries",methods=['POST','GET'])
 def manageUserDelete():
@@ -421,18 +405,17 @@ def manageUserDelete():
     try:
         user_wrapper: UserWrapper = MongoDB.deleteUsers(users)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if user_wrapper.user is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif user_wrapper.found and not user_wrapper.operationDone:
-            return jsonify(response=401, msg="Coudn't delete user entry")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if user_wrapper.found and not user_wrapper.operationDone:
+            return "Coudn't delete user entry", 500
+        return jsonify("Delete successful"), 200
 
 @app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
 def manageUserModify():
@@ -441,18 +424,17 @@ def manageUserModify():
     try:
         user_wrapper: UserWrapper = MongoDB.updateUser(user)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if user_wrapper.user is None:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        elif type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
-            return jsonify(response=401,msg="Couln't update user entry")
-        else:
-            return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
+            return "Couln't update user entry", 500
+        return jsonify("Save successful"), 200
 
 
 

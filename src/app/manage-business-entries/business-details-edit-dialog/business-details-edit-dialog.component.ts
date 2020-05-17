@@ -23,6 +23,7 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   products: string[]; //List containing the titles of the available products offered by the displayed entry.
   imgPath: string; // String containing the path for the preview image of the displayed entry.
   email:string; //The displayes entry's email.
+  clickedSave:boolean;
 
   // Form Control used to receive and validate the user's email input.
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
@@ -69,14 +70,7 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
     var content = {"_id":this.id,"name":this.name,"category":this.category,"country":this.country,
     "city":this.city,"address":this.address,"postalCode":this.postalCode,"phoneNumber":this.phoneNumber,
     "email":this.email};
-    this.editDetailsService.postDetails(content).toPromise().then((data:any)=>{
-      if (data.response==200){
-        //alert service
-        console.log('okey');
-      }
-      else{
-        //show message with the error
-      }
-    });
+    this.clickedSave=true;
+    this.dialogRef.close({'save':this.clickedSave,'details':content});
   }
 }
