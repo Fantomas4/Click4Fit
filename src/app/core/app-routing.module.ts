@@ -21,9 +21,9 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact-us', component: ContactUsComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'recover-password', component: RecoverPasswordComponent},
-  {path: 'register', component: RegisterComponent},
+  {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
+  {path: 'recover-password', component: RecoverPasswordComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'user', component: UserMainViewComponent, canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
