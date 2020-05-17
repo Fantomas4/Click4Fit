@@ -4,7 +4,6 @@ import {BusinessEntry} from '../business-entry';
 import {FormControl} from '@angular/forms';
 // import {MatPaginator} from '@angular/material/paginator';
 
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,7 +11,7 @@ import {FormControl} from '@angular/forms';
 })
 export class SearchComponent implements OnInit {
   searchResults: BusinessEntry[];
-  
+
   constructor(private searchService: SearchService) { }
 
   ngOnInit(): void {
@@ -32,23 +31,4 @@ export class SearchComponent implements OnInit {
       document.getElementById('filters-button').innerText = 'Show Filters';
     }
   }
-
-  applyFilter(event: Event) {
-    // Get the filter value given by the user and apply it
-    // to the dataSource data in order to filter them.
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      // Return to the first page if not already there.
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  onSelection(e, v) {
-    for (const a of v) {
-      this.selectionArray.push(a.value);
-    }
-  }
-
 }
