@@ -1,5 +1,4 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {BusinessEntry} from '../business-entry';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -10,6 +9,7 @@ import {BusinessAddEntryDialogComponent} from './business-add-entry-dialog/busin
 import {ManageBusinessEntriesService} from './manage-business-entries.service';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
+import {Router} from '@angular/router';
 
 interface AlertMessage {
   type: string;
@@ -47,9 +47,12 @@ export class ManageBusinessEntriesComponent implements OnInit {
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
   result:boolean;
+  i:number;
+  content;
+  
 
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog,
-    private alertService: AlertService) {}
+    private alertService: AlertService, private router:Router) {}
 
   /** Method used to change the dialog's height and width according to
    * the window's size.
@@ -161,12 +164,27 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(BusinessAddEntryDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')});
+      this.addEntryDialogRef.afterClosed().subscribe(result=>{
+        this.result = result.save;
+        if (this.result == true) {
+          this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
+            this.alertService.success(data);
+          },
+            error => {
+              this.alertService.error(error.error);
+            })
+        }
+      })
   }
 
   /** Click on delete button */
   deleteEntries(){
     this.selected=this.selection.selected;
-    this.manageBusinessEntriesService.deleteEntries(this.selected).toPromise().then(data =>
+    for (this.i=0;this.i<this.selection.selected.length;this.i++){
+      this.selected[this.i]=this.selection.selected[this.i].email;
+    }
+    this.content={"email":this.selected};
+    this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data =>
     {
       this.alertService.success(data);
     },

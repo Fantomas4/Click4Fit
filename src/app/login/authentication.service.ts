@@ -41,7 +41,7 @@ export class AuthenticationService {
       email: 'giorgospapad@gmail.com',
       password: 'gp123456',
       birthdate: '04,16,1997',
-      privilegeLevel: 'client',
+      privilegeLevel: 'admin',
       token: 'd2d232d22d2'};
 
     sessionStorage.setItem('currentUser', JSON.stringify(user));

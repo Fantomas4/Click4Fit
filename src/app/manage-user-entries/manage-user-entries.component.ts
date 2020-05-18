@@ -42,6 +42,8 @@ export class ManageUserEntriesComponent implements OnInit {
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
   result:boolean;
+  content;
+  i:number;
   
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog,
     private alertService: AlertService) { }
@@ -148,10 +150,13 @@ export class ManageUserEntriesComponent implements OnInit {
       }
     })
   }
-
   deleteEntries(){
     this.selected=this.selection.selected;
-    this.manageUserEntriesService.deleteEntries(this.selected).toPromise().then(data=>
+    for (this.i=0;this.i<this.selection.selected.length;this.i++){
+      this.selected[this.i]=this.selection.selected[this.i].email;
+    }
+    this.content={"email":this.selected};
+    this.manageUserEntriesService.deleteEntries(this.content).toPromise().then(data=>
     {
       this.alertService.success(data);
     },

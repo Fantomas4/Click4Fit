@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
-import {UserDetailsEditDialogService} from './user-details-edit-dialog.service';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -33,7 +32,7 @@ export class UserDetailsEditDialogComponent implements OnInit {
   clickedSave:boolean;
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private editDetailsService: UserDetailsEditDialogService,private _adapter: DateAdapter<any>) { }
+              @Inject(MAT_DIALOG_DATA) public data: any,private _adapter: DateAdapter<any>) { }
 
   ngOnInit(): void {
     this._adapter.setLocale('en');

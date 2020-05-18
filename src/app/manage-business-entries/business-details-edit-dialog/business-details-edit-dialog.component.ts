@@ -1,8 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {BusinessEntry} from '../../business-entry';
 import {FormControl, Validators} from '@angular/forms';
-import {BusinessDetailsEditDialogService} from './business-details-edit-dialog.service';
 
 @Component({
   selector: 'app-details-edit-dialogue',
@@ -29,7 +27,7 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(public dialogRef: MatDialogRef<BusinessDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private editDetailsService: BusinessDetailsEditDialogService) {}
+              @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     // Extract the data from the payload and store it into the class properties
@@ -63,7 +61,8 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
    */
   onCloseClick(): void {
     // method is called when the "Close" button is pressed
-    this.dialogRef.close();
+    this.clickedSave=false;
+    this.dialogRef.close({'save':this.clickedSave});
   }
 
   onSaveClick(): void {

@@ -331,7 +331,7 @@ def manageBusinessDelete():
     entries=request.get_json() #get entries for delete
     #connection with mongo sending the entry
     try:
-        business_wrapper : BusinessWrapper =  MongoDB.deleteBusinesses(entries)
+        response =  MongoDB.deleteBusinesses(entries)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -339,10 +339,8 @@ def manageBusinessDelete():
     except:
         return "Bad error", 500
     else:
-        if business_wrapper.business is None:
-            return "Something is wrong with the database", 500
-        if business_wrapper.found and not business_wrapper.operationDone:
-            return "Coudn't delete business entry", 500
+        if response is False:
+            return "Coudn't delete business entries", 500
         return jsonify("Delete successful"), 200
 
 @app.route("/api/manage-business-modify-entry",methods=['POST','GET'])
@@ -403,7 +401,7 @@ def manageUserDelete():
     users=request.get_json() #get users for delete
     #connection with mongo sending the id
     try:
-        user_wrapper: UserWrapper = MongoDB.deleteUsers(users)
+        response = MongoDB.deleteUsers(users)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -411,10 +409,8 @@ def manageUserDelete():
     except:
         return "Bad error", 500
     else:
-        if user_wrapper.user is None:
-            return "Something is wrong with the database", 500
-        if user_wrapper.found and not user_wrapper.operationDone:
-            return "Coudn't delete user entry", 500
+        if response is False:
+            return "Coudn't delete user entries", 500
         return jsonify("Delete successful"), 200
 
 @app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
@@ -442,3 +438,4 @@ if __name__ == '__main__':
     app.debug = True
     app.run()
     MongoDB.createMockDatabase()
+    

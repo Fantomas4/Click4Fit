@@ -1,8 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {BusinessEntry} from '../../business-entry';
-import {BusinessAddEntryDialogService} from './business-add-entry-dialog.service';
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -23,8 +21,10 @@ export class BusinessAddEntryDialogComponent implements OnInit {
   availableServProd: string[];
   imgPath: string;
   email;
+  clickedSave:boolean;
 
-  constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>,private addEntryService: BusinessAddEntryDialogService) {}
+  constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>,
+     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {}
 
@@ -38,23 +38,16 @@ export class BusinessAddEntryDialogComponent implements OnInit {
 
   onDiscardClick(): void {
     // method is called when the "Close" button is pressed
-    this.dialogRef.close();
+    this.clickedSave=false;
+    this.dialogRef.close({'save':this.clickedSave});
   }
 
   onSaveClick(): void {
     var content = {"_id":this.id,"name":this.name,"category":this.category,"country":this.country,
     "city":this.city,"address":this.address,"postalCode":this.postalCode,"phoneNumber":this.phoneNumber,
     "email":this.email};
-    this.addEntryService.postDetails(content).toPromise().then((data:any)=>{
-      console.log(data.msg);
-      if (data.response==200){
-        //alert service
-        console.log('okey');
-      }
-      else{
-        //show message with the error
-      }
-    });
+    this.clickedSave=true;
+    this.dialogRef.close({'save':this.clickedSave,'details':content});
   }
 
 }
