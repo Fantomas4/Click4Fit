@@ -94,6 +94,13 @@ class BusinessDB:
         else:
             success = bool(business_list)
             return BusinessListWrapper(business_list, found=success, operationDone=success)
+    
+    def getDistinct(self, attribute: str):
+        """
+        :param attribute:
+        :return:
+        """
+        return self.db.distinct(attribute)
 
     def search(self, search_query: dict):
         """

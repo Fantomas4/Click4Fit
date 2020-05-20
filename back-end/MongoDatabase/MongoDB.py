@@ -311,6 +311,18 @@ class MongoDB:
         """
         self.validator.validate_filter(delete_query, "business")
         return self.businessDB.deleteMany(delete_query)
+
+    def getCountries(self):
+        """
+        :return: a list with all distinct country values
+        """
+        return self.getDistinct("country")
+    
+    def getCities(self):
+        """
+        :return: a list with all distinct city values
+        """
+        return self.getDistinct("city")
     
     ################################################# Workout Methods ##################################################
     
@@ -416,12 +428,14 @@ class MongoDB:
 
 
 
-# from pprint import pprint
+from pprint import pprint
 
-# mongo = MongoDB()
-# mongo.dropDatabases()
-# returned_data = mongo.createMockDatabase()
-# pprint(returned_data)
+mongo = MongoDB()
+mongo.dropDatabases()
+returned_data = mongo.createMockDatabase()
+pprint(returned_data)
+
+pprint(mongo.businessDB.db.distinct("country"))
 
 
 # delete_query = {
