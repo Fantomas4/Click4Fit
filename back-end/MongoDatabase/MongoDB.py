@@ -314,13 +314,13 @@ class MongoDB:
 
     def getCountries(self):
         """
-        :return: a list with all distinct country values
+        :return: a list with all distinct country values. Will return None if something failed in mongo
         """
         return self.getDistinct("country")
     
     def getCities(self):
         """
-        :return: a list with all distinct city values
+        :return: a list with all distinct city values. Will return None if something failed in mongo
         """
         return self.getDistinct("city")
     
@@ -428,14 +428,14 @@ class MongoDB:
 
 
 
-from pprint import pprint
+# from pprint import pprint
 
-mongo = MongoDB()
-mongo.dropDatabases()
-returned_data = mongo.createMockDatabase()
-pprint(returned_data)
+# mongo = MongoDB()
+# mongo.dropDatabases()
+# returned_data = mongo.createMockDatabase()
+# pprint(returned_data)
 
-pprint(mongo.businessDB.db.distinct("country"))
+# pprint(mongo.businessDB.db.distinct("country"))
 
 
 # delete_query = {
