@@ -249,7 +249,7 @@ class MongoDB:
         """
         self.validator.validate(business, "business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
-                            "phoneNumber","email"]: #img_path
+                            "phoneNumber","email", "imgPath"]:
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
@@ -312,6 +312,18 @@ class MongoDB:
         """
         self.validator.validate_filter(delete_query, "business")
         return self.businessDB.deleteMany(delete_query)
+
+    def getCountries(self):
+        """
+        :return: a list with all distinct country values. Will return None if something failed in mongo
+        """
+        return self.getDistinct("country")
+    
+    def getCities(self):
+        """
+        :return: a list with all distinct city values. Will return None if something failed in mongo
+        """
+        return self.getDistinct("city")
     
     ################################################# Workout Methods ##################################################
     
@@ -423,6 +435,8 @@ class MongoDB:
 # mongo.dropDatabases()
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
+
+# pprint(mongo.businessDB.db.distinct("country"))
 
 
 # delete_query = {
