@@ -21,8 +21,7 @@ class MongoDB:
     to the low level classes is checked.
     """
 
-    def __init__(self, database="Click4Fit"):
-        url = "mongodb://localhost:27017/"
+    def __init__(self, database="Click4Fit", url = "mongodb://localhost:27017/"):
         self.client = MongoClient(url)[database]
         self.userDB = UserDB(self.client[database])
         self.businessDB = BusinessDB(self.client[database])
@@ -250,7 +249,7 @@ class MongoDB:
         """
         self.validator.validate(business, "business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
-                            "phoneNumber","email"]: #img_path
+                            "phoneNumber","email", "imgPath"]:
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute +
                                 " attribute, which is needed for creation")
@@ -423,6 +422,9 @@ class MongoDB:
 # mongo = MongoDB()
 # mongo.dropDatabases()
 # returned_data = mongo.createMockDatabase()
+# pprint(returned_data)
+
+# pprint(mongo.businessDB.db.distinct("country"))
 
 
 # delete_query = {

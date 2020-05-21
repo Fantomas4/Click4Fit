@@ -1,6 +1,15 @@
 data = {
     'user': [
-       { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'gp123456', 'birthdate': '16.04.1997',
+      { 'name': 'Paulos', 'surname': 'Kostopoulos', 'email':'pauloskostop@gmail.com', 'password':'pk123456','birthdate': '28.06.1980',
+        'privilegeLevel':'admin', 'favoriteWorkout':[{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
+         "difficulty": 'hard', "equipment": True, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'}, {"name": 'Scissors', "category": "abs", "muscleGroups": ["abs", "obliques", "quads"], "advisedFor": 'women',
+         "difficulty": 'medium', "equipment": False, "sets": '4x15 ', "videoUrl": 'https://www.youtube.com/embed/WoNCIBVLbgY'}], 'favoriteBusiness':[{ 'name': 'FitClub', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'diagora 20', 'postalCode': '567 55',
+           'phoneNumber': '2310 634590', 'email': 'fitclub@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
+           'products': ['product_1', 'product_2']}, { 'name': 'Planet Fitness', 'category': 'gym', 'country': 'Greece', 'city': 'Athens', 'address': '3 Septembriou Street 6', 'postalCode': '576 45',
+           'phoneNumber': '202-555-0376', 'email': 'planetfitness@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
+           'products': ['product_1', 'product_2', 'service_1', 'service_2']}] },
+
+       { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'na123456', 'birthdate': '16.04.1997',
         'privilegeLevel': 'client', 'favoriteWorkout': ["push ups"], 'favoriteBusiness': [] },
 
        { 'name': 'Giorgos', 'surname': 'Andrianakis', 'email': 'gandrian@gmail.com',  'password': 'ga123456', 'birthdate': '02.06.1961' ,
@@ -9,7 +18,7 @@ data = {
        { 'name': 'Angelina', 'surname': 'Athanasiou', 'email': 'angath@gmail.com', 'password':'an123456','birthdate': '07.01.1991',
         'privilegeLevel': 'client', 'favoriteWorkout': [], 'favoriteBusiness': []},
 
-       { 'name': 'Kostas', 'surname': 'Bakirtzis', 'email': 'kostasba@gmail.com', 'password':'an123456', 'birthdate': '25.01.1998' ,
+       { 'name': 'Kostas', 'surname': 'Bakirtzis', 'email': 'kostasba@gmail.com', 'password':'bk123456', 'birthdate': '25.01.1998' ,
         'privilegeLevel': 'client', 'favoriteWorkout': [], 'favoriteBusiness': []},
 
        { 'name': 'Eirini', 'surname': 'Christoforou', 'email': 'chriseir@hotmail.com', 'password':'ec123456',  'birthdate': '03.08.1967',
@@ -144,7 +153,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Fitclub Bootcamps', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Petrou Ralli Street 77', 'postalCode': '667 00',
-           'phoneNumber': '202-555-0747', 'email': 'fitclub@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
+           'phoneNumber': '202-555-0747', 'email': 'fitclubbootcamps@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Your Wellbeing', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Voreou Street 66', 'postalCode': '888 32',
@@ -168,7 +177,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'PureGym', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Stavrou Street 17', 'postalCode': '564 32',
-           'phoneNumber': '307-555-0184', 'email': 'yourwellbeing@gmail.com', 'imgPath': './assets/gym-preview.JPG',  'services': ['service_1', 'service_2'],
+           'phoneNumber': '307-555-0184', 'email': 'puregym@gmail.com', 'imgPath': './assets/gym-preview.JPG',  'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']}
     ],
     "workout": [

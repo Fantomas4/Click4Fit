@@ -1,9 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import {LegsWorkoutEntry,BackWorkoutEntry,ChestWorkoutEntry,ShouldersWorkoutEntry,
-  BicepsWorkoutEntry,TricepsWorkoutEntry,AbsWorkoutEntry,CoreWorkoutEntry} from '../../workout-entry';
-import {WorkoutService} from '.././workout.service';
+import {AlertService} from '../../core/alert.service';
+import {Subscription} from 'rxjs';
 import {ResultCard2Service} from './result-card2.service';
+
+interface AlertMessage {
+  type: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-result-card2',
@@ -30,16 +34,28 @@ export class ResultCard2Component implements OnInit {
   tricepsIsEmpty=false;
   absIsEmpty=false;
   coreIsEmpty=false;
+  noResults=false;
   results;
   name:string;
   i:number;
+  alertMessage: AlertMessage;
+  alertSubscription: Subscription;
+  favorite=false;
+
 
   //DomSanitizer helps to pass url video safe
-  constructor(public sanitizer: DomSanitizer,private workoutService: WorkoutService,private resultCardSrvice: ResultCard2Service){}
+  constructor(public sanitizer: DomSanitizer,private resultCardSrvice: ResultCard2Service,private alertService: AlertService){}
 
   ngOnInit(): void {
-    this.resultCardSrvice.postFilters(this.filters).toPromise().then((data:any)=>{
-      if (data.response==200){
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
+    this.resultCardSrvice.postFilters(this.filters).toPromise().then(data=>{
         this.results=data.workoutList;
         for (this.i=0;this.i<this.results.length;this.i++){
           if (this.results[this.i].category=='legs'){
@@ -91,12 +107,27 @@ export class ResultCard2Component implements OnInit {
         if (this.coreWorkoutResults.length==0){
           this.coreIsEmpty=true;
         }
-      }
-      else{
-        console.log(data.msg);
+      },
+      error=>{
+        this.noResults=true;
+        this.alertService.error(error.error);
+      });
+    console.log('yes');
+    this.legsWorkoutResults.length=0;
+    this.backWorkoutResults.length=0;
+    this.chestWorkoutResults.length=0;
+    this.shouldersWorkoutResults.length=0;
+    this.bicepsWorkoutResults.length=0;
+    this.tricepsWorkoutResults.length=0;
+    this.absWorkoutResults.length=0;
+    this.coreWorkoutResults.length=0;
+  }
+  onClick(entry){
+    this.resultCardSrvice.addFavoriteWorkout(entry).toPromise().then((data:any)=>{
+      if (data.response==200){
+        this.favorite=true;
       }
     });
-  
   }
 
 }

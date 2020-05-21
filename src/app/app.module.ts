@@ -61,6 +61,7 @@ import {ErrorInterceptor} from './core/error.interceptor';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,8 +91,7 @@ import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
     HomepageComponent,
     ErrorPageComponent,
     RecoverDialogMessageComponent,
-    ContactUsDialogMessageComponent,
-    UpdateDialogMessageComponent
+    ContactUsDialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -126,6 +126,6 @@ import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogMessageComponent,UpdateDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
+  entryComponents: [DeleteDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
 })
 export class AppModule { }

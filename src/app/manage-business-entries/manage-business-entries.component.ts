@@ -1,5 +1,4 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {BusinessEntry} from '../business-entry';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -8,7 +7,14 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {BusinessDetailsEditDialogComponent} from './business-details-edit-dialog/business-details-edit-dialog.component';
 import {BusinessAddEntryDialogComponent} from './business-add-entry-dialog/business-add-entry-dialog.component';
 import {ManageBusinessEntriesService} from './manage-business-entries.service';
+import { AlertService } from '../core/alert.service';
+import { Subscription } from 'rxjs';
+import {Router} from '@angular/router';
 
+interface AlertMessage {
+  type: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-manage-business-entries',
@@ -37,8 +43,16 @@ export class ManageBusinessEntriesComponent implements OnInit {
   detailsEditDialogRef: MatDialogRef<BusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<BusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
 
-  selected=[]; //List with selected checkboxes
-  constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog) {}
+  selected=[]; //List with selected checkboxes alertMessage: AlertMessage;
+  alertMessage: AlertMessage;
+  alertSubscription: Subscription;
+  result:boolean;
+  i:number;
+  content;
+  
+
+  constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog,
+    private alertService: AlertService, private router:Router) {}
 
   /** Method used to change the dialog's height and width according to
    * the window's size.
@@ -61,6 +75,14 @@ export class ManageBusinessEntriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
     this.getBusinessEntries();
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
@@ -91,12 +113,13 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
     /*this.manageBusinessEntriesService.getResults()
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
-      this.manageBusinessEntriesService.getResults().toPromise().then((data:any)=>{
-        if (data.response==200){
-          this.businessData=data.businesses;
-          this.dataSource.data=this.businessData;
-        }
-      })
+      this.manageBusinessEntriesService.getResults().toPromise().then(data =>{
+        this.businessData=data.businessList;
+        this.dataSource.data=this.businessData;
+      },
+      error => {
+        this.alertService.error(error.errror);
+      });
   }
 
   /** Checks whether the number of selected elements matches the total number of rows. */
@@ -119,10 +142,21 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.detailsEditDialogRef = this.dialog.open(BusinessDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
       data: {_id: element._id, name: element.name, category: element.category, country: element.country,
-      city: element.city, address: element.address, postal_code: element.postal_code, phone_number:
-      element.phone_number, email: element.email, services: element.services, products: element.products,
-      img_path: element.img_path}
+      city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
+      element.phoneNumber, email: element.email, services: element.services, products: element.products,
+      imgPath: element.imgPath}
     });
+    this.detailsEditDialogRef.afterClosed().subscribe(result=>{
+      this.result = result.save;
+      if (this.result == true) {
+        this.manageBusinessEntriesService.updateEntry(result.details).toPromise().then(data => {
+          this.alertService.success(data);
+        },
+          error => {
+            this.alertService.error(error.error);
+          })
+      }
+    })
   }
 
   /** Spawns the "Add Entry" dialog window */
@@ -130,19 +164,32 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(BusinessAddEntryDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')});
+      this.addEntryDialogRef.afterClosed().subscribe(result=>{
+        this.result = result.save;
+        if (this.result == true) {
+          this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
+            this.alertService.success(data);
+          },
+            error => {
+              this.alertService.error(error.error);
+            })
+        }
+      })
   }
 
   /** Click on delete button */
   deleteEntries(){
     this.selected=this.selection.selected;
-    this.manageBusinessEntriesService.deleteEntries(this.selected).toPromise().then((data:any)=>
+    for (this.i=0;this.i<this.selection.selected.length;this.i++){
+      this.selected[this.i]=this.selection.selected[this.i].email;
+    }
+    this.content={"email":this.selected};
+    this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data =>
     {
-      if (data.response==200){
-        //show message everything is okey
-      }
-      else{
-        //show message for error
-      }
-    })
+      this.alertService.success(data);
+    },
+    error => {
+      this.alertService.error(error.errror);
+    });
   }
 }

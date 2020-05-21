@@ -1,5 +1,4 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {UserEntry} from '../user-entry';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -7,6 +6,13 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {UserDetailsEditDialogComponent} from './user-details-edit-dialog/user-details-edit-dialog.component';
 import {ManageUserEntriesService} from './manage-user-entries.service';
+import { AlertService } from '../core/alert.service';
+import { Subscription } from 'rxjs';
+
+interface AlertMessage {
+  type: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-manage-users-entries',
@@ -33,7 +39,14 @@ export class ManageUserEntriesComponent implements OnInit {
 
   detailsEditDialogRef: MatDialogRef<UserDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   selected = []; //List with selected checkboxes
-  constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog) { }
+  alertMessage: AlertMessage;
+  alertSubscription: Subscription;
+  result:boolean;
+  content;
+  i:number;
+  
+  constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog,
+    private alertService: AlertService) { }
 
   /** Method used to change the dialog's height and width according to
    * the window's size.
@@ -59,6 +72,14 @@ export class ManageUserEntriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
     this.getUsersEntries();
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
@@ -87,12 +108,13 @@ export class ManageUserEntriesComponent implements OnInit {
 
     /*this.manageUserEntriesService.getResults()
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
-      this.manageUserEntriesService.getResults().toPromise().then((data:any)=>{
-        if (data.response==200){
-          this.userData=data.users;
+      this.manageUserEntriesService.getResults().toPromise().then(data =>{
+          this.userData=data.userList;
           this.dataSource.data=this.userData;
-        }
-      })
+      },
+      error => {
+        this.alertService.error(error.errror);
+      });
   }
 
   /** Checks whether the number of selected elements matches the total number of rows. */
@@ -116,18 +138,30 @@ export class ManageUserEntriesComponent implements OnInit {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
       data: {_id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email}
     });
+    this.detailsEditDialogRef.afterClosed().subscribe(result=>{
+      this.result = result.save;
+      if (this.result == true) {
+        this.manageUserEntriesService.updateEntry(result.details).toPromise().then(data => {
+          this.alertService.success(data);
+        },
+          error => {
+            this.alertService.error(error.error);
+          })
+      }
+    })
   }
-
   deleteEntries(){
     this.selected=this.selection.selected;
-    this.manageUserEntriesService.deleteEntries(this.selected).toPromise().then((data:any)=>
+    for (this.i=0;this.i<this.selection.selected.length;this.i++){
+      this.selected[this.i]=this.selection.selected[this.i].email;
+    }
+    this.content={"email":this.selected};
+    this.manageUserEntriesService.deleteEntries(this.content).toPromise().then(data=>
     {
-      if (data.response==200){
-        //show message everything is okey
-      }
-      else{
-        //show message for error
-      }
+      this.alertService.success(data);
+    },
+    error => {
+      this.alertService.error(error.errror);
     });
   }
 }

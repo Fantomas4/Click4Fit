@@ -21,4 +21,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
       const jsonData=JSON.stringify(content);
       return this.http.post('http://localhost:5000/api/display-workout',jsonData,{'headers':headers});  
     }
+    addFavoriteWorkout(content):Observable<any>{
+      const headers = {'content-type':'application/json'}; 
+      const jsonData=JSON.stringify(content);
+      return this.http.post('http://localhost:5000/api/add-favorite-workout',jsonData,{'headers':headers});  
+
+    }
   }

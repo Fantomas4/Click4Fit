@@ -1,5 +1,4 @@
 import sys
-import sys
 sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
 
 from bson import ObjectId
@@ -32,7 +31,6 @@ class BusinessDB:
         :param business:
         :return:
         """
-        print(business)
         if self._findByEmail(business["email"]): # Checks if user already exists
             return BusinessWrapper({}, found=True, operationDone=False)
         business = {
@@ -96,6 +94,13 @@ class BusinessDB:
         else:
             success = bool(business_list)
             return BusinessListWrapper(business_list, found=success, operationDone=success)
+    
+    def getDistinct(self, attribute: str):
+        """
+        :param attribute:
+        :return:
+        """
+        return self.db.distinct(attribute)
 
     def search(self, search_query: dict):
         """

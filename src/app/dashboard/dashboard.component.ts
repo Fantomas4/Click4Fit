@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import {FavoriteWorkout, FavoritePlace} from '../favorite-entry';
-import {DashboardService} from './dashboard.service';
+import { FavoriteWorkout, FavoritePlace } from '../favorite-entry';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +10,8 @@ import {DashboardService} from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-  favoriteWorkoutResults=[];
-  favoritePlacesResults=[];
+  favoriteWorkoutResults = [];
+  favoritePlacesResults = [];
   workoutIsEmpty = false;
   placeIsEmpty = false;
 
@@ -20,7 +20,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
-      this.CurrentTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' +  new Date().getSeconds(); }, 1);
+      this.CurrentTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds();
+    }, 1);
 
   }
 
@@ -29,29 +30,25 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.user={"email":"nikosalex@gmail.com"}
-    this.dashboardService.getFavoriteWorkout(this.user).subscribe((data:any)=>{
-      if (data.response==200){
-        this.favoriteWorkoutResults=data.workoutList;
+    this.user = { "email": "pauloskostop@gmail.com" }
+    this.dashboardService.getFavoriteWorkout(this.user).subscribe(data => {
+      this.favoriteWorkoutResults = data.workoutList;
+      if (this.favoriteWorkoutResults.length == 0) {
+        this.workoutIsEmpty = true;
       }
-      else{
-        //alert service
-      }
+    },
+    error=>{
+
     });
-    this.dashboardService.getFavoritePlaces(this.user).subscribe((data:any)=>{
-      if (data.response==200){
-        this.favoritePlacesResults=data.businessList;
+    this.dashboardService.getFavoritePlaces(this.user).subscribe(data => {
+      this.favoritePlacesResults = data.businessList;
+      if (this.favoritePlacesResults.length == 0) {
+        this.placeIsEmpty = true;
       }
-      else{
-        //alert service
-      }
+    },
+    error=>{
+      
     });
-    if (this.favoriteWorkoutResults.length == 0) {
-      this.workoutIsEmpty = true;
-    }
-    if (this.favoritePlacesResults.length == 0) {
-      this.placeIsEmpty = true;
-    }
     //gets the favrorites workout results from dashboard.service and adds them to an array
     //this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
     //gets the favorites places results from dashboard.service and adds them to an array

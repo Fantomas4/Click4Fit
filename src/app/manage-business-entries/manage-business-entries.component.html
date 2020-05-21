@@ -61,5 +61,9 @@
       <button mat-raised-button color="primary" (click)="openAddEntryDialog()">Add Entry</button>
       <button mat-raised-button color="warn" (click)="deleteEntries()">Delete</button>
     </mat-card-actions>
+    <div id="alert-message"
+      [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+      *ngIf="alertMessage">{{alertMessage.text}}
+    </div>
   </mat-card>
 </div>
