@@ -316,13 +316,13 @@ class MongoDB:
         """
         :return: a list with all distinct country values. Will return None if something failed in mongo
         """
-        return self.getDistinct("country")
+        return self.businessDB.getDistinct("country")
     
     def getCities(self):
         """
         :return: a list with all distinct city values. Will return None if something failed in mongo
         """
-        return self.getDistinct("city")
+        return self.businessDB.getDistinct("city")
     
     ################################################# Workout Methods ##################################################
     
