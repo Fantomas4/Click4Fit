@@ -193,9 +193,9 @@ def search():
 
 ######### getCountries() #########
 @app.route("/api/getCountries", methods=['GET'])
-def getCoutries():
+def getCountries():
   try:
-    countries_list = MongoDB.getCountries();
+    countries_list = MongoDB.getCountries()
   except:
     return "Bad error", 500
   else:

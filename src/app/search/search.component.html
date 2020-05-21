@@ -17,8 +17,7 @@
       <mat-divider></mat-divider>
       <div mat-subheader class="filter-type-subheader">Location</div>
       <div class="location-container">
-        <app-location-autocomplete class="autocomplete-field" placeholderStr="Country name"></app-location-autocomplete>
-        <app-location-autocomplete class="autocomplete-field" placeholderStr="City name"></app-location-autocomplete>
+        <app-location-autocomplete></app-location-autocomplete>
         <mat-divider></mat-divider>
       </div>
       <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
@@ -31,8 +30,7 @@
     <h1>Search</h1>
     <form class="search-form">
       <input matInput placeholder="Search..." class="search-input" name="search-input">
-      <!--      <button>Go</button>-->
-      <button id="search-button" (click)="getResults()">Go!</button>
+<!--      <button id="search-button" (click)="getResults()">Go!</button>-->
     </form>
     <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">
       Show Filters

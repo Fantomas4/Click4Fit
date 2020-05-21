@@ -313,6 +313,18 @@ class MongoDB:
         self.validator.validate_filter(delete_query, "business")
         return self.businessDB.deleteMany(delete_query)
 
+    def getCountries(self):
+        """
+        :return: a list with all distinct country values. Will return None if something failed in mongo
+        """
+        return self.businessDB.getDistinct("country")
+
+    def getCities(self):
+        """
+        :return: a list with all distinct city values. Will return None if something failed in mongo
+        """
+        return self.businessDB.getDistinct("city")
+
     ################################################# Workout Methods ##################################################
 
     def createNewWorkout(self, workout: dict):

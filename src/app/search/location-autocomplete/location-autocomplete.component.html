@@ -1,12 +1,25 @@
 <mat-form-field>
-  <input type="text"
-         [placeholder]="placeholderStr"
+  <input matInput
+         type="text"
+         placeholder="Country name..."
          aria-label="Number"
-         matInput
-         [formControl]="formControl"
-         [matAutocomplete]="auto">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+         [formControl]="countryFormControl"
+         [matAutocomplete]="autoCountry">
+  <mat-autocomplete #autoCountry="matAutocomplete">
+    <mat-option *ngFor="let option of filteredCountryOptions | async" [value]="option">
+      {{option}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<mat-form-field>
+  <input matInput
+         type="text"
+         placeholder="City name..."
+         aria-label="Number"
+         [formControl]="cityFormControl"
+         [matAutocomplete]="autoCity">
+  <mat-autocomplete #autoCity="matAutocomplete">
+    <mat-option *ngFor="let option of filteredCityOptions | async" [value]="option">
       {{option}}
     </mat-option>
   </mat-autocomplete>

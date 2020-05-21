@@ -38,8 +38,8 @@ export class ResultCardComponent implements OnInit {
       width: '600px',
       data: {
         name: this.businessData.name, category: this.businessData.category,
-        country: this.businessData.country, city: this.businessData.city, availableServProd:
-        this.businessData.availableServProd
+        country: this.businessData.country, city: this.businessData.city, services:
+        this.businessData.services, products: this.businessData.products
       }
     });
   }

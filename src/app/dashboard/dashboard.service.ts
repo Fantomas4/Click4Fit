@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {FAVORITEWORKOUT, FAVORITEPLACES} from '../mock-database';
 import {FavoriteWorkout, FavoritePlace} from '../favorite-entry';
 import {Observable, of} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';

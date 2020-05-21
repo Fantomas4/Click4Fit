@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SearchService} from './search.service';
 import {BusinessEntry} from '../business-entry';
 import {FormControl} from '@angular/forms';
-// import {MatPaginator} from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-search',
@@ -20,13 +20,13 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     // TEMP! FOR DEBUGGING ONLY!!!
-    this.getResults();
+    // this.getResults();
   }
 
-  getResults() {
-    this.searchService.getResults()
-      .subscribe(results => this.searchResults = results);
-  }
+  // getResults() {
+  //   this.searchService.getResults()
+  //     .subscribe(results => this.searchResults = results);
+  // }
 
   onToggleSidenav() {
     if (document.getElementById('filters-button').innerText === 'Show Filters') {
