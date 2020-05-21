@@ -1,5 +1,5 @@
 export interface BusinessEntry {
-  id: number;
+  _id: number;
   name: string;
   category: string;
   country: string;
@@ -8,6 +8,7 @@ export interface BusinessEntry {
   postalCode: string;
   phoneNumber: string;
   email: string;
-  availableServProd: string[];
   imgPath: string;
+  services: string[];
+  products: string[];
 }

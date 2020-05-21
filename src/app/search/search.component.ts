@@ -10,6 +10,10 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  myControl = new FormControl();
+
   searchResults: BusinessEntry[];
 
   constructor(private searchService: SearchService) { }
