@@ -8,10 +8,10 @@
 <!--      https://material.angular.io/components/list/overview-->
       <div class="category-container">
         <div mat-subheader class="filter-type-subheader">Category</div>
-        <mat-selection-list #categories>
-          <mat-list-option>Gym</mat-list-option>
-          <mat-list-option>Personal Trainer</mat-list-option>
-          <mat-list-option>Fitness Shop</mat-list-option>
+        <mat-selection-list #categories [(ngModel)]="selectedOptions">
+          <mat-list-option *ngFor="let option of businessCategories" [value]="option.value">
+            {{option.name}}
+          </mat-list-option>
         </mat-selection-list>
       </div>
       <mat-divider></mat-divider>
@@ -30,7 +30,7 @@
     <h1>Search</h1>
     <form class="search-form">
       <input matInput placeholder="Search..." class="search-input" name="search-input">
-<!--      <button id="search-button" (click)="getResults()">Go!</button>-->
+      <button id="search-button" (click)="getResults()">Go!</button>
     </form>
     <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">
       Show Filters

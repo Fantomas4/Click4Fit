@@ -13,8 +13,26 @@ export class SearchComponent implements OnInit {
   // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   myControl = new FormControl();
-
   searchResults: BusinessEntry[];
+
+  selectedOptions: string[];
+  businessCategories: {
+    name: string;
+    value: string;
+  }[] = [
+    {
+      name: 'Gym',
+      value: 'gym'
+    },
+    {
+      name: 'Personal Trainer',
+      value: 'personal trainer'
+    },
+    {
+      name: 'Fitness Shop',
+      value: 'fitness shop'
+    },
+  ];
 
   constructor(private searchService: SearchService) { }
 
@@ -23,10 +41,12 @@ export class SearchComponent implements OnInit {
     // this.getResults();
   }
 
-  // getResults() {
-  //   this.searchService.getResults()
-  //     .subscribe(results => this.searchResults = results);
-  // }
+  getResults() {
+
+    this.searchService.getResults(this.selectedOptions);
+    // this.searchService.getResults()
+    //   .subscribe(results => this.searchResults = results);
+  }
 
   onToggleSidenav() {
     if (document.getElementById('filters-button').innerText === 'Show Filters') {
@@ -35,4 +55,5 @@ export class SearchComponent implements OnInit {
       document.getElementById('filters-button').innerText = 'Show Filters';
     }
   }
+
 }

@@ -14,9 +14,10 @@ export class SearchService {
   constructor(private http: HttpClient) { }
 
 
-// getResults(); : Observable < BusinessEntry[] > {
-//     return of(ENTRIES);
-//   };
+  getResults(filterData) {
+    console.log(filterData);
+  }
+
 }
 
 
