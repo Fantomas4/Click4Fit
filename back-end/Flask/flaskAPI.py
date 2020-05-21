@@ -26,19 +26,19 @@ def login():
     user=request.get_json() #get username and password
     #connection with mongo sending user and getting answer if this user exists or not
     try:
-        user_wrapper: UserWrapper = MongoDB.logIn(user) 
+        user_wrapper: UserWrapper = MongoDB.logIn(user)
     except TypeError as type_err: # Checking for errors
         return jsonify(response=500, msg=str(type_err))
     except ValueError as value_err:
         return jsonify(response=500, msg=str(value_err))
     except:
         return jsonify(response=500, msg="Bad error")
-    else: 
+    else:
         if type(user_wrapper.user) is not dict:
             return jsonify(response=500, msg="Something is wrong with the database")
-        if not user_wrapper.found: 
+        if not user_wrapper.found:
             return jsonify(response=404, msg="Couldn't find user")
-        if not user_wrapper.operationDone: 
+        if not user_wrapper.operationDone:
             return jsonify(response=400, msg="Wrong password")
     return jsonify(response=200, user=user_wrapper.user)
 
@@ -162,6 +162,7 @@ def deleteMyprofile():
         return jsonify("Delete successful"), 200
 
 ####################################### Search #######################################
+######### getResults() #########
 @app.route("/api/search", methods=['POST','GET'])
 def search():
     filters=request.get_json() #get chosen filters by user
@@ -180,6 +181,30 @@ def search():
         if type(business_wrapper_list.business_list) is list and not business_wrapper_list.found and not business_wrapper_list.operationDone:
             return "Couldn't find businesses with these filters", 404
         return jsonify(businessList=business_wrapper_list.business_list), 200
+
+######### getCountries() #########
+@app.route("/api/getCountries", methods=['GET'])
+def getCoutries():
+  try:
+    countries_list = MongoDB.getCountries();
+  except:
+    return "Bad error", 500
+  else:
+    if countries_list is None:
+        return "Something is wrong with the database", 500
+    return jsonify(data=countries_list), 200
+
+######### getCities() #########
+@app.route("/api/getCities", methods=['GET'])
+def getCities():
+  try:
+    cities_list = MongoDB.getCities()
+  except:
+    return "Bad error", 500
+  else:
+    if cities_list is None:
+        return "Something is wrong with the database", 500
+    return jsonify(data=cities_list), 200
 
 @app.route("/api/add-favorite-place", methods=['POST','GET'])
 def addFavoritePlace():
@@ -201,7 +226,7 @@ def addFavoritePlace():
         return jsonify(business=business_wrapper.business), 200
 
 ####################################### Workout ######################################
-@app.route("/api/display-workout", methods=['POST','GET']) 
+@app.route("/api/display-workout", methods=['POST','GET'])
 def getWorkout():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the filters and getting the matched workout
@@ -254,7 +279,7 @@ def addFavoriteWorkout():
             return "Couldn't insert workout entry", 500
         return jsonify("Addition successful"), 200
 
-@app.route("/api/delete-workout", methods=['POST','GET']) 
+@app.route("/api/delete-workout", methods=['POST','GET'])
 def deleteWorkout():
     workout=request.get_json() #get workout for delete
     #connection with mongo sending the filters and deleting the workout
@@ -310,7 +335,7 @@ def manageAllBusinessesDisplay():
 @app.route("/api/manage-business-add-entry",methods=['POST','GET'])
 def manageBusinessAdd():
     entry=request.get_json() #get new entry
-    #connection with mongo getting the details for the new business 
+    #connection with mongo getting the details for the new business
     try:
         business_wrapper : BusinessWrapper = MongoDB.createNewBusiness(entry)
     except TypeError as type_err: #Checking for errors
@@ -438,4 +463,3 @@ if __name__ == '__main__':
     app.debug = True
     app.run()
     MongoDB.createMockDatabase()
-    
