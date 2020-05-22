@@ -47,14 +47,15 @@ export class SearchComponent implements OnInit {
   getResults() {
 
     this.searchService.getResults({category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
-      city: this.locationAutocomplete.getUserCityChoices()}).subscribe(res => {
+      city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
+        res => {
         const results = res.body.data;
         console.log(results);
     },
 
       error => {
         this.alertService.error(error);
-      });
+    });
 
   }
 

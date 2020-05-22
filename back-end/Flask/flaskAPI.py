@@ -176,8 +176,9 @@ def deleteMyprofile():
 def search():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the fitlers and return the matched place
+    print(filters)
     try:
-        business_wrapper_list : BusinessListWrapper = MongoDB.getBusinesses(filters)
+        business_wrapper_list : BusinessListWrapper = MongoDB.businessSearch(filters)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
