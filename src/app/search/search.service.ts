@@ -16,7 +16,7 @@ export class SearchService {
 
   getResults(filterData) {
     console.log(filterData);
-    return this.http.post<any>(`${environment.apiUrl}/getCountries`, filterData, {headers: {'Content-type': 'application/json'},
+    return this.http.post<any>(`${environment.apiUrl}/search`, filterData, {headers: {'Content-type': 'application/json'},
       observe: 'response'}).pipe(map((res: any) => {
       return res;
     }));

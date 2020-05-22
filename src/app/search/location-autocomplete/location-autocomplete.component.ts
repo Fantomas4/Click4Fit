@@ -76,10 +76,10 @@ export class LocationAutocompleteComponent implements OnInit {
   }
 
   getUserCountryChoices() {
-    return [this.countryFormControl.value];
+    return this.countryFormControl.value ? [this.countryFormControl.value] : [];
   }
 
   getUserCityChoices() {
-    return [this.cityFormControl.value];
+    return this.cityFormControl.value ? [this.cityFormControl.value] : [];
   }
 }
