@@ -435,6 +435,12 @@ class MongoDB:
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
 
+# print(mongo.businessSearch({
+#     "category": ["gym"],
+#     "country": ["Greece"],
+#     "city": ["Thessaloniki"]
+# }).business_list)
+
 # pprint(mongo.businessDB.db.distinct("country"))
 
 
