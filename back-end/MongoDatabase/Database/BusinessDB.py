@@ -112,11 +112,11 @@ class BusinessDB:
                         {key: {"$in": search_query[key]} for key in search_query.keys()}
                         ))
         except:
-            return BusinesstListWrapper(None, found=False, operationDone=False)
+            return BusinessListWrapper(None, found=False, operationDone=False)
         else:
             success = bool(results)
-            return BusinesstListWrapper(results, found=success, operationDone=success)
-
+            return BusinessListWrapper(results, found=success, operationDone=success)
+    
     def update(self, new_business: dict):
         """
         :param new_business:

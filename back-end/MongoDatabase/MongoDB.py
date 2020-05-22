@@ -318,13 +318,13 @@ class MongoDB:
         :return: a list with all distinct country values. Will return None if something failed in mongo
         """
         return self.businessDB.getDistinct("country")
-
+    
     def getCities(self):
         """
         :return: a list with all distinct city values. Will return None if something failed in mongo
         """
         return self.businessDB.getDistinct("city")
-
+    
     ################################################# Workout Methods ##################################################
 
     def createNewWorkout(self, workout: dict):
@@ -435,6 +435,12 @@ class MongoDB:
 # mongo.dropDatabases()
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
+
+# print(mongo.businessSearch({
+#     "category": ["gym"],
+#     "country": ["Greece"],
+#     "city": ["Thessaloniki"]
+# }).business_list)
 
 # pprint(mongo.businessDB.db.distinct("country"))
 
