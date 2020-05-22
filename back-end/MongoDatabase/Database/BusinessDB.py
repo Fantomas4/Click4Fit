@@ -42,7 +42,7 @@ class BusinessDB:
             "address"      : business["address"],
             "postalCode"  : business["postalCode"],
             "phoneNumber" : business["phoneNumber"],
-            "email"        : business["email"]
+            "email"        : business["email"],
             "imgPath"     : business["imgPath"],
             "services"     : business["services"],
             "products"     : business["products"]
