@@ -43,7 +43,7 @@ class BusinessDB:
             "postalCode"  : business["postalCode"],
             "phoneNumber" : business["phoneNumber"],
             "email"        : business["email"]
-            "img_path"     : business["img_path"],
+            "imgPath"     : business["imgPath"],
             "services"     : business["services"],
             "products"     : business["products"]
         }
