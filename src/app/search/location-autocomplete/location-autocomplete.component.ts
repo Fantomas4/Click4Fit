@@ -66,14 +66,20 @@ export class LocationAutocompleteComponent implements OnInit {
   }
 
   filterCountries(val: string): string[] {
-    console.log(this.countryOptions);
     return this.countryOptions.filter(option =>
       option.toLowerCase().indexOf(val.toLowerCase()) === 0);
   }
 
   filterCities(val: string): string[] {
-    console.log(this.cityOptions);
     return this.cityOptions.filter(option =>
       option.toLowerCase().indexOf(val.toLowerCase()) === 0);
+  }
+
+  getUserCountryChoices() {
+    return [this.countryFormControl.value];
+  }
+
+  getUserCityChoices() {
+    return [this.cityFormControl.value];
   }
 }

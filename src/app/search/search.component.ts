@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SearchService} from './search.service';
 import {BusinessEntry} from '../business-entry';
 import {FormControl} from '@angular/forms';
+import {LocationAutocompleteComponent} from './location-autocomplete/location-autocomplete.component';
+import {AlertService} from '../core/alert.service';
 
 
 @Component({
@@ -10,7 +12,8 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  @ViewChild(LocationAutocompleteComponent) locationAutocomplete; // Used to access LocationAutocompleteComponent
 
   myControl = new FormControl();
   searchResults: BusinessEntry[];
@@ -34,7 +37,7 @@ export class SearchComponent implements OnInit {
     },
   ];
 
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     // TEMP! FOR DEBUGGING ONLY!!!
@@ -43,9 +46,16 @@ export class SearchComponent implements OnInit {
 
   getResults() {
 
-    this.searchService.getResults(this.selectedOptions);
-    // this.searchService.getResults()
-    //   .subscribe(results => this.searchResults = results);
+    this.searchService.getResults({category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
+      city: this.locationAutocomplete.getUserCityChoices()}).subscribe(res => {
+        const results = res.body.data;
+        console.log(results);
+    },
+
+      error => {
+        this.alertService.error(error);
+      });
+
   }
 
   onToggleSidenav() {
