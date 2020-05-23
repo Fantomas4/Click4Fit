@@ -194,6 +194,16 @@ class MongoDB:
         self.validator.validate(user, "user")
         return self.userDB.getFavorite(user, "favoriteWorkout")
     
+    def addFavoriteBusiness(self, user: dict):
+        """
+        """
+        pass
+    
+    def addFavoriteWorkout(self, user: dict):
+        """
+        """
+        pass
+    
     def updateUser(self, new_user: dict):
         """
         Updates a user based on _id
@@ -434,6 +444,9 @@ class MongoDB:
 # mongo.dropDatabases()
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
+
+# mongo.userDB.db.update_one({"email": "nikosalex@gmail.com"}, {"$push": {'favoriteWorkout': "Squat"}})
+# pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
 
 # print(mongo.businessSearch({
 #     "category": ["gym"],

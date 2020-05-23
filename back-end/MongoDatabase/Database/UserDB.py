@@ -164,6 +164,17 @@ class UserDB:
             return None
         else:
             return favorites
+    
+    def addFavorite(self, user: dict, favorite: str, new_favorite: str):
+        """
+        """
+        # try:
+        #     self.db.update_one(user, {"$push": {favorite: new_favorite}})
+        # except:
+        #     return None
+        # else:
+        #     return True
+            
 
     def changePassword(self, user: dict, new_password: str):
         """
