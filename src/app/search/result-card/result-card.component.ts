@@ -12,22 +12,37 @@ export class ResultCardComponent implements OnInit {
 
   @Input() businessData: BusinessEntry;
 
-  cardTitle: string; // Card title text.
-  cardCategory: string; // Card category text.
-  cardCountry: string; // Card country text.
-  cardCity: string; // Card city text.
-  cardImagePath: string; // Card preview image path.
+  title: string; // Card title text.
+  category: string; // Card category text.
+  country: string; // Card country text.
+  city: string; // Card city text.
+  imgPath: string; // Card preview image path.
 
   constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     // Load data from businessData into the result card object's properties.
-    this.cardTitle = this.businessData.name;
-    this.cardCategory = this.businessData.category;
-    this.cardCountry = this.businessData.country;
-    this.cardCity = this.businessData.city;
-    this.cardImagePath = this.businessData.imgPath;
+    this.title = this.businessData.name;
+
+    // Change the "category" text to the appropriate format
+    switch(this.businessData.category) {
+      case 'gym':
+        this.category = 'Gym';
+        break;
+
+      case 'personal trainer':
+        this.category = 'Personal Trainer';
+        break;
+
+      case 'fitness shop':
+        this.category = 'Fitness Shop';
+        break;
+    }
+
+    this.country = this.businessData.country;
+    this.city = this.businessData.city;
+    this.imgPath = this.businessData.imgPath;
   }
 
   /**
@@ -37,8 +52,8 @@ export class ResultCardComponent implements OnInit {
     const dialogRef = this.dialog.open(DetailsDialogComponent, {
       width: '600px',
       data: {
-        name: this.businessData.name, category: this.businessData.category,
-        country: this.businessData.country, city: this.businessData.city, services:
+        name: this.title, category: this.category,
+        country: this.country, city: this.city, services:
         this.businessData.services, products: this.businessData.products
       }
     });
