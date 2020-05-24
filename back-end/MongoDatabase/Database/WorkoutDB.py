@@ -86,7 +86,7 @@ class WorkoutDB:
         """
         try:
             results = list(self.db.find(
-                        {key: {"$in": search_query[key]} for key in search_query.keys()}
+                        {key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}
                         ))
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)

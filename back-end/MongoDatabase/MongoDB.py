@@ -448,8 +448,8 @@ class MongoDB:
 # mongo.userDB.db.update_one({"email": "nikosalex@gmail.com"}, {"$push": {'favoriteWorkout': "Squat"}})
 # pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
 
-# print(mongo.businessSearch({
-#     "category": ["gym"],
+# pprint(mongo.businessSearch({
+#     "category": [],
 #     "country": ["Greece"],
 #     "city": ["Thessaloniki"]
 # }).business_list)
