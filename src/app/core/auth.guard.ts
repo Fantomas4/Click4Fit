@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     console.log('DIAG: state.url: ' + state.url);
     const currentUser = this.authenticationService.currentUserValue;
 
-    if (route.url.toString() === 'user' || route.url.toString() === 'admin') {
+    if (route.url.toString() === 'user' || route.url.toString() === 'admin' || route.url.toString() === 'business-owner') {
       // Authorization guard has to check if there is a logged in user with sufficient permissions
       // to access the guarded routes.
       if (currentUser) {
@@ -28,6 +28,8 @@ export class AuthGuard implements CanActivate {
         } else if (route.url.toString() === 'user' && currentUser.privilegeLevel === 'client') {
           // If the requested route is exclusive to client users and
           // the user currently logged in has a user privilege level, grant the access request.
+          return true;
+        } else if (route.url.toString() === 'business-owner' && currentUser.privilegeLevel === 'business') {
           return true;
         } else {
           // Not logged in so redirect to login page with the return url
@@ -45,7 +47,7 @@ export class AuthGuard implements CanActivate {
           case 'client':
             arg = 'user';
             break;
-          case 'business owner':
+          case 'business':
             arg = 'business-owner';
             break;
           case 'admin':

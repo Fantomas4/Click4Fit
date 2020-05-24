@@ -13,7 +13,7 @@ data = {
         'privilegeLevel': 'client', 'favoriteWorkout': ["push ups"], 'favoriteBusiness': [] },
 
        { 'name': 'Giorgos', 'surname': 'Andrianakis', 'email': 'gandrian@gmail.com',  'password': 'ga123456', 'birthdate': '02.06.1961' ,
-        'privilegeLevel': 'client', 'favoriteWorkout': [], 'favoriteBusiness': []},
+        'privilegeLevel': 'business', 'favoriteWorkout': [], 'favoriteBusiness': []},
 
        { 'name': 'Angelina', 'surname': 'Athanasiou', 'email': 'angath@gmail.com', 'password':'an123456','birthdate': '07.01.1991',
         'privilegeLevel': 'client', 'favoriteWorkout': [], 'favoriteBusiness': []},

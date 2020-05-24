@@ -84,6 +84,9 @@ export class LoginComponent implements OnInit, OnDestroy {
             console.log('login check 3');
             this.alertSubscription.unsubscribe();
             this.router.navigate(['/admin']);
+          } else if (this.authenticationService.currentUserValue.privilegeLevel === 'business') {
+            this.alertSubscription.unsubscribe();
+            this.router.navigate(['/business-owner']);
           }
         },
         error => {
