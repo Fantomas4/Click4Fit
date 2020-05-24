@@ -32,10 +32,10 @@
             Click the button above to choose filters <br> and find your workout!
         </p>
         <!-- The container of results cards -->
-        <div class="card-container">
+        <div class="card-container" *ngIf="isClicked">
             <!-- It is shown only when the user has clicked the search button -->
-            <div *ngIf="isClicked">
-                <app-result-card2 [filters]="content"></app-result-card2>
+            <div *ngFor="let entry of results">
+                <app-result-card2 [workoutEntry]="entry"></app-result-card2>
             </div>
         </div>
     </mat-drawer-content>

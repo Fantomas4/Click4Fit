@@ -8,14 +8,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   export class ResultCard2Service {
 
     results;
+    filters;
+   
     constructor(private http: HttpClient){}
 
-    /*getResults(jsonData){
-        this.results=jsonData;
+    getFilters(filters){
+      this.filters=filters;
     }
-    passResults(){
-        return this.results;
-    }*/
+    passFilters(){
+      return this.filters;
+    }
     postFilters(content): Observable<any>{
       const headers = {'content-type':'application/json'}; 
       const jsonData=JSON.stringify(content);
