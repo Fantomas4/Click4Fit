@@ -193,8 +193,87 @@ class MongoDB:
                 Will be None if something failed inside mongo.
         """
         self.validator.validate(user, "user")
-        return self.userDB.getFavorite(user, "favorite_workout")
+        return self.userDB.getFavorite(user, "favoriteWorkout")
+    
+    def addFavoriteBusiness(self, favorite_query: dict):
+        """
+        :param favorite_query: a dict containing the user and the new_favorite.
+                            Example: favorite_query = {
+                                        "user": {
+                                            "email"    : 'nikosalex@gmail.com',
+                                        },
+                                        "new_favorite" : {
+                                            'name': 'FitClub',
+                                            'category': 'gym',
+                                            'country': 'Greece',
+                                            'city': 'Thessaloniki',
+                                            'address': 'diagora 20',
+                                            'postalCode': '567 55',
+                                            'phoneNumber': '2310 634590',
+                                            'email': 'fitclub@gmail.com',
+                                            'imgPath': './assets/gym-preview.JPG',
+                                            'services': ['service_1', 'service_2'],
+                                            'products': ['product_1', 'product_2']
+                                        }
+                                    }
+                            user must contain an unique identifier (_id or email)
+        :return: True if successfull and False if something failed in mongo
+        """
+        if "user" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain user")
+        if "new_favorite" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain new favorite")
 
+        user: dict = favorite_query["user"]
+        favorite_business: dict = favorite_query["new_favorite"]
+
+        # validate user
+        self.validator.validate(user, "user")
+        # validate business
+        self.validator.validate(favorite_business, "business")
+        # make sure necessary attributes exist and are correct
+        if "email" not in user and "_id" not in user:
+            raise ValueError("user doesn't contain a unique identifier (email or _id)")
+        self.userDB.addFavorite(user, "favoriteBusiness", favorite_business)
+    
+    def addFavoriteWorkout(self, favorite_query: dict):
+        """
+        :param favorite_query: a dict containing the user and the new_favorite.
+                            Example: favorite_query = {
+                                        "user": {
+                                            "email"    : 'nikosalex@gmail.com',
+                                        },
+                                        "new_favorite" : {
+                                            "name": 'Hammer curls',
+                                            "category": "biceps",
+                                            "muscleGroups": ["branchialis", "forearms", "biceps"],
+                                            "advisedFor": 'women',
+                                            "difficulty": 'medium',
+                                            "equipment": True,
+                                            "sets": '4x15 10kg ',
+                                            "videoUrl": 'https://www.youtube.com/embed/iOwrtesXiDw'
+                                        }
+                                    }
+                            user must contain an unique identifier (_id or email)
+        :return: True if successfull and False if something failed in mongo
+        """
+        if "user" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain user")
+        if "new_favorite" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain new favorite")
+
+        user: dict = favorite_query["user"]
+        favorite_business: dict = favorite_query["new_favorite"]
+
+        # validate user
+        self.validator.validate(user, "user")
+        # validate workout
+        self.validator.validate(favorite_business, "workout")
+        # make sure necessary attributes exist and are correct
+        if "email" not in user and "_id" not in user:
+            raise ValueError("user doesn't contain a unique identifier (email or _id)")
+        self.userDB.addFavorite(user, "favoriteWorkout", favorite_business)
+    
     def updateUser(self, new_user: dict):
         """
         Updates a user based on _id
@@ -436,8 +515,29 @@ class MongoDB:
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
 
-# print(mongo.businessSearch({
-#     "category": ["gym"],
+# favorite_query = {
+#                 "user": {
+#                     "email"    : 'nikosalex@gmail.com',
+#                 },
+#                 "new_favorite" : {
+#                     "name": 'Hammer curls',
+#                     "category": "biceps",
+#                     "muscleGroups": ["branchialis", "forearms", "biceps"],
+#                     "advisedFor": 'women',
+#                     "difficulty": 'medium',
+#                     "equipment": True,
+#                     "sets": '4x15 10kg ',
+#                     "videoUrl": 'https://www.youtube.com/embed/iOwrtesXiDw'
+#                 }
+#             }
+# mongo.addFavoriteWorkout(favorite_query)
+# pprint(mongo.userDB.db.find_one(favorite_query["user"]))
+
+# mongo.userDB.db.update_one({"email": "nikosalex@gmail.com"}, {"$push": {'favoriteWorkout': "Squat"}})
+# pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
+
+# pprint(mongo.businessSearch({
+#     "category": [],
 #     "country": ["Greece"],
 #     "city": ["Thessaloniki"]
 # }).business_list)
