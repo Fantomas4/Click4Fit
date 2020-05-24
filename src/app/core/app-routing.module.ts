@@ -16,6 +16,7 @@ import {ManageBusinessEntriesComponent} from '../manage-business-entries/manage-
 import {ManageUserEntriesComponent} from '../manage-user-entries/manage-user-entries.component';
 import {AuthGuard} from './auth.guard';
 import {ErrorPageComponent} from '../error-page/error-page.component';
+import {ManageMyBusinessComponent} from '../manage-my-business/manage-my-business.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -32,6 +33,11 @@ const routes: Routes = [
       {path: 'myprofile', component: MyprofileComponent},
       {path: 'search', component: SearchComponent},
       {path: 'workout', component: WorkoutComponent }
+    ]},
+  {path: 'business-owner', component: UserMainViewComponent, canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'manage-my-business', pathMatch: 'full' },
+      {path: 'manage-my-business', component: ManageMyBusinessComponent}
     ]},
   {path: 'admin', component: UserMainViewComponent, canActivate: [AuthGuard],
     children: [

@@ -45,6 +45,9 @@ export class AuthGuard implements CanActivate {
           case 'client':
             arg = 'user';
             break;
+          case 'business owner':
+            arg = 'business-owner';
+            break;
           case 'admin':
             arg = 'admin';
             break;

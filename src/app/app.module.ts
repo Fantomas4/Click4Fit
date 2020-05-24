@@ -55,6 +55,7 @@ import {JwtInterceptor} from './core/jwt.interceptor';
 import {ErrorInterceptor} from './core/error.interceptor';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS} from '@angular/material-moment-adapter';
+import { ManageMyBusinessComponent } from './manage-my-business/manage-my-business.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import {MAT_MOMENT_DATE_FORMATS} from '@angular/material-moment-adapter';
     HomepageComponent,
     ErrorPageComponent,
     RecoverDialogMessageComponent,
-    ContactUsDialogMessageComponent
+    ContactUsDialogMessageComponent,
+    ManageMyBusinessComponent
   ],
   imports: [
     BrowserModule,
