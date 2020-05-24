@@ -46,8 +46,10 @@ export class SearchComponent implements OnInit {
   }
 
   getResults() {
-    this.searchService.getResults({keywords: this.searchKeywords.value.split(' '), category: this.selectedOptions,
-      country: this.locationAutocomplete.getUserCountryChoices(), city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
+
+    this.searchService.getResults({keywords: this.searchKeywords.value === null ? [] : this.searchKeywords.value.split(' '),
+      category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
+      city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
         res => {
         this.searchResults = res.body.data;
     },
