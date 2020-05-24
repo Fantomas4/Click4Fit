@@ -167,13 +167,17 @@ class UserDB:
     
     def addFavorite(self, user: dict, favorite: str, new_favorite: str):
         """
+        :param user:
+        :param favorite:
+        :param new_favorite:
+        :return:
         """
-        # try:
-        #     self.db.update_one(user, {"$push": {favorite: new_favorite}})
-        # except:
-        #     return None
-        # else:
-        #     return True
+        try:
+            self.db.update_one(user, {"$push": {favorite: new_favorite}})
+        except:
+            return False
+        else:
+            return True
             
 
     def changePassword(self, user: dict, new_password: str):
