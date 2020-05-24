@@ -1,0 +1,32 @@
+.management-card {
+  margin: 2.5%;
+}
+
+.filter-field {
+  font-size: large;
+  width: 100%;
+}
+
+.table-container {
+  height: 100%;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.alert-error-text {
+  color: red;
+  font-weight: bold;
+  text-align:center;
+}
+.alert-success-text {
+  color: green;
+  font-weight: bold;
+  text-align:center;
+}

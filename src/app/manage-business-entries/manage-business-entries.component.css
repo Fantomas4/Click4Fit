@@ -19,6 +19,7 @@ table {
 td, th {
   width: 25%;
 }
+
 .alert-error-text {
   color: red;
   font-weight: bold;
