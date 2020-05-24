@@ -36,9 +36,10 @@ export class MyprofileComponent implements OnInit {
   newPassword: string;
   newRepeatedPassword: string;
   content;
+  jsonData;
   results;
   picker;
-  emailuser;
+  user:string;
   id: string;
   message;
   alertMessage: AlertMessage;
@@ -58,8 +59,9 @@ export class MyprofileComponent implements OnInit {
         };
       }
     });
-    this.emailuser = { "email": "angath@gmail.com" };
-    this.myprofileService.displayUser(this.emailuser).subscribe(data => {
+    this.jsonData=JSON.parse(sessionStorage.getItem('currentUser'));
+    this.user=this.jsonData.email;
+    this.myprofileService.displayUser(this.user).subscribe(data => {
       this.results = data.user;
       this.id = this.results._id;
       this.name = this.results.name;

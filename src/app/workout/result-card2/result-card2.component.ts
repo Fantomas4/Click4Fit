@@ -4,10 +4,6 @@ import { AlertService } from '../../core/alert.service';
 import { Subscription } from 'rxjs';
 import { ResultCard2Service } from './result-card2.service';
 
-interface AlertMessage {
-  type: string;
-  text: string;
-}
 
 @Component({
   selector: 'app-result-card2',
@@ -16,26 +12,11 @@ interface AlertMessage {
 })
 export class ResultCard2Component implements OnInit {
 
-  /*@Input() legsWorkoutResults;
-  @Input() chestWorkoutResults;
-  @Input() backWorkoutResults;
-  @Input() shouldersWorkoutResults;
-  @Input() bicepsWorkoutResults;
-  @Input() tricepsWorkoutResults;
-  @Input() absWorkoutResults;
-  @Input() coreWorkoutResults;
-  @Input() legsIsEmpty;
-  @Input() backIsEmpty;
-  @Input() chestIsEmpty;
-  @Input() shouldersIsEmpty;
-  @Input() bicepsIsEmpty;
-  @Input() tricepsIsEmpty;
-  @Input() absIsEmpty;
-  @Input() coreIsEmpty;
-  @Input() noResults;*/
   @Input() workoutEntry;
 
-
+  user:string;
+  jsonData;
+  content;
   name: string;
   category:string;
   muscleGroups:[];
@@ -45,14 +26,11 @@ export class ResultCard2Component implements OnInit {
   videoUrl:string;
   equipment:boolean;
   i: number;
-  alertMessage: AlertMessage;
-  alertSubscription: Subscription;
   favorite = false;
 
 
   //DomSanitizer helps to pass url video safe
-  constructor(public sanitizer: DomSanitizer, private resultCardSrvice: ResultCard2Service,
-    private alertService: AlertService, private changeDetector: ChangeDetectorRef) { }
+  constructor(public sanitizer: DomSanitizer, private resultCardSrvice: ResultCard2Service) { }
 
   ngOnInit(): void {
     this.name=this.workoutEntry.name;
@@ -65,34 +43,18 @@ export class ResultCard2Component implements OnInit {
     this.sets=this.workoutEntry.sets;
 
   }
-  /*ngOnChanges(changes: SimpleChanges): void {
-    //},
-    /*error=>{
-      this.noResults=true;
-      this.alertService.error(error.error);
-    });
-    console.log('yes');
-    console.log(this.legsWorkoutResults);
-    console.log(this.chestWorkoutResults);
-  }*/
 
   onClick(entry) {
-    this.resultCardSrvice.addFavoriteWorkout(entry).toPromise().then((data: any) => {
+    this.jsonData=JSON.parse(sessionStorage.getItem('currentUser'));
+    this.user=this.jsonData.email;
+    this.content={"user":{"email":this.user}, "new_favorite":{"name":entry.name, "category":entry.category,
+    "muscleGroups":entry.muscleGroups, "advisedFor":entry.advisedFor, "difficulty":entry.difficulty,
+    "equipment":entry.equipment, "sets":entry.sets, "videoUrl":entry.videoUrl}};
+    this.resultCardSrvice.addFavoriteWorkout(this.content).toPromise().then((data: any) => {
       if (data.response == 200) {
         this.favorite = true;
       }
     });
   }
-  arraysInitialization() {
-    /*this.legsWorkoutResults.length = 0;
-    this.backWorkoutResults.length = 0;
-    this.chestWorkoutResults.length = 0;
-    this.shouldersWorkoutResults.length = 0;
-    this.bicepsWorkoutResults.length = 0;
-    this.tricepsWorkoutResults.length = 0;
-    this.absWorkoutResults.length = 0;
-    this.coreWorkoutResults.length = 0;*/
-  }
-
 
 }

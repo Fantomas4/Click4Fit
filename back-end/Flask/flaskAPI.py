@@ -208,10 +208,10 @@ def getCities():
 
 @app.route("/api/add-favorite-place", methods=['POST','GET'])
 def addFavoritePlace():
-    place=request.get_json() #get favorite place
+    entry=request.get_json() #get favorite place
     #connection with mongo sending the place and adding to favorites
     try:
-        business_wrapper: BusinessWrapper = MongoDB.createWorkout(place)
+        business = MongoDB.addFavoriteBusiness(entry)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -219,11 +219,9 @@ def addFavoritePlace():
     except:
         return "Bad error", 500
     else:
-        if business_wrapper.business is None:
-            return "Something is wrong with the database", 500
-        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return "Couldn't add business", 500
-        return jsonify(business=business_wrapper.business), 200
+        if business is False:
+            return "Couldn't insert business entry", 500
+        return jsonify("Addition successful"), 200
 
 ####################################### Workout ######################################
 @app.route("/api/display-workout", methods=['POST','GET'])
@@ -262,10 +260,11 @@ def createWorkout():
 
 @app.route("/api/add-favorite-workout", methods=['POST','GET'])
 def addFavoriteWorkout():
-    workout=request.get_json() #get new workout
+    entry=request.get_json() #get new workout
+    print(entry)
     #connection with mongo sending the filters and creating the workout
     try:
-        workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
+        workout = MongoDB.addFavoriteWorkout(entry)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -273,9 +272,7 @@ def addFavoriteWorkout():
     except:
         return "Bad error", 500
     else:
-        if workout_wrapper.workout is None:
-            return "Something is wrong with the database", 500
-        if type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
+        if workout is False:
             return "Couldn't insert workout entry", 500
         return jsonify("Addition successful"), 200
 

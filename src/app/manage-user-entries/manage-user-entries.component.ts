@@ -142,6 +142,9 @@ export class ManageUserEntriesComponent implements OnInit {
       this.result = result.save;
       if (this.result == true) {
         this.manageUserEntriesService.updateEntry(result.details).toPromise().then(data => {
+          this.getUsersEntries();
+          this.dataSource.paginator = this.paginator; 
+          this.dataSource.sort = this.sort;
           this.alertService.success(data);
         },
           error => {
@@ -158,6 +161,9 @@ export class ManageUserEntriesComponent implements OnInit {
     this.content={"email":this.selected};
     this.manageUserEntriesService.deleteEntries(this.content).toPromise().then(data=>
     {
+      this.getUsersEntries();
+      this.dataSource.paginator = this.paginator; 
+      this.dataSource.sort = this.sort;
       this.alertService.success(data);
     },
     error => {

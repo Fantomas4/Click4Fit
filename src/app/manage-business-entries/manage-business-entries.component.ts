@@ -9,7 +9,7 @@ import {BusinessAddEntryDialogComponent} from './business-add-entry-dialog/busin
 import {ManageBusinessEntriesService} from './manage-business-entries.service';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
-import {Router} from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
 
 interface AlertMessage {
   type: string;
@@ -49,10 +49,12 @@ export class ManageBusinessEntriesComponent implements OnInit {
   result:boolean;
   i:number;
   content;
+  mySubscription;
   
 
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog,
-    private alertService: AlertService, private router:Router) {}
+    private alertService: AlertService, private router:Router) {
+    }
 
   /** Method used to change the dialog's height and width according to
    * the window's size.
@@ -86,6 +88,11 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.getBusinessEntries();
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
+  }
+  ngOnDestroy(){
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 
   /**
@@ -150,6 +157,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
       this.result = result.save;
       if (this.result == true) {
         this.manageBusinessEntriesService.updateEntry(result.details).toPromise().then(data => {
+          this.getBusinessEntries();
+          this.dataSource.paginator = this.paginator; 
+          this.dataSource.sort = this.sort;
           this.alertService.success(data);
         },
           error => {
@@ -168,6 +178,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
         this.result = result.save;
         if (this.result == true) {
           this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
+            this.getBusinessEntries();
+            this.dataSource.paginator = this.paginator; 
+            this.dataSource.sort = this.sort;
             this.alertService.success(data);
           },
             error => {
@@ -186,6 +199,10 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.content={"email":this.selected};
     this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data =>
     {
+      this.getBusinessEntries();
+      this.dataSource.paginator = this.paginator; 
+      this.dataSource.sort = this.sort;
+      this.alertService.success(data);
       this.alertService.success(data);
     },
     error => {

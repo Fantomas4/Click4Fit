@@ -1,18 +1,15 @@
 <!-- The general container with all cards-->
-<!--<div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-    *ngIf="noResults">{{alertMessage.text}}
-</div>-->
 <mat-card>
     <mat-card-title class="exercise-title">
         {{name}}<button mat-icon-button *ngIf="!favorite" (click)="onClick(workoutEntry)"><mat-icon class="icon">favorite_border</mat-icon></button>
         <button mat-icon-button *ngIf="favorite"><mat-icon class="icon">favorite</mat-icon></button><br>
         <mat-chip-list>
-            <mat-chip>{{category}}</mat-chip>
-            <mat-chip>{{advisedFor}}</mat-chip>
-            <mat-chip *ngIf="!equipment">no equipment</mat-chip>
-            <mat-chip *ngIf="equipment">with equipment</mat-chip>
-            <mat-chip>{{difficulty}}</mat-chip>
-            <mat-chip *ngFor="let muscleGroup of muscleGroups">{{muscleGroup}}</mat-chip>
+            <mat-chip class="chip">{{category}}</mat-chip>
+            <mat-chip class="chip">{{advisedFor}}</mat-chip>
+            <mat-chip *ngIf="!equipment" class="chip">no equipment</mat-chip>
+            <mat-chip *ngIf="equipment" class="chip">with equipment</mat-chip>
+            <mat-chip  class="chip">{{difficulty}}</mat-chip>
+            <mat-chip *ngFor="let muscleGroup of muscleGroups" class="chip">{{muscleGroup}}</mat-chip>
         </mat-chip-list>
     </mat-card-title>
     <mat-card-content>

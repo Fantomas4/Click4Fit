@@ -2,9 +2,10 @@
 
 /*!* The  card *!*/
 .mat-card {
-    width: 100%;
+    width: 50%;
     height: 100%;
     box-sizing: border-box;
+    background-color: lightgray;
 }
 .exercise-title{
     font-size:22px;
@@ -20,12 +21,8 @@
     font-style: italic;
     font-size:16px;
 }
-#alert-message {
-    margin-top: 2%;
-}
-.alert-error-text {
-    color: red;
-    font-weight: bold;
+.chip{
+    background-color: white;
 }
 
 /*!* Configuration only for mobile view *!*/

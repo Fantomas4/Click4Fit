@@ -18,9 +18,9 @@ export class ManageUserEntriesService {
   getResults(): Observable<any> {
     return this.http.get('http://localhost:5000/api/manage-user-display-entries');
   }
-  deleteEntries(id): Observable<any> {
+  deleteEntries(content): Observable<any> {
     const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(id);
+    const jsonData = JSON.stringify(content);
     return this.http.post('http://localhost:5000/api/manage-user-delete-entries', jsonData, { 'headers': headers });
   }
   updateEntry(content): Observable<any> {

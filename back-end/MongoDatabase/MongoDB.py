@@ -234,7 +234,7 @@ class MongoDB:
         # make sure necessary attributes exist and are correct
         if "email" not in user and "_id" not in user:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
-        self.userDB.addFavorite(user, "favoriteBusiness", favorite_business)
+        return self.userDB.addFavorite(user, "favoriteBusiness", favorite_business)
     
     def addFavoriteWorkout(self, favorite_query: dict):
         """
@@ -263,16 +263,16 @@ class MongoDB:
             raise ValueError("favorite_query doesn't contain new favorite")
 
         user: dict = favorite_query["user"]
-        favorite_business: dict = favorite_query["new_favorite"]
+        favorite_workout: dict = favorite_query["new_favorite"]
 
         # validate user
         self.validator.validate(user, "user")
         # validate workout
-        self.validator.validate(favorite_business, "workout")
+        self.validator.validate(favorite_workout, "workout")
         # make sure necessary attributes exist and are correct
         if "email" not in user and "_id" not in user:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
-        self.userDB.addFavorite(user, "favoriteWorkout", favorite_business)
+        return self.userDB.addFavorite(user, "favoriteWorkout", favorite_workout)
     
     def updateUser(self, new_user: dict):
         """
@@ -328,7 +328,7 @@ class MongoDB:
         """
         self.validator.validate(business, "business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
-                            "phoneNumber","email", "imgPath"]:
+                            "phoneNumber","email"]: #imgPath
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")

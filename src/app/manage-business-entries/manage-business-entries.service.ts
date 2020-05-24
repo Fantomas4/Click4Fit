@@ -16,7 +16,7 @@ export class ManageBusinessEntriesService {
   deleteEntries(content): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const jsonData = JSON.stringify(content);
-    return this.http.post('http://localhost:5000/api/manage-business-delete-entry', jsonData, { 'headers': headers });
+    return this.http.post('http://localhost:5000/api/manage-business-delete-entries', jsonData, { 'headers': headers });
   }
   updateEntry(content): Observable<any> {
     const headers = { 'content-type': 'application/json' };

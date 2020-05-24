@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   favoritePlacesResults = [];
   workoutIsEmpty = false;
   placeIsEmpty = false;
-
+  jsonData;
   CurrentTime: any;
   user;
 
@@ -30,7 +30,8 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.user = { "email": "pauloskostop@gmail.com" }
+    this.jsonData=JSON.parse(sessionStorage.getItem('currentUser'));
+    this.user=this.jsonData.email;
     this.dashboardService.getFavoriteWorkout(this.user).subscribe(data => {
       this.favoriteWorkoutResults = data.workoutList;
       if (this.favoriteWorkoutResults.length == 0) {
