@@ -233,7 +233,7 @@ class MongoDB:
         # make sure necessary attributes exist and are correct
         if "email" not in user and "_id" not in user:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
-        self.userDB.addFavorite(user, "favoriteBusiness", favorite_business)
+        return self.userDB.addFavorite(user, "favoriteBusiness", favorite_business)
     
     def addFavoriteWorkout(self, favorite_query: dict):
         """
@@ -271,7 +271,7 @@ class MongoDB:
         # make sure necessary attributes exist and are correct
         if "email" not in user and "_id" not in user:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
-        self.userDB.addFavorite(user, "favoriteWorkout", favorite_business)
+        return self.userDB.addFavorite(user, "favoriteWorkout", favorite_business)
     
     def updateUser(self, new_user: dict):
         """
@@ -507,30 +507,30 @@ class MongoDB:
 
 
 
-# from pprint import pprint
+from pprint import pprint
 
-# mongo = MongoDB()
-# mongo.dropDatabases()
-# returned_data = mongo.createMockDatabase()
+mongo = MongoDB()
+mongo.dropDatabases()
+returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
 
-# favorite_query = {
-#                 "user": {
-#                     "email"    : 'nikosalex@gmail.com',
-#                 },
-#                 "new_favorite" : {
-#                     "name": 'Hammer curls',
-#                     "category": "biceps",
-#                     "muscleGroups": ["branchialis", "forearms", "biceps"],
-#                     "advisedFor": 'women',
-#                     "difficulty": 'medium',
-#                     "equipment": True,
-#                     "sets": '4x15 10kg ',
-#                     "videoUrl": 'https://www.youtube.com/embed/iOwrtesXiDw'
-#                 }
-#             }
-# mongo.addFavoriteWorkout(favorite_query)
-# pprint(mongo.userDB.db.find_one(favorite_query["user"]))
+favorite_query = {
+                "user": {
+                    "email"    : 'nikosalex@gmail.com',
+                },
+                "new_favorite" : {
+                    "name": 'Hammer curls',
+                    "category": "biceps",
+                    "muscleGroups": ["branchialis", "forearms", "biceps"],
+                    "advisedFor": 'women',
+                    "difficulty": 'medium',
+                    "equipment": True,
+                    "sets": '4x15 10kg ',
+                    "videoUrl": 'https://www.youtube.com/embed/iOwrtesXiDw'
+                }
+            }
+mongo.addFavoriteWorkout(favorite_query)
+pprint(mongo.userDB.db.find_one(favorite_query["user"]))
 
 # mongo.userDB.db.update_one({"email": "nikosalex@gmail.com"}, {"$push": {'favoriteWorkout': "Squat"}})
 # pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
