@@ -39,7 +39,7 @@ export class MyprofileComponent implements OnInit {
   jsonData;
   results;
   picker;
-  user:string;
+  user;
   id: string;
   message;
   alertMessage: AlertMessage;
@@ -60,7 +60,7 @@ export class MyprofileComponent implements OnInit {
       }
     });
     this.jsonData=JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user=this.jsonData.email;
+    this.user={"email":this.jsonData.email};
     this.myprofileService.displayUser(this.user).subscribe(data => {
       this.results = data.user;
       this.id = this.results._id;

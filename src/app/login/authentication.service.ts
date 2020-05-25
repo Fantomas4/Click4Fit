@@ -36,11 +36,11 @@ export class AuthenticationService {
 
     const user: UserEntry = {
       id: 1,
-      name: 'Giorgos',
-      lastname: 'Papadopoulos',
-      email: 'giorgospapad@gmail.com',
-      password: 'gp123456',
-      birthdate: '04,16,1997',
+      name: 'Nikos',
+      lastname: 'Alexopoulos',
+      email: 'nikosalex@gmail.com',
+      password: 'na123456',
+      birthdate: '16.04.1997',
       privilegeLevel: 'client',
       token: 'd2d232d22d2'};
 

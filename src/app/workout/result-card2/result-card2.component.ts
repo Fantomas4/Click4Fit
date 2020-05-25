@@ -50,10 +50,11 @@ export class ResultCard2Component implements OnInit {
     this.content={"user":{"email":this.user}, "new_favorite":{"name":entry.name, "category":entry.category,
     "muscleGroups":entry.muscleGroups, "advisedFor":entry.advisedFor, "difficulty":entry.difficulty,
     "equipment":entry.equipment, "sets":entry.sets, "videoUrl":entry.videoUrl}};
-    this.resultCardSrvice.addFavoriteWorkout(this.content).toPromise().then((data: any) => {
-      if (data.response == 200) {
-        this.favorite = true;
-      }
+    this.resultCardSrvice.addFavoriteWorkout(this.content).toPromise().then(data => {
+      this.favorite=true;
+    },
+    error=>{
+
     });
   }
 

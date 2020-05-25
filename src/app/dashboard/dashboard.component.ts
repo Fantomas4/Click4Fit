@@ -31,25 +31,23 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.jsonData=JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user=this.jsonData.email;
+    this.user={"email":this.jsonData.email};
     this.dashboardService.getFavoriteWorkout(this.user).subscribe(data => {
       this.favoriteWorkoutResults = data.workoutList;
-      if (this.favoriteWorkoutResults.length == 0) {
-        this.workoutIsEmpty = true;
-      }
     },
     error=>{
-
     });
+    if (this.favoriteWorkoutResults.length == 0) {
+      this.workoutIsEmpty = true;
+    }
     this.dashboardService.getFavoritePlaces(this.user).subscribe(data => {
       this.favoritePlacesResults = data.businessList;
-      if (this.favoritePlacesResults.length == 0) {
-        this.placeIsEmpty = true;
-      }
     },
     error=>{
-      
     });
+    if (this.favoritePlacesResults.length == 0) {
+      this.placeIsEmpty = true;
+    }
     //gets the favrorites workout results from dashboard.service and adds them to an array
     //this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
     //gets the favorites places results from dashboard.service and adds them to an array
