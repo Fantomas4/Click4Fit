@@ -41,7 +41,8 @@ class MongoDB:
         While inserting the user gets an unique identifier attribute _id, which will be contained in the user dict
         returned in the UserWrapper. This process will hash the users password before inserting it in the database.
 
-        :param user: a dictionary containing at least valid "name", "surname", "email", "password" and "birthdate"
+        :param user: a dictionary containing at least valid "name", "surname", "email", "password", "birthdate" and
+                                                                                                     "privilegeLevel"   
         :return: UserWrapper
                 .user: containing created user dict if inserted, else empty dict.
                        Will contain None if something failed inside mongo.
@@ -49,7 +50,7 @@ class MongoDB:
                 .operationDone: will be true if insertion was successfull, else false
         """
         self.validator.validate(user, "user")
-        for attribute in ["name", "surname", "email", "password", "birthdate"]:
+        for attribute in ["name", "surname", "email", "password", "birthdate", "privilegeLevel"]:
             if attribute not in user:
                 raise ValueError("user doesn't contain " + attribute +
                                 " attribute, which is needed for registration")
@@ -92,7 +93,7 @@ class MongoDB:
                 .user: a dict containing the updated user with the new password (hashed) if successfull, else
                         empty dict. Will contain None if something failed in mongo
                 .found: will be true if a user could be found with the unique identifier, else false
-                .operationDOne: will be true if password was changed successfully, else false
+                .operationDone: will be true if password was changed successfully, else false
         """
         if "user" not in change_query:
             raise ValueError("change_query doesn't contain user")
@@ -234,7 +235,7 @@ class MongoDB:
         # make sure necessary attributes exist and are correct
         if "email" not in user and "_id" not in user:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
-        self.userDB.addFavorite(user, "favoriteBusiness", favorite_business)
+        return self.userDB.addFavorite(user, "favoriteBusiness", favorite_business)
     
     def addFavoriteWorkout(self, favorite_query: dict):
         """
@@ -272,7 +273,7 @@ class MongoDB:
         # make sure necessary attributes exist and are correct
         if "email" not in user and "_id" not in user:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
-        self.userDB.addFavorite(user, "favoriteWorkout", favorite_business)
+        return self.userDB.addFavorite(user, "favoriteWorkout", favorite_business)
     
     def updateUser(self, new_user: dict):
         """
@@ -320,28 +321,66 @@ class MongoDB:
         return self.userDB.deleteMany(delete_query)
 
     ################################################# Business Methods ##################################################
-
-    def createNewBusiness(self, business: dict):
+    
+    def createNewBusiness(self, create_query: dict):
         """
-        :param business:
+        :param create_query:
+        {
+            user: {
+                "_id": "users id"
+            },
+            business: {
+                'name': 'FitClub',
+                'category': 'gym',
+                'country': 'Greece',
+                'city': 'Thessaloniki',
+                'address': 'diagora 20',
+                'postalCode': '567 55',
+                'phoneNumber': '2310 634590',
+                'email': 'fitclub@gmail.com',
+                'imgPath': './assets/gym-preview.JPG',
+                'services': ['service_1', 'service_2'],
+                'products': ['product_1', 'product_2']
+            }
+        }
         :return:
         """
+        if "user" not in create_query:
+            raise ValueError("create_query doesn't contain owner")
+        if "business" not in create_query:
+            raise ValueError("create_query doesn't contain business")
+        user = create_query["user"]
+        business = create_query["business"]
+        self.validator.validate(user, "user")
         self.validator.validate(business, "business")
+        user_wrapper = self.userDB.get(user)
+        if not user_wrapper.operationDone:
+            raise ValueError(user + " owner doesn't exist in db")
+        if user_wrapper.user["privilegeLevel"] != "business":
+            raise ValueError(user + " has not the privilegeLevel to add a business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
                             "phoneNumber","email", "imgPath"]:
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute +
                                 " attribute, which is needed for creation")
-        return self.businessDB.create(business)
+        business_wrapper = self.businessDB.create(business)
+        if business_wrapper.operationDone:
+            business_wrapper.operationDone = self.userDB.addBusiness(
+                user, business_wrapper.business["_id"])
+        return business_wrapper
 
     def businessSearch(self, search_query: dict):
         """
         :param search_query:
         :return:
         """
+        if "keywords" not in search_query:
+            raise ValueError("search_query doesn't contain keywords")
+        keywords = search_query["keywords"]
+        del search_query["keywords"]
         self.validator.validate_filter(search_query, "business")
-        return self.businessDB.search(search_query)
-
+        return self.businessDB.search(search_query, keywords)
+    
     def getBusiness(self, business_query: dict):
         """
         :param business_query:
@@ -374,15 +413,16 @@ class MongoDB:
             raise ValueError("new_business doesn't contain _id attribute, which is needed for updating")
         return self.businessDB.update(new_business)
 
-    def deleteBusiness(self, business: dict):
-        """
-        :param business:
-        :return:
-        """
-        self.validator.validate(business, "business")
-        if "_id" not in business:
-            raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
-        return self.businessDB.delete(business)
+    #TODO: DELETE THIS
+    # def deleteBusiness(self, business: dict):
+    #     """
+    #     :param business:
+    #     :return:
+    #     """
+    #     self.validator.validate(business, "business")
+    #     if "_id" not in business:
+    #         raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
+    #     return self.businessDB.delete(business)
 
     def deleteBusinesses(self, delete_query: dict):
         """
@@ -492,7 +532,10 @@ class MongoDB:
             else:
                 print("Could not insert user: " + str(user))
         for business in data["business"]:
-            business_wrapper = self.createNewBusiness(business)
+            business_wrapper = self.createNewBusiness({
+                "user": {"email" : 'nikosalex@gmail.com'},
+                "business" : business
+                })
             if (business_wrapper.operationDone):
                 returned_data["business"].append(business_wrapper.business)
             else:
@@ -514,6 +557,23 @@ class MongoDB:
 # mongo.dropDatabases()
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
+# pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
+
+
+# search_query = {
+#     "keywords" : "Gym",
+#     "category": [],
+#     "country": ["Greece"],
+#     "city": ["Thessaloniki"]
+# }
+
+# keywords = search_query["keywords"]
+# del search_query["keywords"]
+
+# mongo.businessDB.db.create_index([('name', 'text')])
+
+# results = list(mongo.businessDB.db.find({key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}))
+# pprint(list(mongo.businessDB.db.find({"$text": {"$search": keywords}})))
 
 # favorite_query = {
 #                 "user": {
