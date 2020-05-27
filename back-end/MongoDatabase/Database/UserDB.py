@@ -70,10 +70,14 @@ class UserDB:
             "email"            : user["email"],
             "password"         : self._hashPassword(user["password"]), # hash and salt password
             "birthdate"        : user["birthdate"],
-            "privilegeLevel"   : user.get("privilegeLevel", "client"), # default value of "client"
+            "privilegeLevel"   : user["privilegeLevel"],
             "favoriteWorkout"  : user.get("favoriteWorkout", []),
             "favoriteBusiness" : user.get("favoriteBusiness", [])
         }
+        if not user["birthdate"]:
+            del user["birthdate"]
+        if user["privilegeLevel"] == "business":
+            user["businessList"] = []
         try:
             insert_result: InsertOneResult = self.db.insert_one(user) # inserting user
         except:
@@ -174,6 +178,19 @@ class UserDB:
         """
         try:
             self.db.update_one(user, {"$push": {favorite: new_favorite}})
+        except:
+            return False
+        else:
+            return True
+        
+    def addBusiness(self, user: dict, new_business: str):
+        """
+        :param user:
+        :param new_business:
+        :return:
+        """
+        try:
+            self.db.update_one(user, {"$push": {"businessList": new_business}})
         except:
             return False
         else:
