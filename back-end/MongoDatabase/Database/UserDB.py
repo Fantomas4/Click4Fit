@@ -63,28 +63,27 @@ class UserDB:
         """
         if self._findByEmail(user["email"]): # Checks if user already exists
             return UserWrapper({}, found=True, operationDone=False)
-        user = {
+        _user = {
             "_id"              : str(ObjectId()),
             "name"             : user["name"],
             "surname"          : user["surname"],
             "email"            : user["email"],
             "password"         : self._hashPassword(user["password"]), # hash and salt password
-            "birthdate"        : user["birthdate"],
             "privilegeLevel"   : user["privilegeLevel"],
             "favoriteWorkout"  : user.get("favoriteWorkout", []),
             "favoriteBusiness" : user.get("favoriteBusiness", [])
         }
-        if not user["birthdate"]:
-            del user["birthdate"]
-        if user["privilegeLevel"] == "business":
-            user["businessList"] = []
+        if "birthdate" in user:
+            _user["birthdate"] = user["birthdate"]
+        if _user["privilegeLevel"] == "business":
+            _user["businessList"] = []
         try:
-            insert_result: InsertOneResult = self.db.insert_one(user) # inserting user
+            insert_result: InsertOneResult = self.db.insert_one(_user) # inserting user
         except:
             return UserWrapper(None, found=False, operationDone=False)
         else:
             if insert_result.acknowledged:
-                return UserWrapper(user, found=False, operationDone=True) # success!
+                return UserWrapper(_user, found=False, operationDone=True) # success!
             return UserWrapper({}, found=False, operationDone=False)
 
     def logIn(self, user_credentials: dict):

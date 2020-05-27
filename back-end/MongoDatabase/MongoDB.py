@@ -49,7 +49,7 @@ class MongoDB:
                 .operationDone: will be true if insertion was successfull, else false
         """
         self.validator.validate(user, "user")
-        for attribute in ["name", "surname", "email", "password", "birthdate", "privilegeLevel"]:
+        for attribute in ["name", "surname", "email", "password", "privilegeLevel"]:
             if attribute not in user:
                 raise ValueError("user doesn't contain " + attribute + 
                                 " attribute, which is needed for registration")
