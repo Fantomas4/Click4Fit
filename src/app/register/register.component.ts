@@ -77,6 +77,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }, [matchingPasswordsValidator]
   );
 
+  selectedType = 'client';
+
   genericErrorStateMatcher = new GenericErrorStateMatcher();
   passwordsErrorStateMatcher = new PasswordsErrorStateMatcher();
   alertSubscription: Subscription;
@@ -110,15 +112,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
       if (this.registerForm.get('birthDate').value !== null) {
         birthDateString = JSON.stringify(this.registerForm.get('birthDate').value.toLocaleString('fr')).substring(1, 11);
+      } else {
+        birthDateString = '';
       }
 
-      this.registrationService.register(
-        this.registerForm.get('firstName').value,
-        this.registerForm.get('lastName').value,
-        birthDateString,
-        this.registerForm.get('email').value,
-        this.registerForm.get('password').value
-        ).pipe(first()).subscribe(
+      this.registrationService.register({
+        name: this.registerForm.get('firstName').value,
+        surname: this.registerForm.get('lastName').value,
+        birthdate: birthDateString,
+        email: this.registerForm.get('email').value,
+        password: this.registerForm.get('password').value,
+        privilegeLevel: this.selectedType
+      }).pipe(first()).subscribe(
           data => {
             this.alertService.success(data.body);
             this.loading = false;
