@@ -201,9 +201,9 @@ class MongoDB:
         self.validator.validate(user, "user")
         user_wrapper = self.userDB.get(user)
         if not user_wrapper.operationDone:
-            raise ValueError(user + " doesn't exist in db")
+            raise ValueError("user doesn't exist in db")
         if user_wrapper.user["privilegeLevel"] != "business":
-            raise ValueError(user + " has no business privilegeLevel")
+            raise ValueError("user has no business privilegeLevel")
         business_list = user_wrapper.user["businessList"]
         business_query = {"_id": {"$in": business_list}}
         return self.businessDB.getList(business_query)
@@ -563,14 +563,14 @@ class MongoDB:
 
 
 
-# from pprint import pprint
+from pprint import pprint
 
-# mongo = MongoDB()
-# mongo.dropDatabases()
-# returned_data = mongo.createMockDatabase()
-# pprint(returned_data)
-# pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
-# pprint(mongo.getUserBusinesses({"email": "nikosalex@gmail.com"}).business_list)
+mongo = MongoDB()
+mongo.dropDatabases()
+returned_data = mongo.createMockDatabase()
+pprint(returned_data)
+pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
+pprint(mongo.getUserBusinesses({"email": "nikosalex@gmail.com"}).business_list)
 
 
 # search_query = {
