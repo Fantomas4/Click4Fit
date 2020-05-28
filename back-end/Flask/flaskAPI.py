@@ -497,6 +497,28 @@ def manageUserModify():
         return jsonify("Save successful"), 200
 
 
+####################################### Manage My Business ##################################
+@app.route("/api/manage-my-business", methods=['POST','GET'])
+def manageMyBusiness():
+    user=request.get_json()
+    #connection with mongo sending the user and modifying the profile's details
+    try:
+        user_list_wrapper: UserListWrapper = MongoDB.getUserBusinesses(user)
+    except TypeError as type_err: #Checking for errors
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if type(user_list_wrapper.user_list) is list and not user_list_wrapper.found and not user_list_wrapper.operationDone:
+            return "Couldn't get users", 500
+        return jsonify(data=user_list_wrapper.user_list), 200
+
+
+
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
