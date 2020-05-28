@@ -37,7 +37,8 @@ const routes: Routes = [
   {path: 'business-owner', component: UserMainViewComponent, canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'manage-my-business', pathMatch: 'full' },
-      {path: 'manage-my-business', component: ManageMyBusinessComponent}
+      {path: 'manage-my-business', component: ManageMyBusinessComponent},
+      {path: 'myprofile', component: MyprofileComponent}
     ]},
   {path: 'admin', component: UserMainViewComponent, canActivate: [AuthGuard],
     children: [
