@@ -503,7 +503,7 @@ def manageMyBusiness():
     user=request.get_json()
     #connection with mongo sending the user and modifying the profile's details
     try:
-        user_list_wrapper: UserListWrapper = MongoDB.getUserBusinesses(user)
+        business_list_wrapper: BusinessListWrapper = MongoDB.getUserBusinesses(user)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -511,16 +511,16 @@ def manageMyBusiness():
     except:
         return "Bad error", 500
     else:
-        if type(user_list_wrapper.user_list) is list and not user_list_wrapper.found and not user_list_wrapper.operationDone:
+        if type(business_list_wrapper.business_list) is list and not business_list_wrapper.found and not business_list_wrapper.operationDone:
             return "Couldn't get users", 500
-        return jsonify(data=user_list_wrapper.user_list), 200
-
-
-
+        return jsonify(data=business_list_wrapper.business_list), 200
 
 
 if __name__ == '__main__':
+    print("Resetting database data...")
+    MongoDB.dropDatabases()
+    print("Initializing database data...")
+    MongoDB.createMockDatabase()
     app.debug = True
     app.run()
-    MongoDB.dropDatabases()
-    print(MongoDB.createMockDatabase())
+
