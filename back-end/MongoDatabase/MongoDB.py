@@ -195,6 +195,19 @@ class MongoDB:
         self.validator.validate(user, "user")
         return self.userDB.getFavorite(user, "favoriteWorkout")
     
+    def getUserBusinesses(self, user: dict):
+        """
+        """
+        self.validator.validate(user, "user")
+        user_wrapper = self.userDB.get(user)
+        if not user_wrapper.operationDone:
+            raise ValueError(user + " doesn't exist in db")
+        if user_wrapper.user["privilegeLevel"] != "business":
+            raise ValueError(user + " has no business privilegeLevel")
+        business_list = user_wrapper.user["businessList"]
+        business_query = {"_id": {"$in": business_list}}
+        return self.businessDB.getList(business_query)
+    
     def addFavoriteBusiness(self, favorite_query: dict):
         """
         :param favorite_query: a dict containing the user and the new_favorite.
@@ -557,6 +570,7 @@ class MongoDB:
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
 # pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
+# pprint(mongo.getUserBusinesses({"email": "nikosalex@gmail.com"}).business_list)
 
 
 # search_query = {
