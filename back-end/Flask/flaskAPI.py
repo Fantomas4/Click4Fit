@@ -329,8 +329,8 @@ def deleteWorkout():
         return jsonify("Delete successful"), 200
 
 
-####################################### Manage business ##############################
-@app.route("/api/manage-business-display-entry",methods=['POST','GET'])
+####################################### Business Management ##############################
+@app.route("/api/manage-business-display-entry", methods=['POST', 'GET'])
 def manageOneBusinessDisplay():
     entry=request.get_json() #get entry's id for display
     #connection with mongo getting all current business entry
@@ -365,12 +365,12 @@ def manageAllBusinessesDisplay():
         return jsonify(businessList=business_wrapper_list.business_list), 200
 
 
-@app.route("/api/manage-business-add-entry",methods=['POST','GET'])
-def manageBusinessAdd():
-    entry=request.get_json() #get new entry
-    #connection with mongo getting the details for the new business
+@app.route("/api/get-my-business", methods=['POST','GET'])
+def getMyBusiness():
+    user = request.get_json()
+    #connection with mongo sending the user and modifying the profile's details
     try:
-        business_wrapper : BusinessWrapper = MongoDB.createNewBusiness(entry)
+        business_list_wrapper: BusinessListWrapper = MongoDB.getUserBusinesses(user)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -378,19 +378,39 @@ def manageBusinessAdd():
     except:
         return "Bad error", 500
     else:
-        if business_wrapper.business is None:
+        if type(business_list_wrapper.business_list) is not list:
+            return "Couldn't get users", 500
+        return jsonify(data=business_list_wrapper.business_list), 200
+
+
+@app.route("/api/manage-business-add-entry", methods=['POST', 'GET'])
+def manageBusinessAdd():
+    business = request.get_json()
+    # connection with mongo sending the user and modifying the profile's details
+    try:
+        business_wrapper: BusinessWrapper = MongoDB.createNewBusiness(business)
+    except TypeError as type_err:  # Checking for errors
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if type(business_wrapper.business) is not dict:
             return "Something is wrong with the database", 500
-        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return "Couldn't insert business entry", 500
-        return jsonify("Creation successful"), 200
+        if business_wrapper.found:
+            return "Business already exists", 409
+        if business_wrapper.operationDone:
+            return jsonify("Business addition successful!"), 200
+        return "Unexpected Error!", 500
 
 
-@app.route("/api/manage-business-delete-entries",methods=['POST','GET'])
+@app.route("/api/manage-business-delete-entries", methods=['POST', 'GET'])
 def manageBusinessDelete():
-    entries=request.get_json() #get entries for delete
+    entries = request.get_json() #get entries for delete
     #connection with mongo sending the entry
     try:
-        response =  MongoDB.deleteBusinesses(entries)
+        response = MongoDB.deleteBusinesses(entries)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -398,18 +418,18 @@ def manageBusinessDelete():
     except:
         return "Bad error", 500
     else:
-        if response is False:
-            return "Coudn't delete business entries", 500
-        return jsonify("Delete successful"), 200
+        if not response:
+            return "Couldn't delete business entries", 500
+        return jsonify("Deletion successful"), 200
 
 
-@app.route("/api/manage-business-modify-entry",methods=['POST','GET'])
+@app.route("/api/manage-business-modify-entry", methods=['POST', 'GET'])
 def manageBusinessModify():
-    entry=request.get_json() #get modifying entry
-    #connection with mongo sending the details of modified business entry
+    business = request.get_json()
+    # connection with mongo sending the user and modifying the profile's details
     try:
-        business_wrapper : BusinessWrapper =  MongoDB.updateBusiness(entry)
-    except TypeError as type_err: #Checking for errors
+        business_wrapper: BusinessWrapper = MongoDB.updateBusiness(business)
+    except TypeError as type_err:  # Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
         return str(value_err), 422
@@ -419,7 +439,7 @@ def manageBusinessModify():
         if business_wrapper.business is None:
             return "Something is wrong with the database", 500
         if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return "Couln't update business entry", 500
+            return "Couldn't update Business entry", 500
         return jsonify("Save successful"), 200
 
 
@@ -493,27 +513,8 @@ def manageUserModify():
         if user_wrapper.user is None:
             return "Something is wrong with the database", 500
         if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
-            return "Couln't update user entry", 500
+            return "Couldn't update user entry", 500
         return jsonify("Save successful"), 200
-
-
-####################################### Manage My Business ##################################
-@app.route("/api/manage-my-business", methods=['POST','GET'])
-def manageMyBusiness():
-    user=request.get_json()
-    #connection with mongo sending the user and modifying the profile's details
-    try:
-        business_list_wrapper: BusinessListWrapper = MongoDB.getUserBusinesses(user)
-    except TypeError as type_err: #Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if type(business_list_wrapper.business_list) is list and not business_list_wrapper.found and not business_list_wrapper.operationDone:
-            return "Couldn't get users", 500
-        return jsonify(data=business_list_wrapper.business_list), 200
 
 
 if __name__ == '__main__':

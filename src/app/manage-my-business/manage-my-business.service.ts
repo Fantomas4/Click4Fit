@@ -11,10 +11,35 @@ export class ManageMyBusinessService {
   constructor(private http: HttpClient) { }
 
   getBusinesses(userId: string) {
-    return this.http.post<any>(`${environment.apiUrl}/manage-my-business`, JSON.stringify({_id: userId}),
+    return this.http.post<any>(`${environment.apiUrl}/get-my-business`, JSON.stringify({_id: userId}),
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
         console.log('RECEIVED 1: ', res);
         return res;
       }));
+  }
+
+  updateEntry(data: object) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-modify-entry`, JSON.stringify({data}),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
+  }
+
+  addEntry(data: object) {
+    console.log("ADD ENTRY: ", data);
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, JSON.stringify({data}),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
+  }
+
+  deleteEntries(data: object) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-delete-entries`, JSON.stringify({_id: data}),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
   }
 }

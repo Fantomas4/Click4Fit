@@ -180,7 +180,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
     for (this.i = 0; this.i < this.selection.selected.length; this.i++) {
       this.selected[this.i] = this.selection.selected[this.i].email;
     }
-    this.content={'email': this.selected};
+    this.content={email: this.selected};
     this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data =>
     {
       this.alertService.success(data);

@@ -56,6 +56,8 @@ import {ErrorInterceptor} from './core/error.interceptor';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS} from '@angular/material-moment-adapter';
 import { ManageMyBusinessComponent } from './manage-my-business/manage-my-business.component';
+import { MyBusinessDetailsEditDialogComponent } from './manage-my-business/my-business-details-edit-dialog/my-business-details-edit-dialog.component';
+import { MyBusinessAddEntryDialogComponent } from './manage-my-business/my-business-add-entry-dialog/my-business-add-entry-dialog.component';
 
 
 @NgModule({
@@ -82,13 +84,14 @@ import { ManageMyBusinessComponent } from './manage-my-business/manage-my-busine
     BusinessAddEntryDialogComponent,
     ManageUserEntriesComponent,
     UserDetailsEditDialogComponent,
-    UserDetailsEditDialogComponent,
     FooterComponent,
     HomepageComponent,
     ErrorPageComponent,
     RecoverDialogMessageComponent,
     ContactUsDialogMessageComponent,
-    ManageMyBusinessComponent
+    ManageMyBusinessComponent,
+    MyBusinessDetailsEditDialogComponent,
+    MyBusinessAddEntryDialogComponent
   ],
   imports: [
     BrowserModule,
