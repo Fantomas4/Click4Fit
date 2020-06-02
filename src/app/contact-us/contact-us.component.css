@@ -21,3 +21,15 @@
   display:block;
   margin:0 auto;
 }
+.alert-error-text {
+  color: red;
+  font-weight: bold;
+  text-align:center;
+  margin-top:5%;
+}
+.alert-success-text {
+  color: green;
+  font-weight: bold;
+  text-align:center;
+  margin-top:5%;
+}

@@ -1,42 +1,44 @@
-<mat-card class="login-card">
-  <mat-card-header>
-    <mat-card-title>Login using an existing account:</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="loginForm" id="login-form" (ngSubmit)="onSubmit()">
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <mat-form-field>
-            <mat-label>E-mail</mat-label>
-            <input matInput formControlName="email"
-                   [errorStateMatcher]="customErrorMatcher" name="e-mail" required>
-            <mat-error *ngIf="loginForm.get('email').hasError('required')">
-              Please enter your e-mail
-            </mat-error>
-            <mat-error *ngIf="loginForm.get('email').hasError('email')">
-              Please a valid email address
-            </mat-error>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" name="password"
-                   [errorStateMatcher]="customErrorMatcher" required>
-            <mat-error *ngIf="loginForm.get('password').hasError('required')">
-              Please enter your password
-            </mat-error>
-          </mat-form-field>
-        </tr>
-      </table>
-    </form>
-    <div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-         *ngIf="alertMessage">{{alertMessage.text}}
-    </div>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button id="submit-button" type="submit" form="login-form" color="primary">Login</button>
-    <mat-spinner *ngIf="loading" mode="indeterminate" diameter="30" ></mat-spinner>
-    <a class="forgot-password" routerLink="/recover-password">I forgot my password</a>
-  </mat-card-actions>
-</mat-card>
+<div class="container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Login using an existing account:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" id="login-form" (ngSubmit)="onSubmit()">
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <mat-form-field class="email">
+              <mat-label>E-mail</mat-label>
+              <input matInput formControlName="email" [errorStateMatcher]="customErrorMatcher" name="e-mail" required>
+              <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                Please enter your e-mail
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('email').hasError('email')">
+                Please a valid email address
+              </mat-error>
+            </mat-form-field>
+          </tr>
+          <tr>
+            <mat-form-field class="password">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" name="password"
+                [errorStateMatcher]="customErrorMatcher" required>
+              <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                Please enter your password
+              </mat-error>
+            </mat-form-field>
+          </tr>
+        </table>
+      </form>
+      <div id="alert-message"
+        [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+        *ngIf="alertMessage">{{alertMessage.text}}
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button id="submit-button" type="submit" form="login-form" color="primary">Login</button>
+      <mat-spinner *ngIf="loading" mode="indeterminate" diameter="30"></mat-spinner>
+      <a class="forgot-password" routerLink="/recover-password">I forgot my password</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

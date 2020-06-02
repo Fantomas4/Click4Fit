@@ -48,7 +48,6 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { WorkoutService } from './workout/workout.service';
 import { ContactUsService } from './contact-us/contact-us.service';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
-import { ContactUsDialogMessageComponent } from './contact-us/contactus-dialog-message/contactus-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
 
 
@@ -79,8 +78,7 @@ import { RecoverPasswordService } from './recover-password/recover-password.serv
     UserDetailsEditDialogComponent,
     FooterComponent,
     HomepageComponent,
-    RecoverDialogMessageComponent,
-    ContactUsDialogMessageComponent
+    RecoverDialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -107,6 +105,6 @@ import { RecoverPasswordService } from './recover-password/recover-password.serv
   ],
   providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
+  entryComponents: [DeleteDialogMessageComponent,RecoverDialogMessageComponent]
 })
 export class AppModule { }

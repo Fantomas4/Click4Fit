@@ -1,16 +1,16 @@
 data = {
     'user': [
       { 'name': 'Paulos', 'surname': 'Kostopoulos', 'email':'pauloskostop@gmail.com', 'password':'pk123456','birthdate': '28.06.1980',
-        'privilegeLevel':'admin', 'favoriteWorkout':[{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
+        'privilegeLevel':'admin', 'favoriteWorkout':[], 'favoriteBusiness':[] },
+
+       { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'na123456', 'birthdate': '16.04.1997',
+        'privilegeLevel': 'client', 'favoriteWorkout':[{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
          "difficulty": 'hard', "equipment": True, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'}, {"name": 'Scissors', "category": "abs", "muscleGroups": ["abs", "obliques", "quads"], "advisedFor": 'women',
          "difficulty": 'medium', "equipment": False, "sets": '4x15 ', "videoUrl": 'https://www.youtube.com/embed/WoNCIBVLbgY'}], 'favoriteBusiness':[{ 'name': 'FitClub', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'diagora 20', 'postalCode': '567 55',
            'phoneNumber': '2310 634590', 'email': 'fitclub@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']}, { 'name': 'Planet Fitness', 'category': 'gym', 'country': 'Greece', 'city': 'Athens', 'address': '3 Septembriou Street 6', 'postalCode': '576 45',
            'phoneNumber': '202-555-0376', 'email': 'planetfitness@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2', 'service_1', 'service_2']}] },
-
-       { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'na123456', 'birthdate': '16.04.1997',
-        'privilegeLevel': 'client', 'favoriteWorkout': [], 'favoriteBusiness': [] },
+           'products': ['product_1', 'product_2', 'service_1', 'service_2']}]  },
 
        { 'name': 'Giorgos', 'surname': 'Andrianakis', 'email': 'gandrian@gmail.com',  'password': 'ga123456', 'birthdate': '02.06.1961' ,
         'privilegeLevel': 'client', 'favoriteWorkout': [], 'favoriteBusiness': []},
