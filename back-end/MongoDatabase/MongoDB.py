@@ -367,9 +367,9 @@ class MongoDB:
         self.validator.validate(business, "business")
         user_wrapper = self.userDB.get(user)
         if not user_wrapper.operationDone:
-            raise ValueError(user + " owner doesn't exist in db")
+            raise ValueError("owner doesn't exist in db")
         if user_wrapper.user["privilegeLevel"] != "business":
-            raise ValueError(user + " has not the privilegeLevel to add a business")
+            raise ValueError("user has not the privilegeLevel to add a business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
                             "phoneNumber","email", "imgPath"]:
             if attribute not in business:
@@ -570,7 +570,26 @@ mongo.dropDatabases()
 returned_data = mongo.createMockDatabase()
 pprint(returned_data)
 pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
-pprint(mongo.getUserBusinesses({"email": "nikosalex@gmail.com"}).business_list)
+pprint(mongo.createNewBusiness(
+    {
+    "user": {
+      "_id": "12313213"
+    },
+    "business": {
+      "name": "test",
+      "category": "gym",
+      "country": "Greece",
+      "city": "Thessaloniki",
+      "address": "dasdas",
+      "postalCode": "432423",
+      "phoneNumber": "3424232324",
+      "imgPath": "",
+      "services"    : [],
+        "products"    : [],
+      "email": "daaaasd@gmail.com"
+    }
+}
+).business)
 
 
 # search_query = {
