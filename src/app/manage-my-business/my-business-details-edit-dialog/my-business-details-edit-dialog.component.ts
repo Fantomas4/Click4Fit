@@ -65,7 +65,7 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
   }
 
   onCountrySelected($event: Country) {
-    console.log($event);
+    this.country = $event.name;
   }
 
   /**

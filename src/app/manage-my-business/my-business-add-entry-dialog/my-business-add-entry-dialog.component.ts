@@ -44,7 +44,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   }
 
   onCountrySelected($event: Country) {
-    console.log($event);
+    this.country = $event.name;
   }
 
   onDiscardClick(): void {
