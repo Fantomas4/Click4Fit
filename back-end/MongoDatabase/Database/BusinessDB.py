@@ -44,9 +44,9 @@ class BusinessDB:
             "postalCode"  : business["postalCode"],
             "phoneNumber" : business["phoneNumber"],
             "email"       : business["email"],
-            "imgPath"     : business["imgPath"],
-            "services"    : business["services"],
-            "products"    : business["products"]
+            "imgPath"     : business.get("imgPath", "./assets/image_placeholder.jpg"),
+            "services"    : business.get("services", []),
+            "products"    : business.get("products", [])
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(business)

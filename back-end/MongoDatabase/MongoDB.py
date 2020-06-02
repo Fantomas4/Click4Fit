@@ -371,7 +371,7 @@ class MongoDB:
         if user_wrapper.user["privilegeLevel"] != "business":
             raise ValueError("user has not the privilegeLevel to add a business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
-                            "phoneNumber","email", "imgPath"]:
+                            "phoneNumber", "email"]:
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
@@ -563,33 +563,33 @@ class MongoDB:
 
 
 
-from pprint import pprint
+# from pprint import pprint
 
-mongo = MongoDB()
-mongo.dropDatabases()
-returned_data = mongo.createMockDatabase()
-pprint(returned_data)
-pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
-pprint(mongo.createNewBusiness(
-    {
-    "user": {
-      "_id": "12313213"
-    },
-    "business": {
-      "name": "test",
-      "category": "gym",
-      "country": "Greece",
-      "city": "Thessaloniki",
-      "address": "dasdas",
-      "postalCode": "432423",
-      "phoneNumber": "3424232324",
-      "imgPath": "",
-      "services"    : [],
-        "products"    : [],
-      "email": "daaaasd@gmail.com"
-    }
-}
-).business)
+# mongo = MongoDB()
+# mongo.dropDatabases()
+# returned_data = mongo.createMockDatabase()
+# pprint(returned_data)
+# pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
+# pprint(mongo.createNewBusiness(
+#     {
+#     "user": {
+#       "_id": "12313213"
+#     },
+#     "business": {
+#       "name": "test",
+#       "category": "gym",
+#       "country": "Greece",
+#       "city": "Thessaloniki",
+#       "address": "dasdas",
+#       "postalCode": "432423",
+#       "phoneNumber": "3424232324",
+#       "imgPath": "",
+#       "services"    : [],
+#         "products"    : [],
+#       "email": "daaaasd@gmail.com"
+#     }
+# }
+# ).business)
 
 
 # search_query = {
