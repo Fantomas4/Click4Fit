@@ -2,6 +2,13 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
+interface Country {
+  name: string;
+  alpha2Code: string;
+  alpha3Code: string;
+  numericCode: string;
+}
+
 @Component({
   selector: 'app-add-entry-dialog',
   templateUrl: './my-business-add-entry-dialog.component.html',
@@ -34,6 +41,10 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
     }
 
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
+  }
+
+  onCountrySelected($event: Country) {
+    console.log($event);
   }
 
   onDiscardClick(): void {

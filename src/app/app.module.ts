@@ -58,6 +58,7 @@ import {MAT_MOMENT_DATE_FORMATS} from '@angular/material-moment-adapter';
 import { ManageMyBusinessComponent } from './manage-my-business/manage-my-business.component';
 import { MyBusinessDetailsEditDialogComponent } from './manage-my-business/my-business-details-edit-dialog/my-business-details-edit-dialog.component';
 import { MyBusinessAddEntryDialogComponent } from './manage-my-business/my-business-add-entry-dialog/my-business-add-entry-dialog.component';
+import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { MyBusinessAddEntryDialogComponent } from './manage-my-business/my-busin
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectCountryModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService, ContactUsService,

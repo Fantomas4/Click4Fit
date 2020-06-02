@@ -16,10 +16,11 @@
             </mat-form-field>
           </tr>
           <tr>
-            <mat-form-field>
-              <mat-label>Country</mat-label>
-              <input matInput placeholder="e.g. Greece" [(ngModel)]="country" name="country" required>
-            </mat-form-field>
+            <mat-select-country [country]="country" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
+            <!--            <mat-form-field>-->
+<!--              <mat-label>Country</mat-label>-->
+<!--              <input matInput placeholder="e.g. Greece" [(ngModel)]="country" name="country" required>-->
+<!--            </mat-form-field>-->
           </tr>
           <tr>
             <mat-form-field>

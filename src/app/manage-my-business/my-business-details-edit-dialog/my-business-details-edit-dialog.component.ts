@@ -2,11 +2,19 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
 
+interface Country {
+  name: string;
+  alpha2Code: string;
+  alpha3Code: string;
+  numericCode: string;
+}
+
 @Component({
   selector: 'app-details-edit-dialogue',
   templateUrl: './my-business-details-edit-dialog.component.html',
   styleUrls: ['./my-business-details-edit-dialog.component.css']
 })
+
 export class MyBusinessDetailsEditDialogComponent implements OnInit {
 
   id: number; // The displayed entry's id.
@@ -54,6 +62,10 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
       return 'You must enter a value';
     }
     return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
+  }
+
+  onCountrySelected($event: Country) {
+    console.log($event);
   }
 
   /**
