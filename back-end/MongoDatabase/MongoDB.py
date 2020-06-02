@@ -368,9 +368,9 @@ class MongoDB:
         self.validator.validate(business, "business")
         user_wrapper = self.userDB.get(user)
         if not user_wrapper.operationDone:
-            raise ValueError(user + " owner doesn't exist in db")
+            raise ValueError("user doesn't exist in db")
         if user_wrapper.user["privilegeLevel"] != "business":
-            raise ValueError(user + " has not the privilegeLevel to add a business")
+            raise ValueError("user has not the privilegeLevel to add a business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
                             "phoneNumber","email", "imgPath"]:
             if attribute not in business:
