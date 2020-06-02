@@ -138,10 +138,10 @@ export class ManageMyBusinessComponent implements OnInit {
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes.clickedSave) {
         this.manageMyBusinessService.updateEntry(dialogRes.details).toPromise().then(data => {
-            this.alertService.success(data);
+            this.alertService.success('Data updated successfully');
           },
           error => {
-            this.alertService.error(error.error);
+            this.alertService.error(error);
           });
       }
     });
@@ -161,7 +161,7 @@ export class ManageMyBusinessComponent implements OnInit {
             this.alertService.success('Entry added successfully');
           },
           error => {
-            this.alertService.error(error.error);
+            this.alertService.error(error);
           });
       }
     });

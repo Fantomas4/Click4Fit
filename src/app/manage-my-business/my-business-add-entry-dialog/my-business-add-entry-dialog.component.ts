@@ -18,7 +18,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
 
   id: number;
   name: string;
-  category: string;
+  category = 'gym';
   country: string;
   city: string;
   address: string;
@@ -30,6 +30,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   imgPath: string;
   email;
   clickedSave: boolean;
+
 
   constructor(public dialogRef: MatDialogRef<MyBusinessAddEntryDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 

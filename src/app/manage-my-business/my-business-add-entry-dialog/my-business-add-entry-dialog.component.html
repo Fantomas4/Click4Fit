@@ -11,18 +11,15 @@
           </mat-form-field>
         </tr>
         <tr>
-          <mat-form-field>
-            <mat-label>Category</mat-label>
-            <input matInput placeholder="e.g. Gym" [(ngModel)]="this.category" name="category" required>
-          </mat-form-field>
+          <p>Category: </p>
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(value)]="category">
+            <mat-button-toggle value="gym">Gym</mat-button-toggle>
+            <mat-button-toggle value="fitness shop">Fitness Shop</mat-button-toggle>
+            <mat-button-toggle value="personal trainer">Personal Trainer</mat-button-toggle>
+          </mat-button-toggle-group>
         </tr>
         <tr>
           <mat-select-country [country]="country" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
-
-<!--          <mat-form-field>-->
-<!--            <mat-label>Country</mat-label>-->
-<!--            <input matInput placeholder="e.g. Greece" [(ngModel)]="this.country" name="country" required>-->
-<!--          </mat-form-field>-->
         </tr>
         <tr>
           <mat-form-field>
