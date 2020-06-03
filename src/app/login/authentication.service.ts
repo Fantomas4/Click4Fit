@@ -25,13 +25,6 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-
-    // nikosalex@gmail.com
-    // gp123456
-    // DEBUGGING ONLY!!!!!!
-    // email = 'nikosalex@gmail.com';
-    // password = 'na123456';
-
     return this.http.post<any>(`${environment.apiUrl}/login`, JSON.stringify({email, password}),
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
             console.log('RECEIVED 1: ', res);
