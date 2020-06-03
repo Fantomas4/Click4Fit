@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 interface Country {
   name: string;
@@ -25,16 +27,73 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   postalCode: string;
   phoneNumber: string;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  services: string[];
-  products: string[];
-  imgPath: string;
+  services = [];
+  products = [];
+  imgFile = null;
   email;
   clickedSave: boolean;
+
+  // Chip list options
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
 
   constructor(public dialogRef: MatDialogRef<MyBusinessAddEntryDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {}
+
+  onFileSelected(event) {
+    console.log(event);
+    this.imgFile = event.files.target[0];
+  }
+
+  addServiceChip(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our service
+    if ((value || '').trim()) {
+      this.services.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeServiceChip(service: string): void {
+    const index = this.services.indexOf(service);
+
+    if (index >= 0) {
+      this.services.splice(index, 1);
+    }
+  }
+
+  addProductChip(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our service
+    if ((value || '').trim()) {
+      this.products.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeProductChip(product: string): void {
+    const index = this.products.indexOf(product);
+
+    if (index >= 0) {
+      this.products.splice(index, 1);
+    }
+  }
 
   getErrorMessage() {
     if (this.emailFormControl.hasError('required')) {
@@ -68,7 +127,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
       phoneNumber: this.phoneNumber,
       services: this.services,
       products: this.products,
-      imgPath: this.imgPath,
+      imgPath: this.imgFile,
       email: this.email}
     };
     this.dialogRef.close({clickedSave: true, details: content});

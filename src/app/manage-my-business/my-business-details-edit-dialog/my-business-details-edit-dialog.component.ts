@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 interface Country {
   name: string;
@@ -27,12 +29,19 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
   phoneNumber: string; // The displayed entry's phone number.
   services: string[]; // List containing the titles of the available services offered by the displayed entry.
   products: string[]; // List containing the titles of the available products offered by the displayed entry.
-  imgPath: string; // String containing the path for the preview image of the displayed entry.
+  imgFile: string; // String containing the path for the preview image of the displayed entry.
   email: string; // The displayes entry's email.
   clickedSave: boolean;
 
   // Form Control used to receive and validate the user's email input.
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+
+  // Chip list options
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
 
   constructor(public dialogRef: MatDialogRef<MyBusinessDetailsEditDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
@@ -50,7 +59,58 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
     this.email = this.data.email;
     this.services = this.data.services;
     this.products = this.data.products;
-    this.imgPath = this.data.imgPath;
+    this.imgFile = this.data.imgPath;
+  }
+
+  onFileSelected(event) {
+    console.log(event);
+    this.imgFile = event.files.target[0];
+  }
+
+  addServiceChip(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our service
+    if ((value || '').trim()) {
+      this.services.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeServiceChip(service: string): void {
+    const index = this.services.indexOf(service);
+
+    if (index >= 0) {
+      this.services.splice(index, 1);
+    }
+  }
+
+  addProductChip(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our service
+    if ((value || '').trim()) {
+      this.products.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeProductChip(product: string): void {
+    const index = this.products.indexOf(product);
+
+    if (index >= 0) {
+      this.products.splice(index, 1);
+    }
   }
 
   /**
@@ -88,7 +148,7 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
       phoneNumber: this.phoneNumber,
       services: this.services,
       products: this.products,
-      imgPath: this.imgPath,
+      imgPath: this.imgFile,
       email: this.email
     };
     this.dialogRef.close({clickedSave: true, details: content});

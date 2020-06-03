@@ -42,6 +42,8 @@ export class ManageMyBusinessComponent implements OnInit {
   dialogHeight: number; // Height of the dialog window.
   dialogWidth: number; // Width of the dialog window.
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
+  dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
+  dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
 
   detailsEditDialogRef: MatDialogRef<MyBusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<MyBusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
@@ -111,6 +113,8 @@ export class ManageMyBusinessComponent implements OnInit {
    */
   @HostListener('window:resize')
   onResize() {
+    console.log('window height: ', window.innerHeight);
+    console.log('window width: ', window.innerWidth);
     this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
     this.dialogWidth = window.innerWidth;
 
@@ -136,7 +140,7 @@ export class ManageMyBusinessComponent implements OnInit {
       }
     });
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
-      if (dialogRes.clickedSave) {
+      if (dialogRes && dialogRes.clickedSave) {
         this.manageMyBusinessService.updateEntry(dialogRes.details).toPromise().then(data => {
             this.alertService.success('Data updated successfully');
           },
@@ -152,10 +156,11 @@ export class ManageMyBusinessComponent implements OnInit {
   openAddEntryDialog() {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(MyBusinessAddEntryDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      maxWidth: this.dialogMaxWidth
     });
     this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
-      if (dialogRes.clickedSave) {
+      if (dialogRes && dialogRes.clickedSave) {
         this.manageMyBusinessService.addEntry(dialogRes.details).toPromise().then(data => {
             this.getMyBusinessEntries();
             this.alertService.success('Entry added successfully');

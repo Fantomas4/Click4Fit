@@ -29,6 +29,7 @@
     "jquery": "^3.4.1",
     "rxjs": "~6.5.4",
     "safe-pipe": "^1.0.2",
+    "svg-country-flags": "^1.2.6",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

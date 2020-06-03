@@ -1,6 +1,5 @@
 <div class="main-container">
   <h1 mat-dialog-title>Add Business Entry</h1>
-  <div class="description-text">Please provide the required business details:</div>
   <div mat-dialog-content class="field-list">
     <form class="form">
       <table class="table" cellspacing="0">
@@ -11,12 +10,16 @@
           </mat-form-field>
         </tr>
         <tr>
-          <p>Category: </p>
-          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(value)]="category">
-            <mat-button-toggle value="gym">Gym</mat-button-toggle>
-            <mat-button-toggle value="fitness shop">Fitness Shop</mat-button-toggle>
-            <mat-button-toggle value="personal trainer">Personal Trainer</mat-button-toggle>
-          </mat-button-toggle-group>
+          <p>Preview Image: </p>
+          <input type="file" (change)="onFileSelected($event)">
+        </tr>
+        <tr id="category-container">
+            <p>Category: </p>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" vertical="true" [(value)]="category">
+              <mat-button-toggle value="gym">Gym</mat-button-toggle>
+              <mat-button-toggle value="fitness shop">Fitness Shop</mat-button-toggle>
+              <mat-button-toggle value="personal trainer">Personal Trainer</mat-button-toggle>
+            </mat-button-toggle-group>
         </tr>
         <tr>
           <mat-select-country [country]="country" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
@@ -52,6 +55,40 @@
                    type="email" name="registration-email" required [(ngModel)]="email">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
+        </tr>
+        <tr>
+          <div class="services-and-products-container">
+            <p class="section-title">My Services and Products</p>
+<!--            <p class="section-subtitle">Please write a name and press enter to add...</p>-->
+            <mat-form-field class="chip-list">
+              <mat-chip-list #servicesChipList aria-label="Service selection">
+                <mat-chip *ngFor="let service of services" [selectable]="selectable"
+                          [removable]="removable" (removed)="removeServiceChip(service)">
+                  {{service}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New Service..."
+                       [matChipInputFor]="servicesChipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       (matChipInputTokenEnd)="addServiceChip($event)">
+              </mat-chip-list>
+            </mat-form-field>
+            <mat-form-field class="chip-list">
+              <mat-chip-list #productsChipList aria-label="Product selection">
+                <mat-chip *ngFor="let product of products" [selectable]="selectable"
+                          [removable]="removable" (removed)="removeProductChip(product)">
+                  {{product}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New Product..."
+                       [matChipInputFor]="productsChipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       (matChipInputTokenEnd)="addProductChip($event)">
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
         </tr>
       </table>
     </form>
