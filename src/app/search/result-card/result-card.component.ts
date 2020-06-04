@@ -69,7 +69,7 @@ export class ResultCardComponent implements OnInit {
     this.user = this.jsonData.email;
     this.content = {
       "user": { "email": this.user }, "new_favorite": {
-        "name": this.title, "country": this.country, "city": this.city, "imgPath":this.imgPath
+        "name": entry.title, "country": entry.country, "city": entry.city, "imgPath":entry.imgPath
       }
     }
     this.resultCardService.addFavoritePlace(this.content).toPromise().then(data => {
