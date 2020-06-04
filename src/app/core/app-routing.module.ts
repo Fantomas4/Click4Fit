@@ -36,6 +36,7 @@ const routes: Routes = [
       {path: 'workout', component: WorkoutComponent }
     ]},
   {path: 'about', component: AboutComponent},
+  {path: '**', component: ErrorPageComponent},
 ];
 
 @NgModule({
