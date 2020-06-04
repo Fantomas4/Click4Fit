@@ -25,6 +25,7 @@ export class LocationAutocompleteComponent implements OnInit {
     'Komotini',
     'Kalamata'
   ];
+  location;
 
   filteredOptions: Observable<string[]>;
 

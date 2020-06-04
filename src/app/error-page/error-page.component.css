@@ -1,66 +1,113 @@
-/*!* Error text of page styles *!*/
-h1 {
-  font-size: 60px;
-  font-style: italic;
-  font-weight: normal;
-  top:50%;
-  left:50%;
-  text-align: center;
-  color: black;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  opacity: 0.8;
+/*The template used for this error page was taken from:*/
+/*https://colorlib.com/wp/free-error-page-templates/*/
+/*The creator of the template is stated as requested by the "CC BY 3.0." licence.*/
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-h2 {
-  font-size: 30px;
-  font-style: italic;
-  font-weight: normal;
-  top:50%;
-  left:50%;
-  text-align: center;
-  color: black;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  opacity: 0.8;
-}
-/*!* The homepage button included in error text styles *!*/
-h3 {
-  font-size: 30px;
-  font-style: italic;
-  font-weight: normal;
-  top:50%;
-  left:50%;
-  text-align: center;
-  color: darkgreen;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  opacity: 0.8;
+body {
+  padding: 0;
+  margin: 0;
 }
 
-/*!* Background image styles with the blur effect *!*/
-.error-image {
-  flex: 1;
-  background-image: url("../../assets/error-image.jpg");
-  background-color: #cccccc;
-  height: 100%;
-  opacity: unset;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+#notfound {
   position: relative;
-  filter: blur(3px);
-  -webkit-filter: blur(3px);
+  height: 100vh;
 }
 
-/*!* Position text in the middle of the page and error-image, black opacity see-through frame for the error text *!*/
-.error-text {
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0, 0.4);
-  border: 3px solid darkgreen;
+#notfound .notfound {
   position: absolute;
-  top: 50%;
   left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 80%;
-  padding: 20px;
+}
+
+.notfound {
+  max-width: 520px;
+  width: 100%;
+  line-height: 1.4;
   text-align: center;
+}
+
+.notfound .notfound-404 {
+  position: relative;
+  height: 200px;
+  margin: 0px auto 20px;
+  z-index: -1;
+}
+
+.notfound .notfound-404 h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 236px;
+  font-weight: 200;
+  margin: 0px;
+  color: #211b19;
+  text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.notfound .notfound-404 h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #211b19;
+  background: #fff;
+  padding: 10px 5px;
+  margin: auto;
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+.notfound a {
+  font-family: 'Montserrat', sans-serif;
+  display: inline-block;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 13px 23px;
+  background: #2E7D32;
+  font-size: 18px;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.notfound a:hover {
+  color: #2E7D32;
+  background: #211b19;
+}
+
+@media only screen and (max-width: 767px) {
+  .notfound .notfound-404 h1 {
+    font-size: 148px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .notfound .notfound-404 {
+    height: 148px;
+    margin: 0px auto 10px;
+  }
+  .notfound .notfound-404 h1 {
+    font-size: 86px;
+  }
+  .notfound .notfound-404 h2 {
+    font-size: 16px;
+  }
+  .notfound a {
+    padding: 7px 15px;
+    font-size: 14px;
+  }
 }

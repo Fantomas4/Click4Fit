@@ -40,8 +40,7 @@ const routes: Routes = [
       { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
     ]},
   {path: 'error-page', component: ErrorPageComponent},
-  { path: '**', redirectTo: '' } // If any other path is given, redirect to '' (home)
-
+  {path: '**', component: ErrorPageComponent},
 ];
 
 @NgModule({
