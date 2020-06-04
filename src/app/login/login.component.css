@@ -6,12 +6,46 @@
   width: 25%;
   margin: 10% auto;
 }
+
 .mat-card-title {
   font-size: 21px;
 }
-.forgot-password {
-  margin-left: 15px;
+
+#login-form {
+  padding-bottom: 3%;
 }
+
+#alert-message {
+  margin-top: 2%;
+}
+.alert-error-text {
+  color: red;
+  font-weight: bold;
+}
+
+.alert-success-text {
+  color: green;
+  font-weight: bold;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#submit-button {
+  margin-right: 2%
+}
+
+mat-spinner {
+  margin-right: 2%
+}
+
+/*.forgot-password {*/
+/*  margin-left: 15px;*/
+/*}*/
+
 @media screen and (max-width:320px){
   .login-card {
     width: 70%;
@@ -20,6 +54,7 @@
     margin-top:70px;
   }
 }
+
 @media screen and (max-height:320px){
   .login-card {
     width: 40%;
@@ -28,6 +63,7 @@
     margin-top:15px;
   }
 }
+
 @media screen and (min-width:321px)and (max-width:375px){
   .login-card {
     width: 60%;
@@ -36,6 +72,7 @@
     margin-top:70px;
   }
 }
+
 @media screen and (min-height:321px) and (max-height:375px){
   .login-card {
     width: 40%;
@@ -44,6 +81,7 @@
     margin-top:25px;
   }
 }
+
 @media screen and (min-width:376px)and (max-width:425px){
   .login-card {
     width: 60%;
@@ -52,6 +90,7 @@
     margin-top:70px;
   }
 }
+
 @media screen and (min-height:376px) and (max-height:425px){
   .login-card {
     width: 40%;

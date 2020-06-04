@@ -10,7 +10,6 @@ import {LocationAutocompleteComponent} from './location-autocomplete/location-au
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
   @ViewChild(LocationAutocompleteComponent) locationAutocomplete;
 
   searchResults: BusinessEntry[]; // Array containing the BusinessEntry objects that were retrieved from the database.
@@ -27,19 +26,11 @@ export class SearchComponent implements OnInit {
     this.getResults();
   }
 
-  /**
-   * Called to fetch Business Entries results based on the keywords provided by
-   * the user and the filters applied.
-   */
   getResults() {
     this.searchService.getResults()
       .subscribe(results => this.searchResults = results);
   }
 
-  /**
-   * Called when the filters sidenav is toggled to update the
-   * "Show/Hide Filters button text.
-   */
   onToggleSidenav() {
     if (document.getElementById('filters-button').innerText === 'Show Filters') {
       document.getElementById('filters-button').innerText = 'Hide Filters';
@@ -69,5 +60,4 @@ export class SearchComponent implements OnInit {
     this.countryName=this.locationAutocomplete.location;
     console.log(this.countryName);
   }
-
 }

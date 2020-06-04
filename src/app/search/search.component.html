@@ -4,7 +4,7 @@
     <mat-nav-list id="filter-list" title="Category">
       <div class="category-container">
         <div mat-subheader class="filter-type-subheader">Category</div>
-        <mat-selection-list #categories (selectionChange)="onSelection($event, categories.selectedOptions.selected)">
+        <mat-selection-list >
           <mat-list-option value ="Gym">Gym</mat-list-option>
           <mat-list-option value ="Personal Trainer">Personal Trainer</mat-list-option>
           <mat-list-option value ="Fitness Shop">Fitness Shop</mat-list-option>
@@ -24,7 +24,7 @@
   <mat-drawer-content>
     <h1>Search</h1>
     <form class="search-form">
-      <input matInput placeholder="Search..." (keyup)="applyFilter($event)" [(ngModel)]="searchInput" class="search-input" name="search-input">
+<!--      <input matInput placeholder="Search..." (keyup)="applyFilter($event)" [(ngModel)]="searchInput" class="search-input" name="search-input">-->
       <button id="search-button" (click)="getResults()">Go!</button>
     </form>
     <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">

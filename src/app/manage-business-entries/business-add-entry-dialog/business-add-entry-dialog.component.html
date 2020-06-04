@@ -50,7 +50,7 @@
           <mat-form-field class="email-input-field">
             <mat-label>E-mail</mat-label>
             <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
-                   type="email" name="registration-email" required>
+                   type="email" name="registration-email" required [(ngModel)]="email">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
         </tr>

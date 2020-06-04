@@ -4,24 +4,21 @@
     <form class="form">
       <table class="table" cellspacing="0">
         <tr>
-          <p id="user-id">User ID: {{this.id}}</p>
-        </tr>
-        <tr>
           <mat-form-field>
             <mat-label>Name</mat-label>
-            <input matInput placeholder="e.g. George" [(ngModel)]="this.firstName" name="name" required>
+            <input matInput placeholder="e.g. George" [(ngModel)]="name" name="name" required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>Last Name</mat-label>
-            <input matInput placeholder="e.g. Brown" [(ngModel)]="this.lastName" name="lastName" required>
+            <input matInput placeholder="e.g. Brown" [(ngModel)]="surname" name="surname" required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>Date of birth</mat-label>
-            <input matInput [matDatepicker]="picker" [formControl]="date">
+            <input matInput [matDatepicker]="picker" [formControl]="birthdate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -30,7 +27,7 @@
           <mat-form-field class="email-input-field">
             <mat-label>E-mail</mat-label>
             <input matInput placeholder="address@example.com" [formControl]="emailFormControl" type="email"
-                   name="registration-email" required>
+                   name="registration-email" required [(ngModel)]="email">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
         </tr>
