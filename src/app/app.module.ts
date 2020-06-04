@@ -60,7 +60,6 @@ import { MyBusinessDetailsEditDialogComponent } from './manage-my-business/my-bu
 import { MyBusinessAddEntryDialogComponent } from './manage-my-business/my-business-add-entry-dialog/my-business-add-entry-dialog.component';
 import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 
-
 @NgModule({
   declarations: [
     AppComponent,
