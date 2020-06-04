@@ -12,11 +12,11 @@ export class DashboardComponent implements OnInit {
 
   favoriteWorkoutResults = [];
   favoritePlacesResults = [];
-  workoutIsEmpty = false;
-  placeIsEmpty = false;
-  jsonData;
+  workoutIsEmpty = false; // they show whether the relevant list with the results is empty or not and 
+  placeIsEmpty = false; // in this way it doesn't add an empty card in favorites
+  jsonData; // it contains a json with the current user which has been saved in session storage after log in
   CurrentTime: any;
-  user;
+  user; // it contains the email of the current logged in user
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
@@ -30,30 +30,20 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.jsonData=JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user={"email":this.jsonData.email};
+    this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
+    this.user = { "email": this.jsonData.email };
     this.dashboardService.getFavoriteWorkout(this.user).subscribe(data => {
       this.favoriteWorkoutResults = data.workoutList;
-      if (this.favoriteWorkoutResults.length == 0) {
-        this.workoutIsEmpty = true;
+      if (this.favoriteWorkoutResults.length == 0) { //check if the list with the results is empty or not
+        this.workoutIsEmpty = true;                  
       }
-    },
-    error=>{
     });
     this.dashboardService.getFavoritePlaces(this.user).subscribe(data => {
       this.favoritePlacesResults = data.businessList;
-      if (this.favoritePlacesResults.length == 0) {
+      if (this.favoritePlacesResults.length == 0) { //check if the list with the results is empty or not
         this.placeIsEmpty = true;
       }
-    },
-    error=>{
     });
-    //gets the favrorites workout results from dashboard.service and adds them to an array
-    //this.dashboardService.getFAVWResults().subscribe(results => this.FavoritesWorkoutResults = results);
-    //gets the favorites places results from dashboard.service and adds them to an array
-    //this.dashboardService.getFAVPResults().subscribe(results => this.FavoritesPlaceResults = results);
-    //in the case of zero favorites results
   }
-
 
 }

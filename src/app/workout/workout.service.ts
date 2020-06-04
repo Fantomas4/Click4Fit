@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
   import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
-/* This service is about getting workout entries from mock-database and displaying them */
+/* This service is about getting workout entries from API and displaying them */
 @Injectable({
     providedIn: 'root'
   })

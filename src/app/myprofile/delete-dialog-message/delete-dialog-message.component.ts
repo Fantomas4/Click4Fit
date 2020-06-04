@@ -10,19 +10,19 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DeleteDialogMessageComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DeleteDialogMessageComponent>,
-    @Inject(MAT_DIALOG_DATA) public data:any) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  clickedYes:boolean=false;
+  clickedYes: boolean = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onCloseClick(): void {
-    // method is called when the "Close" button is pressed
     this.dialogRef.close();
   }
-  deleteProfile(){
-    this.clickedYes=true;
-    this.dialogRef.close(this.clickedYes);
+  deleteProfile() {
+    this.clickedYes = true;
+    this.dialogRef.close(this.clickedYes); // it passes to the myprofile component the choice of user about
+                                           //deleting his profile or not after closing of dialog message
   }
 }
 
