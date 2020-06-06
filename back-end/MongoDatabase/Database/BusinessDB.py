@@ -108,12 +108,20 @@ class BusinessDB:
         :param search_query:
         :return:
         """
-        # self.db.create_index([('name', 'text')])
+        self.db.create_index([
+                            ("name", "text"),
+                            ("category", "text"),
+                            ("country", "text"),
+                            ("city", "text"),
+                            ("address", "text"),
+                            ("postalCode", "text"),
+                            ("phoneNumber", "text")
+                            ])
         try:
-            results = list(self.db.find(
+            results = list(self.db.find({"$and": [
+                        {"$text": {"$search": keywords}} if keywords else {},
                         {key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}
-                        ))
-            # self.db.find({"$text": {"$search": keywords}})
+                        ]}))
         except:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:

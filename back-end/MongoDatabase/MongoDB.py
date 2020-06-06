@@ -570,6 +570,34 @@ class MongoDB:
 # returned_data = mongo.createMockDatabase()
 # pprint(returned_data)
 # pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
+
+# search_query = {
+#     "keywords" : "",
+#     "category": ["gym"],
+#     "country": [],
+#     "city": ["Thessaloniki"]
+# }
+
+# pprint(mongo.businessSearch(search_query).business_list)
+
+# keywords = search_query["keywords"]
+# del search_query["keywords"]
+
+# mongo.businessDB.db.create_index([
+#                                 ("name", "text"),
+#                                 ("category", "text"),
+#                                 ("country", "text"),
+#                                 ("city", "text"),
+#                                 ("address", "text"),
+#                                 ("postalCode", "text"),
+#                                 ("phoneNumber", "text")
+#                                 ])
+
+# pprint(list(mongo.businessDB.db.find({"$and": [
+#     {"$text": {"$search": keywords}} if keywords else {},
+#     {key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}
+#     ]})))
+
 # pprint(mongo.createNewBusiness(
 #     {
 #     "user": {
@@ -592,20 +620,6 @@ class MongoDB:
 # ).business)
 
 
-# search_query = {
-#     "keywords" : "Gym",
-#     "category": [],
-#     "country": ["Greece"],
-#     "city": ["Thessaloniki"]
-# }
-
-# keywords = search_query["keywords"]
-# del search_query["keywords"]
-
-# mongo.businessDB.db.create_index([('name', 'text')])
-
-# results = list(mongo.businessDB.db.find({key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}))
-# pprint(list(mongo.businessDB.db.find({"$text": {"$search": keywords}})))
 
 # favorite_query = {
 #                 "user": {

@@ -144,7 +144,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Fitclub Bootcamps', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Petrou Ralli Street 77', 'postalCode': '667 00',
-           'phoneNumber': '202-555-0747', 'email': 'fitclub@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
+           'phoneNumber': '202-555-0747', 'email': 'fitclubbootcamps@gmail.com', 'imgPath': './assets/gym-preview.JPG', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Your Wellbeing', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Voreou Street 66', 'postalCode': '888 32',
@@ -168,7 +168,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'PureGym', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Stavrou Street 17', 'postalCode': '564 32',
-           'phoneNumber': '307-555-0184', 'email': 'yourwellbeing@gmail.com', 'imgPath': './assets/gym-preview.JPG',  'services': ['service_1', 'service_2'],
+           'phoneNumber': '307-555-0184', 'email': 'puregym@gmail.com', 'imgPath': './assets/gym-preview.JPG',  'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']}
     ],
     "workout": [
