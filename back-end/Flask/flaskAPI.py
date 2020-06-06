@@ -414,24 +414,27 @@ def getMyBusiness():
 
 @app.route("/api/manage-business-add-entry", methods=['POST', 'GET'])
 def manageBusinessAdd():
-    business = request.get_json()
-    # connection with mongo sending the user and modifying the profile's details
-    try:
-        business_wrapper: BusinessWrapper = MongoDB.createNewBusiness(business)
-    except TypeError as type_err:  # Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if type(business_wrapper.business) is not dict:
-            return "Something is wrong with the database", 500
-        if business_wrapper.found:
-            return "Business already exists", 409
-        if business_wrapper.operationDone:
-            return jsonify("Business addition successful!"), 200
-        return "Unexpected Error!", 500
+    print(request.files)
+    print(request.form)
+    return "OK", 200
+    # business = request.get_json()
+    # # connection with mongo sending the user and modifying the profile's details
+    # try:
+    #     business_wrapper: BusinessWrapper = MongoDB.createNewBusiness(business)
+    # except TypeError as type_err:  # Checking for errors
+    #     return str(type_err), 422
+    # except ValueError as value_err:
+    #     return str(value_err), 422
+    # except:
+    #     return "Bad error", 500
+    # else:
+    #     if type(business_wrapper.business) is not dict:
+    #         return "Something is wrong with the database", 500
+    #     if business_wrapper.found:
+    #         return "Business already exists", 409
+    #     if business_wrapper.operationDone:
+    #         return jsonify("Business addition successful!"), 200
+    #     return "Unexpected Error!", 500
 
 
 @app.route("/api/manage-business-delete-entries", methods=['POST', 'GET'])

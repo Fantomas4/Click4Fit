@@ -161,7 +161,25 @@ export class ManageMyBusinessComponent implements OnInit {
     });
     this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        this.manageMyBusinessService.addEntry(dialogRes.details).toPromise().then(data => {
+
+        const formData = new FormData();
+        formData.append('userID', JSON.parse(sessionStorage.getItem('currentUser'))._id);
+        formData.append('name', dialogRes.details.name);
+        formData.append('category', dialogRes.details.category);
+        formData.append('country', dialogRes.details.country);
+        formData.append('city', dialogRes.details.city);
+        formData.append('address', dialogRes.details.address);
+        formData.append('postalCode', dialogRes.details.postalCode);
+        formData.append('phoneNumber', dialogRes.details.phoneNumber);
+        formData.append('services', dialogRes.details.services);
+        formData.append('products', dialogRes.details.products);
+        formData.append('imgPath', dialogRes.details.imgPath);
+        formData.append('email', dialogRes.details.email);
+
+        console.log('formData: ');
+        formData.forEach((value, key) => { console.log(key + ' ' + value); });
+
+        this.manageMyBusinessService.addEntry(formData).toPromise().then(data => {
             this.getMyBusinessEntries();
             this.alertService.success('Entry added successfully');
           },
