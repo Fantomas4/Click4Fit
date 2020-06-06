@@ -46,7 +46,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
 
   onFileSelected(event) {
     console.log(event);
-    this.imgFile = event.files.target[0];
+    this.imgFile = event.target.files[0];
   }
 
   addServiceChip(event: MatChipInputEvent): void {
@@ -114,10 +114,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
 
   onSaveClick(): void {
     const content = {
-    user: {
-      _id: (JSON.parse(sessionStorage.getItem('currentUser')))._id
-    },
-    business: {
+      ownerId: (JSON.parse(sessionStorage.getItem('currentUser')))._id,
       name: this.name,
       category: this.category,
       country: this.country,
@@ -127,8 +124,8 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
       phoneNumber: this.phoneNumber,
       services: this.services,
       products: this.products,
-      imgPath: this.imgFile,
-      email: this.email}
+      image: this.imgFile,
+      email: this.email
     };
     this.dialogRef.close({clickedSave: true, details: content});
   }
