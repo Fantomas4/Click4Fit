@@ -47,7 +47,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return "Image Upload Successfull", 200
+            return "file Upload Successfull", 200
     return "Not a post request", 422
 
 ####################################### Contact Us ###################################
@@ -417,7 +417,7 @@ def getMyBusiness():
 def manageBusinessAdd():
     """
     {
-        "image"
+        "file"
         "name"
         "category"
         "country"
@@ -430,18 +430,18 @@ def manageBusinessAdd():
     }
     """
     if request.method == "POST":
-        # check if the post request has the image part
-        if "image" not in request.files:
-            return "No image part", 422
-        image = request.files["image"]
+        # check if the post request has the file part
+        if "file" not in request.files:
+            return "No file part", 422
+        file = request.files["file"]
         # if user does not select file, browser also
         # submit an empty part without filename
-        if image.filename == '':
-            return "No selected image", 422
-        if image and allowed_file(image.filename):
-            image_name = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
-            imgPath = UPLOAD_FOLDER + "\\" + image_name
+        if file.filename == '':
+            return "No selected file", 422
+        if file and allowed_file(file.filename):
+            file_name = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
+            imgPath = UPLOAD_FOLDER + "\\" + file_name
         else:
             imgPath = './assets/gym-preview.JPG'
 
