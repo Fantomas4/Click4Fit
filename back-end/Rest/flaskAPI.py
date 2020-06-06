@@ -442,6 +442,8 @@ def manageBusinessAdd():
             return "No selected file", 422
         if file and allowed_file(file.filename):
             file_name = secure_filename(file.filename)
+            if not os.path.exists(UPLOAD_FOLDER):
+                os.makedirs(UPLOAD_FOLDER)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
             imgPath = UPLOAD_FOLDER + "\\" + file_name
         else:
