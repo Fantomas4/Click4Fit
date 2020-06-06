@@ -415,6 +415,20 @@ def getMyBusiness():
 
 @app.route("/api/manage-business-add-entry", methods=['POST', 'GET'])
 def manageBusinessAdd():
+    """
+    {
+        "image"
+        "name"
+        "category"
+        "country"
+        "city"
+        "address"
+        "postalCode"
+        "phoneNumber"
+        "email"
+        "ownerId"
+    }
+    """
     if request.method == "POST":
         # check if the post request has the image part
         if "image" not in request.files:
@@ -427,7 +441,7 @@ def manageBusinessAdd():
         if image and allowed_file(image.filename):
             image_name = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
-            imgPath = UPLOAD_FOLDER
+            imgPath = UPLOAD_FOLDER + "\\" + image_name
         else:
             imgPath = './assets/gym-preview.JPG'
 
