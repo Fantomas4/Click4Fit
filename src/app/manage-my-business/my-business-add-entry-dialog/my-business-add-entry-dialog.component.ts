@@ -124,7 +124,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
       phoneNumber: this.phoneNumber,
       services: this.services,
       products: this.products,
-      image: this.imgFile,
+      file: this.imgFile,
       email: this.email
     };
     this.dialogRef.close({clickedSave: true, details: content});

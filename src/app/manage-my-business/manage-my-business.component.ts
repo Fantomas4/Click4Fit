@@ -172,7 +172,7 @@ export class ManageMyBusinessComponent implements OnInit {
         formData.append('phoneNumber', dialogRes.details.phoneNumber);
         formData.append('services', dialogRes.details.services);
         formData.append('products', dialogRes.details.products);
-        formData.append('image', dialogRes.details.image);
+        formData.append('file', dialogRes.details.file);
         formData.append('email', dialogRes.details.email);
 
         formData.forEach((value, key) => {

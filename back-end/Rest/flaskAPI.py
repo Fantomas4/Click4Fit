@@ -430,6 +430,8 @@ def manageBusinessAdd():
     }
     """
     if request.method == "POST":
+        print(request.files)
+        print(request.form)
         # check if the post request has the file part
         if "file" not in request.files:
             return "No file part", 422
