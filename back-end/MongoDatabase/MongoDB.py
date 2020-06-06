@@ -334,38 +334,27 @@ class MongoDB:
     
     ################################################# Business Methods ##################################################
     
-    def createNewBusiness(self, create_query: dict):
+    def createNewBusiness(self, business: dict):
         """
-        :param create_query:
+        :param business:
         {
-            user: {
-                "_id": "users id"
-            },
-            business: {
-                'name': 'FitClub',
-                'category': 'gym',
-                'country': 'Greece',
-                'city': 'Thessaloniki',
-                'address': 'diagora 20',
-                'postalCode': '567 55',
-                'phoneNumber': '2310 634590',
-                'email': 'fitclub@gmail.com',
-                'imgPath': './assets/gym-preview.JPG',
-                'services': ['service_1', 'service_2'],
-                'products': ['product_1', 'product_2']
-            }
+            'name': 'FitClub',
+            'category': 'gym',
+            'country': 'Greece',
+            'city': 'Thessaloniki',
+            'address': 'diagora 20',
+            'postalCode': '567 55',
+            'phoneNumber': '2310 634590',
+            'email': 'fitclub@gmail.com',
+            'imgPath': './assets/gym-preview.JPG',
+            'services': ['service_1', 'service_2'],
+            'products': ['product_1', 'product_2'],
+            'ownerId': "<business owners id>"
         }
         :return:
         """
-        if "user" not in create_query:
-            raise ValueError("create_query doesn't contain owner")
-        if "business" not in create_query:
-            raise ValueError("create_query doesn't contain business")
-        user = create_query["user"]
-        business = create_query["business"]
-        self.validator.validate(user, "user")
         self.validator.validate(business, "business")
-        user_wrapper = self.userDB.get(user)
+        user_wrapper = self.userDB.get(business["ownerId"])
         if not user_wrapper.operationDone:
             raise ValueError("owner doesn't exist in db")
         if user_wrapper.user["privilegeLevel"] != "business":
@@ -378,7 +367,7 @@ class MongoDB:
         business_wrapper = self.businessDB.create(business)
         if business_wrapper.operationDone:
             business_wrapper.operationDone = self.userDB.addBusiness(
-                user, business_wrapper.business["_id"])
+                user_wrapper.user, business_wrapper.business["_id"])
         return business_wrapper
 
     def businessSearch(self, search_query: dict):
@@ -543,11 +532,10 @@ class MongoDB:
                 returned_data["user"].append(user_wrapper.user)
             else:
                 print("Could not insert user: " + str(user))
+        owner_id = self.userDB.get({"email" : 'nikosalex@gmail.com'}).user["_id"]
         for business in data["business"]:
-            business_wrapper = self.createNewBusiness({
-                "user": {"email" : 'nikosalex@gmail.com'},
-                "business" : business
-                })
+            business["ownerId"] = owner_id
+            business_wrapper = self.createNewBusiness(business)
             if (business_wrapper.operationDone):
                 returned_data["business"].append(business_wrapper.business)
             else:

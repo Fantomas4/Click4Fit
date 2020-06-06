@@ -40,20 +40,21 @@ class Validator:
             },
             "business" : {
                 "legal-attributes" : ["name", "category", "country", "city", "address", "postalCode", "phoneNumber",
-                                        "email", "imgPath", "services", "products", "_id"],
+                                        "email", "imgPath", "services", "products", "_id", "ownerId"],
                 "type" : {
-                    "_id"          : str,
-                    "name"         : str,
-                    "category"     : str,
-                    "country"      : str,
-                    "city"         : str,
-                    "address"      : str,
+                    "_id"         : str,
+                    "name"        : str,
+                    "category"    : str,
+                    "country"     : str,
+                    "city"        : str,
+                    "address"     : str,
                     "postalCode"  : str,
                     "phoneNumber" : str,
-                    "email"        : str,
+                    "email"       : str,
                     "imgPath"     : str,
-                    "services"     : list,
-                    "products"     : list
+                    "services"    : list,
+                    "products"    : list,
+                    "ownerId"     : str
                 },
                 "regex" : {
                     "email"    : r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",

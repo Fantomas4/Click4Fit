@@ -33,7 +33,10 @@ def allowed_file(filename):
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
-        # print(request.get_json())
+        print(request.files)
+        print(request.form)
+        business = request.form.to_dict()
+        print(business)
         if 'file' not in request.files:
             return "No file part", 422
         file = request.files['file']
@@ -412,24 +415,42 @@ def getMyBusiness():
 
 @app.route("/api/manage-business-add-entry", methods=['POST', 'GET'])
 def manageBusinessAdd():
-    business = request.get_json()
-    # connection with mongo sending the user and modifying the profile's details
-    try:
-        business_wrapper: BusinessWrapper = MongoDB.createNewBusiness(business)
-    except TypeError as type_err:  # Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if type(business_wrapper.business) is not dict:
-            return "Something is wrong with the database", 500
-        if business_wrapper.found:
-            return "Business already exists", 409
-        if business_wrapper.operationDone:
-            return jsonify("Business addition successful!"), 200
-        return "Unexpected Error!", 500
+    if request.method == "POST":
+        # check if the post request has the image part
+        if "image" not in request.files:
+            return "No image part", 422
+        image = request.files["image"]
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if image.filename == '':
+            return "No selected image", 422
+        if image and allowed_file(image.filename):
+            image_name = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+            imgPath = UPLOAD_FOLDER
+        else:
+            imgPath = './assets/gym-preview.JPG'
+
+        business = request.form.to_dict()
+        business["imgPath"] = imgPath
+        # connection with mongo sending the user and modifying the profile's details
+        try:
+            business_wrapper: BusinessWrapper = MongoDB.createNewBusiness(business)
+        except TypeError as type_err:  # Checking for errors
+            return str(type_err), 422
+        except ValueError as value_err:
+            return str(value_err), 422
+        except:
+            return "Bad error", 500
+        else:
+            if type(business_wrapper.business) is not dict:
+                return "Something is wrong with the database", 500
+            if business_wrapper.found:
+                return "Business already exists", 409
+            if business_wrapper.operationDone:
+                return jsonify("Business addition successful!"), 200
+            return "Unexpected Error!", 500
+    return "Not a POST request", 422
 
 
 @app.route("/api/manage-business-delete-entries", methods=['POST', 'GET'])
