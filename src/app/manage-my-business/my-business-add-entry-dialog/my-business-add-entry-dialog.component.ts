@@ -45,7 +45,6 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   onFileSelected(event) {
-    console.log(event);
     this.imgFile = event.target.files[0];
   }
 

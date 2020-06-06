@@ -161,6 +161,9 @@ export class ManageMyBusinessComponent implements OnInit {
     });
     this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
+        console.log("SERVICES: ", dialogRes.details.services);
+        console.log("PRODUCTS: ", dialogRes.details.products);
+
         const formData = new FormData();
         formData.append('ownerId', dialogRes.details.ownerId);
         formData.append('name', dialogRes.details.name);
@@ -179,7 +182,7 @@ export class ManageMyBusinessComponent implements OnInit {
           console.log(key + " " + value);
         });
 
-        this.manageMyBusinessService.addEntry(dialogRes.details).toPromise().then(data => {
+        this.manageMyBusinessService.addEntry(formData).toPromise().then(data => {
             this.getMyBusinessEntries();
             this.alertService.success('Entry added successfully');
           },
