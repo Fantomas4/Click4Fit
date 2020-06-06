@@ -27,9 +27,8 @@ export class ManageMyBusinessService {
   }
 
   addEntry(data: object) {
-    console.log("ADD ENTRY: ", data);
-    return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, JSON.stringify(data),
-      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, data,
+      {observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
     }));
