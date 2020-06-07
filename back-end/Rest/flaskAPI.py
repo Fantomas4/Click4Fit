@@ -450,6 +450,10 @@ def manageBusinessAdd():
             imgPath = './assets/gym-preview.JPG'
 
         business = request.form.to_dict()
+        if "services" in business:
+            business["services"] = business["services"].split(",")
+        if "products" in business:
+            business["products"] = business["products"].split(",")
         business["imgPath"] = imgPath
         # connection with mongo sending the user and modifying the profile's details
         try:
