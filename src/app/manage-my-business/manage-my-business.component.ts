@@ -141,7 +141,21 @@ export class ManageMyBusinessComponent implements OnInit {
     });
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        this.manageMyBusinessService.updateEntry(dialogRes.details).toPromise().then(data => {
+        const formData = new FormData();
+        formData.append('ownerId', dialogRes.details.ownerId);
+        formData.append('name', dialogRes.details.name);
+        formData.append('category', dialogRes.details.category);
+        formData.append('country', dialogRes.details.country);
+        formData.append('city', dialogRes.details.city);
+        formData.append('address', dialogRes.details.address);
+        formData.append('postalCode', dialogRes.details.postalCode);
+        formData.append('phoneNumber', dialogRes.details.phoneNumber);
+        formData.append('services', dialogRes.details.services);
+        formData.append('products', dialogRes.details.products);
+        formData.append('file', dialogRes.details.file);
+        formData.append('email', dialogRes.details.email);
+
+        this.manageMyBusinessService.updateEntry(formData).toPromise().then(data => {
             this.alertService.success('Data updated successfully');
           },
           error => {
