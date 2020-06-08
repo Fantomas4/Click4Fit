@@ -80,11 +80,11 @@ def login():
         if not user_wrapper.operationDone:
             return "Wrong password", 401
         return jsonify(user={
-            "_id": user_wrapper.user["_id"]
-            "name": user_wrapper.user["name"]
-            "surname": user_wrapper.user["surname"]
-            "email": user_wrapper.user["email"]
-            "privilegeLevel": user_wrapper.user["privilegeLevel"]
+            "_id": user_wrapper.user["_id"],
+            "name": user_wrapper.user["name"],
+            "surname": user_wrapper.user["surname"],
+            "email": user_wrapper.user["email"],
+            "privilegeLevel": user_wrapper.user["privilegeLevel"],
             "token": user_wrapper.user["token"]
         }), 200
 
