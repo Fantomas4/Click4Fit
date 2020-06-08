@@ -25,7 +25,6 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-
     // nikosalex@gmail.com
     // gp123456
     // DEBUGGING ONLY!!!!!!
@@ -42,7 +41,6 @@ export class AuthenticationService {
             }
             return res;
     }));
-
   }
 
   logout() {

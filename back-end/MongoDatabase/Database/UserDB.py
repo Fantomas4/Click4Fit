@@ -64,12 +64,12 @@ class UserDB:
         if self._findByEmail(user["email"]): # Checks if user already exists
             return UserWrapper({}, found=True, operationDone=False)
         user = {
-            "_id"               : str(ObjectId()),
-            "name"              : user["name"],
-            "surname"           : user["surname"],
-            "email"             : user["email"],
-            "password"          : self._hashPassword(user["password"]), # hash and salt password
-            "birthdate"         : user["birthdate"],
+            "_id"              : str(ObjectId()),
+            "name"             : user["name"],
+            "surname"          : user["surname"],
+            "email"            : user["email"],
+            "password"         : self._hashPassword(user["password"]), # hash and salt password
+            "birthdate"        : user["birthdate"],
             "privilegeLevel"   : user.get("privilegeLevel", "client"), # default value of "client"
             "favoriteWorkout"  : user.get("favoriteWorkout", []),
             "favoriteBusiness" : user.get("favoriteBusiness", [])
@@ -134,7 +134,6 @@ class UserDB:
         except:
             return UserListWrapper(None, found=False, operationDone=False)
         else:
-            #user_list = [user for user in user_list_cursor]
             success = bool(user_list)
             return UserListWrapper(user_list, found=success, operationDone=success)
 
@@ -165,6 +164,21 @@ class UserDB:
             return None
         else:
             return favorites
+    
+    def addFavorite(self, user: dict, favorite: str, new_favorite: str):
+        """
+        :param user:
+        :param favorite:
+        :param new_favorite:
+        :return:
+        """
+        try:
+            self.db.update_one(user, {"$push": {favorite: new_favorite}})
+        except:
+            return False
+        else:
+            return True
+            
 
     def changePassword(self, user: dict, new_password: str):
         """

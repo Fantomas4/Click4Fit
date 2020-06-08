@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import { AlertService } from '../core/alert.service';
+import { Subscription } from 'rxjs';
 import {ContactUsService} from './contact-us.service';
+
+interface AlertMessage {
+  type: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-contact-us',
@@ -18,15 +25,25 @@ export class ContactUsComponent implements OnInit {
   contactEmail: string;
   textarea: string;
   subject: string;
+  alertMessage: AlertMessage;
+  alertSubscription: Subscription;
 
-  constructor(public contactUsService: ContactUsService) {}
+  constructor(public contanctUsService:ContactUsService,private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
   }
 
   onClick() {
     this.content={'fullname':this.fullName,'email':this.contactEmail,'telephone':this.telephone,'subject':this.subject,'text':this.textarea};
-    this.contactUsService.postDetails(this.content);
-    this.contactUsService.openModal();
+    this.contanctUsService.postDetails(this.content);
+    this.alertService.success("Your message has been sent.")
   }
 }

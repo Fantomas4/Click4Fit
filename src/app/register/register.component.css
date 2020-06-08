@@ -3,8 +3,8 @@
 }
 
 .register-card {
-  width: 25%;
-  margin: 10% auto;
+  width: 18%;
+  margin: 5% auto;
 }
 
 #register-form {
@@ -15,8 +15,8 @@
   font-size: 21px;
 }
 
-.email-input-field {
-  width: 80%
+.firstName, .lastName, .birthDate,.email, .password, .repeatedPassword {
+  width: 100%
 }
 
 #alert-message {
@@ -41,57 +41,77 @@ mat-card-actions {
 #register-button{
   margin-right: 2%
 }
-
-@media screen and (max-width:320px){
+/*!* vertical mobile responsiveness *!*/
+@media screen and (max-width:320px) and (max-height:1023px) and (orientation:portrait){
   .register-card {
     width: 65%;
     margin: 0 auto;
     display:block;
-    margin-top:20px;
+    margin-top:10%;
+    margin-bottom:5%;
+  }
+  .mat-card-title {
+    font-size: 18px;
   }
 }
-
-@media screen and (max-height:320px){
+@media screen and (min-width:321px) and (max-width:375px) and (max-height:1023px) and (orientation:portrait){
   .register-card {
-    width: 35%;
+    width: 60%;
     margin: 0 auto;
     display:block;
-    margin-top:30px;
+    margin-top:10%;
+    margin-bottom:5%;
+  }
+  .mat-card-title {
+    font-size: 18px;
   }
 }
-
-@media screen and (min-width:321px)and (max-width:375px){
+@media screen and (min-width:376px) and (max-width:425px) and (max-height:1023px) and (orientation:portrait){
   .register-card {
     width: 55%;
     margin: 0 auto;
     display:block;
-    margin-top:20px;
+    margin-top:10%;
+    margin-bottom:5%;
+  }
+  .mat-card-title {
+    font-size: 18px;
   }
 }
-
-@media screen and (min-height:321px) and (max-height:375px){
+/*!* horizontal mobile responsiveness *!*/
+@media screen and (max-width:1023px) and (max-height:320px) and (orientation:landscape){
   .register-card {
     width: 35%;
     margin: 0 auto;
     display:block;
-    margin-top:30px;
+    margin-top:10%;
+    margin-bottom:5%;
+  }
+  .mat-card-title {
+    font-size: 18px;
   }
 }
-
-@media (min-width:376px)and (max-width:425px){
-  .register-card {
-    width: 50%;
-    margin: 0 auto;
-    display:block;
-    margin-top:20px;
-  }
-}
-
-@media (min-height:376px) and (max-height:425px){
+@media screen and (max-width:1023px) and (min-height:321px) and (max-height:375px) and (orientation:landscape){
   .register-card {
     width: 35%;
     margin: 0 auto;
     display:block;
-    margin-top:30px;
+    margin-top:10%;
+    margin-bottom:5%;
+  }
+  .mat-card-title {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width:1023px) and (min-height:376px) and (max-height:425px) and (orientation:landscape){
+  .register-card {
+    width: 35%;
+    margin: 0 auto;
+    display:block;
+    margin-top:10%;
+    margin-bottom:5%;
+  }
+  .mat-card-title {
+    font-size: 18px;
   }
 }

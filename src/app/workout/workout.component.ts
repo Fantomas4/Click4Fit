@@ -1,7 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { WorkoutService } from './workout.service';
 import {ResultCard2Service} from './result-card2/result-card2.service';
-import { MatListOption } from '@angular/material/list/selection-list';
+import { Router, NavigationEnd} from '@angular/router';
+import { AlertService } from '../core/alert.service';
+import { Subscription } from 'rxjs';
+
+interface AlertMessage {
+  type: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-workout',
@@ -10,6 +17,8 @@ import { MatListOption } from '@angular/material/list/selection-list';
 })
 export class WorkoutComponent implements OnInit {
 
+  alertMessage: AlertMessage;
+  alertSubscription: Subscription;
   isClicked = false;
   results;
   content;
@@ -29,17 +38,34 @@ export class WorkoutComponent implements OnInit {
   selectedOptionsAdvisedFor;
   selectedOptionsDifficulty;
   selectedOptionsEquipment;
-
-  constructor(private workoutService: WorkoutService,private resultCardService: ResultCard2Service) { }
+  search:boolean=false;
+  i:number=0;
+ 
+  constructor(private workoutService: WorkoutService,private resultCardService: ResultCard2Service,
+    private router: Router,private alertService: AlertService) { }
 
   ngOnInit(): void {
-
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
+    
   }
   
   /* In the case of clicking search button */
   getResults() {
-    this.isClicked = true;
-    this.content={"category":this.selectedOptionsCategories,"advised_for":this.selectedOptionsAdvisedFor,"difficulty":this.selectedOptionsDifficulty,"equipment": [this.selectedOptionsEquipment]};
+    this.isClicked=true;
+    this.content={"category":this.selectedOptionsCategories,"advisedFor":this.selectedOptionsAdvisedFor,"difficulty":this.selectedOptionsDifficulty,"equipment": [this.selectedOptionsEquipment]};
+    this.workoutService.getResults(this.content).toPromise().then(data=>{
+      this.results=data.workoutList;
+    },
+    error=>{
+      this.alertService.error(error.error);
+    })
   }
   
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/

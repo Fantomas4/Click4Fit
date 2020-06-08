@@ -49,7 +49,6 @@ import { WorkoutService } from './workout/workout.service';
 import { ContactUsService } from './contact-us/contact-us.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
-import { ContactUsDialogMessageComponent } from './contact-us/contactus-dialog-message/contactus-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
 import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/update-dialog-message.component';
 import { BusinessAddEntryDialogService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
@@ -126,6 +125,6 @@ import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogMessageComponent,UpdateDialogMessageComponent,RecoverDialogMessageComponent,ContactUsDialogMessageComponent]
+  entryComponents: [DeleteDialogMessageComponent,RecoverDialogMessageComponent]
 })
 export class AppModule { }

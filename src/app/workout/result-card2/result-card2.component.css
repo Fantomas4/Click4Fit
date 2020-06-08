@@ -1,19 +1,17 @@
 /*!* Configuration for both desktop and mobile view *!*/
 
-/*!* The category card *!*/
-.category{
-    width:300px;
-    margin-left:30px;
+/*!* The  card *!*/
+.mat-card {
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
     background-color: lightgray;
 }
-.category-title{
-    text-align: center;
-    font-size:27px;
-    font-weight: bold;
-}
-/*!* The exercise card *!*/
 .exercise-title{
     font-size:22px;
+}
+.icon{
+    color:red;
 }
 .frame{
     width:100%;
@@ -22,6 +20,9 @@
 .sets{
     font-style: italic;
     font-size:16px;
+}
+.chip{
+    background-color: white;
 }
 
 /*!* Configuration only for mobile view *!*/

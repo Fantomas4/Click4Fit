@@ -19,3 +19,13 @@ table {
 td, th {
   width: 25%;
 }
+.alert-error-text {
+  color: red;
+  font-weight: bold;
+  text-align:center;
+}
+.alert-success-text {
+  color: green;
+  font-weight: bold;
+  text-align:center;
+}

@@ -7,18 +7,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   })
   export class ResultCard2Service {
 
-    results;
+   
     constructor(private http: HttpClient){}
 
-    /*getResults(jsonData){
-        this.results=jsonData;
-    }
-    passResults(){
-        return this.results;
-    }*/
-    postFilters(content): Observable<any>{
+    addFavoriteWorkout(content):Observable<any>{
       const headers = {'content-type':'application/json'}; 
       const jsonData=JSON.stringify(content);
-      return this.http.post('http://localhost:5000/api/display-workout',jsonData,{'headers':headers});  
+      return this.http.post('http://localhost:5000/api/add-favorite-workout',jsonData,{'headers':headers});  
+
     }
   }

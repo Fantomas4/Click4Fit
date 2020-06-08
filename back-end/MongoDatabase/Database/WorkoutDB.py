@@ -21,14 +21,14 @@ class WorkoutDB:
         if self.get(workout).found:
             return WorkoutWrapper({}, found=True, operationDone=False)
         workout = {
-            "_id"           : str(ObjectId()),
-            "name"          : workout["name"],
-            "category"      : workout["category"],
+            "_id"          : str(ObjectId()),
+            "name"         : workout["name"],
+            "category"     : workout["category"],
             "muscleGroups" : workout["muscleGroups"], 
             "advisedFor"   : workout["advisedFor"],
-            "difficulty"    : workout["difficulty"],
-            "equipment"     : workout["equipment"],
-            "sets"          : workout["sets"],
+            "difficulty"   : workout["difficulty"],
+            "equipment"    : workout["equipment"],
+            "sets"         : workout["sets"],
             "videoUrl"     : workout["videoUrl"] 
         }
         try:
@@ -86,7 +86,7 @@ class WorkoutDB:
         """
         try:
             results = list(self.db.find(
-                        {key: {"$in": search_query[key]} for key in search_query.keys()}
+                        {key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}
                         ))
         except:
             return WorkoutListWrapper(None, found=False, operationDone=False)
