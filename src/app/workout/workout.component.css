@@ -68,8 +68,8 @@ h1{
   
 /*!* Configuration only for mobile view *!*/
 
-/*!* Size S and horizontal mode *!*/
-@media screen and (max-width:320px){
+/*!* horizontal mobile responsiveness *!*/
+@media screen and (max-width:1023px) and (max-height:320px) and (orientation:landscape){
     .text{
         text-align: center;
         font-size:25px;
@@ -77,8 +77,24 @@ h1{
         font-style: oblique;       
     }
 }
-/*!* Size S and vertical mode *!*/
-@media screen and (max-height:320px){
+@media screen and (max-width:1023px) and (min-height:321px) and (max-height:375px) and (orientation:landscape){
+    .text{
+        text-align: center;
+        font-size:25px;
+        margin-top:25%;
+        font-style: oblique;       
+    }
+}
+@media screen and (max-width:1023px) and (min-height:376px) and (max-height:425px) and (orientation:landscape){
+    .text{
+        text-align: center;
+        font-size:25px;
+        margin-top:25%;
+        font-style: oblique;       
+    }
+}
+/*!* vertical mobile responsiveness *!*/
+@media screen and (max-width:320px) and (max-height:1023px) and (orientation:portrait){
     .text{
         text-align: center;
         font-size:25px;
@@ -86,17 +102,7 @@ h1{
         font-style: oblique;       
     }
 }
-/*!* Size M and horizontal mode *!*/
-@media screen and (min-width:321px) and (max-width:375px){
-    .text{
-        text-align: center;
-        font-size:25px;
-        margin-top:25%;
-        font-style: oblique;       
-    }
-}
-/*!* Size M and vertical mode *!*/
-@media screen and (min-height:321px) and (max-height:375px){
+@media screen and (min-width:321px) and (max-width:375px) and (max-height:1023px) and (orientation:portrait){
     .text{
         text-align: center;
         font-size:25px;
@@ -104,17 +110,8 @@ h1{
         font-style: oblique;       
     }
 }
-/*!* Size L and horizontal mode *!*/
-@media screen and (min-width:376px) and (max-width:425px){
-    .text{
-        text-align: center;
-        font-size:25px;
-        margin-top:25%;
-        font-style: oblique;       
-    }
-}
-/*!* Size L and vertical mode *!*/
-@media screen and (min-height:376px) and (max-height:425px){
+
+@media screen and (min-width:376px) and (max-width:425px) and (max-height:1023px) and (orientation:portrait){
     .text{
         text-align: center;
         font-size:25px;
