@@ -135,7 +135,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   onSaveClick(): void {
     if (this.entryForm.valid) {
       const content = {
-        // ownerId: JSON.parse(sessionStorage.getItem('currentUser'))
+        ownerId: JSON.parse(sessionStorage.getItem('currentUser'))._id,
         name: this.entryForm.get('name').value,
         category: this.category,
         country: this.country,
