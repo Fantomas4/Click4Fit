@@ -135,6 +135,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   onSaveClick(): void {
     if (this.entryForm.valid) {
       const content = {
+        // ownerId: JSON.parse(sessionStorage.getItem('currentUser'))
         name: this.entryForm.get('name').value,
         category: this.category,
         country: this.country,
@@ -144,7 +145,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
         phoneNumber: this.entryForm.get('phoneNumber').value,
         services: this.services,
         products: this.products,
-        imgPath: this.imgFile,
+        file: this.imgFile,
         email: this.entryForm.get('email').value
       };
       console.log('onSaveClick result: ', content);

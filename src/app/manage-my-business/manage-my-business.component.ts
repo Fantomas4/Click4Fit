@@ -190,9 +190,9 @@ export class ManageMyBusinessComponent implements OnInit {
         formData.append('file', dialogRes.details.file);
         formData.append('email', dialogRes.details.email);
 
-        // formData.forEach((value, key) => {
-        //   console.log(key + " " + value);
-        // });
+        formData.forEach((value, key) => {
+          console.log(key + " " + value);
+        });
 
         this.manageMyBusinessService.addEntry(formData).toPromise().then(data => {
             this.getMyBusinessEntries();
