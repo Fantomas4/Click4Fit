@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MyProfileService } from './myprofile.service';
-import {MAT_MOMENT_DATE_FORMATS,MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 import { DeleteDialogMessageComponent } from './delete-dialog-message/delete-dialog-message.component';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 interface AlertMessage {
   type: string;
@@ -16,18 +16,12 @@ interface AlertMessage {
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
-  styleUrls: ['./myprofile.component.css'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },]
+  styleUrls: ['./myprofile.component.css']
 })
 export class MyprofileComponent implements OnInit {
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  id: string;
   name: string;
   surname: string;
   birthdate: FormControl;
@@ -35,22 +29,19 @@ export class MyprofileComponent implements OnInit {
   password: string;
   newPassword: string;
   newRepeatedPassword: string;
-  content;
-  jsonData;
-  results;
+  content; // it contains the json data for the request to API 
+  jsonData; // it contains a json with the current user which has been saved in session storage after log in
+  results; //it contains the results from the request to API 
   picker;
-  user;
-  id: string;
-  message;
+  user; // it contains the email of the current logged in user
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  result: boolean;
+  deleteProfile: boolean; // it contains the choice of user about deleting his profile or not
 
-  constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>, 
+  constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>,
     private alertService: AlertService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this._adapter.setLocale('en');
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
         this.alertMessage = {
@@ -59,9 +50,9 @@ export class MyprofileComponent implements OnInit {
         };
       }
     });
-    this.jsonData=JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user={"email":this.jsonData.email};
-    this.myprofileService.displayUser(this.user).subscribe(data => {
+    this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
+    this.user = { "email": this.jsonData.email };
+    this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
       this.results = data.user;
       this.id = this.results._id;
       this.name = this.results.name;
@@ -69,7 +60,7 @@ export class MyprofileComponent implements OnInit {
       this.email = this.results.email;
       this.birthdate = new FormControl(new Date(this.results.birthdate));
     },
-      error => {
+      error => { // if the request returns an error, it shows an alert message with the relevant content
         this.alertService.error(error.errror);
       });
   }
@@ -89,12 +80,12 @@ export class MyprofileComponent implements OnInit {
     dialogConfig.minWidth = 100;
     const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(result => {
-      this.result = result;
-      if (this.result == true) {
+      this.deleteProfile = result;
+      if (this.deleteProfile == true) {
         this.myprofileService.deleteProfile(this.content).toPromise().then(data => {
-          this.alertService.success(data);
+          this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
-          error => {
+          error => {  // if the request returns an error, it shows an alert message with the relevant content
             this.alertService.error(error.error);
           })
       }
@@ -105,13 +96,14 @@ export class MyprofileComponent implements OnInit {
     if (this.newPassword == this.newRepeatedPassword) {
       this.content = { "user": { "email": this.email, "password": this.password }, "new_password": this.newPassword };
       this.myprofileService.updateChanges(this.content).toPromise().then(data => {
-        this.alertService.success(data);
+        this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
       },
-        error => {
+        error => { // if the request returns an error, it shows an alert message with the relevant content
           this.alertService.error(error.error);
         });
     }
-    else {
+    else {  // if the user didn't give same new password and new repeated password, 
+      //it shows an alert message with the relevant content
       this.alertService.error('New password and new repeated password are not same');
     }
   }

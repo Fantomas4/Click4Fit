@@ -34,9 +34,10 @@
         <h1 id="title">Workout</h1>
         <button mat-raised-button id="filtersButton" (click)="sidenav.toggle()" background-color="primary">Show
             Filters</button><br>
-            <div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+        <div id="alert-message"
+            [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
             *ngIf="alertMessage">{{alertMessage.text}}
-       </div>
+        </div>
         <!-- It is shown only when the results of search are absent -->
         <p class="text" *ngIf="!isClicked">
             Click the button above to choose filters <br> and find your workout!
