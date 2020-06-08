@@ -15,6 +15,8 @@ export class SearchComponent implements OnInit {
 
   @ViewChild(LocationAutocompleteComponent) locationAutocomplete; // Used to access LocationAutocompleteComponent
 
+  searchKeywords = new FormControl();
+
   searchResults: BusinessEntry[];
 
   selectedOptions = [];
@@ -45,7 +47,8 @@ export class SearchComponent implements OnInit {
 
   getResults() {
 
-    this.searchService.getResults({category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
+    this.searchService.getResults({keywords: this.searchKeywords.value === null ? [] : this.searchKeywords.value.split(' '),
+      category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
       city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
         res => {
         this.searchResults = res.body.data;
