@@ -8,7 +8,13 @@ import {BusinessEntry} from '../../business-entry';
   styleUrls: ['./details-dialog.component.css']
 })
 export class DetailsDialogComponent implements OnInit {
+  title: string;
+  category: string;
   previewImagePath = './assets/image_placeholder.jpg';
+  country: string;
+  city: string;
+  services: string[];
+  products: string[];
 
   constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
@@ -20,7 +26,6 @@ export class DetailsDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

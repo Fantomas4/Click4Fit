@@ -77,6 +77,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }, [matchingPasswordsValidator]
   );
 
+  selectedType = 'client';
+
   genericErrorStateMatcher = new GenericErrorStateMatcher();
   passwordsErrorStateMatcher = new PasswordsErrorStateMatcher();
   alertSubscription: Subscription;
@@ -106,19 +108,28 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.registerForm.valid) {
       this.loading = true;
 
-      let birthDateString: string;
+      let postData: object;
 
       if (this.registerForm.get('birthDate').value !== null) {
-        birthDateString = JSON.stringify(this.registerForm.get('birthDate').value.toLocaleString('fr')).substring(1, 11);
+        postData = {
+          name: this.registerForm.get('firstName').value,
+          surname: this.registerForm.get('lastName').value,
+          birthdate: JSON.stringify(this.registerForm.get('birthDate').value.toLocaleString('fr')).substring(1, 11),
+          email: this.registerForm.get('email').value,
+          password: this.registerForm.get('password').value,
+          privilegeLevel: this.selectedType
+        };
+      } else {
+        postData = {
+          name: this.registerForm.get('firstName').value,
+          surname: this.registerForm.get('lastName').value,
+          email: this.registerForm.get('email').value,
+          password: this.registerForm.get('password').value,
+          privilegeLevel: this.selectedType
+        };
       }
 
-      this.registrationService.register(
-        this.registerForm.get('firstName').value,
-        this.registerForm.get('lastName').value,
-        birthDateString,
-        this.registerForm.get('email').value,
-        this.registerForm.get('password').value
-        ).pipe(first()).subscribe(
+      this.registrationService.register(postData).pipe(first()).subscribe(
           data => {
             this.alertService.success(data.body);
             this.loading = false;

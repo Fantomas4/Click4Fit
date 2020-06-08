@@ -21,14 +21,14 @@ class WorkoutDB:
         if self.get(workout).found:
             return WorkoutWrapper({}, found=True, operationDone=False)
         workout = {
-            "_id"          : str(ObjectId()),
-            "name"         : workout["name"],
-            "category"     : workout["category"],
+            "_id"           : str(ObjectId()),
+            "name"          : workout["name"],
+            "category"      : workout["category"],
             "muscleGroups" : workout["muscleGroups"], 
             "advisedFor"   : workout["advisedFor"],
-            "difficulty"   : workout["difficulty"],
-            "equipment"    : workout["equipment"],
-            "sets"         : workout["sets"],
+            "difficulty"    : workout["difficulty"],
+            "equipment"     : workout["equipment"],
+            "sets"          : workout["sets"],
             "videoUrl"     : workout["videoUrl"] 
         }
         try:

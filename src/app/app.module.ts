@@ -57,8 +57,12 @@ import { UserDetailsEditDialogService} from './manage-user-entries/user-details-
 import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/delete-dialog-message.service';
 import {JwtInterceptor} from './core/jwt.interceptor';
 import {ErrorInterceptor} from './core/error.interceptor';
-import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
-import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MAT_MOMENT_DATE_FORMATS} from '@angular/material-moment-adapter';
+import { ManageMyBusinessComponent } from './manage-my-business/manage-my-business.component';
+import { MyBusinessDetailsEditDialogComponent } from './manage-my-business/my-business-details-edit-dialog/my-business-details-edit-dialog.component';
+import { MyBusinessAddEntryDialogComponent } from './manage-my-business/my-business-add-entry-dialog/my-business-add-entry-dialog.component';
+import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 
 @NgModule({
   declarations: [
@@ -84,13 +88,15 @@ import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
     BusinessAddEntryDialogComponent,
     ManageUserEntriesComponent,
     UserDetailsEditDialogComponent,
-    UserDetailsEditDialogComponent,
     FooterComponent,
     HomepageComponent,
     ErrorPageComponent,
     RecoverDialogMessageComponent,
-    ContactUsDialogMessageComponent,
     UpdateDialogMessageComponent
+    ContactUsDialogMessageComponent,
+    ManageMyBusinessComponent,
+    MyBusinessDetailsEditDialogComponent,
+    MyBusinessAddEntryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -113,11 +119,11 @@ import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectCountryModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService,
-    BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService, DeleteDialogMessageService,
+    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService, ContactUsService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},
@@ -125,6 +131,6 @@ import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogMessageComponent,RecoverDialogMessageComponent]
+  entryComponents: [DeleteDialogMessageComponent, RecoverDialogMessageComponent, ContactUsDialogMessageComponent]
 })
 export class AppModule { }

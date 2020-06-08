@@ -11,9 +11,16 @@
         <p>City: {{data.city}}</p>
       </div>
     </mat-tab>
-    <mat-tab label="Offered Services/Products">
+    <mat-tab label="Services">
       <mat-chip-list class="chip-list">
-        <mat-chip *ngFor="let opt of data.availableServProd" color="accent" selected>
+        <mat-chip *ngFor="let opt of data.services "color="accent" selected>
+          {{opt}}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-tab>
+    <mat-tab label="Products">
+      <mat-chip-list class="chip-list">
+        <mat-chip *ngFor="let opt of data.products "color="accent" selected>
           {{opt}}
         </mat-chip>
       </mat-chip-list>

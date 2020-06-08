@@ -70,6 +70,13 @@
             </mat-error>
           </mat-form-field>
         </tr>
+        <tr>
+          <p>Account type: </p>
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(value)]="selectedType">
+            <mat-button-toggle value="client">Client</mat-button-toggle>
+            <mat-button-toggle value="business">Business Owner</mat-button-toggle>
+          </mat-button-toggle-group>
+        </tr>
       </table>
     </form>
     <div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"

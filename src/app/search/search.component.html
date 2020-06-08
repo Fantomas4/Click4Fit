@@ -1,13 +1,17 @@
-
+<!--filters:-->
+<!--Category: Gym, Personal Trainer, Fitness Shop-->
+<!--Country:-->
+<!--City: -->
 <mat-drawer-container>
   <mat-drawer mode="over" #sidenav (openedChange)="onToggleSidenav()" position="end">
     <mat-nav-list id="filter-list" title="Category">
+<!--      https://material.angular.io/components/list/overview-->
       <div class="category-container">
         <div mat-subheader class="filter-type-subheader">Category</div>
-        <mat-selection-list >
-          <mat-list-option value ="Gym">Gym</mat-list-option>
-          <mat-list-option value ="Personal Trainer">Personal Trainer</mat-list-option>
-          <mat-list-option value ="Fitness Shop">Fitness Shop</mat-list-option>
+        <mat-selection-list #categories [(ngModel)]="selectedOptions">
+          <mat-list-option *ngFor="let option of businessCategories" [value]="option.value">
+            {{option.name}}
+          </mat-list-option>
         </mat-selection-list>
       </div>
       <mat-divider></mat-divider>
@@ -21,22 +25,34 @@
     </mat-nav-list>
   </mat-drawer>
 
+
+
   <mat-drawer-content>
     <h1>Search</h1>
     <form class="search-form">
-<!--      <input matInput placeholder="Search..." (keyup)="applyFilter($event)" [(ngModel)]="searchInput" class="search-input" name="search-input">-->
+      <input matInput placeholder="Search..." class="search-input" name="search-input">
       <button id="search-button" (click)="getResults()">Go!</button>
     </form>
     <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">
       Show Filters
     </button>
 
+
+
     <!--    /*Card deck component */-->
     <div class="card-deck-container">
+<!--      <app-result-card></app-result-card>-->
       <div *ngFor="let entry of searchResults" class="card-item">
         <app-result-card [businessData]="entry"></app-result-card>
       </div>
+
+<!--      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+
     </div>
+
+
+
+
 
   </mat-drawer-content>
 </mat-drawer-container>

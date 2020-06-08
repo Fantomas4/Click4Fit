@@ -1,5 +1,4 @@
 import sys
-import sys
 sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
 
 from bson import ObjectId
@@ -12,6 +11,7 @@ class BusinessDB:
     def __init__(self, client):
         self.client = client
         self.db = self.client.BusinessDB
+        # self.db.create_index([('name', 'text')])
 
     ################################################# Private Methods ##################################################
 
@@ -43,10 +43,10 @@ class BusinessDB:
             "address"      : business["address"],
             "postalCode"  : business["postalCode"],
             "phoneNumber" : business["phoneNumber"],
-            "email"        : business["email"]
-            #"img_path"     : business["img_path"],
-            #"services"     : business["services"],
-            #"products"     : business["products"]
+            "email"       : business["email"],
+            "imgPath"     : business.get("imgPath", "./assets/image_placeholder.jpg"),
+            "services"    : business.get("services", []),
+            "products"    : business.get("products", [])
         }
         try:
             insert_result: InsertOneResult = self.db.insert_one(business)
@@ -103,21 +103,23 @@ class BusinessDB:
         """
         return self.db.distinct(attribute)
 
-    def search(self, search_query: dict):
+    def search(self, search_query: dict, keywords: str):
         """
         :param search_query:
         :return:
         """
+        # self.db.create_index([('name', 'text')])
         try:
             results = list(self.db.find(
                         {key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}
                         ))
+            # self.db.find({"$text": {"$search": keywords}})
         except:
             return BusinessListWrapper(None, found=False, operationDone=False)
         else:
             success = bool(results)
             return BusinessListWrapper(results, found=success, operationDone=success)
-          
+    
     def update(self, new_business: dict):
         """
         :param new_business:
@@ -133,21 +135,22 @@ class BusinessDB:
         except:
             return BusinessWrapper(None, found=False, operationDone=False)
 
-    def delete(self, business: dict):
-        """
-        :param business:
-        :return:
-        """
-        try:
-            wrapper: BusinessWrapper = self.get({"_id": business["_id"]})
-            if wrapper.operationDone:
-                return BusinessWrapper(wrapper.business, found=True,
-                        operationDone=bool(
-                            self.db.delete_one({"_id": business["_id"]}).deleted_count))
-            return wrapper
-        except:
-            return BusinessWrapper(None, found=False, operationDone=False)
-
+    #TODO: DELETE THIS
+    # def delete(self, business: dict):
+    #     """
+    #     :param business:
+    #     :return:
+    #     """
+    #     try:
+    #         wrapper: BusinessWrapper = self.get({"_id": business["_id"]})
+    #         if wrapper.operationDone:
+    #             return BusinessWrapper(wrapper.business, found=True,
+    #                     operationDone=bool(
+    #                         self.db.delete_one({"_id": business["_id"]}).deleted_count))
+    #         return wrapper
+    #     except:
+    #         return BusinessWrapper(None, found=False, operationDone=False)
+    
     def deleteMany(self, delete_query: dict):
         """
         :param delete_query:

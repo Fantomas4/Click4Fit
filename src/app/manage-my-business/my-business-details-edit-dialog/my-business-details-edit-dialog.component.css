@@ -1,0 +1,35 @@
+.main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.field-list {
+  flex-grow: 2;
+}
+
+#category-container {
+  display: block;
+  padding-bottom: 5%
+}
+
+
+.services-and-products-container {
+  margin-top: 8%;
+}
+
+.section-title {
+  font-size: medium;
+}
+
+.section-subtitle {
+  font-size: small;
+}
+
+.chip-list {
+  width: 80%;
+}
+
+
+

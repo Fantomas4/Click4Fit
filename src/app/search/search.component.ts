@@ -4,6 +4,7 @@ import {BusinessEntry} from '../business-entry';
 import {MatTableDataSource} from '@angular/material/table';
 import {LocationAutocompleteComponent} from './location-autocomplete/location-autocomplete.component';
 
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -21,14 +22,25 @@ export class SearchComponent implements OnInit {
   
   constructor(private searchService: SearchService) { }
 
+  constructor(private searchService: SearchService, private alertService: AlertService) { }
+
   ngOnInit(): void {
     // TEMP! FOR DEBUGGING ONLY!!!
-    this.getResults();
+    // this.getResults();
   }
 
   getResults() {
-    this.searchService.getResults()
-      .subscribe(results => this.searchResults = results);
+
+    this.searchService.getResults({category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
+      city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
+        res => {
+        this.searchResults = res.body.data;
+    },
+
+      error => {
+        this.alertService.error(error);
+    });
+
   }
 
   onToggleSidenav() {

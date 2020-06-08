@@ -12,7 +12,6 @@ export class AlertService {
     // clear alert message on route change
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        console.log('test');
         this.subject.next();
       }
     });

@@ -33,7 +33,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
   // Determines the columns to be displayed in the table's header row.
   displayedColumns = ['checkboxes', 'name', 'category', 'buttons'];
 
-  businessData=[]; // An array of BusinessEntry objects retrieved from the database.
+  businessData = []; // An array of BusinessEntry objects retrieved from the database.
   dataSource = new MatTableDataSource(this.businessData); // MatTableDataSource<BusinessEntry> used as the table's data source.
 
   dialogHeight: number; // Height of the dialog window.
@@ -43,11 +43,11 @@ export class ManageBusinessEntriesComponent implements OnInit {
   detailsEditDialogRef: MatDialogRef<BusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<BusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
 
-  selected=[]; //List with selected checkboxes alertMessage: AlertMessage;
+  selected = []; // List with selected checkboxes alertMessage: AlertMessage;
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  result:boolean;
-  i:number;
+  result: boolean;
+  i: number;
   content;
   mySubscription;
   
@@ -97,7 +97,6 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
   /**
    * Method called when a key is pressed inside the Filter input field of the UI.
-   * The method receives
    * @param event: The entire event payload passed to the applyFilter event handler.
    */
   applyFilter(event: Event) {
@@ -120,9 +119,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
     /*this.manageBusinessEntriesService.getResults()
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
-      this.manageBusinessEntriesService.getResults().toPromise().then(data =>{
-        this.businessData=data.businessList;
-        this.dataSource.data=this.businessData;
+      this.manageBusinessEntriesService.getResults().toPromise().then(data => {
+        this.businessData = data.businessList;
+        this.dataSource.data = this.businessData;
       },
       error => {
         this.alertService.error(error.errror);
@@ -153,9 +152,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
       element.phoneNumber, email: element.email, services: element.services, products: element.products,
       imgPath: element.imgPath}
     });
-    this.detailsEditDialogRef.afterClosed().subscribe(result=>{
+    this.detailsEditDialogRef.afterClosed().subscribe(result => {
       this.result = result.save;
-      if (this.result == true) {
+      if (this.result === true) {
         this.manageBusinessEntriesService.updateEntry(result.details).toPromise().then(data => {
           this.getBusinessEntries();
           this.dataSource.paginator = this.paginator; 
@@ -164,9 +163,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
         },
           error => {
             this.alertService.error(error.error);
-          })
+          });
       }
-    })
+    });
   }
 
   /** Spawns the "Add Entry" dialog window */
@@ -174,9 +173,9 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(BusinessAddEntryDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')});
-      this.addEntryDialogRef.afterClosed().subscribe(result=>{
+    this.addEntryDialogRef.afterClosed().subscribe(result => {
         this.result = result.save;
-        if (this.result == true) {
+        if (this.result === true) {
           this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
             this.getBusinessEntries();
             this.dataSource.paginator = this.paginator; 
@@ -185,18 +184,18 @@ export class ManageBusinessEntriesComponent implements OnInit {
           },
             error => {
               this.alertService.error(error.error);
-            })
+            });
         }
-      })
+      });
   }
 
   /** Click on delete button */
-  deleteEntries(){
-    this.selected=this.selection.selected;
-    for (this.i=0;this.i<this.selection.selected.length;this.i++){
-      this.selected[this.i]=this.selection.selected[this.i].email;
+  deleteEntries() {
+    this.selected = this.selection.selected;
+    for (this.i = 0; this.i < this.selection.selected.length; this.i++) {
+      this.selected[this.i] = this.selection.selected[this.i].email;
     }
-    this.content={"email":this.selected};
+    this.content={email: this.selected};
     this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data =>
     {
       this.getBusinessEntries();

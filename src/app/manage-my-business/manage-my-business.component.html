@@ -1,0 +1,69 @@
+<div class="card-container">
+  <mat-card class="management-card">
+    <mat-card-header>
+      <mat-card-title>My Business Entries</mat-card-title>
+      <mat-card-subtitle>
+        The following business entries are currently linked to your account:
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="filter-field">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Name or Category...">
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="checkboxes">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Category Column -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+          <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+        </ng-container>
+
+        <!-- Buttons Column -->
+        <ng-container matColumnDef="buttons">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+              <button mat-button (click)="openDetailsEditDialog(element)">
+              <i class="material-icons">more_horiz</i>
+              </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="openAddEntryDialog()">Add Entry</button>
+      <button mat-raised-button color="warn" (click)="deleteEntries()">Delete</button>
+    </mat-card-actions>
+    <div id="alert-message"
+         [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+         *ngIf="alertMessage">{{alertMessage.text}}
+    </div>
+  </mat-card>
+</div>
+

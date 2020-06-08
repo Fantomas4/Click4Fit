@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {LocationAutocompleteService} from './location-autocomplete.service';
+import {AlertService} from '../../core/alert.service';
 
 /**
  * @title Filter autocomplete
@@ -13,32 +15,71 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./location-autocomplete.component.css']
 })
 export class LocationAutocompleteComponent implements OnInit {
-  @Input() placeholderStr;
+  countryFormControl: FormControl = new FormControl();
+  cityFormControl: FormControl = new FormControl();
 
-  formControl: FormControl = new FormControl();
 
-  options = [
-    'Thessaloniki',
-    'Athens',
-    'Xanthi',
-    'Kavala',
-    'Komotini',
-    'Kalamata'
-  ];
-  location;
+  countryOptions: string[];
+  cityOptions: string[];
 
-  filteredOptions: Observable<string[]>;
+  filteredCountryOptions: Observable<string[]>;
+  filteredCityOptions: Observable<string[]>;
+
+
+  constructor(private locationService: LocationAutocompleteService, private alertService: AlertService) {}
 
   ngOnInit() {
-    this.filteredOptions = this.formControl.valueChanges
+    this.filteredCountryOptions = this.countryFormControl.valueChanges
       .pipe(
         startWith(''),
-        map(val => val.length >= 1 ? this.filter(val) : [])
+        map(val => val.length >= 1 ? this.filterCountries(val) : [])
       );
+
+    this.filteredCityOptions = this.cityFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => val.length >= 1 ? this.filterCities(val) : [])
+      );
+
+    this.getCountries();
+    this.getCities();
   }
 
-  filter(val: string): string[] {
-    return this.options.filter(option =>
+  getCountries() {
+    this.locationService.getCountries().subscribe(res => {
+      this.countryOptions = res.body.data;
+    },
+
+    error => {
+      this.alertService.error(error);
+    });
+  }
+
+  getCities() {
+    this.locationService.getCities().subscribe(res => {
+        this.cityOptions = res.body.data;
+      },
+
+      error => {
+        this.alertService.error(error);
+      });
+  }
+
+  filterCountries(val: string): string[] {
+    return this.countryOptions.filter(option =>
       option.toLowerCase().indexOf(val.toLowerCase()) === 0);
+  }
+
+  filterCities(val: string): string[] {
+    return this.cityOptions.filter(option =>
+      option.toLowerCase().indexOf(val.toLowerCase()) === 0);
+  }
+
+  getUserCountryChoices() {
+    return this.countryFormControl.value ? [this.countryFormControl.value] : [];
+  }
+
+  getUserCityChoices() {
+    return this.cityFormControl.value ? [this.cityFormControl.value] : [];
   }
 }

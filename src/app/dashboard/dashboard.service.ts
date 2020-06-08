@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import { HttpClient} from '@angular/common/http';
+import {FavoriteWorkout, FavoritePlace} from '../favorite-entry';
+import {Observable, of} from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 /* This service is about getting favorites entries  and displaying them */
 @Injectable({

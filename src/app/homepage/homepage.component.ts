@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -7,13 +7,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
+  logoUrl = '../assets/logo.png'; // Holds logos path
+  privilegeLevel: string; // Store the user's privilege level (if a user is currently logged in).
 
-  // Holds logos path
-  logoUrl = '../assets/logo.png';
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
+  constructor(private router: Router) {
+    // clear alert message on route change
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        console.log('HOMEPAGE Detected route change!');
+        this.checkPrivilegeLevel();
+      }
+    });
   }
 
+  ngOnInit(): void {
+    this.checkPrivilegeLevel();
+  }
+
+  checkPrivilegeLevel() {
+    if (JSON.parse(sessionStorage.getItem('currentUser'))) {
+      this.privilegeLevel = JSON.parse(sessionStorage.getItem('currentUser')).privilegeLevel;
+    } else {
+      this.privilegeLevel = undefined;
+    }
+    console.log('HOMEPAGE privilegeLevel: ', this.privilegeLevel);
+  }
 }
