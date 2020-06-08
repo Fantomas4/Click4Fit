@@ -3,7 +3,6 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
-import {BusinessEntry} from '../../business-entry';
 import {ErrorStateMatcher} from '@angular/material/core';
 
 interface Country {
@@ -32,7 +31,6 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
     name: new FormControl('', [
       Validators.required
     ]),
-    country: new FormControl(),
     city: new FormControl('', [
       Validators.required
     ]),
@@ -49,9 +47,6 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
       Validators.required,
       Validators.email
     ]),
-    // services: new FormControl(),
-    // products: new FormControl(),
-    // imgFile: new FormControl(),
     },
   );
 
@@ -59,14 +54,8 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
 
 
   id: number;
-  // name: string;
   category = 'gym';
-  // country: string;
-  // city: string;
-  // address: string;
-  // postalCode: string;
-  // phoneNumber: string;
-  // emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  country = 'Greece'; // The default country value is set to 'Greece'
   services = [];
   products = [];
   imgFile = null;
@@ -135,7 +124,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   }
 
   onCountrySelected($event: Country) {
-    this.entryForm.setValue({country: $event.name});
+    this.country = $event.name;
   }
 
   onDiscardClick(): void {
@@ -144,21 +133,22 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    const content = {
-      name: this.entryForm.get('name').value,
-      category: this.entryForm.get('category').value,
-      country: this.entryForm.get('country').value,
-      city: this.entryForm.get('city').value,
-      address: this.entryForm.get('address').value,
-      postalCode: this.entryForm.get('postalCode').value,
-      phoneNumber: this.entryForm.get('phoneNumber').value,
-      services: this.services,
-      products: this.products,
-      imgPath: this.imgFile,
-      email: this.entryForm.get('email').value
-    };
-    console.log('onSaveClick result: ', content);
-    this.dialogRef.close({clickedSave: true, details: content});
+    if (this.entryForm.valid) {
+      const content = {
+        name: this.entryForm.get('name').value,
+        category: this.category,
+        country: this.country,
+        city: this.entryForm.get('city').value,
+        address: this.entryForm.get('address').value,
+        postalCode: this.entryForm.get('postalCode').value,
+        phoneNumber: this.entryForm.get('phoneNumber').value,
+        services: this.services,
+        products: this.products,
+        imgPath: this.imgFile,
+        email: this.entryForm.get('email').value
+      };
+      console.log('onSaveClick result: ', content);
+      this.dialogRef.close({clickedSave: true, details: content});
+    }
   }
-
 }

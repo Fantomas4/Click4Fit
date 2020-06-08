@@ -131,7 +131,8 @@ export class ManageMyBusinessComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
     this.detailsEditDialogRef = this.dialog.open(MyBusinessDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      maxWidth: this.dialogMaxWidth,
       data: {
         _id: element._id, name: element.name, category: element.category, country: element.country,
         city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
@@ -141,7 +142,21 @@ export class ManageMyBusinessComponent implements OnInit {
     });
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        this.manageMyBusinessService.updateEntry(dialogRes.details).toPromise().then(data => {
+        const formData = new FormData();
+        formData.append('ownerId', dialogRes.details.ownerId);
+        formData.append('name', dialogRes.details.name);
+        formData.append('category', dialogRes.details.category);
+        formData.append('country', dialogRes.details.country);
+        formData.append('city', dialogRes.details.city);
+        formData.append('address', dialogRes.details.address);
+        formData.append('postalCode', dialogRes.details.postalCode);
+        formData.append('phoneNumber', dialogRes.details.phoneNumber);
+        formData.append('services', dialogRes.details.services);
+        formData.append('products', dialogRes.details.products);
+        formData.append('file', dialogRes.details.file);
+        formData.append('email', dialogRes.details.email);
+
+        this.manageMyBusinessService.updateEntry(formData).toPromise().then(data => {
             this.alertService.success('Data updated successfully');
           },
           error => {
@@ -161,9 +176,8 @@ export class ManageMyBusinessComponent implements OnInit {
     });
     this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-
         const formData = new FormData();
-        formData.append('userID', JSON.parse(sessionStorage.getItem('currentUser'))._id);
+        formData.append('ownerId', dialogRes.details.ownerId);
         formData.append('name', dialogRes.details.name);
         formData.append('category', dialogRes.details.category);
         formData.append('country', dialogRes.details.country);
@@ -173,11 +187,12 @@ export class ManageMyBusinessComponent implements OnInit {
         formData.append('phoneNumber', dialogRes.details.phoneNumber);
         formData.append('services', dialogRes.details.services);
         formData.append('products', dialogRes.details.products);
-        formData.append('imgPath', dialogRes.details.imgPath);
+        formData.append('file', dialogRes.details.file);
         formData.append('email', dialogRes.details.email);
 
-        console.log('formData: ');
-        formData.forEach((value, key) => { console.log(key + ' ' + value); });
+        // formData.forEach((value, key) => {
+        //   console.log(key + " " + value);
+        // });
 
         this.manageMyBusinessService.addEntry(formData).toPromise().then(data => {
             this.getMyBusinessEntries();
