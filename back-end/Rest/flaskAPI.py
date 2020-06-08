@@ -65,9 +65,7 @@ def login():
 
     # connection with mongo sending user and getting answer if this user exists or not
     try:
-        print("mpika try")
         user_wrapper: UserWrapper = MongoDB.logIn(user)
-        print(user_wrapper.found)
     except TypeError as type_err:  # Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -80,15 +78,20 @@ def login():
         if not user_wrapper.found:
             return "User does not exist", 404
         if not user_wrapper.operationDone:
-            print("CASE - wrong password: ", user_wrapper.operationDone)
             return "Wrong password", 401
-        return jsonify(user=user_wrapper.user), 200
+        return jsonify(user={
+            "_id": user_wrapper.user["_id"]
+            "name": user_wrapper.user["name"]
+            "surname": user_wrapper.user["surname"]
+            "email": user_wrapper.user["email"]
+            "privilegeLevel": user_wrapper.user["privilegeLevel"]
+            "token": user_wrapper.user["token"]
+        }), 200
 
 
 ####################################### Register #####################################
 @app.route("/api/register", methods=['POST'])
 def register():
-    print(request.get_json())
     user = request.get_json() #get all the user's details
     #connection with mongo sending user
     try:
