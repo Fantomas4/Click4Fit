@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, json
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from pprint import pprint
+from time import time
 
 import sys
 sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
@@ -18,7 +19,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.dirname(__file__) + "\\uploads"
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "\\uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 MongoDB=MongoDB()
 CORS(app)
@@ -442,13 +443,13 @@ def manageBusinessAdd():
         if file.filename == '':
             return "No selected file", 422
         if file and allowed_file(file.filename):
-            file_name = secure_filename(file.filename)
+            file_name = secure_filename(file.filename) + str(time()).replace(".","")
             if not os.path.exists(UPLOAD_FOLDER):
                 os.makedirs(UPLOAD_FOLDER)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-            imgPath = UPLOAD_FOLDER + "\\" + file_name
+            imgPath = file_name
         else:
-            imgPath = './assets/gym-preview.JPG'
+            imgPath = 'gym-preview.JPG'
 
         business = request.form.to_dict()
         if "services" in business:
