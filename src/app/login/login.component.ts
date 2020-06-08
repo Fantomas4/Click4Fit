@@ -5,6 +5,7 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {ErrorStateMatcher} from '@angular/material/core';
 import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
+import {first} from 'rxjs/operators';
 
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -63,24 +64,34 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(this.loginForm.get('email'));
-    console.log(this.loginForm.get('password'));
+    // console.log(this.loginForm.get('email'));
+    // console.log(this.loginForm.get('password'));
 
     if (this.loginForm.valid) {
       // Update loading flag value for mat-spinner
       this.loading = true;
-      this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value);
-      // this.alertMessage = 'Error: Could not authenticate';
-      console.log(this.authenticationService.currentUserValue);
-      if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
-        // The user currently logged in has the access privilege level of a client
-        this.router.navigate(['/user']);
-      } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
-        this.alertSubscription.unsubscribe();
-        this.router.navigate(['/admin']);
-      }
+
+      this.authenticationService.login(this.loginForm.get('email').value, this.loginForm.get('password').value).
+      pipe(first()).subscribe(
+        data => {
+          console.log('POINT 1 - res: ', data);
+          console.log('POINT 2 - currentUserValue: ', this.authenticationService.currentUserValue);
+          if (this.authenticationService.currentUserValue.privilegeLevel === 'client') {
+            // The user currently logged in has the access privilege level of a client
+            console.log('login check 2');
+            this.router.navigate(['/user']);
+          } else if (this.authenticationService.currentUserValue.privilegeLevel === 'admin') {
+            console.log('login check 3');
+            this.alertSubscription.unsubscribe();
+            this.router.navigate(['/admin']);
+          }
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        }
+      );
     }
-    this.loading = false;
   }
 }
 

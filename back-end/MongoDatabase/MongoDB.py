@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
 
 from pymongo import MongoClient
 from re import fullmatch # for new password validation
@@ -27,7 +27,7 @@ class MongoDB:
         self.businessDB = BusinessDB(self.client[database])
         self.workoutDB = WorkoutDB(self.client[database])
         self.validator = Validator()
-    
+
     def dropDatabases(self):
         self.userDB.db.drop()
         self.businessDB.db.drop()
@@ -41,7 +41,7 @@ class MongoDB:
         While inserting the user gets an unique identifier attribute _id, which will be contained in the user dict
         returned in the UserWrapper. This process will hash the users password before inserting it in the database.
 
-        :param user: a dictionary containing at least valid "name", "surname", "email", "password" and "birthdate"   
+        :param user: a dictionary containing at least valid "name", "surname", "email", "password" and "birthdate"
         :return: UserWrapper
                 .user: containing created user dict if inserted, else empty dict.
                        Will contain None if something failed inside mongo.
@@ -51,7 +51,7 @@ class MongoDB:
         self.validator.validate(user, "user")
         for attribute in ["name", "surname", "email", "password", "birthdate"]:
             if attribute not in user:
-                raise ValueError("user doesn't contain " + attribute + 
+                raise ValueError("user doesn't contain " + attribute +
                                 " attribute, which is needed for registration")
         return self.userDB.create(user)
 
@@ -73,11 +73,11 @@ class MongoDB:
                 raise ValueError("user_credentials doesn't contain " + attribute +
                                 " attribute, which is needed to log in")
         return self.userDB.logIn(user_credentials)
-    
+
     def changeUserPassword(self, change_query: dict):
         """
         Changes a users password.
-        
+
         :param change_query: a dict containing 2 attributes: The user and the new_password.
                             Example: change_query = {
                                         "user": {
@@ -130,11 +130,11 @@ class MongoDB:
                 .user_list: a list with all users matching search_query filters
                             Will contain None if something failed inside mongo.
                 .found: will be true if user_list is not empty, else false
-                .operationDone: will be true if found is true, else false 
+                .operationDone: will be true if found is true, else false
         """
         self.validator.validate_filter(search_query, "user")
         return self.userDB.search(search_query)
-    
+
     def getUser(self, user_query: dict):
         """
         Gets first user which has the same attribute-value pairs as user_query.
@@ -151,7 +151,7 @@ class MongoDB:
         """
         self.validator.validate(user_query, "user")
         return self.userDB.get(user_query)
-    
+
     def getUsers(self, user_query: dict):
         """
         Gets all users which have same attribute-value pairs as user_query
@@ -165,7 +165,7 @@ class MongoDB:
         """
         self.validator.validate(user_query, "user")
         return self.userDB.getList(user_query)
-    
+
     def getAllUsers(self):
         """
         Gets all users
@@ -176,7 +176,7 @@ class MongoDB:
                 .operationDone: will be true if found is true, else false
         """
         return self.userDB.getAll()
-    
+
     def getFavoriteBusiness(self, user: dict):
         """
         :param user: a dict containing a unique identifier to find the user. Example: _id, email
@@ -289,7 +289,7 @@ class MongoDB:
         if "_id" not in new_user:
             raise ValueError("new_user doesn't contain _id attribute, which is needed for updating")
         return self.userDB.update(new_user)
-    
+
     def deleteUser(self, user: dict):
         """
         Deletes a user based on _id
@@ -309,7 +309,7 @@ class MongoDB:
     def deleteUsers(self, delete_query: dict):
         """
         :param delete_query: a dictionary containing attribute and a list of values
-                            Example: 
+                            Example:
                             delete_query = {
                                 "name": ["Kostas", "Nikos"]
                             }
@@ -318,9 +318,9 @@ class MongoDB:
         """
         self.validator.validate_filter(delete_query, "user")
         return self.userDB.deleteMany(delete_query)
-    
+
     ################################################# Business Methods ##################################################
-    
+
     def createNewBusiness(self, business: dict):
         """
         :param business:
@@ -330,7 +330,7 @@ class MongoDB:
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
                             "phoneNumber","email"]: #imgPath
             if attribute not in business:
-                raise ValueError("business doesn't contain " + attribute + 
+                raise ValueError("business doesn't contain " + attribute +
                                 " attribute, which is needed for creation")
         return self.businessDB.create(business)
 
@@ -341,7 +341,7 @@ class MongoDB:
         """
         self.validator.validate_filter(search_query, "business")
         return self.businessDB.search(search_query)
-    
+
     def getBusiness(self, business_query: dict):
         """
         :param business_query:
@@ -349,7 +349,7 @@ class MongoDB:
         """
         self.validator.validate(business_query, "business")
         return self.businessDB.get(business_query)
-    
+
     def getBusinesses(self, business_query: dict):
         """
         :param business_query:
@@ -403,9 +403,9 @@ class MongoDB:
         :return: a list with all distinct city values. Will return None if something failed in mongo
         """
         return self.businessDB.getDistinct("city")
-    
+
     ################################################# Workout Methods ##################################################
-    
+
     def createNewWorkout(self, workout: dict):
         """
         :param workout:
@@ -426,7 +426,7 @@ class MongoDB:
         """
         self.validator.validate_filter(search_query, "workout")
         return self.workoutDB.search(search_query)
-    
+
     def getWorkout(self, workout_query: dict):
         """
         :param workout_query:
@@ -434,7 +434,7 @@ class MongoDB:
         """
         self.validator.validate(workout_query, "workout")
         return self.workoutDB.get(workout_query)
-    
+
     def getWorkouts(self, workout_query: dict):
         """
         :param workout_query:
@@ -442,13 +442,13 @@ class MongoDB:
         """
         self.validator.validate(workout_query, "workout")
         return self.workoutDB.getList(workout_query)
-    
+
     def getAllWorkouts(self):
         """
         :return:
         """
         return self.workoutDB.getAll()
-    
+
     def updateWorkout(self, new_workout: dict):
         """
         :param new_workout:
@@ -458,7 +458,7 @@ class MongoDB:
         if "_id" not in new_workout:
             raise ValueError("new_workout doesn't contain _id, which is needed for updating")
         return self.workoutDB.update(new_workout)
-    
+
     def deleteWorkout(self, workout: dict):
         """
         :param workout:
@@ -476,7 +476,7 @@ class MongoDB:
         """
         self.validator.validate_filter(delete_query, "workout")
         return self.workoutDB.deleteMany(delete_query)
-    
+
     ################################################# Mock Database ##################################################
 
     def createMockDatabase(self):

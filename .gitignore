@@ -47,3 +47,5 @@ Thumbs.db
 
 *.pyc
 /env/
+/.vscode/
+/back-end/Flask/.idea/

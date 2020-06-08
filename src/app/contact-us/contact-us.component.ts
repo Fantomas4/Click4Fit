@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ContactUsService} from './contact-us.service';
 import {FormControl, Validators} from '@angular/forms';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
+import {ContactUsService} from './contact-us.service';
 
 interface AlertMessage {
   type: string;
@@ -15,8 +15,9 @@ interface AlertMessage {
   styleUrls: ['./contact-us.component.css']
 })
 export class ContactUsComponent implements OnInit {
-  title = "Contact Us"
+  title = 'Contact Us';
   content;
+
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   fullName: string;
   telephone: string;

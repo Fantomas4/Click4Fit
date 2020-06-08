@@ -55,6 +55,7 @@ export class WorkoutComponent implements OnInit {
     });
     
   }
+  
   /* In the case of clicking search button */
   getResults() {
     this.isClicked=true;
@@ -66,6 +67,7 @@ export class WorkoutComponent implements OnInit {
       this.alertService.error(error.error);
     })
   }
+  
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {
     if (document.getElementById('filtersButton').innerText === 'Show Filters') {
@@ -74,6 +76,7 @@ export class WorkoutComponent implements OnInit {
       document.getElementById('filtersButton').innerText = 'Show Filters';
     }
   }
+  
   onNgModelChangeCategories($event){
     this.selectedOptionsCategories=$event;
   }
@@ -91,6 +94,5 @@ export class WorkoutComponent implements OnInit {
       this.selectedOptionsEquipment=false;
     }
   }
-  
 }
 

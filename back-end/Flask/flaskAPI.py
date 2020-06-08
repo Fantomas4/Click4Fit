@@ -4,14 +4,16 @@ from flask_cors import CORS
 from pprint import pprint
 
 import sys
-sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
 from MongoDatabase.MongoDB import MongoDB
-from MongoDatabase.Wrappers import *
+from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 MongoDB=MongoDB()
 CORS(app)
+
+
 
 ####################################### Contact Us ###################################
 @app.route("/api/contactus",methods=['POST','GET'])
@@ -23,44 +25,51 @@ def getContact():
 ####################################### Login ########################################
 @app.route("/api/login",methods=['POST','GET'])
 def login():
-    user=request.get_json() #get username and password
-    #connection with mongo sending user and getting answer if this user exists or not
+    user = request.get_json()  # get username and password
+
+    # connection with mongo sending user and getting answer if this user exists or not
     try:
+        print("mpika try")
         user_wrapper: UserWrapper = MongoDB.logIn(user)
-    except TypeError as type_err: # Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        print(user_wrapper.found)
+    except TypeError as type_err:  # Checking for errors
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if type(user_wrapper.user) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
+            return "Something is wrong with the database", 500
         if not user_wrapper.found:
-            return jsonify(response=404, msg="Couldn't find user")
+            return "User does not exist", 404
         if not user_wrapper.operationDone:
-            return jsonify(response=400, msg="Wrong password")
-    return jsonify(response=200, user=user_wrapper.user)
+            print("CASE - wrong password: ", user_wrapper.operationDone)
+            return "Wrong password", 401
+        return jsonify(user=user_wrapper.user), 200
 
 ####################################### Register #####################################
 @app.route("/api/register", methods=['POST'])
 def register():
-    user=request.get_json() #get all the user's details
+    print(request.get_json())
+    user = request.get_json() #get all the user's details
     #connection with mongo sending user
     try:
         user_wrapper: UserWrapper = MongoDB.register(user)
     except TypeError as type_err: #Checking for errors
-        return jsonify(response=500, msg=str(type_err))
+        return str(type_err), 422
     except ValueError as value_err:
-        return jsonify(response=500, msg=str(value_err))
+        return str(value_err), 422
     except:
-        return jsonify(response=500, msg="Bad error")
+        return "Bad error", 500
     else:
         if type(user_wrapper.user) is not dict:
-            return jsonify(response=500, msg="Something is wrong with the database")
-        if not user_wrapper.found:
-            return jsonify(response=400, msg="User exists")
-    return jsonify(response=200, msg="Everything is okey")
+            return "Something is wrong with the database", 500
+        if user_wrapper.found:
+            return "User already exists", 409
+        if user_wrapper.operationDone:
+            return jsonify("Registration successful!"), 200
+        return "Unexpected Error!", 500
 
 ####################################### Dashboard ####################################
 @app.route("/api/favorite-workout", methods=['POST','GET'])
@@ -459,4 +468,4 @@ def manageUserModify():
 if __name__ == '__main__':
     app.debug = True
     app.run()
-    MongoDB.createMockDatabase()
+    print(MongoDB.createMockDatabase())

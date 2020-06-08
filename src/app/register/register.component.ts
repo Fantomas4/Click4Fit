@@ -9,6 +9,8 @@ import {
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Subscription} from 'rxjs';
 import {AlertService} from '../core/alert.service';
+import {RegistrationService} from './registration.service';
+import {first} from 'rxjs/operators';
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -61,6 +63,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     lastName: new FormControl('', [
       Validators.required
     ]),
+    birthDate: new FormControl(),
     email: new FormControl('', [
       Validators.required,
       Validators.email
@@ -82,7 +85,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   loading = false;
 
 
-  constructor(private alertService: AlertService) { }
+  constructor(private alertService: AlertService, private registrationService: RegistrationService) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -102,7 +105,28 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (this.registerForm.valid) {
       this.loading = true;
+
+      let birthDateString: string;
+
+      if (this.registerForm.get('birthDate').value !== null) {
+        birthDateString = JSON.stringify(this.registerForm.get('birthDate').value.toLocaleString('fr')).substring(1, 11);
+      }
+
+      this.registrationService.register(
+        this.registerForm.get('firstName').value,
+        this.registerForm.get('lastName').value,
+        birthDateString,
+        this.registerForm.get('email').value,
+        this.registerForm.get('password').value
+        ).pipe(first()).subscribe(
+          data => {
+            this.alertService.success(data.body);
+            this.loading = false;
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
     }
-    this.loading = false;
   }
 }

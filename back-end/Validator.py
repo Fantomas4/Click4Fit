@@ -154,4 +154,3 @@ class Validator:
                     raise ValueError("""
                     invalid {0} ({2}): {0} {1}
                     """.format(key, self.valid[db]["regex-error"][key], json_dict[key]))
-

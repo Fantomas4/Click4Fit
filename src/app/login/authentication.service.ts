@@ -5,50 +5,42 @@ import { map } from 'rxjs/operators';
 
 import { UserEntry} from '../user-entry';
 import {AlertService} from '../core/alert.service';
+import {environment} from '../../environments/environment';
+import {LoggedInUser} from './logged-in-user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<UserEntry>;
-  public currentUser: Observable<UserEntry>;
+  private currentUserSubject: BehaviorSubject<LoggedInUser>;
+  public currentUser: Observable<LoggedInUser>;
 
-  constructor(private alertService: AlertService) {
-    this.currentUserSubject = new BehaviorSubject<UserEntry>(JSON.parse(sessionStorage.getItem('currentUser')));
+  constructor(private alertService: AlertService, private http: HttpClient) {
+    // console.log(sessionStorage.getItem('currentUser'));
+    console.log('session storage: ', JSON.parse(sessionStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<LoggedInUser>(JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): UserEntry {
+  public get currentUserValue(): LoggedInUser {
     return this.currentUserSubject.value;
   }
 
   login(email: string, password: string) {
-    // return this.http.post<any>(`${config.apiUrl}/users/authenticate`, { username, password })
-    //   .pipe(map(user => {
-    //     // login successful if there's a jwt token in the response
-    //     if (user && user.token) {
-    //       // store user details and jwt token in local storage to keep user logged in between page refreshes
-    //       localStorage.setItem('currentUser', JSON.stringify(user));
-    //       this.currentUserSubject.next(user);
-    //     }
-    //
-    //     return user;
-    //   }));
+    // nikosalex@gmail.com
+    // gp123456
+    // DEBUGGING ONLY!!!!!!
+    // email = 'nikosalex@gmail.com';
+    // password = 'gp123456';
 
-
-    const user: UserEntry = {
-      id: 1,
-      name: 'Nikos',
-      lastname: 'Alexopoulos',
-      email: 'nikosalex@gmail.com',
-      password: 'na123456',
-      birthdate: '16.04.1997',
-      privilegeLevel: 'client',
-      token: 'd2d232d22d2'};
-
-    sessionStorage.setItem('currentUser', JSON.stringify(user));
-    this.currentUserSubject.next(user);
-
-    // console.log('sdadsaadasd');
-    // this.alertService.error('Error: Could not authenticate user');
+    return this.http.post<any>(`${environment.apiUrl}/login`, JSON.stringify({email, password}),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+            console.log('RECEIVED 1: ', res);
+            const data = res.body;
+            if (data.user && data.user.token) {
+              sessionStorage.setItem('currentUser', JSON.stringify(data.user));
+              this.currentUserSubject.next(data.user);
+            }
+            return res;
+    }));
   }
 
   logout() {

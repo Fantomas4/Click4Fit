@@ -1,87 +1,83 @@
-<div class="container">
-  <mat-card class="register-card">
-    <mat-card-header>
-      <mat-card-title>Please provide your registration details:</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="registerForm" id="register-form" (ngSubmit)="onSubmit()">
-        <table>
-          <tr>
-            <mat-form-field class="firstName">
-              <mat-label>First name</mat-label>
-              <input matInput formControlName="firstName" placeholder="e.g. George"
-                [errorStateMatcher]="genericErrorStateMatcher" name="first-name" required>
-              <mat-error *ngIf="registerForm.get('email').hasError('required')">
-                Please enter your first name
-              </mat-error>
-            </mat-form-field>
-          </tr>
-          <tr>
-            <mat-form-field class="lastName">
-              <mat-label>Last name</mat-label>
-              <input matInput formControlName="lastName" placeholder="e.g. Brown"
-                [errorStateMatcher]="genericErrorStateMatcher" name="last-name" required>
-              <mat-error *ngIf="registerForm.get('email').hasError('required')">
-                Please enter your last name
-              </mat-error>
-            </mat-form-field>
-          </tr>
-          <tr>
-            <mat-form-field class="birthDate">
-              <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="picker">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </tr>
-          <tr>
-            <mat-form-field class="email">
-              <mat-label>E-mail</mat-label>
-              <input matInput formControlName="email" placeholder="address@example.com"
-                [errorStateMatcher]="genericErrorStateMatcher" type="email" name="registration-email" required>
-              <mat-error *ngIf="registerForm.get('email').hasError('required')">
-                Please enter your e-mail
-              </mat-error>
-              <mat-error *ngIf="registerForm.get('email').hasError('email')">
-                Please a valid email address
-              </mat-error>
-            </mat-form-field>
-          </tr>
-          <tr>
-            <mat-form-field class="password">
-              <mat-label>Password</mat-label>
-              <input matInput formControlName="password" [errorStateMatcher]="passwordsErrorStateMatcher"
-                type="password" name="initial-password" required>
-              <mat-error *ngIf="registerForm.get('password').hasError('required')">
-                Please enter your password
-              </mat-error>
-              <mat-error *ngIf="registerForm.hasError('passwordMismatch')"></mat-error>
-            </mat-form-field>
-          </tr>
-          <tr>
-            <mat-form-field class="repeatedPassword">
-              <mat-label>Repeat Password</mat-label>
-              <input matInput formControlName="repeatPassword" [errorStateMatcher]="passwordsErrorStateMatcher"
-                type="password" name="repeat-password" required>
-              <mat-error *ngIf="registerForm.get('repeatPassword').hasError('required')">
-                Please repeat your password
-              </mat-error>
-              <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
-                Passwords do not match!
-              </mat-error>
-            </mat-form-field>
-          </tr>
-        </table>
-      </form>
-      <div id="alert-message"
-        [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-        *ngIf="alertMessage">{{alertMessage.text}}
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button id="register-button" type="submit" form="register-form"
-        color="primary">Register</button>
-      <mat-spinner *ngIf="loading" mode="indeterminate" diameter="30"></mat-spinner>
-    </mat-card-actions>
-  </mat-card>
-</div>
+<mat-card class="register-card">
+  <mat-card-header>
+    <mat-card-title>Please provide your registration details:</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="registerForm" id="register-form" (ngSubmit)="onSubmit()">
+      <table>
+        <tr>
+          <mat-form-field>
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName" placeholder="e.g. George"
+                   [errorStateMatcher]="genericErrorStateMatcher" name="first-name" required>
+            <mat-error *ngIf="registerForm.get('email').hasError('required')">
+              Please enter your first name
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName" placeholder="e.g. Brown" [errorStateMatcher]="genericErrorStateMatcher"
+                   name="last-name" required>
+            <mat-error *ngIf="registerForm.get('email').hasError('required')">
+              Please enter your last name
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Date of birth</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field class="email-input-field">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="email" placeholder="address@example.com" [errorStateMatcher]="genericErrorStateMatcher"
+                   type="email" name="registration-email" required>
+            <mat-error *ngIf="registerForm.get('email').hasError('required')">
+              Please enter your e-mail
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('email').hasError('email')">
+              Please a valid email address
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" [errorStateMatcher]="passwordsErrorStateMatcher"
+                   type="password" name="initial-password" required>
+            <mat-error *ngIf="registerForm.get('password').hasError('required')">
+              Please enter your password
+            </mat-error>
+            <mat-error *ngIf="registerForm.hasError('passwordMismatch')"></mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Repeat Password</mat-label>
+            <input matInput formControlName="repeatPassword"
+                   [errorStateMatcher]="passwordsErrorStateMatcher" type="password" name="repeat-password" required>
+            <mat-error *ngIf="registerForm.get('repeatPassword').hasError('required')">
+              Please repeat your password
+            </mat-error>
+            <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+              Passwords do not match!
+            </mat-error>
+          </mat-form-field>
+        </tr>
+      </table>
+    </form>
+    <div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+         *ngIf="alertMessage">{{alertMessage.text}}
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button id="register-button" type="submit" form="register-form" color="primary">Register</button>
+    <mat-spinner *ngIf="loading" mode="indeterminate" diameter="30" ></mat-spinner>
+  </mat-card-actions>
+</mat-card>

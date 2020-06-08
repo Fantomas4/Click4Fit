@@ -38,7 +38,7 @@ import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-en
 import { UserDetailsEditDialogComponent } from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -47,9 +47,18 @@ import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
 import { WorkoutService } from './workout/workout.service';
 import { ContactUsService } from './contact-us/contact-us.service';
+import { ErrorPageComponent } from './error-page/error-page.component';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
-
+import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/update-dialog-message.component';
+import { BusinessAddEntryDialogService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
+import { BusinessDetailsEditDialogService} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.service';
+import { UserDetailsEditDialogService} from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.service';
+import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/delete-dialog-message.service';
+import {JwtInterceptor} from './core/jwt.interceptor';
+import {ErrorInterceptor} from './core/error.interceptor';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {MAT_MOMENT_DATE_FORMATS} from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
@@ -78,7 +87,10 @@ import { RecoverPasswordService } from './recover-password/recover-password.serv
     UserDetailsEditDialogComponent,
     FooterComponent,
     HomepageComponent,
-    RecoverDialogMessageComponent
+    ErrorPageComponent,
+    RecoverDialogMessageComponent,
+    ContactUsDialogMessageComponent,
+    UpdateDialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +115,15 @@ import { RecoverPasswordService } from './recover-password/recover-password.serv
     MatListModule,
     HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService,WorkoutService,RecoverPasswordService,ContactUsService,
+    BusinessAddEntryDialogService, BusinessDetailsEditDialogService, UserDetailsEditDialogService, DeleteDialogMessageService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: MAT_DATE_LOCALE, useValue: 'fr'},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+
+  ],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialogMessageComponent,RecoverDialogMessageComponent]
 })

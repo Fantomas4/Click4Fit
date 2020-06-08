@@ -20,9 +20,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
-      this.CurrentTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds();
-    }, 1);
-
+      this.CurrentTime = new Date().getHours() + ' ' + ':' + ' ' + new Date().getMinutes(); }, 1);
   }
 
   today: number = Date.now(); //gets the current date

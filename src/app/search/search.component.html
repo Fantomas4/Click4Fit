@@ -1,29 +1,30 @@
+
 <mat-drawer-container>
   <mat-drawer mode="over" #sidenav (openedChange)="onToggleSidenav()" position="end">
     <mat-nav-list id="filter-list" title="Category">
       <div class="category-container">
         <div mat-subheader class="filter-type-subheader">Category</div>
-        <mat-selection-list #categories>
-          <mat-list-option>Gym</mat-list-option>
-          <mat-list-option>Personal Trainer</mat-list-option>
-          <mat-list-option>Fitness Shop</mat-list-option>
+        <mat-selection-list >
+          <mat-list-option value ="Gym">Gym</mat-list-option>
+          <mat-list-option value ="Personal Trainer">Personal Trainer</mat-list-option>
+          <mat-list-option value ="Fitness Shop">Fitness Shop</mat-list-option>
         </mat-selection-list>
       </div>
       <mat-divider></mat-divider>
       <div mat-subheader class="filter-type-subheader">Location</div>
       <div class="location-container">
         <app-location-autocomplete class="autocomplete-field" placeholderStr="Country name"></app-location-autocomplete>
-        <app-location-autocomplete class="autocomplete-field" placeholderStr="City name"></app-location-autocomplete>
+        <app-location-autocomplete class="autocomplete-field" placeholderStr="City name"></app-location-autocomplete>  <!--[(ngModel)]="cityName" name="cityName"*/-->
         <mat-divider></mat-divider>
       </div>
-      <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
+      <button mat-raised-button id="done-button" (click)="sidenav.close();onClick()" color="primary">Done!</button>
     </mat-nav-list>
   </mat-drawer>
 
   <mat-drawer-content>
     <h1>Search</h1>
     <form class="search-form">
-      <input matInput placeholder="Search..." class="search-input" name="search-input">
+<!--      <input matInput placeholder="Search..." (keyup)="applyFilter($event)" [(ngModel)]="searchInput" class="search-input" name="search-input">-->
       <button id="search-button" (click)="getResults()">Go!</button>
     </form>
     <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">
