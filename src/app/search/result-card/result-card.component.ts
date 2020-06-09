@@ -53,6 +53,7 @@ export class ResultCardComponent implements OnInit {
       width: '600px',
       data: {
         name: this.title,
+        imgPath: this.imgPath,
         category: this.category,
         country: this.country,
         city: this.city,
