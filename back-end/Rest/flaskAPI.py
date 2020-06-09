@@ -446,7 +446,7 @@ def manageBusinessAdd():
                 if not os.path.exists(UPLOAD_FOLDER):
                     os.makedirs(UPLOAD_FOLDER)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-                imgPath = './assets/' + file_name
+                imgPath = './assets/uploads/' + file_name
         else:
             imgPath = './assets/image_placeholder.jpg'
 
