@@ -454,6 +454,8 @@ def manageBusinessAdd():
             imgPath = './assets/image_placeholder.jpg'
 
         business = request.form.to_dict()
+        if "file" in business:
+            del business["file"]
         if "services" in business:
             business["services"] = business["services"].split(",")
         if "products" in business:
