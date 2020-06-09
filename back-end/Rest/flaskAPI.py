@@ -449,7 +449,7 @@ def manageBusinessAdd():
             imgPath = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
             file.save(imgPath)
         else:
-            imgPath = './assets/gym-preview.JPG'
+            imgPath = './assets/image_placeholder.jpg'
 
         business = request.form.to_dict()
         if "services" in business:
