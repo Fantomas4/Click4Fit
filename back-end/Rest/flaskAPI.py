@@ -447,9 +447,9 @@ def manageBusinessAdd():
             if not os.path.exists(UPLOAD_FOLDER):
                 os.makedirs(UPLOAD_FOLDER)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-            imgPath = file_name
+            imgPath = os.path.join(app.config['UPLOAD_FOLDER'], file_name).rsplit("Click4Fit", 1)[1]
         else:
-            imgPath = 'gym-preview.JPG'
+            imgPath = './assets/gym-preview.JPG'
 
         business = request.form.to_dict()
         if "services" in business:
