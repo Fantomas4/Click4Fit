@@ -26,7 +26,7 @@ export class ResultCardComponent implements OnInit {
     this.title = this.businessData.name;
 
     // Change the "category" text to the appropriate format
-    switch(this.businessData.category) {
+    switch (this.businessData.category) {
       case 'gym':
         this.category = 'Gym';
         break;
@@ -52,9 +52,12 @@ export class ResultCardComponent implements OnInit {
     const dialogRef = this.dialog.open(DetailsDialogComponent, {
       width: '600px',
       data: {
-        name: this.title, category: this.category,
-        country: this.country, city: this.city, services:
-        this.businessData.services, products: this.businessData.products
+        name: this.title,
+        category: this.category,
+        country: this.country,
+        city: this.city,
+        services: this.businessData.services,
+        products: this.businessData.products
       }
     });
   }
