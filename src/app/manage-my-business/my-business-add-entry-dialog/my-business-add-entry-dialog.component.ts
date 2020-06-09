@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {ErrorStateMatcher} from '@angular/material/core';
 
 interface Country {
   name: string;
@@ -11,26 +12,54 @@ interface Country {
   numericCode: string;
 }
 
+export class GenericErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    // console.log(control);
+    // console.log(form);
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 @Component({
   selector: 'app-add-entry-dialog',
   templateUrl: './my-business-add-entry-dialog.component.html',
   styleUrls: ['./my-business-add-entry-dialog.component.css']
 })
 export class MyBusinessAddEntryDialogComponent implements OnInit {
+  entryForm = new FormGroup( {
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    city: new FormControl('', [
+      Validators.required
+    ]),
+    address: new FormControl('', [
+      Validators.required
+    ]),
+    postalCode: new FormControl('', [
+      Validators.required
+    ]),
+    phoneNumber: new FormControl('', [
+      Validators.required
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+    },
+  );
+
+  genericErrorStateMatcher = new GenericErrorStateMatcher();
+
 
   id: number;
-  name: string;
   category = 'gym';
-  country: string;
-  city: string;
-  address: string;
-  postalCode: string;
-  phoneNumber: string;
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  country = 'Greece'; // The default country value is set to 'Greece'
   services = [];
   products = [];
   imgFile = null;
-  email;
+
   clickedSave: boolean;
 
   // Chip list options
@@ -45,8 +74,7 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   onFileSelected(event) {
-    console.log(event);
-    this.imgFile = event.files.target[0];
+    this.imgFile = event.target.files[0];
   }
 
   addServiceChip(event: MatChipInputEvent): void {
@@ -95,14 +123,6 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
     }
   }
 
-  getErrorMessage() {
-    if (this.emailFormControl.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
-  }
-
   onCountrySelected($event: Country) {
     this.country = $event.name;
   }
@@ -113,24 +133,23 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    const content = {
-    user: {
-      _id: (JSON.parse(sessionStorage.getItem('currentUser')))._id
-    },
-    business: {
-      name: this.name,
-      category: this.category,
-      country: this.country,
-      city: this.city,
-      address: this.address,
-      postalCode: this.postalCode,
-      phoneNumber: this.phoneNumber,
-      services: this.services,
-      products: this.products,
-      imgPath: this.imgFile,
-      email: this.email}
-    };
-    this.dialogRef.close({clickedSave: true, details: content});
+    if (this.entryForm.valid) {
+      const content = {
+        ownerId: JSON.parse(sessionStorage.getItem('currentUser'))._id,
+        name: this.entryForm.get('name').value,
+        category: this.category,
+        country: this.country,
+        city: this.entryForm.get('city').value,
+        address: this.entryForm.get('address').value,
+        postalCode: this.entryForm.get('postalCode').value,
+        phoneNumber: this.entryForm.get('phoneNumber').value,
+        services: this.services,
+        products: this.products,
+        file: this.imgFile,
+        email: this.entryForm.get('email').value
+      };
+      console.log('onSaveClick result: ', content);
+      this.dialogRef.close({clickedSave: true, details: content});
+    }
   }
-
 }

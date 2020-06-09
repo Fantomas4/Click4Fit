@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,18 +19,17 @@ export class ManageMyBusinessService {
       }));
   }
 
-  updateEntry(data: object) {
-    return this.http.post<any>(`${environment.apiUrl}/manage-business-modify-entry`, JSON.stringify(data),
-      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+  updateEntry(data: FormData) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-modify-entry`, data,
+      {observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
     }));
   }
 
-  addEntry(data: object) {
-    console.log("ADD ENTRY: ", data);
-    return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, JSON.stringify(data),
-      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+  addEntry(data: FormData) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, data,
+      {observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
     }));

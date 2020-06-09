@@ -86,17 +86,22 @@ button {
 
 .card-deck-container {
   margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
   /*display: flex;*/
   /*flex-wrap: wrap;*/
-  /*align-content: stretch;*/
-  /*justify-content: stretch;*/
+  /*justify-content: center;*/
+
   display: grid;
+  /*grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));*/
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  align-items: stretch;
+  grid-gap: 1rem;
+  /*align-items: stretch;*/
 }
 
 .card-item {
-  padding: 5%;
+  /*flex-basis: 20%;*/
+  padding: 1%;
 }
 
 /*============= START: Styling concerning filter sidebar and its elements ============= */

@@ -10,7 +10,6 @@ import {BusinessEntry} from '../../business-entry';
 export class DetailsDialogComponent implements OnInit {
   title: string;
   category: string;
-  previewImagePath = './assets/image_placeholder.jpg';
   country: string;
   city: string;
   services: string[];

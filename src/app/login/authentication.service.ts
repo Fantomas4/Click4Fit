@@ -14,9 +14,8 @@ export class AuthenticationService {
   public currentUser: Observable<LoggedInUser>;
 
   constructor(private alertService: AlertService, private http: HttpClient) {
-    // console.log(sessionStorage.getItem('currentUser'));
-    console.log('session storage: ', JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUserSubject = new BehaviorSubject<LoggedInUser>(JSON.parse(sessionStorage.getItem('currentUser')));
+    console.log('PIRA LOGGEDINUSER: ', this.currentUserSubject);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -31,6 +30,8 @@ export class AuthenticationService {
             const data = res.body;
             if (data.user && data.user.token) {
               sessionStorage.setItem('currentUser', JSON.stringify(data.user));
+              console.log('SESSION STORAGE', JSON.parse(sessionStorage.getItem('currentUser')));
+              console.log('CURRENT USER VALUE: ', this.currentUserValue);
               this.currentUserSubject.next(data.user);
             }
             return res;

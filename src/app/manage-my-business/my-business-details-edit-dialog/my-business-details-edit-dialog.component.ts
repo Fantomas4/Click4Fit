@@ -1,14 +1,24 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {ErrorStateMatcher} from '@angular/material/core';
 
 interface Country {
   name: string;
   alpha2Code: string;
   alpha3Code: string;
   numericCode: string;
+}
+
+export class GenericErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    // console.log(control);
+    // console.log(form);
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
 }
 
 @Component({
@@ -18,23 +28,39 @@ interface Country {
 })
 
 export class MyBusinessDetailsEditDialogComponent implements OnInit {
+  entryForm = new FormGroup( {
+      name: new FormControl('', [
+        Validators.required
+      ]),
+      city: new FormControl('', [
+        Validators.required
+      ]),
+      address: new FormControl('', [
+        Validators.required
+      ]),
+      postalCode: new FormControl('', [
+        Validators.required
+      ]),
+      phoneNumber: new FormControl('', [
+        Validators.required
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+    },
+  );
+
+  genericErrorStateMatcher = new GenericErrorStateMatcher();
 
   id: number; // The displayed entry's id.
-  name: string; // The displayed entry's name.
   category: string; // The displayed entry's category.
   country: string; // The displayed entry's country location.
-  city: string; // The displayed entry's city location.
-  address: string; // The displayed entry's address location.
-  postalCode: string; // The displayed entry's postalCode location.
-  phoneNumber: string; // The displayed entry's phone number.
   services: string[]; // List containing the titles of the available services offered by the displayed entry.
   products: string[]; // List containing the titles of the available products offered by the displayed entry.
   imgFile: string; // String containing the path for the preview image of the displayed entry.
-  email: string; // The displayes entry's email.
-  clickedSave: boolean;
 
-  // Form Control used to receive and validate the user's email input.
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  clickedSave: boolean;
 
   // Chip list options
   selectable = true;
@@ -49,14 +75,16 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
   ngOnInit(): void {
     // Extract the data from the payload and store it into the class properties
     this.id = this.data._id;
-    this.name = this.data.name;
+    this.entryForm.setValue({
+      name: this.data.name,
+      city: this.data.city,
+      address: this.data.address,
+      postalCode: this.data.postalCode,
+      phoneNumber: this.data.phoneNumber,
+      email: this.data.email
+    });
     this.category = this.data.category;
     this.country = this.data.country;
-    this.city = this.data.city;
-    this.address = this.data.address;
-    this.postalCode = this.data.postalCode;
-    this.phoneNumber = this.data.phoneNumber;
-    this.email = this.data.email;
     this.services = this.data.services;
     this.products = this.data.products;
     this.imgFile = this.data.imgPath;
@@ -113,44 +141,35 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
     }
   }
 
-  /**
-   *  Retrieves and returns any errors that have occurred in
-   *  the email Form Control.
-   */
-  getErrorMessage() {
-    if (this.emailFormControl.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
-  }
-
   onCountrySelected($event: Country) {
     this.country = $event.name;
   }
 
   /**
-   * Called to close the "Edit/Details" dialog window.
+   * Called to close (discard) the "Edit/Details" dialog window.
    */
-  onCloseClick(): void {
+  onDiscardClick(): void {
     // method is called when the "Close" button is pressed
     this.dialogRef.close({clickedSave: false});
   }
 
   onSaveClick(): void {
-    const content = {
-      _id: this.id,
-      name: this.name,
-      category: this.category,
-      country: this.country,
-      city: this.city,
-      address: this.address,
-      postalCode: this.postalCode,
-      phoneNumber: this.phoneNumber,
-      services: this.services,
-      products: this.products,
-      imgPath: this.imgFile,
-      email: this.email
-    };
-    this.dialogRef.close({clickedSave: true, details: content});
+    if (this.entryForm.valid) {
+      const content = {
+        _id: this.id,
+        name: this.entryForm.get('name'),
+        category: this.category,
+        country: this.country,
+        city: this.entryForm.get('city'),
+        address: this.entryForm.get('address'),
+        postalCode: this.entryForm.get('postalCode'),
+        phoneNumber: this.entryForm.get('phoneNumber'),
+        services: this.services,
+        products: this.products,
+        imgPath: this.imgFile,
+        email: this.entryForm.get('email')
+      };
+      this.dialogRef.close({clickedSave: true, details: content});
+    }
   }
 }

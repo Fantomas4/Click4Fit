@@ -1,12 +1,16 @@
 <div class="main-container">
   <h1 mat-dialog-title>Add Business Entry</h1>
   <div mat-dialog-content class="field-list">
-    <form class="form">
+    <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="onSaveClick()" class="form">
       <table class="table" cellspacing="0">
         <tr>
           <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="e.g. George Brown" [(ngModel)]="this.name" name="name" required>
+            <mat-label>Business Name</mat-label>
+            <input matInput placeholder="e.g. George Brown" formControlName="name" name="name"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('name').hasError('required')">
+              Please enter a business name
+            </mat-error>
           </mat-form-field>
         </tr>
         <tr>
@@ -22,38 +26,59 @@
             </mat-button-toggle-group>
         </tr>
         <tr>
-          <mat-select-country [country]="country" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
+          <mat-select-country country="Greece" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>City</mat-label>
-            <input matInput placeholder="e.g. Thessaloniki" [(ngModel)]="this.city" name="city" required>
+            <input matInput formControlName="city" name="city" placeholder="e.g. Thessaloniki"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('city').hasError('required')">
+              Please enter a city name
+            </mat-error>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>Address</mat-label>
-            <input matInput placeholder="e.g. Grigoriou Lampraki 105, Ano Toumpa" [(ngModel)]="this.address" name="address" required>
+            <input matInput formControlName="address" name="address" placeholder="e.g. Grigoriou Lampraki 105, Ano Toumpa"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('address').hasError('required')">
+              Please enter an address
+            </mat-error>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>Postal Code</mat-label>
-            <input matInput placeholder="e.g. 555 55" [(ngModel)]="this.postalCode" name="postalCode" required>
+            <input matInput formControlName="postalCode" name="postalCode" placeholder="e.g. 555 55"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('postalCode').hasError('required')">
+              Please enter a postal code
+            </mat-error>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field class="phone-number-field">
-            <input type="tel" matInput placeholder="Telephone" [(ngModel)]="this.phoneNumber" name="phoneNumber" required>
+            <input type="tel" matInput formControlName="phoneNumber" name="phoneNumber" placeholder="Telephone"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('phoneNumber').hasError('required')">
+              Please enter a phone number
+            </mat-error>
             <mat-icon matSuffix>call</mat-icon>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field class="email-input-field">
             <mat-label>E-mail</mat-label>
-            <input matInput placeholder="address@example.com" [formControl]="emailFormControl"
-                   type="email" name="registration-email" required [(ngModel)]="email">
-            <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+            <input matInput placeholder="address@example.com" formControlName="email" name="registration-email"
+                   type="email" [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('email').hasError('required')">
+              Please enter an e-mail
+            </mat-error>
+            <mat-error *ngIf="entryForm.get('email').hasError('email')">
+              Please a valid email address
+            </mat-error>
           </mat-form-field>
         </tr>
         <tr>
@@ -94,7 +119,7 @@
     </form>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button color="warn" (click)="onSaveClick()">Save</button>
+    <button mat-raised-button color="warn" type="submit" form="entry-form" (click)="onSaveClick()">Save</button>
     <button mat-raised-button color="primary" (click)="onDiscardClick()">Discard</button>
   </div>
 </div>
