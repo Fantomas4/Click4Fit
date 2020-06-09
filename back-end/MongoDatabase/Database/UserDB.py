@@ -14,7 +14,7 @@ class UserDB:
     
     def __init__(self, client):
         self.client = client
-        self.db = self.client.userDB
+        self.db = self.client.UserDB
     
     ################################################# Private Methods ##################################################
 
