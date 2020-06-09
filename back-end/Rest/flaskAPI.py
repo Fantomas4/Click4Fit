@@ -435,19 +435,18 @@ def manageBusinessAdd():
     """
     if request.method == "POST":
         # check if the post request has the file part
-        if "file" not in request.files:
-            return "No file part", 422
-        file = request.files["file"]
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            return "No selected file", 422
-        if file and allowed_file(file.filename):
-            file_name = secure_filename(file.filename).replace(".", str(time()).replace(".","") + ".")
-            if not os.path.exists(UPLOAD_FOLDER):
-                os.makedirs(UPLOAD_FOLDER)
-            imgPath = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
-            file.save(imgPath)
+        if "file" in request.files:
+            file = request.files["file"]
+            # if user does not select file, browser also
+            # submit an empty part without filename
+            if file.filename == '':
+                return "No selected file", 422
+            if file and allowed_file(file.filename):
+                file_name = secure_filename(file.filename).replace(".", str(time()).replace(".","") + ".")
+                if not os.path.exists(UPLOAD_FOLDER):
+                    os.makedirs(UPLOAD_FOLDER)
+                imgPath = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+                file.save(imgPath)
         else:
             imgPath = './assets/image_placeholder.jpg'
 
