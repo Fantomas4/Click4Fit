@@ -18,10 +18,10 @@ export class ResultCardComponent implements OnInit {
   country: string; // Card country text.
   city: string; // Card city text.
   imgPath: string; // Card preview image path.
-  jsonData; // Json data for the request to API 
+  jsonData; // Json data for the request to API
   content; // Json with the current user which has been saved in session storage after log in
   user:string; // Email of current user
-  favorite = false; //it shows if the workout entry has been added in favorites successfully and 
+  favorite = false; //it shows if the workout entry has been added in favorites successfully and
   //in this way the empty heart icon changes to full heart icon
 
   constructor(public dialog: MatDialog, private resultCardService: ResultCardService) {
@@ -75,7 +75,7 @@ export class ResultCardComponent implements OnInit {
       "user": { "email": this.user }, "new_favorite": {
         "name": entry.title, "country": entry.country, "city": entry.city, "imgPath":entry.imgPath
       }
-    }
+    };
     this.resultCardService.addFavoritePlace(this.content).toPromise().then(data => {
       this.favorite = true;
     });

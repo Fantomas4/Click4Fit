@@ -47,12 +47,12 @@ export class LocationAutocompleteComponent implements OnInit {
 
   getCountries() {
     this.locationService.getCountries().subscribe(res => {
-      this.countryOptions = res.body.data;
-    },
+        this.countryOptions = res.body.data;
+      },
 
-    error => {
-      this.alertService.error(error);
-    });
+      error => {
+        this.alertService.error(error);
+      });
   }
 
   getCities() {

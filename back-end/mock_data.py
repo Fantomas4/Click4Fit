@@ -3,7 +3,7 @@ data = {
       { 'name': 'Paulos', 'surname': 'Kostopoulos', 'email':'pauloskostop@gmail.com', 'password':'pk123456','birthdate': '28.06.1980',
         'privilegeLevel':'admin', 'favoriteWorkout':[], 'favoriteBusiness':[] },
 
-       { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'na123456', 'birthdate': '16.04.1997',
+       { 'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex1@gmail.com', 'password': 'na123456', 'birthdate': '16.04.1997',
         'privilegeLevel': 'client', 'favoriteWorkout':[{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
          "difficulty": 'hard', "equipment": True, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'}, {"name": 'Scissors', "category": "abs", "muscleGroups": ["abs", "obliques", "quads"], "advisedFor": 'women',
          "difficulty": 'medium', "equipment": False, "sets": '4x15 ', "videoUrl": 'https://www.youtube.com/embed/WoNCIBVLbgY'}], 'favoriteBusiness':[{ 'name': 'FitClub', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'diagora 20', 'postalCode': '567 55',

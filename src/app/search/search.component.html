@@ -1,7 +1,7 @@
 <mat-drawer-container>
   <mat-drawer mode="over" #sidenav (openedChange)="onToggleSidenav()" position="end">
     <mat-nav-list id="filter-list" title="Category">
-<!--      https://material.angular.io/components/list/overview-->
+      <!--      https://material.angular.io/components/list/overview-->
       <div class="category-container">
         <div mat-subheader class="filter-type-subheader">Category</div>
         <mat-selection-list #categories [(ngModel)]="selectedOptions">
@@ -13,11 +13,10 @@
       <mat-divider></mat-divider>
       <div mat-subheader class="filter-type-subheader">Location</div>
       <div class="location-container">
-        <app-location-autocomplete class="autocomplete-field" placeholderStr="Country name"></app-location-autocomplete>
-        <app-location-autocomplete class="autocomplete-field" placeholderStr="City name"></app-location-autocomplete>  <!--[(ngModel)]="cityName" name="cityName"*/-->
+        <app-location-autocomplete></app-location-autocomplete>
         <mat-divider></mat-divider>
       </div>
-      <button mat-raised-button id="done-button" (click)="sidenav.close();onClick()" color="primary">Done!</button>
+      <button mat-raised-button id="done-button" (click)="sidenav.close()" color="primary">Done!</button>
     </mat-nav-list>
   </mat-drawer>
 
@@ -33,14 +32,11 @@
 
     <!--    /*Card deck component */-->
     <div class="card-deck-container">
-<!--      <app-result-card></app-result-card>-->
+      <!--      <app-result-card></app-result-card>-->
       <div *ngFor="let entry of searchResults" class="card-item">
         <app-result-card [businessData]="entry"></app-result-card>
       </div>
-<!--      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+      <!--      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
-
-
-

@@ -3,11 +3,10 @@
          type="text"
          placeholder="Country name..."
          aria-label="Number"
-         matInput
-         [formControl]="formControl"
-         [matAutocomplete]="auto" [(ngModel)]="location">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+         [formControl]="countryFormControl"
+         [matAutocomplete]="autoCountry">
+  <mat-autocomplete #autoCountry="matAutocomplete">
+    <mat-option *ngFor="let option of filteredCountryOptions | async" [value]="option">
       {{option}}
     </mat-option>
   </mat-autocomplete>
