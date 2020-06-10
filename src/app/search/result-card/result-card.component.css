@@ -5,8 +5,16 @@
 }
 
 >>> .mat-card-header-text {
-  width: 100%;
+  /*width: 100%;*/
 }
 .icon{
   color:red;
 }
+
+#preview-img {
+  height: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+

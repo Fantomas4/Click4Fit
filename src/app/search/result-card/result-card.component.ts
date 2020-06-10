@@ -49,6 +49,7 @@ export class ResultCardComponent implements OnInit {
     this.country = this.businessData.country;
     this.city = this.businessData.city;
     this.imgPath = this.businessData.imgPath;
+    console.log("RESULT CARD imgPath: ", this.imgPath);
   }
 
   /**
