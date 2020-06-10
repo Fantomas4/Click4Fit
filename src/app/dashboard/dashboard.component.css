@@ -590,19 +590,18 @@ h1{
     ;
   }
   .workout{
-    width:80%;
+    width:34%;
     height:50%;
     margin:0 auto;
     display:block;
     background-color: white;
   }
   .places{
-    width:80%;
+    width:35%;
     height:70%;
     margin:0 auto;
     display:block;
     background-color: white;
-    margin-left:20px;
   }
   .flex{
     margin-top: 5%;

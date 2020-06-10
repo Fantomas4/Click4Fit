@@ -328,7 +328,7 @@ class MongoDB:
         """
         self.validator.validate(business, "business")
         for attribute in ["name", "category", "country", "city", "address", "postalCode",
-                            "phoneNumber","email"]: #imgPath
+                            "phoneNumber","email","imgPath"]:
             if attribute not in business:
                 raise ValueError("business doesn't contain " + attribute + 
                                 " attribute, which is needed for creation")
@@ -481,28 +481,16 @@ class MongoDB:
 
     def createMockDatabase(self):
         returned_data = {
-            "user"     : list(),
+            #"user"     : list(),
             "business" : list(),
-            "workout"  : list()
+            #"workout"  : list()
         }
-        for user in data["user"]:
-            user_wrapper = self.register(user)
-            if (user_wrapper.operationDone):
-                returned_data["user"].append(user_wrapper.user)
-            else:
-                print("Could not insert user: " + str(user))
         for business in data["business"]:
             business_wrapper = self.createNewBusiness(business)
             if (business_wrapper.operationDone):
                 returned_data["business"].append(business_wrapper.business)
             else:
                 print("Could not insert business: " + str(business))
-        for workout in data["workout"]:
-            workout_wrapper = self.createNewWorkout(workout)
-            if (workout_wrapper.operationDone):
-                returned_data["workout"].append(workout_wrapper.workout)
-            else:
-                print("Could not insert workout: " + str(workout))
         return returned_data
 
 
