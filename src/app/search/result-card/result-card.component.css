@@ -1,12 +1,20 @@
-.mat-card-title {
+
+>>> .mat-card-header-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
->>> .mat-card-header-text {
-  /*width: 100%;*/
+>>> .mat-card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+#title-text {
+  font-size: large;
+}
+
 .icon{
   color:red;
 }

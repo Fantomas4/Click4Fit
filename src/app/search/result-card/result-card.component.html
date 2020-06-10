@@ -1,9 +1,7 @@
 <div id="card-container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title class="card-title">
-        {{title}}
-      </mat-card-title>
+      <mat-card-title><span id="title-text">{{title}}</span></mat-card-title>
       <mat-card-subtitle>{{category}}</mat-card-subtitle>
       <button mat-icon-button *ngIf="!favorite" (click)="onClick(businessData)">
         <mat-icon class="icon">favorite_border</mat-icon>
