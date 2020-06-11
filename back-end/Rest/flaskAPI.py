@@ -270,6 +270,71 @@ def addFavoritePlace():
 
 
 ####################################### Workout ######################################
+@app.route("/api/workout", methods=["POST"])
+def create_workout():
+    workout = request.get_json()
+    try:
+        workout_wrapper: WorkoutWrapper = MongoDB.createNewWorkout(workout)
+    except TypeError as type_err:
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if type(workout_wrapper.workout) is not dict:
+            return "Something is wrong with the database", 500
+        if workout_wrapper.found:
+            return "Workout already exists", 409
+        if not workout_wrapper.operationDone:
+            return  "Couldn't create workout entry", 500
+        return "Creation successful", 200
+
+
+@app.route("/api/workout", methods=["GET"])
+def get_workouts():
+    try:
+        workout_list_wrapper: WorkoutListWrapper = MongoDB.getAllWorkouts()
+    except:
+        return "Bad error", 500
+    else:
+        if type(workout_list_wrapper.workout_list) is not list:
+            return "Something is wrong with the database", 500
+        return jsonify(data=workout_list_wrapper.workout_list), 200
+
+
+@app.route("/api/workout", methods=["PUT"])
+def update_workout():
+    new_workout = request.get_json()
+    try:
+        workout_wrapper: WorkoutWrapper = MongoDB.updateWorkout(new_workout)
+    except TypeError as type_err:
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if type(workout_wrapper.workout) is not dict:
+            return "Something is wrong with the database", 500
+        if not workout_wrapper.found:
+            return "Workout doesn't exist in the database", 404
+        return "Workout update successfull", 200
+
+
+@app.route("/api/workout", methods=["DELETE"])
+def delete_workouts():
+    delete_query = request.get_json()
+    try:
+        deleted_successfull = MongoDB.deleteWorkouts(delete_query)
+    except:
+        return "Bad error", 500
+    else:
+        if not deleted_successfull:
+            return "Could not delete workouts", 400
+        return "Workouts deleted successfully", 200
+
+
 @app.route("/api/display-workout", methods=['POST','GET'])
 def getWorkout():
     filters=request.get_json() #get chosen filters by user
@@ -284,26 +349,6 @@ def getWorkout():
         if type(workout_wrapper_list.workout_list) is list and not workout_wrapper_list.found and not workout_wrapper_list.operationDone:
             return "Couldn't find workout with these filters", 404
         return jsonify(workoutList=workout_wrapper_list.workout_list), 200
-
-
-@app.route("/api/create-workout", methods=['POST','GET'])
-def createWorkout():
-    workout=request.get_json() #get new workout
-    #connection with mongo sending the filters and creating the workout
-    try:
-        workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
-    except TypeError as type_err: #Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if workout_wrapper.workout is None:
-            return "Something is wrong with the database", 500
-        if type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
-            return  "Couldn't insert workout entry", 500
-        return jsonify("Creation successful"), 200
 
 
 @app.route("/api/add-favorite-workout", methods=['POST','GET'])
