@@ -19,7 +19,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)).rsplit("back-end", 1)[0] + "src\\assets\\uploads"
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)).rsplit("back-end", 1)[0] + "src\\assets"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 MongoDB=MongoDB()
 CORS(app)
