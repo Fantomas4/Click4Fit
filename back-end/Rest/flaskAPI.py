@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request, json
+from flask import Flask, jsonify, request, json, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from pprint import pprint
@@ -19,7 +19,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)).rsplit("back-end", 1)[0] + "src\\assets"
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "\\uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 MongoDB=MongoDB()
 CORS(app)
@@ -30,26 +30,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        print(request.files)
-        print(request.form)
-        business = request.form.to_dict()
-        print(business)
-        if 'file' not in request.files:
-            return "No file part", 422
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            return "No selected file", 422
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return "file Upload Successfull", 200
-    return "Not a post request", 422
+@app.route('/uploads/<path:filename>')
+def view_resource(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 ####################################### Contact Us ###################################
 @app.route("/api/contactus",methods=['POST','GET'])
@@ -446,12 +429,11 @@ def manageBusinessAdd():
                 return "No selected file", 422
             if file and allowed_file(file.filename):
                 file_name = secure_filename(file.filename).replace(".", str(time()).replace(".","") + ".")
-                # if not os.path.exists(UPLOAD_FOLDER):
-                #     os.makedirs(UPLOAD_FOLDER)
+                if not os.path.exists(UPLOAD_FOLDER):
+                    os.makedirs(UPLOAD_FOLDER)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-                imgPath = './assets/' + file_name
         else:
-            imgPath = './assets/image_placeholder.jpg'
+            file_name = 'image_placeholder.jpg'
 
         business = request.form.to_dict()
         if "file" in business:
@@ -460,7 +442,7 @@ def manageBusinessAdd():
             business["services"] = business["services"].split(",")
         if "products" in business:
             business["products"] = business["products"].split(",")
-        business["imgPath"] = imgPath
+        business["imgPath"] = file_name
         # connection with mongo sending the user and modifying the profile's details
         try:
             business_wrapper: BusinessWrapper = MongoDB.createNewBusiness(business)
