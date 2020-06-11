@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {MatChipInputEvent} from '@angular/material/chips';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 import {ErrorStateMatcher} from '@angular/material/core';
 
 interface Country {
@@ -22,43 +22,43 @@ export class GenericErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-details-edit-dialogue',
-  templateUrl: './my-business-details-edit-dialog.component.html',
-  styleUrls: ['./my-business-details-edit-dialog.component.css']
+  selector: 'app-add-entry-dialog',
+  templateUrl: './workout-add-entry-dialog.component.html',
+  styleUrls: ['./workout-add-entry-dialog.component.css']
 })
-
-export class MyBusinessDetailsEditDialogComponent implements OnInit {
+export class WorkoutAddEntryDialogComponent implements OnInit {
   entryForm = new FormGroup( {
-      name: new FormControl('', [
-        Validators.required
-      ]),
-      city: new FormControl('', [
-        Validators.required
-      ]),
-      address: new FormControl('', [
-        Validators.required
-      ]),
-      postalCode: new FormControl('', [
-        Validators.required
-      ]),
-      phoneNumber: new FormControl('', [
-        Validators.required
-      ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email
-      ]),
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    city: new FormControl('', [
+      Validators.required
+    ]),
+    address: new FormControl('', [
+      Validators.required
+    ]),
+    postalCode: new FormControl('', [
+      Validators.required
+    ]),
+    phoneNumber: new FormControl('', [
+      Validators.required
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
     },
   );
 
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-  id: number; // The displayed entry's id.
-  category: string; // The displayed entry's category.
-  country: string; // The displayed entry's country location.
-  services: string[]; // List containing the titles of the available services offered by the displayed entry.
-  products: string[]; // List containing the titles of the available products offered by the displayed entry.
-  imgFile: string; // String containing the path for the preview image of the displayed entry.
+
+  id: number;
+  category = 'gym';
+  country = 'Greece'; // The default country value is set to 'Greece'
+  services = [];
+  products = [];
+  imgFile = null;
 
   clickedSave: boolean;
 
@@ -69,30 +69,12 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
 
-  constructor(public dialogRef: MatDialogRef<MyBusinessDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public dialogRef: MatDialogRef<WorkoutAddEntryDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  ngOnInit(): void {
-    // Extract the data from the payload and store it into the class properties
-    this.id = this.data._id;
-    this.entryForm.setValue({
-      name: this.data.name,
-      city: this.data.city,
-      address: this.data.address,
-      postalCode: this.data.postalCode,
-      phoneNumber: this.data.phoneNumber,
-      email: this.data.email
-    });
-    this.category = this.data.category;
-    this.country = this.data.country;
-    this.services = this.data.services;
-    this.products = this.data.products;
-    this.imgFile = this.data.imgPath;
-  }
+  ngOnInit(): void {}
 
   onFileSelected(event) {
-    console.log(event);
-    this.imgFile = event.files.target[0];
+    this.imgFile = event.target.files[0];
   }
 
   addServiceChip(event: MatChipInputEvent): void {
@@ -145,9 +127,6 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
     this.country = $event.name;
   }
 
-  /**
-   * Called to close (discard) the "Edit/Details" dialog window.
-   */
   onDiscardClick(): void {
     // method is called when the "Close" button is pressed
     this.dialogRef.close({clickedSave: false});
@@ -156,7 +135,7 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
   onSaveClick(): void {
     if (this.entryForm.valid) {
       const content = {
-        _id: this.id,
+        ownerId: JSON.parse(sessionStorage.getItem('currentUser'))._id,
         name: this.entryForm.get('name').value,
         category: this.category,
         country: this.country,
@@ -166,9 +145,10 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
         phoneNumber: this.entryForm.get('phoneNumber').value,
         services: this.services,
         products: this.products,
-        imgPath: this.imgFile,
+        file: this.imgFile,
         email: this.entryForm.get('email').value
       };
+      console.log('onSaveClick result: ', content);
       this.dialogRef.close({clickedSave: true, details: content});
     }
   }

@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {DetailsDialogComponent} from '../details-dialog/details-dialog.component';
 import {BusinessEntry} from '../../business-entry';
 import {ResultCardService} from './result-card.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-result-card',
@@ -48,7 +49,7 @@ export class ResultCardComponent implements OnInit {
 
     this.country = this.businessData.country;
     this.city = this.businessData.city;
-    this.imgPath = this.businessData.imgPath;
+    this.imgPath = environment.apiUrl + '/uploads/' + this.businessData.imgPath;
     console.log("RESULT CARD imgPath: ", this.imgPath);
   }
 

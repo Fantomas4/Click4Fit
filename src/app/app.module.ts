@@ -58,6 +58,9 @@ import { ManageMyBusinessComponent } from './manage-my-business/manage-my-busine
 import { MyBusinessDetailsEditDialogComponent } from './manage-my-business/my-business-details-edit-dialog/my-business-details-edit-dialog.component';
 import { MyBusinessAddEntryDialogComponent } from './manage-my-business/my-business-add-entry-dialog/my-business-add-entry-dialog.component';
 import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
+import { ManageWorkoutEntriesComponent } from './manage-workout-entries/manage-workout-entries.component';
+import { WorkoutAddEntryDialogComponent} from './manage-workout-entries/workout-add-entry-dialog/workout-add-entry-dialog.component';
+import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/workout-details-edit-dialog/workout-details-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +92,10 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
     RecoverDialogMessageComponent,
     ManageMyBusinessComponent,
     MyBusinessDetailsEditDialogComponent,
-    MyBusinessAddEntryDialogComponent
+    MyBusinessAddEntryDialogComponent,
+    ManageWorkoutEntriesComponent,
+    WorkoutAddEntryDialogComponent,
+    WorkoutDetailsEditDialogComponent
   ],
   imports: [
     BrowserModule,

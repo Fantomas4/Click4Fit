@@ -30,7 +30,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/uploads/<path:filename>')
+@app.route('/api/uploads/<path:filename>')
 def view_resource(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
