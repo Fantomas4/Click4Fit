@@ -4,6 +4,7 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {ErrorStateMatcher} from '@angular/material/core';
+import {WorkoutEntry} from '../workout-entry';
 
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
@@ -44,9 +45,9 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
   id: number; // The displayed entry's id.
-  advisedFor: string; // The gender that the exercise is advised for.
-  difficulty: string;
-  equipment: boolean;
+  advisedFor = 'both'; // The gender that the exercise is advised for.
+  difficulty = 'easy'; // The difficulty level of the exercise.
+  equipment = 'false'; // Whether the exercise requires equipment or not.
 
   clickedSave: boolean;
 
@@ -108,7 +109,8 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
 
   onSaveClick(): void {
     if (this.entryForm.valid) {
-      const content = {
+      // Use WorkoutEntry interface to properly format the data
+      const content: WorkoutEntry  = {
         _id: this.id,
         name: this.entryForm.get('name').value,
         category: this.entryForm.get('category').value,
@@ -117,7 +119,7 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
         videoUrl: this.entryForm.get('videoUrl').value,
         advisedFor: this.advisedFor,
         difficulty: this.difficulty,
-        equipment: this.equipment
+        equipment: (this.equipment === 'true') // Convert string to boolean
       };
       this.dialogRef.close({clickedSave: true, details: content});
     }

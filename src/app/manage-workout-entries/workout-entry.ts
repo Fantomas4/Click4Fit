@@ -3,7 +3,7 @@ export interface WorkoutEntry {
   name: string;
   category: string;
   muscleGroups: string[];
-  advisedFor: string[];
+  advisedFor: string;
   difficulty: string;
   equipment: boolean;
   sets: string;

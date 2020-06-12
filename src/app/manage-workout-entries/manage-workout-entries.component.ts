@@ -134,20 +134,17 @@ export class ManageWorkoutEntriesComponent implements OnInit {
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
         const formData = new FormData();
-        formData.append('ownerId', dialogRes.details.ownerId);
+        formData.append('_id', dialogRes.details._id);
         formData.append('name', dialogRes.details.name);
         formData.append('category', dialogRes.details.category);
-        formData.append('country', dialogRes.details.country);
-        formData.append('city', dialogRes.details.city);
-        formData.append('address', dialogRes.details.address);
-        formData.append('postalCode', dialogRes.details.postalCode);
-        formData.append('phoneNumber', dialogRes.details.phoneNumber);
-        formData.append('services', dialogRes.details.services);
-        formData.append('products', dialogRes.details.products);
-        formData.append('file', dialogRes.details.file);
-        formData.append('email', dialogRes.details.email);
+        formData.append('muscleGroups', dialogRes.details.muscleGroups);
+        formData.append('sets', dialogRes.details.sets);
+        formData.append('videoUrl', dialogRes.details.videoUrl);
+        formData.append('advisedFor', dialogRes.details.advisedFor);
+        formData.append('difficulty', dialogRes.details.difficulty);
+        formData.append('equipment', dialogRes.details.equipment);
 
-        this.manageMyBusinessService.updateEntry(formData).toPromise().then(data => {
+        this.manageWorkoutEntriesService.updateEntry(formData).toPromise().then(data => {
             this.alertService.success('Data updated successfully');
           },
           error => {

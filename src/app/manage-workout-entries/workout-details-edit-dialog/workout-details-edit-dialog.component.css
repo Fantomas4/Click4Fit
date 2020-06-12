@@ -9,13 +9,12 @@
   flex-grow: 2;
 }
 
-#category-container {
+.button-toggle-group-container {
   display: block;
   padding-bottom: 5%
 }
 
-
-.services-and-products-container {
+.chip-list-container {
   margin-top: 8%;
 }
 
@@ -30,6 +29,3 @@
 .chip-list {
   width: 80%;
 }
-
-
-
