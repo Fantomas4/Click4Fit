@@ -4,13 +4,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {ErrorStateMatcher} from '@angular/material/core';
+import {WorkoutEntry} from '../workout-entry';
 
-interface Country {
-  name: string;
-  alpha2Code: string;
-  alpha3Code: string;
-  numericCode: string;
-}
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -28,37 +23,30 @@ export class GenericErrorStateMatcher implements ErrorStateMatcher {
 })
 export class WorkoutAddEntryDialogComponent implements OnInit {
   entryForm = new FormGroup( {
-    name: new FormControl('', [
-      Validators.required
-    ]),
-    city: new FormControl('', [
-      Validators.required
-    ]),
-    address: new FormControl('', [
-      Validators.required
-    ]),
-    postalCode: new FormControl('', [
-      Validators.required
-    ]),
-    phoneNumber: new FormControl('', [
-      Validators.required
-    ]),
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email
-    ]),
+      name: new FormControl('', [
+        Validators.required
+      ]),
+      category: new FormControl('', [
+        Validators.required
+      ]),
+      muscleGroups: new FormControl('', [
+        Validators.required
+      ]),
+      sets: new FormControl('', [
+        Validators.required,
+      ]),
+      videoUrl: new FormControl('', [
+        Validators.required,
+      ]),
     },
   );
 
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-
-  id: number;
-  category = 'gym';
-  country = 'Greece'; // The default country value is set to 'Greece'
-  services = [];
-  products = [];
-  imgFile = null;
+  id: number; // The displayed entry's id.
+  advisedFor = 'both'; // The gender that the exercise is advised for.
+  difficulty = 'easy'; // The difficulty level of the exercise.
+  equipment = 'false'; // Whether the exercise requires equipment or not.
 
   clickedSave: boolean;
 
@@ -73,17 +61,13 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onFileSelected(event) {
-    this.imgFile = event.target.files[0];
-  }
-
-  addServiceChip(event: MatChipInputEvent): void {
+  addMuscleGroupChip(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
     // Add our service
     if ((value || '').trim()) {
-      this.services.push(value.trim());
+      this.entryForm.get('muscleGroups').value.push(value.trim());
     }
 
     // Reset the input value
@@ -92,41 +76,17 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
     }
   }
 
-  removeServiceChip(service: string): void {
-    const index = this.services.indexOf(service);
+  removeMuscleGroupChip(muscleGroup: string): void {
+    const index = this.entryForm.get('muscleGroups').value.indexOf(muscleGroup);
 
     if (index >= 0) {
-      this.services.splice(index, 1);
+      this.entryForm.get('muscleGroups').value.splice(index, 1);
     }
   }
 
-  addProductChip(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our service
-    if ((value || '').trim()) {
-      this.products.push(value.trim());
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-  }
-
-  removeProductChip(product: string): void {
-    const index = this.products.indexOf(product);
-
-    if (index >= 0) {
-      this.products.splice(index, 1);
-    }
-  }
-
-  onCountrySelected($event: Country) {
-    this.country = $event.name;
-  }
-
+  /**
+   * Called to close (discard) the "Edit/Details" dialog window.
+   */
   onDiscardClick(): void {
     // method is called when the "Close" button is pressed
     this.dialogRef.close({clickedSave: false});
@@ -134,21 +94,18 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
 
   onSaveClick(): void {
     if (this.entryForm.valid) {
-      const content = {
-        ownerId: JSON.parse(sessionStorage.getItem('currentUser'))._id,
+      // Use WorkoutEntry interface to properly format the data
+      const content: WorkoutEntry  = {
+        _id: this.id,
         name: this.entryForm.get('name').value,
-        category: this.category,
-        country: this.country,
-        city: this.entryForm.get('city').value,
-        address: this.entryForm.get('address').value,
-        postalCode: this.entryForm.get('postalCode').value,
-        phoneNumber: this.entryForm.get('phoneNumber').value,
-        services: this.services,
-        products: this.products,
-        file: this.imgFile,
-        email: this.entryForm.get('email').value
+        category: this.entryForm.get('category').value,
+        muscleGroups: this.entryForm.get('muscleGroups').value,
+        sets: this.entryForm.get('sets').value,
+        videoUrl: this.entryForm.get('videoUrl').value,
+        advisedFor: this.advisedFor,
+        difficulty: this.difficulty,
+        equipment: (this.equipment === 'true') // Convert string to boolean
       };
-      console.log('onSaveClick result: ', content);
       this.dialogRef.close({clickedSave: true, details: content});
     }
   }

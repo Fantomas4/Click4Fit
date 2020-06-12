@@ -1,119 +1,88 @@
 <div class="main-container">
-  <h1 mat-dialog-title>Add Business Entry</h1>
+  <h1 mat-dialog-title>Workout Details</h1>
   <div mat-dialog-content class="field-list">
     <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="onSaveClick()" class="form">
       <table class="table" cellspacing="0">
         <tr>
           <mat-form-field>
-            <mat-label>Business Name</mat-label>
+            <mat-label>Workout Name</mat-label>
             <input matInput placeholder="e.g. George Brown" formControlName="name" name="name"
                    [errorStateMatcher]="genericErrorStateMatcher" required>
             <mat-error *ngIf="entryForm.get('name').hasError('required')">
-              Please enter a business name
-            </mat-error>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <p>Preview Image: </p>
-          <input type="file" (change)="onFileSelected($event)">
-        </tr>
-        <tr id="category-container">
-            <p>Category: </p>
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" vertical="true" [(value)]="category">
-              <mat-button-toggle value="gym">Gym</mat-button-toggle>
-              <mat-button-toggle value="fitness shop">Fitness Shop</mat-button-toggle>
-              <mat-button-toggle value="personal trainer">Personal Trainer</mat-button-toggle>
-            </mat-button-toggle-group>
-        </tr>
-        <tr>
-          <mat-select-country country="Greece" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
-        </tr>
-        <tr>
-          <mat-form-field>
-            <mat-label>City</mat-label>
-            <input matInput formControlName="city" name="city" placeholder="e.g. Thessaloniki"
-                   [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="entryForm.get('city').hasError('required')">
-              Please enter a city name
+              Please enter a workout name
             </mat-error>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="address" name="address" placeholder="e.g. Grigoriou Lampraki 105, Ano Toumpa"
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" name="category" placeholder="e.g. Legs"
                    [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="entryForm.get('address').hasError('required')">
-              Please enter an address
+            <mat-error *ngIf="entryForm.get('category').hasError('required')">
+              Please enter a workout category
             </mat-error>
           </mat-form-field>
         </tr>
         <tr>
-          <mat-form-field>
-            <mat-label>Postal Code</mat-label>
-            <input matInput formControlName="postalCode" name="postalCode" placeholder="e.g. 555 55"
-                   [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="entryForm.get('postalCode').hasError('required')">
-              Please enter a postal code
-            </mat-error>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field class="phone-number-field">
-            <input type="tel" matInput formControlName="phoneNumber" name="phoneNumber" placeholder="Telephone"
-                   [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="entryForm.get('phoneNumber').hasError('required')">
-              Please enter a phone number
-            </mat-error>
-            <mat-icon matSuffix>call</mat-icon>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field class="email-input-field">
-            <mat-label>E-mail</mat-label>
-            <input matInput placeholder="address@example.com" formControlName="email" name="registration-email"
-                   type="email" [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="entryForm.get('email').hasError('required')">
-              Please enter an e-mail
-            </mat-error>
-            <mat-error *ngIf="entryForm.get('email').hasError('email')">
-              Please a valid email address
-            </mat-error>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <div class="services-and-products-container">
-            <p class="section-title">My Services and Products</p>
-<!--            <p class="section-subtitle">Please write a name and press enter to add...</p>-->
+          <div class="chip-list-container">
+            <p class="section-title">Muscle Groups</p>
             <mat-form-field class="chip-list">
-              <mat-chip-list #servicesChipList aria-label="Service selection">
-                <mat-chip *ngFor="let service of services" [selectable]="selectable"
-                          [removable]="removable" (removed)="removeServiceChip(service)">
-                  {{service}}
+              <mat-chip-list #muscleGroupsChipList aria-label="Muscle Groups selection">
+                <mat-chip *ngFor="let muscleGroup of this.entryForm.get('muscleGroups').value" [selectable]="selectable"
+                          [removable]="removable" (removed)="removeMuscleGroupChip(muscleGroup)">
+                  {{muscleGroup}}
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="New Service..."
-                       [matChipInputFor]="servicesChipList"
+                <input placeholder="New Muscle Group..."
+                       [matChipInputFor]="muscleGroupsChipList"
                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                        [matChipInputAddOnBlur]="addOnBlur"
-                       (matChipInputTokenEnd)="addServiceChip($event)">
-              </mat-chip-list>
-            </mat-form-field>
-            <mat-form-field class="chip-list">
-              <mat-chip-list #productsChipList aria-label="Product selection">
-                <mat-chip *ngFor="let product of products" [selectable]="selectable"
-                          [removable]="removable" (removed)="removeProductChip(product)">
-                  {{product}}
-                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-                <input placeholder="New Product..."
-                       [matChipInputFor]="productsChipList"
-                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                       [matChipInputAddOnBlur]="addOnBlur"
-                       (matChipInputTokenEnd)="addProductChip($event)">
+                       (matChipInputTokenEnd)="addMuscleGroupChip($event)">
               </mat-chip-list>
             </mat-form-field>
           </div>
+        </tr>
+        <tr>
+          <mat-radio-group aria-label="Advised for:" [(ngModel)]="advisedFor" required>
+            <mat-radio-button value="both">Both</mat-radio-button>
+            <mat-radio-button value="men">Men</mat-radio-button>
+            <mat-radio-button value="women">Women</mat-radio-button>
+          </mat-radio-group>
+        </tr>
+        <tr class="button-toggle-group-container">
+          <p>Difficulty:</p>
+          <mat-button-toggle-group vertical="true" [(value)]="difficulty">
+            <mat-button-toggle value="easy">Easy</mat-button-toggle>
+            <mat-button-toggle value="medium">Medium</mat-button-toggle>
+            <mat-button-toggle value="hard">Hard</mat-button-toggle>
+          </mat-button-toggle-group>
+        </tr>
+        <tr class="button-toggle-group-container">
+          <p>Requires Equipment</p>
+          <mat-button-toggle-group vertical="true" [(value)]="equipment">
+            <mat-button-toggle value="yes">Yes</mat-button-toggle>
+            <mat-button-toggle value="no">No</mat-button-toggle>
+          </mat-button-toggle-group>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Recommended Sets</mat-label>
+            <input matInput placeholder="e.g. ???" formControlName="sets" name="sets"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('sets').hasError('required')">
+              Please enter a set description
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Instruction Video</mat-label>
+            <input matInput placeholder="e.g. www.youtube.com" formControlName="videoUrl" name="videoUrl"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('videoUrl').hasError('required')">
+              Please enter the link to the instruction video
+            </mat-error>
+          </mat-form-field>
         </tr>
       </table>
     </form>
