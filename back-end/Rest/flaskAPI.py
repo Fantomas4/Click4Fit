@@ -549,7 +549,7 @@ def manageBusinessModify():
                 if business["imgPath"] != "gym-preview.JPG" and business["imgPath"] != "image_placeholder.jpg":
                     os.remove(os.path.join(app.config['UPLOAD_FOLDER'], business["imgPath"]))
                 business["imgPath"] = file_name
-        
+
         try:
             business_wrapper: BusinessWrapper = MongoDB.updateBusiness(business)
         except TypeError as type_err:  # Checking for errors

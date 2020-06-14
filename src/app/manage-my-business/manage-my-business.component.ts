@@ -143,7 +143,7 @@ export class ManageMyBusinessComponent implements OnInit {
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
         const formData = new FormData();
-        formData.append('ownerId', dialogRes.details.ownerId);
+        formData.append('_id', dialogRes.details._id);
         formData.append('name', dialogRes.details.name);
         formData.append('category', dialogRes.details.category);
         formData.append('country', dialogRes.details.country);
@@ -154,10 +154,12 @@ export class ManageMyBusinessComponent implements OnInit {
         formData.append('services', dialogRes.details.services);
         formData.append('products', dialogRes.details.products);
         formData.append('file', dialogRes.details.file);
+        formData.append('imgPath', dialogRes.details.imgPath);
         formData.append('email', dialogRes.details.email);
 
         this.manageMyBusinessService.updateEntry(formData).toPromise().then(data => {
-            this.alertService.success('Data updated successfully');
+            this.getMyBusinessEntries();
+            this.alertService.success('Entry updated successfully');
           },
           error => {
             this.alertService.error(error);

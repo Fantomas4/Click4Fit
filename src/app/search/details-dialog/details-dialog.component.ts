@@ -12,10 +12,7 @@ export class DetailsDialogComponent implements OnInit {
   imgPath: string;
 
   constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {
-    this.imgPath = environment.apiUrl + '/uploads/' + data.imgPath;
-    console.log("COMBINED IMAGE URL: ", this.imgPath);
-  }
+              @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}
 
   /**
    * Method called when the "Close" button is pressed.

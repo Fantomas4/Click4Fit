@@ -10,7 +10,7 @@ export class ManageWorkoutEntriesService {
   constructor(private http: HttpClient) { }
 
   getWorkouts() {
-    return this.http.post<any>(`${environment.apiUrl}/get-my-business`, JSON.stringify({_id: userId}),
+    return this.http.get<any>(`${environment.apiUrl}/workouts`,
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
@@ -18,7 +18,7 @@ export class ManageWorkoutEntriesService {
   }
 
   updateEntry(data: FormData) {
-    return this.http.post<any>(`${environment.apiUrl}/manage-business-modify-entry`, data,
+    return this.http.put<any>(`${environment.apiUrl}/workouts`, data,
       {observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
@@ -26,7 +26,7 @@ export class ManageWorkoutEntriesService {
   }
 
   addEntry(data: FormData) {
-    return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, data,
+    return this.http.post<any>(`${environment.apiUrl}/workouts`, data,
       {observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
@@ -34,7 +34,7 @@ export class ManageWorkoutEntriesService {
   }
 
   deleteEntries(data: object) {
-    return this.http.post<any>(`${environment.apiUrl}/manage-business-delete-entries`, JSON.stringify({_id: data}),
+    return this.http.post<any>(`${environment.apiUrl}/delete-workouts`, JSON.stringify({_id: data}),
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
