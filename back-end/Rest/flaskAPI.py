@@ -270,6 +270,71 @@ def addFavoritePlace():
 
 
 ####################################### Workout ######################################
+@app.route("/api/workouts", methods=["POST"])
+def create_workout():
+    workout = request.get_json()
+    try:
+        workout_wrapper: WorkoutWrapper = MongoDB.createNewWorkout(workout)
+    except TypeError as type_err:
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if type(workout_wrapper.workout) is not dict:
+            return "Something is wrong with the database", 500
+        if workout_wrapper.found:
+            return "Workout already exists", 409
+        if not workout_wrapper.operationDone:
+            return  "Couldn't create workout entry", 500
+        return "Creation successful", 200
+
+
+@app.route("/api/workouts", methods=["GET"])
+def get_workouts():
+    try:
+        workout_list_wrapper: WorkoutListWrapper = MongoDB.getAllWorkouts()
+    except:
+        return "Bad error", 500
+    else:
+        if type(workout_list_wrapper.workout_list) is not list:
+            return "Something is wrong with the database", 500
+        return jsonify(data=workout_list_wrapper.workout_list), 200
+
+
+@app.route("/api/workouts", methods=["PUT"])
+def update_workout():
+    new_workout = request.get_json()
+    try:
+        workout_wrapper: WorkoutWrapper = MongoDB.updateWorkout(new_workout)
+    except TypeError as type_err:
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if type(workout_wrapper.workout) is not dict:
+            return "Something is wrong with the database", 500
+        if not workout_wrapper.found:
+            return "Workout doesn't exist in the database", 404
+        return "Workout update successfull", 200
+
+
+@app.route("/api/workouts", methods=["DELETE"])
+def delete_workouts():
+    delete_query = request.get_json()
+    try:
+        deleted_successfull = MongoDB.deleteWorkouts(delete_query)
+    except:
+        return "Bad error", 500
+    else:
+        if not deleted_successfull:
+            return "Could not delete workouts", 400
+        return "Workouts deleted successfully", 200
+
+
 @app.route("/api/display-workout", methods=['POST','GET'])
 def getWorkout():
     filters=request.get_json() #get chosen filters by user
@@ -284,26 +349,6 @@ def getWorkout():
         if type(workout_wrapper_list.workout_list) is list and not workout_wrapper_list.found and not workout_wrapper_list.operationDone:
             return "Couldn't find workout with these filters", 404
         return jsonify(workoutList=workout_wrapper_list.workout_list), 200
-
-
-@app.route("/api/create-workout", methods=['POST','GET'])
-def createWorkout():
-    workout=request.get_json() #get new workout
-    #connection with mongo sending the filters and creating the workout
-    try:
-        workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
-    except TypeError as type_err: #Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if workout_wrapper.workout is None:
-            return "Something is wrong with the database", 500
-        if type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
-            return  "Couldn't insert workout entry", 500
-        return jsonify("Creation successful"), 200
 
 
 @app.route("/api/add-favorite-workout", methods=['POST','GET'])
@@ -458,7 +503,7 @@ def manageBusinessAdd():
             if business_wrapper.found:
                 return "Business already exists", 409
             if business_wrapper.operationDone:
-                return jsonify("Business addition successful!"), 200
+                return "Business addition successful!", 200
             return "Unexpected Error!", 500
     return "Not a POST request", 422
 
@@ -483,22 +528,42 @@ def manageBusinessDelete():
 
 @app.route("/api/manage-business-modify-entry", methods=['POST', 'GET'])
 def manageBusinessModify():
-    business = request.get_json()
-    # connection with mongo sending the user and modifying the profile's details
-    try:
-        business_wrapper: BusinessWrapper = MongoDB.updateBusiness(business)
-    except TypeError as type_err:  # Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if business_wrapper.business is None:
-            return "Something is wrong with the database", 500
-        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return "Couldn't update Business entry", 500
-        return jsonify("Save successful"), 200
+    if request.method == "POST":
+        business = request.form.to_dict()
+        if "file" in business:
+            del business["file"]
+        if "services" in business:
+            business["services"] = business["services"].split(",")
+        if "products" in business:
+            business["products"] = business["products"].split(",")
+
+        if "file" in request.files:
+            file = request.files["file"]
+            if file.filename == '':
+                return "No selected file", 422
+            if file and allowed_file(file.filename):
+                file_name = secure_filename(file.filename).replace(".", str(time()).replace(".","") + ".")
+                if not os.path.exists(UPLOAD_FOLDER):
+                    os.makedirs(UPLOAD_FOLDER)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], business["imgPath"]))
+                business["imgPath"] = file_name
+        
+        try:
+            business_wrapper: BusinessWrapper = MongoDB.updateBusiness(business)
+        except TypeError as type_err:  # Checking for errors
+            return str(type_err), 422
+        except ValueError as value_err:
+            return str(value_err), 422
+        except:
+            return "Bad error", 500
+        else:
+            if type(business_wrapper.business) is not dict:
+                return "Something is wrong with the database", 500
+            if not business_wrapper.operationDone:
+                return "Could not update business entry", 500
+            return "Update successful", 200
+    return "Not a POST request", 422
 
 
 ####################################### Manage user ##################################
