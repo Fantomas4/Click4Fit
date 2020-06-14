@@ -80,11 +80,11 @@ class Validator:
                     "videoUrl"     : str 
                 },
                 "regex" : {
-                    "advisedFor" : r"(men|women)",
+                    "advisedFor" : r"(men|women|both)",
                     "difficulty" : r"(easy|medium|hard)",
                 },
                 "regex-error" : {
-                    "advisedFor" : "can only be one of these values: \"men\", \"women\"",
+                    "advisedFor" : "can only be one of these values: \"men\", \"women\", \"both\"",
                     "difficulty" : "can only be one of these values: \"easy\", \"medium\", \"hard\""
                 }
 

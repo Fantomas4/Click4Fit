@@ -500,7 +500,7 @@ def manageBusinessAdd():
             if business_wrapper.found:
                 return "Business already exists", 409
             if business_wrapper.operationDone:
-                return jsonify("Business addition successful!"), 200
+                return "Business addition successful!", 200
             return "Unexpected Error!", 500
     return "Not a POST request", 422
 
@@ -525,22 +525,42 @@ def manageBusinessDelete():
 
 @app.route("/api/manage-business-modify-entry", methods=['POST', 'GET'])
 def manageBusinessModify():
-    business = request.get_json()
-    # connection with mongo sending the user and modifying the profile's details
-    try:
-        business_wrapper: BusinessWrapper = MongoDB.updateBusiness(business)
-    except TypeError as type_err:  # Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if business_wrapper.business is None:
-            return "Something is wrong with the database", 500
-        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return "Couldn't update Business entry", 500
-        return jsonify("Save successful"), 200
+    if request.method == "POST":
+        business = request.form.to_dict()
+        if "file" in business:
+            del business["file"]
+        if "services" in business:
+            business["services"] = business["services"].split(",")
+        if "products" in business:
+            business["products"] = business["products"].split(",")
+
+        if "file" in request.files:
+            file = request.files["file"]
+            if file.filename == '':
+                return "No selected file", 422
+            if file and allowed_file(file.filename):
+                file_name = secure_filename(file.filename).replace(".", str(time()).replace(".","") + ".")
+                if not os.path.exists(UPLOAD_FOLDER):
+                    os.makedirs(UPLOAD_FOLDER)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], business["imgPath"]))
+                business["imgPath"] = file_name
+        
+        try:
+            business_wrapper: BusinessWrapper = MongoDB.updateBusiness(business)
+        except TypeError as type_err:  # Checking for errors
+            return str(type_err), 422
+        except ValueError as value_err:
+            return str(value_err), 422
+        except:
+            return "Bad error", 500
+        else:
+            if type(business_wrapper.business) is not dict:
+                return "Something is wrong with the database", 500
+            if not business_wrapper.operationDone:
+                return "Could not update business entry", 500
+            return "Update successful", 200
+    return "Not a POST request", 422
 
 
 ####################################### Manage user ##################################
