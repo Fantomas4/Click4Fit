@@ -15,17 +15,17 @@ export class DashboardComponent implements OnInit {
   workoutIsEmpty = false;
   placeIsEmpty = false;
   jsonData;
-  CurrentTime: any;
+  currentTime: any;
   user;
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
-      this.CurrentTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds();
+      this.currentTime = Date.now(); //It gets the current time
     }, 1);
 
   }
 
-  today: number = Date.now(); //gets the current date
+  today: number = Date.now(); //It gets the current date
 
 
 
