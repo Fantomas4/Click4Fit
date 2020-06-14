@@ -563,7 +563,7 @@ def manageBusinessModify():
                 return "Something is wrong with the database", 500
             if not business_wrapper.operationDone:
                 return "Could not update business entry", 500
-            return jsonify("Update successful"), 200
+            return "Update successful", 200
     return "Not a POST request", 422
 
 
