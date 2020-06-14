@@ -270,7 +270,7 @@ def addFavoritePlace():
 
 
 ####################################### Workout ######################################
-@app.route("/api/workout", methods=["POST"])
+@app.route("/api/workouts", methods=["POST"])
 def create_workout():
     workout = request.get_json()
     try:
@@ -291,7 +291,7 @@ def create_workout():
         return "Creation successful", 200
 
 
-@app.route("/api/workout", methods=["GET"])
+@app.route("/api/workouts", methods=["GET"])
 def get_workouts():
     try:
         workout_list_wrapper: WorkoutListWrapper = MongoDB.getAllWorkouts()
@@ -303,7 +303,7 @@ def get_workouts():
         return jsonify(data=workout_list_wrapper.workout_list), 200
 
 
-@app.route("/api/workout", methods=["PUT"])
+@app.route("/api/workouts", methods=["PUT"])
 def update_workout():
     new_workout = request.get_json()
     try:
@@ -322,7 +322,7 @@ def update_workout():
         return "Workout update successfull", 200
 
 
-@app.route("/api/workout", methods=["DELETE"])
+@app.route("/api/workouts", methods=["DELETE"])
 def delete_workouts():
     delete_query = request.get_json()
     try:
