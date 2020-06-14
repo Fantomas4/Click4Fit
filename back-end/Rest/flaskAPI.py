@@ -322,7 +322,7 @@ def update_workout():
         return "Workout update successfull", 200
 
 
-@app.route("/api/workouts", methods=["DELETE"])
+@app.route("/api/delete-workouts", methods=["POST"])
 def delete_workouts():
     delete_query = request.get_json()
     try:
