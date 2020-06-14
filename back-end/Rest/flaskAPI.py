@@ -546,7 +546,8 @@ def manageBusinessModify():
                 if not os.path.exists(UPLOAD_FOLDER):
                     os.makedirs(UPLOAD_FOLDER)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], business["imgPath"]))
+                if business["imgPath"] != "gym-preview.JPG" and business["imgPath"] != "image_placeholder.jpg":
+                    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], business["imgPath"]))
                 business["imgPath"] = file_name
         
         try:
