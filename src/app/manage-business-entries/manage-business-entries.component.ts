@@ -39,6 +39,8 @@ export class ManageBusinessEntriesComponent implements OnInit {
   dialogHeight: number; // Height of the dialog window.
   dialogWidth: number; // Width of the dialog window.
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
+  dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
+  dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
 
   detailsEditDialogRef: MatDialogRef<BusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<BusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
@@ -119,7 +121,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
     /*this.manageBusinessEntriesService.getResults()
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
-      this.manageBusinessEntriesService.getResults().toPromise().then(data => {
+      this.manageBusinessEntriesService.getBusinesses().toPromise().then(data => {
         this.businessData = data.businessList;
         this.dataSource.data = this.businessData;
       },
@@ -146,21 +148,35 @@ export class ManageBusinessEntriesComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
     this.detailsEditDialogRef = this.dialog.open(BusinessDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
-      data: {_id: element._id, name: element.name, category: element.category, country: element.country,
-      city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
-      element.phoneNumber, email: element.email, services: element.services, products: element.products,
-      imgPath: element.imgPath}
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      maxWidth: this.dialogMaxWidth,
+      data: {
+        _id: element._id, name: element.name, category: element.category, country: element.country,
+        city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
+        element.phoneNumber, email: element.email, services: element.services, products: element.products,
+        imgPath: element.imgPath
+      }
     });
-    this.detailsEditDialogRef.afterClosed().subscribe(result => {
-      this.result = result.save;
-      if (this.result === true) {
-        this.manageBusinessEntriesService.updateEntry(result.details).toPromise().then(data => {
-          this.getBusinessEntries();
-          this.dataSource.paginator = this.paginator; 
-          this.dataSource.sort = this.sort;
-          this.alertService.success(data);
-        },
+    this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
+      if (dialogRes && dialogRes.clickedSave) {
+        const formData = new FormData();
+        formData.append('_id', dialogRes.details._id);
+        formData.append('name', dialogRes.details.name);
+        formData.append('category', dialogRes.details.category);
+        formData.append('country', dialogRes.details.country);
+        formData.append('city', dialogRes.details.city);
+        formData.append('address', dialogRes.details.address);
+        formData.append('postalCode', dialogRes.details.postalCode);
+        formData.append('phoneNumber', dialogRes.details.phoneNumber);
+        formData.append('services', dialogRes.details.services);
+        formData.append('products', dialogRes.details.products);
+        formData.append('file', dialogRes.details.file);
+        formData.append('imgPath', dialogRes.details.imgPath);
+        formData.append('email', dialogRes.details.email);
+        this.manageBusinessEntriesService.updateEntry(formData).toPromise().then(data => {
+            this.getBusinessEntries();
+            this.alertService.success('Entry updated successfully');
+          },
           error => {
             this.alertService.error(error.error);
           });
@@ -172,40 +188,50 @@ export class ManageBusinessEntriesComponent implements OnInit {
   openAddEntryDialog() {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(BusinessAddEntryDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')});
-    this.addEntryDialogRef.afterClosed().subscribe(result => {
-        this.result = result.save;
-        if (this.result === true) {
-          this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      maxWidth: this.dialogMaxWidth
+    });
+    this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
+      if (dialogRes && dialogRes.clickedSave) {
+        const formData = new FormData();
+        formData.append('ownerId', dialogRes.details.ownerId);
+        formData.append('name', dialogRes.details.name);
+        formData.append('category', dialogRes.details.category);
+        formData.append('country', dialogRes.details.country);
+        formData.append('city', dialogRes.details.city);
+        formData.append('address', dialogRes.details.address);
+        formData.append('postalCode', dialogRes.details.postalCode);
+        formData.append('phoneNumber', dialogRes.details.phoneNumber);
+        formData.append('services', dialogRes.details.services);
+        formData.append('products', dialogRes.details.products);
+        formData.append('file', dialogRes.details.file);
+        formData.append('email', dialogRes.details.email);
+        this.manageBusinessEntriesService.addEntry(formData).toPromise().then(data => {
             this.getBusinessEntries();
-            this.dataSource.paginator = this.paginator; 
-            this.dataSource.sort = this.sort;
-            this.alertService.success(data);
+            this.alertService.success('Entry added successfully');
           },
-            error => {
-              this.alertService.error(error.error);
-            });
-        }
-      });
+          error => {
+            this.alertService.error(error.error);
+          });
+      }
+    });
   }
 
   /** Click on delete button */
   deleteEntries() {
-    this.selected = this.selection.selected;
-    for (this.i = 0; this.i < this.selection.selected.length; this.i++) {
-      this.selected[this.i] = this.selection.selected[this.i].email;
-    }
-    this.content={email: this.selected};
-    this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data =>
-    {
-      this.getBusinessEntries();
-      this.dataSource.paginator = this.paginator; 
-      this.dataSource.sort = this.sort;
-      this.alertService.success(data);
-      this.alertService.success(data);
-    },
-    error => {
-      this.alertService.error(error.errror);
-    });
+    const selectedIds = [];
+    this.selection.selected.forEach(entry =>
+      selectedIds.push(entry._id)
+    );
+
+    this.manageBusinessEntriesService.deleteEntries(selectedIds).toPromise().then(
+      data => {
+        this.getBusinessEntries();
+        this.alertService.success('Data loaded successfully');
+      },
+
+      error => {
+        this.alertService.error(error.error);
+      });
   }
 }

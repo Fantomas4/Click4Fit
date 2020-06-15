@@ -1,11 +1,11 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {UserDetailsEditDialogComponent} from './user-details-edit-dialog/user-details-edit-dialog.component';
-import {ManageUserEntriesService} from './manage-user-entries.service';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { UserDetailsEditDialogComponent } from './user-details-edit-dialog/user-details-edit-dialog.component';
+import { ManageUserEntriesService } from './manage-user-entries.service';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 
@@ -21,8 +21,8 @@ interface AlertMessage {
 })
 export class ManageUserEntriesComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
-  @ViewChild(MatSort, {static: true}) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
+  @ViewChild(MatSort, { static: true }) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
 
   // Holds a SelectionModel<UserEntry> object used to get the table checkboxes' state.
   selection = new SelectionModel<any>(true, []);
@@ -30,20 +30,22 @@ export class ManageUserEntriesComponent implements OnInit {
   // Determines the columns to be displayed in the table's header row.
   displayedColumns = ['checkboxes', 'name', 'last-name', 'buttons'];
 
-  userData=[]; // An array of UserEntry objects retrieved from the database.
+  userData = []; // An array of UserEntry objects retrieved from the database.
   dataSource = new MatTableDataSource(this.userData); // MatTableDataSource<UserEntry> used as the table's data source.
 
   dialogHeight: number; // Height of the dialog window.
   dialogWidth: number; // Width of the dialog window.
-  dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size
+  dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
+  dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
+  dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
 
   detailsEditDialogRef: MatDialogRef<UserDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   selected = []; //List with selected checkboxes
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  result:boolean;
+  result: boolean;
   content;
-  i:number;
+  i: number;
 
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog,
     private alertService: AlertService) { }
@@ -67,8 +69,6 @@ export class ManageUserEntriesComponent implements OnInit {
     if (typeof this.detailsEditDialogRef !== 'undefined') {
       this.detailsEditDialogRef.updateSize(this.dialogWidth.toString(), this.dialogHeight.toString());
     }
-
-    console.log('onresize height is: ' + this.dialogHeight);
   }
 
   ngOnInit(): void {
@@ -108,10 +108,10 @@ export class ManageUserEntriesComponent implements OnInit {
 
     /*this.manageUserEntriesService.getResults()
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
-      this.manageUserEntriesService.getResults().toPromise().then(data =>{
-          this.userData=data.userList;
-          this.dataSource.data=this.userData;
-      },
+    this.manageUserEntriesService.getUsers().toPromise().then(data => {
+      this.userData = data.userList;
+      this.dataSource.data = this.userData;
+    },
       error => {
         this.alertService.error(error.errror);
       });
@@ -135,17 +135,24 @@ export class ManageUserEntriesComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
-      data: {_id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email}
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      maxWidth: this.dialogMaxWidth,
+      data: { _id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
     });
-    this.detailsEditDialogRef.afterClosed().subscribe(result=>{
-      this.result = result.save;
-      if (this.result == true) {
-        this.manageUserEntriesService.updateEntry(result.details).toPromise().then(data => {
+    this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
+      if (dialogRes && dialogRes.clickedSave) {
+        console.log('yes');
+        const formData = new FormData();
+        formData.append('_id', dialogRes.details._id);
+        formData.append('name', dialogRes.details.name);
+        formData.append('surname', dialogRes.data.surname);
+        formData.append('email', dialogRes.data.email);
+        formData.append('birthdate', dialogRes.data.birthdate);
+        this.manageUserEntriesService.updateEntry(formData).toPromise().then(data => {
+          console.log('what');
           this.getUsersEntries();
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.alertService.success(data);
+          console.log('no');
+          this.alertService.success('Entry updated successfully');
         },
           error => {
             this.alertService.error(error.error);
@@ -153,22 +160,21 @@ export class ManageUserEntriesComponent implements OnInit {
       }
     })
   }
-  deleteEntries(){
-    this.selected=this.selection.selected;
-    for (this.i=0;this.i<this.selection.selected.length;this.i++){
-      this.selected[this.i]=this.selection.selected[this.i].email;
-    }
-    this.content={"email":this.selected};
-    this.manageUserEntriesService.deleteEntries(this.content).toPromise().then(data=>
-    {
-      this.getUsersEntries();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.alertService.success(data);
-    },
-    error => {
-      this.alertService.error(error.errror);
-    });
+    /** Click on delete button */
+  deleteEntries() {
+    const selectedIds = [];
+    this.selection.selected.forEach(entry =>
+      selectedIds.push(entry._id)
+    );
+
+    this.manageUserEntriesService.deleteEntries(selectedIds).toPromise().then(
+      data => {
+        this.getUsersEntries();
+        this.alertService.success('Data loaded successfully');
+      },
+
+      error => {
+        this.alertService.error(error.error);
+      });
   }
 }
-

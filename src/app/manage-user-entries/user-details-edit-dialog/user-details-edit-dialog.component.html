@@ -1,0 +1,58 @@
+<div class="main-container">
+    <h1 mat-dialog-title>User Details</h1>
+    <div mat-dialog-content class="field-list">
+        <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="onSaveClick()" class="form">
+            <table class="table" cellspacing="0">
+                <tr>
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="e.g. George" formControlName="name" name="name"
+                            [errorStateMatcher]="genericErrorStateMatcher" required>
+                        <mat-error *ngIf="entryForm.get('name').hasError('required')">
+                            Please enter a name
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field>
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="e.g. Brown" formControlName="surname" name="surname"
+                            [errorStateMatcher]="genericErrorStateMatcher" required>
+                        <mat-error *ngIf="entryForm.get('surname').hasError('required')">
+                            Please enter a last name
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field>
+                        <mat-label>Date of birth</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="birthdate" name="birthdate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="entryForm.get('birthdate').hasError('required')">
+                            Please select a birthdate
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field class="email-input-field">
+                            <mat-label>E-mail</mat-label>
+                            <input matInput placeholder="e.g. address@example.com" formControlName="email"
+                                name="registration-email" type="email" [errorStateMatcher]="genericErrorStateMatcher"
+                                required>
+                            <mat-error *ngIf="entryForm.get('email').hasError('required')">
+                                Please enter an e-mail
+                            </mat-error>
+                            <mat-error *ngIf="entryForm.get('email').hasError('email')">
+                                Please a valid email address
+                            </mat-error>
+                    </mat-form-field>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" type="submit" form="entry-form" (click)="onSaveClick()">Save</button>
+        <button mat-raised-button color="primary" (click)="onDiscardClick()">Discard</button>
+    </div>
+</div>

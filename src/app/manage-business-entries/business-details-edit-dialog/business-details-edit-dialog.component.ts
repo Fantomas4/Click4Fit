@@ -1,75 +1,174 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {ErrorStateMatcher} from '@angular/material/core';
 
+interface Country {
+  name: string;
+  alpha2Code: string;
+  alpha3Code: string;
+  numericCode: string;
+}
+
+export class GenericErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 @Component({
-  selector: 'app-details-edit-dialogue',
+  selector: 'app-business-details-edit-dialog',
   templateUrl: './business-details-edit-dialog.component.html',
   styleUrls: ['./business-details-edit-dialog.component.css']
 })
 export class BusinessDetailsEditDialogComponent implements OnInit {
 
-  id: number; // The displayed entry's id.
-  name: string; // The displayed entry's name.
-  category: string; // The displayed entry's category.
-  country: string; // The displayed entry's country location.
-  city: string; // The displayed entry's city location.
-  address: string; // The displayed entry's address location.
-  postalCode: string; // The displayed entry's postalCode location.
-  phoneNumber: string; // The displayed entry's phone number.
-  services: string[]; // List containing the titles of the available services offered by the displayed entry.
-  products: string[]; //List containing the titles of the available products offered by the displayed entry.
-  imgPath: string; // String containing the path for the preview image of the displayed entry.
-  email:string; //The displayes entry's email.
-  clickedSave:boolean;
+  entryForm = new FormGroup( {
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    city: new FormControl('', [
+      Validators.required
+    ]),
+    address: new FormControl('', [
+      Validators.required
+    ]),
+    postalCode: new FormControl('', [
+      Validators.required
+    ]),
+    phoneNumber: new FormControl('', [
+      Validators.required
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+  },
+);
 
-  // Form Control used to receive and validate the user's email input.
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-  constructor(public dialogRef: MatDialogRef<BusinessDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {}
+id: number; // The displayed entry's id.
+category: string; // The displayed entry's category.
+country: string; // The displayed entry's country location.
+services: string[]; // List containing the titles of the available services offered by the displayed entry.
+products: string[]; // List containing the titles of the available products offered by the displayed entry.
+imgFile = null; // Contains the data for the preview image selected (on edit) for the displayed entry.
+imgPath: string; // Contains the image path for the preview image currently associated with the displayed entry.
 
-  ngOnInit(): void {
-    // Extract the data from the payload and store it into the class properties
-    this.id = this.data._id;
-    this.name = this.data.name;
-    this.category = this.data.category;
-    this.country = this.data.country;
-    this.city = this.data.city;
-    this.address = this.data.address;
-    this.postalCode = this.data.postalCode;
-    this.phoneNumber = this.data.phoneNumber;
-    this.email=this.data.email;
-    this.services=this.data.services;
-    this.products=this.data.products;
-    this.imgPath = this.data.imgPath;
+clickedSave: boolean;
+
+// Chip list options
+selectable = true;
+removable = true;
+addOnBlur = true;
+readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+
+constructor(public dialogRef: MatDialogRef<BusinessDetailsEditDialogComponent>,
+            @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+ngOnInit(): void {
+  // Extract the data from the payload and store it into the class properties
+  this.id = this.data._id;
+  this.entryForm.setValue({
+    name: this.data.name,
+    city: this.data.city,
+    address: this.data.address,
+    postalCode: this.data.postalCode,
+    phoneNumber: this.data.phoneNumber,
+    email: this.data.email
+  });
+  this.category = this.data.category;
+  this.country = this.data.country;
+  this.services = this.data.services;
+  this.products = this.data.products;
+  this.imgPath = this.data.imgPath;
+}
+
+onFileSelected(event) {
+  console.log(event);
+  this.imgFile = event.target.files[0];
+}
+
+addServiceChip(event: MatChipInputEvent): void {
+  const input = event.input;
+  const value = event.value;
+
+  // Add our service
+  if ((value || '').trim()) {
+    this.services.push(value.trim());
   }
 
-  /**
-   *  Retrieves and returns any errors that have occurred in
-   *  the email Form Control.
-   */
-  getErrorMessage() {
-    if (this.emailFormControl.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
+  // Reset the input value
+  if (input) {
+    input.value = '';
+  }
+}
+
+removeServiceChip(service: string): void {
+  const index = this.services.indexOf(service);
+
+  if (index >= 0) {
+    this.services.splice(index, 1);
+  }
+}
+
+addProductChip(event: MatChipInputEvent): void {
+  const input = event.input;
+  const value = event.value;
+
+  // Add our service
+  if ((value || '').trim()) {
+    this.products.push(value.trim());
   }
 
-  /**
-   * Called to close the "Edit/Details" dialog window.
-   */
-  onCloseClick(): void {
-    // method is called when the "Close" button is pressed
-    this.clickedSave=false;
-    this.dialogRef.close({'save':this.clickedSave});
+  // Reset the input value
+  if (input) {
+    input.value = '';
   }
+}
 
-  onSaveClick(): void {
-    var content = {"_id":this.id,"name":this.name,"category":this.category,"country":this.country,
-    "city":this.city,"address":this.address,"postalCode":this.postalCode,"phoneNumber":this.phoneNumber,
-    "email":this.email};
-    this.clickedSave=true;
-    this.dialogRef.close({'save':this.clickedSave,'details':content});
+removeProductChip(product: string): void {
+  const index = this.products.indexOf(product);
+
+  if (index >= 0) {
+    this.products.splice(index, 1);
   }
+}
+
+onCountrySelected($event: Country) {
+  this.country = $event.name;
+}
+
+/**
+ * Called to close (discard) the "Edit/Details" dialog window.
+ */
+onDiscardClick(): void {
+  // method is called when the "Close" button is pressed
+  this.dialogRef.close({clickedSave: false});
+}
+
+onSaveClick(): void {
+  if (this.entryForm.valid) {
+    const content = {
+      _id: this.id,
+      name: this.entryForm.get('name').value,
+      category: this.category,
+      country: this.country,
+      city: this.entryForm.get('city').value,
+      address: this.entryForm.get('address').value,
+      postalCode: this.entryForm.get('postalCode').value,
+      phoneNumber: this.entryForm.get('phoneNumber').value,
+      services: this.services,
+      products: this.products,
+      file: this.imgFile,
+      imgPath: this.imgPath,
+      email: this.entryForm.get('email').value
+    };
+    this.dialogRef.close({clickedSave: true, details: content});
+  }
+}
 }

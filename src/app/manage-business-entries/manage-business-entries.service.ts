@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
@@ -10,23 +11,31 @@ export class ManageBusinessEntriesService {
 
   constructor(private http: HttpClient) { }
 
-  getResults(): Observable<any> {
-    return this.http.get('http://localhost:5000/api/manage-business-display-entries');
+  getBusinesses(){
+    return this.http.get<any>(`${environment.apiUrl}/manage-business-display-entries`);
   }
-  deleteEntries(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post('http://localhost:5000/api/manage-business-delete-entries', jsonData, { 'headers': headers });
-  }
-  updateEntry(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post('http://localhost:5000/api/manage-business-modify-entry', jsonData, { 'headers': headers });
-  }
-  addEntry(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post('http://localhost:5000/api/manage-business-add-entry', jsonData, { 'headers': headers });
 
+  updateEntry(data: FormData) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-modify-entry`, data,
+      {observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
+  }
+
+  addEntry(data: FormData) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, data,
+      {observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
+  }
+
+  deleteEntries(data: object) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-business-delete-entries`, JSON.stringify({_id: data}),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
   }
 }
