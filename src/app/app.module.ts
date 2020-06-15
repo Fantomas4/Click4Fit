@@ -61,6 +61,7 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
 import { ManageWorkoutEntriesComponent } from './manage-workout-entries/manage-workout-entries.component';
 import { WorkoutAddEntryDialogComponent} from './manage-workout-entries/workout-add-entry-dialog/workout-add-entry-dialog.component';
 import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/workout-details-edit-dialog/workout-details-edit-dialog.component';
+import { UserAddEntryDialogComponent } from './manage-user-entries/user-add-entry-dialog/user-add-entry-dialog.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/worko
     MyBusinessAddEntryDialogComponent,
     ManageWorkoutEntriesComponent,
     WorkoutAddEntryDialogComponent,
-    WorkoutDetailsEditDialogComponent
+    WorkoutDetailsEditDialogComponent,
+    UserAddEntryDialogComponent
   ],
   imports: [
     BrowserModule,
