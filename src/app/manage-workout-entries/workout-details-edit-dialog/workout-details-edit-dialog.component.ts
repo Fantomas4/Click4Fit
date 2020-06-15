@@ -47,7 +47,7 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
   id: number; // The displayed entry's id.
   advisedFor = 'both'; // The gender that the exercise is advised for.
   difficulty = 'easy'; // The difficulty level of the exercise.
-  equipment = 'false'; // Whether the exercise requires equipment or not.
+  equipment = 'no'; // Whether the exercise requires equipment or not.
 
   clickedSave: boolean;
 
@@ -56,6 +56,7 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  muscleGroups: string[] = [];
 
 
   constructor(public dialogRef: MatDialogRef<WorkoutDetailsEditDialogComponent>,
@@ -66,37 +67,42 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
     this.entryForm.setValue({
       name: this.data.name,
       category: this.data.category,
-      muscleGroups: this.data.muscleGroups,
+      muscleGroups: '',
       sets: this.data.sets,
       videoUrl: this.data.videoUrl
     });
     this.id = this.data._id;
+    this.muscleGroups = this.data.muscleGroups;
     this.advisedFor = this.data.advisedFor;
     this.difficulty = this.data.difficulty;
-    this.equipment = this.data.equipment;
+    this.equipment = (this.data.equipment ? 'yes' : 'no');
   }
 
   addMuscleGroupChip(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
-    // Add our service
+    // Add muscleGroup
     if ((value || '').trim()) {
-      this.entryForm.get('muscleGroups').value.push(value.trim());
+      this.muscleGroups.push(value.trim());
     }
 
     // Reset the input value
     if (input) {
       input.value = '';
     }
+
+    this.entryForm.get('muscleGroups').setValue(this.muscleGroups);
   }
 
   removeMuscleGroupChip(muscleGroup: string): void {
-    const index = this.entryForm.get('muscleGroups').value.indexOf(muscleGroup);
+    const index = this.muscleGroups.indexOf(muscleGroup);
 
     if (index >= 0) {
-      this.entryForm.get('muscleGroups').value.splice(index, 1);
+      this.muscleGroups.splice(index, 1);
     }
+
+    this.entryForm.get('muscleGroups').setValue(this.muscleGroups);
   }
 
   /**

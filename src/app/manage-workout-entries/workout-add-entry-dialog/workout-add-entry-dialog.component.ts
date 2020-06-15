@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -10,11 +10,12 @@ import {WorkoutEntry} from '../workout-entry';
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     // console.log(control);
-    // console.log(form);
+
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
+
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -29,7 +30,7 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
       category: new FormControl('', [
         Validators.required
       ]),
-      muscleGroups: new FormControl('', [
+      muscleGroups: new FormControl([], [
         Validators.required
       ]),
       sets: new FormControl('', [
@@ -46,7 +47,7 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
   id: number; // The displayed entry's id.
   advisedFor = 'both'; // The gender that the exercise is advised for.
   difficulty = 'easy'; // The difficulty level of the exercise.
-  equipment = 'false'; // Whether the exercise requires equipment or not.
+  equipment = 'no'; // Whether the exercise requires equipment or not.
 
   clickedSave: boolean;
 
@@ -55,6 +56,7 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  muscleGroups: string[] = [];
 
 
   constructor(public dialogRef: MatDialogRef<WorkoutAddEntryDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
@@ -65,23 +67,27 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our service
+    // Add muscleGroup
     if ((value || '').trim()) {
-      this.entryForm.get('muscleGroups').value.push(value.trim());
+      this.muscleGroups.push(value.trim());
     }
 
     // Reset the input value
     if (input) {
       input.value = '';
     }
+
+    this.entryForm.get('muscleGroups').setValue(this.muscleGroups);
   }
 
   removeMuscleGroupChip(muscleGroup: string): void {
-    const index = this.entryForm.get('muscleGroups').value.indexOf(muscleGroup);
+    const index = this.muscleGroups.indexOf(muscleGroup);
 
     if (index >= 0) {
-      this.entryForm.get('muscleGroups').value.splice(index, 1);
+      this.muscleGroups.splice(index, 1);
     }
+
+    this.entryForm.get('muscleGroups').setValue(this.muscleGroups);
   }
 
   /**

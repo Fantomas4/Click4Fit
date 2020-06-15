@@ -110,8 +110,6 @@ export class ManageWorkoutEntriesComponent implements OnInit {
    */
   @HostListener('window:resize')
   onResize() {
-    console.log('window height: ', window.innerHeight);
-    console.log('window width: ', window.innerWidth);
     this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
     this.dialogWidth = window.innerWidth;
 

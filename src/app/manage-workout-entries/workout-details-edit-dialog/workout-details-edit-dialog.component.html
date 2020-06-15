@@ -24,48 +24,66 @@
           </mat-form-field>
         </tr>
         <tr>
-          <div class="chip-list-container">
-            <p class="section-title">Muscle Groups</p>
-            <mat-form-field class="chip-list">
-              <mat-chip-list #muscleGroupsChipList aria-label="Muscle Groups selection">
-                <mat-chip *ngFor="let muscleGroup of this.entryForm.get('muscleGroups').value" [selectable]="selectable"
-                          [removable]="removable" (removed)="removeMuscleGroupChip(muscleGroup)">
-                  {{muscleGroup}}
-                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-                <input placeholder="New Muscle Group..."
-                       [matChipInputFor]="muscleGroupsChipList"
-                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                       [matChipInputAddOnBlur]="addOnBlur"
-                       (matChipInputTokenEnd)="addMuscleGroupChip($event)">
-              </mat-chip-list>
-            </mat-form-field>
-          </div>
+          <td>
+            <div id="chip-list-container">
+              <mat-form-field id="chip-list">
+                <mat-label>Muscle Groups</mat-label>
+                <mat-chip-list formControlName="muscleGroups" #muscleGroupsChipList aria-label="Muscle Groups selection" [errorStateMatcher]="genericErrorStateMatcher">
+                  <mat-chip *ngFor="let muscleGroup of muscleGroups" [selectable]="selectable"
+                            [removable]="removable" (removed)="removeMuscleGroupChip(muscleGroup)">
+                    {{muscleGroup}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                  <input placeholder="new muscle group..."
+                         [matChipInputFor]="muscleGroupsChipList"
+                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                         [matChipInputAddOnBlur]="addOnBlur"
+                         (matChipInputTokenEnd)="addMuscleGroupChip($event)">
+                </mat-chip-list>
+                <mat-error *ngIf="entryForm.get('muscleGroups').hasError('required')">
+                  Please enter workout muscle groups
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </td>
         </tr>
         <tr>
-          <mat-radio-group aria-label="Advised for:" [(ngModel)]="advisedFor" required>
-            <mat-radio-button value="both">Both</mat-radio-button>
-            <mat-radio-button value="men">Men</mat-radio-button>
-            <mat-radio-button value="women">Women</mat-radio-button>
+          <mat-label>Advised For:</mat-label>
+          <mat-radio-group id="gender-radio-group" aria-label="Advised for:" [(value)]="advisedFor">
+            <mat-radio-button class="gender-radio-button" value="men">Men</mat-radio-button>
+            <mat-radio-button class="gender-radio-button" value="women">Women</mat-radio-button>
+            <mat-radio-button class="gender-radio-button" value="both">Both</mat-radio-button>
           </mat-radio-group>
         </tr>
-        <tr class="button-toggle-group-container">
-          <p>Difficulty:</p>
-          <mat-button-toggle-group vertical="true" [(value)]="difficulty">
-            <mat-button-toggle value="easy">Easy</mat-button-toggle>
-            <mat-button-toggle value="medium">Medium</mat-button-toggle>
-            <mat-button-toggle value="hard">Hard</mat-button-toggle>
-          </mat-button-toggle-group>
-        </tr>
-        <tr class="button-toggle-group-container">
-          <p>Requires Equipment</p>
-          <mat-button-toggle-group vertical="true" [(value)]="equipment">
-            <mat-button-toggle value="yes">Yes</mat-button-toggle>
-            <mat-button-toggle value="no">No</mat-button-toggle>
-          </mat-button-toggle-group>
+        <tr>
+          <td>
+            <div id="difficulty-toggle-group-container">
+              <mat-label>Difficulty:</mat-label>
+              <div>
+                <mat-button-toggle-group [(value)]="difficulty">
+                  <mat-button-toggle value="easy">Easy</mat-button-toggle>
+                  <mat-button-toggle value="medium">Medium</mat-button-toggle>
+                  <mat-button-toggle value="hard">Hard</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
-          <mat-form-field>
+          <td>
+            <div id="equipment-toggle-group-container">
+              <mat-label>Requires Equipment?</mat-label>
+              <div>
+                <mat-button-toggle-group [(value)]="equipment">
+                  <mat-button-toggle value="yes">Yes</mat-button-toggle>
+                  <mat-button-toggle value="no">No</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <mat-form-field id="sets-form-field">
             <mat-label>Recommended Sets</mat-label>
             <input matInput placeholder="e.g. ???" formControlName="sets" name="sets"
                    [errorStateMatcher]="genericErrorStateMatcher" required>

@@ -9,15 +9,6 @@
   flex-grow: 2;
 }
 
-.button-toggle-group-container {
-  display: block;
-  padding-bottom: 5%
-}
-
-.chip-list-container {
-  margin-top: 8%;
-}
-
 .section-title {
   font-size: medium;
 }
@@ -26,6 +17,40 @@
   font-size: small;
 }
 
-.chip-list {
+#category-container {
+  display: block;
+  padding-bottom: 5%
+}
+
+#chip-list-container {
+  margin-bottom: 10%;
+}
+
+#chip-list {
   width: 80%;
+}
+
+#gender-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.gender-radio-button {
+  margin: 2%;
+}
+
+#difficulty-toggle-group-container {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+#equipment-toggle-group-container {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+#sets-form-field {
+  margin-top: 2%;
 }
