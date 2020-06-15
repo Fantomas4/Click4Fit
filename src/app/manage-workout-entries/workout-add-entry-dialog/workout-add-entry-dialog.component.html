@@ -48,16 +48,20 @@
           </td>
         </tr>
         <tr>
-          <mat-label>Advised For:</mat-label>
-          <mat-radio-group id="gender-radio-group" aria-label="Advised for:" [(value)]="advisedFor">
-            <mat-radio-button class="gender-radio-button" value="men">Men</mat-radio-button>
-            <mat-radio-button class="gender-radio-button" value="women">Women</mat-radio-button>
-            <mat-radio-button class="gender-radio-button" value="both">Both</mat-radio-button>
-          </mat-radio-group>
+          <div class="toggle-group-container">
+            <mat-label>Difficulty:</mat-label>
+            <div>
+              <mat-button-toggle-group [(value)]="advisedFor">
+                <mat-button-toggle value="men">Men</mat-button-toggle>
+                <mat-button-toggle value="women">Women</mat-button-toggle>
+                <mat-button-toggle value="both">Both</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
         </tr>
         <tr>
           <td>
-            <div id="difficulty-toggle-group-container">
+            <div class="toggle-group-container">
               <mat-label>Difficulty:</mat-label>
               <div>
                 <mat-button-toggle-group [(value)]="difficulty">
@@ -71,7 +75,7 @@
         </tr>
         <tr>
           <td>
-            <div id="equipment-toggle-group-container">
+            <div class="toggle-group-container">
               <mat-label>Requires Equipment?</mat-label>
               <div>
                 <mat-button-toggle-group [(value)]="equipment">

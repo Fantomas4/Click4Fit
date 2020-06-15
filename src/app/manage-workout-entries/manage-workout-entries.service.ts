@@ -17,17 +17,19 @@ export class ManageWorkoutEntriesService {
     }));
   }
 
-  updateEntry(data: FormData) {
+  updateEntry(data: object) {
+    console.log("data is:");
+    console.log(data);
     return this.http.put<any>(`${environment.apiUrl}/workouts`, data,
-      {observe: 'response'}).pipe(map((res: any) => {
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
     }));
   }
 
-  addEntry(data: FormData) {
+  addEntry(data: object) {
     return this.http.post<any>(`${environment.apiUrl}/workouts`, data,
-      {observe: 'response'}).pipe(map((res: any) => {
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
       console.log('RECEIVED 1: ', res);
       return res;
     }));

@@ -131,18 +131,19 @@ export class ManageWorkoutEntriesComponent implements OnInit {
 
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        const formData = new FormData();
-        formData.append('_id', dialogRes.details._id);
-        formData.append('name', dialogRes.details.name);
-        formData.append('category', dialogRes.details.category);
-        formData.append('muscleGroups', dialogRes.details.muscleGroups);
-        formData.append('sets', dialogRes.details.sets);
-        formData.append('videoUrl', dialogRes.details.videoUrl);
-        formData.append('advisedFor', dialogRes.details.advisedFor);
-        formData.append('difficulty', dialogRes.details.difficulty);
-        formData.append('equipment', dialogRes.details.equipment);
+        const requestData: object = {
+          _id: dialogRes.details._id,
+          name: dialogRes.details.name,
+          category: dialogRes.details.category,
+          muscleGroups: dialogRes.details.muscleGroups,
+          sets: dialogRes.details.sets,
+          videoUrl: dialogRes.details.videoUrl,
+          advisedFor: dialogRes.details.advisedFor,
+          difficulty: dialogRes.details.difficulty,
+          equipment: dialogRes.details.equipment
+        };
 
-        this.manageWorkoutEntriesService.updateEntry(formData).toPromise().then(data => {
+        this.manageWorkoutEntriesService.updateEntry(requestData).toPromise().then(data => {
             this.alertService.success('Data updated successfully');
           },
           error => {
@@ -161,22 +162,19 @@ export class ManageWorkoutEntriesComponent implements OnInit {
     });
     this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        const formData = new FormData();
-        formData.append('_id', dialogRes.details._id);
-        formData.append('name', dialogRes.details.name);
-        formData.append('category', dialogRes.details.category);
-        formData.append('muscleGroups', dialogRes.details.muscleGroups);
-        formData.append('sets', dialogRes.details.sets);
-        formData.append('videoUrl', dialogRes.details.videoUrl);
-        formData.append('advisedFor', dialogRes.details.advisedFor);
-        formData.append('difficulty', dialogRes.details.difficulty);
-        formData.append('equipment', dialogRes.details.equipment);
+        const requestData: object = {
+          _id: dialogRes.details._id,
+          name: dialogRes.details.name,
+          category: dialogRes.details.category,
+          muscleGroups: dialogRes.details.muscleGroups,
+          sets: dialogRes.details.sets,
+          videoUrl: dialogRes.details.videoUrl,
+          advisedFor: dialogRes.details.advisedFor,
+          difficulty: dialogRes.details.difficulty,
+          equipment: dialogRes.details.equipment
+        };
 
-        formData.forEach((value, key) => {
-          console.log(key + ' ' + value);
-        });
-
-        this.manageWorkoutEntriesService.addEntry(formData).toPromise().then(data => {
+        this.manageWorkoutEntriesService.addEntry(requestData).toPromise().then(data => {
             this.getWorkoutEntries();
             this.alertService.success('Entry added successfully');
           },
