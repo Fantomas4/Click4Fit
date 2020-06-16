@@ -1,0 +1,116 @@
+<div class="main-container">
+  <h1 mat-dialog-title>Workout Details</h1>
+  <div mat-dialog-content class="field-list">
+    <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="onSaveClick()" class="form">
+      <table class="table" cellspacing="0">
+        <tr>
+          <mat-form-field>
+            <mat-label>Workout Name</mat-label>
+            <input matInput placeholder="e.g. George Brown" formControlName="name" name="name"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('name').hasError('required')">
+              Please enter a workout name
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" name="category" placeholder="e.g. Legs"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('category').hasError('required')">
+              Please enter a workout category
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <td>
+            <div id="chip-list-container">
+              <mat-form-field id="chip-list">
+                <mat-label>Muscle Groups</mat-label>
+                <mat-chip-list formControlName="muscleGroups" #muscleGroupsChipList aria-label="Muscle Groups selection" [errorStateMatcher]="genericErrorStateMatcher" required>
+                  <mat-chip *ngFor="let muscleGroup of muscleGroups" [selectable]="selectable"
+                            [removable]="removable" (removed)="removeMuscleGroupChip(muscleGroup)">
+                    {{muscleGroup}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                  <input placeholder="new muscle group..."
+                         [matChipInputFor]="muscleGroupsChipList"
+                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                         [matChipInputAddOnBlur]="addOnBlur"
+                         (matChipInputTokenEnd)="addMuscleGroupChip($event)">
+                </mat-chip-list>
+                <mat-error *ngIf="entryForm.get('muscleGroups').hasError('required')">
+                  Please enter workout muscle groups
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <div class="toggle-group-container">
+            <mat-label>Difficulty:</mat-label>
+            <div>
+              <mat-button-toggle-group [(value)]="advisedFor">
+                <mat-button-toggle value="men">Men</mat-button-toggle>
+                <mat-button-toggle value="women">Women</mat-button-toggle>
+                <mat-button-toggle value="both">Both</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </tr>
+        <tr>
+          <td>
+            <div class="toggle-group-container">
+              <mat-label>Difficulty:</mat-label>
+              <div>
+                <mat-button-toggle-group [(value)]="difficulty">
+                  <mat-button-toggle value="easy">Easy</mat-button-toggle>
+                  <mat-button-toggle value="medium">Medium</mat-button-toggle>
+                  <mat-button-toggle value="hard">Hard</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="toggle-group-container">
+              <mat-label>Requires Equipment?</mat-label>
+              <div>
+                <mat-button-toggle-group [(value)]="equipment">
+                  <mat-button-toggle value="yes">Yes</mat-button-toggle>
+                  <mat-button-toggle value="no">No</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <mat-form-field id="sets-form-field">
+            <mat-label>Recommended Sets</mat-label>
+            <input matInput placeholder="e.g. ???" formControlName="sets" name="sets"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('sets').hasError('required')">
+              Please enter a set description
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Instruction Video</mat-label>
+            <input matInput placeholder="e.g. www.youtube.com" formControlName="videoUrl" name="videoUrl"
+                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('videoUrl').hasError('required')">
+              Please enter the link to the instruction video
+            </mat-error>
+          </mat-form-field>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" type="submit" form="entry-form" (click)="onSaveClick()">Save</button>
+    <button mat-raised-button color="warn" (click)="onDiscardClick()">Discard</button>
+  </div>
+</div>

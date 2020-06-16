@@ -13,8 +13,9 @@
         </a>
       </ng-container>
       <ng-container *ngIf="privilegeLevel === 'admin'">
-        <a mat-list-item routerLink="/admin/manage-user-entries"><b class="list-item-text">Manage User Entries</b></a>
-        <a mat-list-item routerLink="/admin/manage-business-entries"><b class="list-item-text">Manage Business Entries</b></a>
+        <a mat-list-item routerLink="/admin/manage-user-entries"><b class="list-item-text">Manage Users</b></a>
+        <a mat-list-item routerLink="/admin/manage-business-entries"><b class="list-item-text">Manage Businesses</b></a>
+        <a mat-list-item routerLink="/admin/manage-workout-entries"><b class="list-item-text">Manage Workouts</b></a>
       </ng-container>
       <div class="account-options-container">
         <ng-container *ngIf="privilegeLevel === 'client'">

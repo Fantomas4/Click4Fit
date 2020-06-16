@@ -17,6 +17,7 @@ import {ManageUserEntriesComponent} from '../manage-user-entries/manage-user-ent
 import {AuthGuard} from './auth.guard';
 import {ErrorPageComponent} from '../error-page/error-page.component';
 import {ManageMyBusinessComponent} from '../manage-my-business/manage-my-business.component';
+import {ManageWorkoutEntriesComponent} from '../manage-workout-entries/manage-workout-entries.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'manage-user-entries', pathMatch: 'full' },
       { path: 'manage-user-entries', component: ManageUserEntriesComponent },
       { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
+      { path: 'manage-workout-entries', component: ManageWorkoutEntriesComponent}
     ]},
   {path: 'error-page', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent},

@@ -58,7 +58,8 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
   country: string; // The displayed entry's country location.
   services: string[]; // List containing the titles of the available services offered by the displayed entry.
   products: string[]; // List containing the titles of the available products offered by the displayed entry.
-  imgFile: string; // String containing the path for the preview image of the displayed entry.
+  imgFile = null; // Contains the data for the preview image selected (on edit) for the displayed entry.
+  imgPath: string; // Contains the image path for the preview image currently associated with the displayed entry.
 
   clickedSave: boolean;
 
@@ -87,12 +88,11 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
     this.country = this.data.country;
     this.services = this.data.services;
     this.products = this.data.products;
-    this.imgFile = this.data.imgPath;
+    this.imgPath = this.data.imgPath;
   }
 
   onFileSelected(event) {
-    console.log(event);
-    this.imgFile = event.files.target[0];
+    this.imgFile = event.target.files[0];
   }
 
   addServiceChip(event: MatChipInputEvent): void {
@@ -157,17 +157,18 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
     if (this.entryForm.valid) {
       const content = {
         _id: this.id,
-        name: this.entryForm.get('name'),
+        name: this.entryForm.get('name').value,
         category: this.category,
         country: this.country,
-        city: this.entryForm.get('city'),
-        address: this.entryForm.get('address'),
-        postalCode: this.entryForm.get('postalCode'),
-        phoneNumber: this.entryForm.get('phoneNumber'),
+        city: this.entryForm.get('city').value,
+        address: this.entryForm.get('address').value,
+        postalCode: this.entryForm.get('postalCode').value,
+        phoneNumber: this.entryForm.get('phoneNumber').value,
         services: this.services,
         products: this.products,
-        imgPath: this.imgFile,
-        email: this.entryForm.get('email')
+        file: this.imgFile,
+        imgPath: this.imgPath,
+        email: this.entryForm.get('email').value
       };
       this.dialogRef.close({clickedSave: true, details: content});
     }

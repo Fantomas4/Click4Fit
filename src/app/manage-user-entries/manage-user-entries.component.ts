@@ -44,7 +44,7 @@ export class ManageUserEntriesComponent implements OnInit {
   result:boolean;
   content;
   i:number;
-  
+
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog,
     private alertService: AlertService) { }
 
@@ -143,7 +143,7 @@ export class ManageUserEntriesComponent implements OnInit {
       if (this.result == true) {
         this.manageUserEntriesService.updateEntry(result.details).toPromise().then(data => {
           this.getUsersEntries();
-          this.dataSource.paginator = this.paginator; 
+          this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.alertService.success(data);
         },
@@ -162,7 +162,7 @@ export class ManageUserEntriesComponent implements OnInit {
     this.manageUserEntriesService.deleteEntries(this.content).toPromise().then(data=>
     {
       this.getUsersEntries();
-      this.dataSource.paginator = this.paginator; 
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.alertService.success(data);
     },

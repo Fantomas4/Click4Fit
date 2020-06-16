@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {BusinessEntry} from '../../business-entry';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-details-dialog',
@@ -8,12 +9,6 @@ import {BusinessEntry} from '../../business-entry';
   styleUrls: ['./details-dialog.component.css']
 })
 export class DetailsDialogComponent implements OnInit {
-  title: string;
-  category: string;
-  country: string;
-  city: string;
-  services: string[];
-  products: string[];
 
   constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}

@@ -62,7 +62,7 @@ class Validator:
                 },
                 "regex-error" : {
                     "email"    : "must be of fromat local_part@domain_part, local_part can only contain these special characters: _.+-",
-                    "category" : "can only take one of these value:  \"gym\", \"personal trainer\", \"fitness shop\""
+                    "category" : "can only take one of these value: \"gym\", \"personal trainer\", \"fitness shop\""
                 }
             },
             "workout" : {
@@ -80,11 +80,11 @@ class Validator:
                     "videoUrl"     : str 
                 },
                 "regex" : {
-                    "advisedFor" : r"(men|women)",
+                    "advisedFor" : r"(men|women|both)",
                     "difficulty" : r"(easy|medium|hard)",
                 },
                 "regex-error" : {
-                    "advisedFor" : "can only be one of these values: \"men\", \"women\"",
+                    "advisedFor" : "can only be one of these values: \"men\", \"women\", \"both\"",
                     "difficulty" : "can only be one of these values: \"easy\", \"medium\", \"hard\""
                 }
 
@@ -99,31 +99,25 @@ class Validator:
         if type(db) is not str:
             raise TypeError("db must be of type str and got " + str(type(db)))
         if db not in ["user", "business", "workout"]:
-            raise ValueError("db can only take one of these values (user, business, workout) and got: "
-                                + db + " instead")
+            raise ValueError("db can only take one of these values (user, business, workout) and got: " + db + " instead")
         for key in search_query.keys():
             # checking attribute type
             if type(key) is not str:
                 raise TypeError(db + " attribute names must be of type str and got " + str(type(key)))
             # checking that values are in a list
             if type(search_query[key]) is not list:
-                raise TypeError("search query values must be of type list and got "
-                                + str(type(search_query[key])))
+                raise TypeError("search query values must be of type list and got " + str(type(search_query[key])))
             # checking for illegal attributes
             if key not in self.valid[db]["legal-attributes"]:
                 raise ValueError(db + " contains invalid attribute name: " + key)
             for value in search_query[key]:
                 # checking value type
                 if type(value) is not self.valid[db]["type"][key]:
-                    raise TypeError("""
-                    {} attribute must contain value of type {} and got {} instead
-                    """.format(key, str(self.valid[db]["type"][key]), str(type(value))))
+                    raise TypeError("""{} attribute must contain value of type {} and got {} instead""".format(key, str(self.valid[db]["type"][key]), str(type(value))))
                 # checking value format if available reggex available
                 if type(value) is str:
                     if not re.fullmatch(self.valid[db]["regex"].get(key, r".*"), value):
-                        raise ValueError("""
-                        invalid {0} ({2}): {0} {1}
-                        """.format(key, self.valid[db]["regex-error"][key], value))
+                        raise ValueError("""invalid {0} ({2}): {0} {1}""".format(key, self.valid[db]["regex-error"][key], value))
 
     
     def validate(self, json_dict: dict, db: str):
@@ -134,24 +128,18 @@ class Validator:
         if type(db) is not str:
             raise TypeError("db must be of type str and got " + str(type(db)))
         if db not in ["user", "business", "workout"]:
-            raise ValueError("db can only take one of these values (user, business, workout) and got: "
-                                + db + " instead")
+            raise ValueError("db can only take one of these values (user, business, workout) and got: " + db + " instead")
         for key in json_dict.keys():
             # checking attribute type
             if type(key) is not str:
-                raise TypeError(db + " attribute names must be of type str and got "
-                                + str(type(key)))
+                raise TypeError(db + " attribute names must be of type str and got " + str(type(key)))
             # checking for illegal attributes
             if key not in self.valid[db]["legal-attributes"]:
                 raise ValueError(db + " contains invalid attribute name: " + key)
             # checking value type
             if type(json_dict[key]) is not self.valid[db]["type"][key]:
-                raise TypeError("""
-                {} attribute must contain value of type {} and got {} instead
-                """.format(key, str(self.valid[db]["type"][key]), str(type(json_dict[key]))))
+                raise TypeError("""{} attribute must contain value of type {} and got {} instead""".format(key, str(self.valid[db]["type"][key]), str(type(json_dict[key]))))
             # checking value format if available reggex available
             if type(json_dict[key]) is str:
                 if not re.fullmatch(self.valid[db]["regex"].get(key, r".*"), json_dict[key]):
-                    raise ValueError("""
-                    invalid {0} ({2}): {0} {1}
-                    """.format(key, self.valid[db]["regex-error"][key], json_dict[key]))
+                    raise ValueError("""invalid {0} ({2}): {0} {1}""".format(key, self.valid[db]["regex-error"][key], json_dict[key]))

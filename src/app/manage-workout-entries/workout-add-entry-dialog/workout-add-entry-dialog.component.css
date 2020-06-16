@@ -1,0 +1,50 @@
+.main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.field-list {
+  flex-grow: 2;
+}
+
+.section-title {
+  font-size: medium;
+}
+
+.section-subtitle {
+  font-size: small;
+}
+
+#category-container {
+  display: block;
+  padding-bottom: 5%
+}
+
+#chip-list-container {
+  margin-bottom: 10%;
+}
+
+#chip-list {
+  width: 80%;
+}
+
+#gender-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.gender-radio-button {
+  margin: 2%;
+}
+
+.toggle-group-container {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+#sets-form-field {
+  margin-top: 2%;
+}
