@@ -6,41 +6,61 @@
         </mat-card-header>
         <!-- Card Content -->
         <mat-card-content>
-            <form class="form-area">
+            <form [formGroup]="entryForm" id="entry-form" class="form">
                 <table class="form-content">
                     <!-- Name -->
                     <mat-form-field class="name-area">
-                        <input matInput placeholder="Name" [(ngModel)]="fullName" name="fullname" required>
+                        <input matInput placeholder="Name" formControlName="fullName" name="fullName"
+                            [errorStateMatcher]="genericErrorStateMatcher" required>
+                        <mat-error *ngIf="entryForm.get('fullName').hasError('required')" required>
+                            Please enter a full name</mat-error>
                         <mat-icon matSuffix>person</mat-icon>
                     </mat-form-field>
                     <!-- E-Mail -->
-                    <mat-form-field class="email-area">
-                        <input matInput placeholder="Enter your email" [(ngModel)]="contactEmail" name="contactemail"
-                            required>
-                        <mat-icon matSuffix>drafts</mat-icon>
+                    <mat-form-field class="email-input-field">
+                        <mat-label>E-mail</mat-label>
+                        <input matInput placeholder="address@example.com" formControlName="email" name="email"
+                            type="email" [errorStateMatcher]="genericErrorStateMatcher" required>
+                        <mat-error *ngIf="entryForm.get('email').hasError('required')">
+                            Please enter an e-mail
+                        </mat-error>
+                        <mat-error *ngIf="entryForm.get('email').hasError('email')">
+                            Please a valid email address
+                        </mat-error>
                     </mat-form-field>
                     <!-- Phone Number -->
-                    <mat-form-field class="telephone-area">
+                    <mat-form-field class="phonenumber-area">
                         <span matPrefix>+30 &nbsp;</span>
-                        <input type="tel" matInput placeholder="Telephone" [(ngModel)]="telephone" name="telephone"
-                            required>
+                        <input type="tel" matInput placeholder="Phone number" formControlName="phoneNumber"
+                            name="phoneNumber" [errorStateMatcher]="genericErrorStateMatcher" required>
+                        <mat-error *ngIf="entryForm.get('phoneNumber').hasError('required')">
+                            Please enter a phone number
+                        </mat-error>
                         <mat-icon matSuffix>call</mat-icon>
                     </mat-form-field>
                     <!-- Subject -->
                     <mat-form-field class="subject-area">
-                        <input matInput placeholder="Subject" [(ngModel)]="subject" name="subject" required>
+                        <input matInput placeholder="Subject" formControlName="subject" name="subject"
+                            [errorStateMatcher]="genericErrorStateMatcher" required>
+                        <mat-error *ngIf="entryForm.get('subject').hasError('required')">
+                            Please enter a subject
+                        </mat-error>
                         <mat-icon matSuffix>create</mat-icon>
                     </mat-form-field>
                     <!-- Text -->
                     <mat-form-field>
-                        <textarea matInput placeholder="Textarea" [(ngModel)]="textarea" name="textarea" required
-                            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="13"></textarea>
+                        <textarea matInput placeholder="Textarea" formControlName="text" name="text"
+                            [errorStateMatcher]="genericErrorStateMatcher" required cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="13"></textarea>
+                        <mat-error *ngIf="entryForm.get('text').hasError('required')">
+                            Please enter a text
+                        </mat-error>
                         <mat-icon matSuffix>save</mat-icon>
                     </mat-form-field>
                     <!-- Submit Button -->
                     <div class="button">
-                        <button mat-raised-button color="primary" class="btn-custom" (click)="onClick()">Send Now<i
-                                class="material-icons">send</i></button>
+                        <button mat-raised-button color="primary" type="submit" form="entry-form">
+                            Send Now<i class="material-icons">send</i></button>
                     </div>
                     <div id="alert-message"
                         [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
