@@ -12,7 +12,6 @@ export class ResultCardService {
   constructor(private http: HttpClient) { }
 
   addFavoritePlace(content): Observable<any> {
-    console.log('no');
     const headers = { 'content-type': 'application/json' };
     const jsonData = JSON.stringify(content);
     return this.http.post('http://localhost:5000/api/add-favorite-place', jsonData, { 'headers': headers });

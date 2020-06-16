@@ -255,18 +255,15 @@ def addFavoritePlace():
     print(place)
     #connection with mongo sending the place and adding to favorites
     try:
-        business_wrapper: BusinessWrapper = MongoDB.addFavoritePlace(place)
-    except TypeError as type_err: #Checking for errors
-        return str(type_err), 422
+        favorite = MongoDB.addFavoriteBusiness(place)
+        print(favorite)
     except ValueError as value_err:
         return str(value_err), 422
     except:
         return "Bad error", 500
     else:
-        if business_wrapper.business is None:
-            return "Something is wrong with the database", 500
-        if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return "Couldn't insert business entry", 500
+        if favorite is False:
+            return "Couldn't add entry", 400
         return jsonify("Addition successful")
 
 
@@ -357,18 +354,14 @@ def addFavoriteWorkout():
     workout=request.get_json() #get new workout
     #connection with mongo sending the filters and creating the workout
     try:
-        workout_wrapper : WorkoutWrapper = MongoDB.addFavoriteWorkout(workout)
-    except TypeError as type_err: #Checking for errors
-        return str(type_err), 422
+        favorite = MongoDB.addFavoriteWorkout(workout)
     except ValueError as value_err:
         return str(value_err), 422
     except:
         return "Bad error", 500
     else:
-        if workout_wrapper.workout is None:
-            return "Something is wrong with the database", 500
-        if type(workout_wrapper.workout) is dict and not workout_wrapper.found and not workout_wrapper.operationDone:
-            return "Couldn't insert workout entry", 500
+        if favorite is False:
+            return ("Couldn't add entry"), 400
         return jsonify("Addition successful")
 
 

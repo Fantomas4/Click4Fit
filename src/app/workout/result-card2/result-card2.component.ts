@@ -56,6 +56,9 @@ export class ResultCard2Component implements OnInit {
     };
     this.resultCardSrvice.addFavoriteWorkout(this.content).toPromise().then(data => {
       this.favorite = true;
+    },
+    error=>{
+      
     });
   }
 
