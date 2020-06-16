@@ -6,7 +6,7 @@ from pprint import pprint
 from time import time
 
 import sys
-sys.path.insert(0, "D:\\WebstormProjects\\Click4Fit\\back-end")
+sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper
@@ -252,9 +252,10 @@ def getCities():
 @app.route("/api/add-favorite-place", methods=['POST','GET'])
 def addFavoritePlace():
     place=request.get_json() #get favorite place
+    print(place)
     #connection with mongo sending the place and adding to favorites
     try:
-        business_wrapper: BusinessWrapper = MongoDB.createWorkout(place)
+        business_wrapper: BusinessWrapper = MongoDB.addFavoritePlace(place)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -265,8 +266,8 @@ def addFavoritePlace():
         if business_wrapper.business is None:
             return "Something is wrong with the database", 500
         if type(business_wrapper.business) is dict and not business_wrapper.operationDone and not business_wrapper.found:
-            return "Couldn't add business", 500
-        return jsonify(business=business_wrapper.business)
+            return "Couldn't insert business entry", 500
+        return jsonify("Addition successful")
 
 
 ####################################### Workout ######################################
@@ -356,7 +357,7 @@ def addFavoriteWorkout():
     workout=request.get_json() #get new workout
     #connection with mongo sending the filters and creating the workout
     try:
-        workout_wrapper : WorkoutWrapper = MongoDB.createWorkout(workout)
+        workout_wrapper : WorkoutWrapper = MongoDB.addFavoriteWorkout(workout)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:

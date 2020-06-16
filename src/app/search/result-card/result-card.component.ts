@@ -70,15 +70,18 @@ export class ResultCardComponent implements OnInit {
       }
     });
   }
-  onClick(entry){
+  onClick(){
     this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
+    console.log('yes2');
     this.user = this.jsonData.email;
     this.content = {
       "user": { "email": this.user }, "new_favorite": {
-        "name": entry.title, "country": entry.country, "city": entry.city, "imgPath":entry.imgPath
+        "name": this.title, "category": this.category, "country": this.country, "city": this.city, 
+        "imgPath": this.businessData.imgPath
       }
     };
     this.resultCardService.addFavoritePlace(this.content).toPromise().then(data => {
+      console.log('yes');
       this.favorite = true;
     });
   }

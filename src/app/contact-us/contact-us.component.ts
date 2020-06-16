@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
-import {ContactUsService} from './contact-us.service';
+import { ContactUsService } from './contact-us.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 interface AlertMessage {
@@ -11,8 +11,6 @@ interface AlertMessage {
 }
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    // console.log(control);
-    // console.log(form);
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
@@ -23,8 +21,8 @@ export class GenericErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./contact-us.component.css']
 })
 export class ContactUsComponent implements OnInit {
-  
-  entryForm = new FormGroup( {
+
+  entryForm = new FormGroup({
     fullName: new FormControl('', [
       Validators.required
     ]),
@@ -49,7 +47,7 @@ export class ContactUsComponent implements OnInit {
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
 
-  constructor(public contanctUsService:ContactUsService,private alertService: AlertService) { }
+  constructor(public contanctUsService: ContactUsService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -64,7 +62,16 @@ export class ContactUsComponent implements OnInit {
 
   onClick() {
     //this.content={'fullname':this.fullName,'email':this.contactEmail,'telephone':this.telephone,'subject':this.subject,'text':this.textarea};
-    this.contanctUsService.postDetails(this.content);
-    this.alertService.success("Your message has been sent.")
+    if (this.entryForm.valid) {
+      const content = {
+        fullName: this.entryForm.get('fullName').value,
+        email: this.entryForm.get('email').value,
+        phoneNumber: this.entryForm.get('phoneNumber').value,
+        subject: this.entryForm.get('subject').value,
+        text: this.entryForm.get('text').value
+      }
+      this.contanctUsService.postDetails(content);
+      this.alertService.success("Your message has been sent.")
+    }
   }
 }
