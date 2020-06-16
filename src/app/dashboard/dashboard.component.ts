@@ -12,18 +12,20 @@ export class DashboardComponent implements OnInit {
 
   favoriteWorkoutResults = [];
   favoritePlacesResults = [];
-  workoutIsEmpty = false; // they show whether the relevant list with the results is empty or not and 
-  placeIsEmpty = false; // in this way it doesn't add an empty card in favorites
-  jsonData; // it contains a json with the current user which has been saved in session storage after log in
-  CurrentTime: any;
-  user; // it contains the email of the current logged in user
+  workoutIsEmpty = false;
+  placeIsEmpty = false;
+  jsonData;
+  currentTime: any;
+  user;
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
-      this.CurrentTime = new Date().getHours() + ' ' + ':' + ' ' + new Date().getMinutes(); }, 1);
+      this.currentTime = Date.now(); //It gets the current time
+    }, 1);
+
   }
 
-  today: number = Date.now(); //gets the current date
+  today: number = Date.now(); //It gets the current date
 
 
 
