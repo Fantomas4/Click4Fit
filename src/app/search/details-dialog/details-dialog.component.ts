@@ -9,7 +9,6 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./details-dialog.component.css']
 })
 export class DetailsDialogComponent implements OnInit {
-  imgPath: string;
 
   constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: BusinessEntry) {}

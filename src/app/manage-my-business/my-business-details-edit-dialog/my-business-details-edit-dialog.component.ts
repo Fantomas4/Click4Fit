@@ -92,7 +92,6 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    console.log(event);
     this.imgFile = event.target.files[0];
   }
 
