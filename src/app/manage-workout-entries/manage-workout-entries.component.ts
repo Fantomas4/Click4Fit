@@ -1,20 +1,16 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import { AlertService } from '../core/alert.service';
-import { Subscription } from 'rxjs';
-import {ManageMyBusinessService} from './manage-my-business.service';
-import {MyBusinessDetailsEditDialogComponent} from './my-business-details-edit-dialog/my-business-details-edit-dialog.component';
-import {MyBusinessAddEntryDialogComponent} from './my-business-add-entry-dialog/my-business-add-entry-dialog.component';
+import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {BusinessEntry} from '../business-entry';
+import {Subscription} from 'rxjs';
+import {AlertService} from '../core/alert.service';
+import {ManageWorkoutEntriesService} from './manage-workout-entries.service';
+import {WorkoutDetailsEditDialogComponent} from './workout-details-edit-dialog/workout-details-edit-dialog.component';
+import {WorkoutAddEntryDialogComponent} from './workout-add-entry-dialog/workout-add-entry-dialog.component';
+import {WorkoutEntry} from './workout-entry';
 
-interface TableEntry {
-  name: string;
-  category: string;
-}
 
 interface AlertMessage {
   type: string;
@@ -22,19 +18,19 @@ interface AlertMessage {
 }
 
 @Component({
-  selector: 'app-manage-my-business',
-  templateUrl: './manage-my-business.component.html',
-  styleUrls: ['./manage-my-business.component.css']
+  selector: 'app-manage-workout-entries',
+  templateUrl: './manage-workout-entries.component.html',
+  styleUrls: ['./manage-workout-entries.component.css']
 })
-export class ManageMyBusinessComponent implements OnInit {
+export class ManageWorkoutEntriesComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
   @ViewChild(MatSort, {static: true}) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
 
-  selection = new SelectionModel<BusinessEntry>(true, []);
+  selection = new SelectionModel<WorkoutEntry>(true, []);
   displayedColumns = ['checkboxes', 'name', 'category', 'buttons']; // Determines the columns to be displayed in the table's header row.
 
-  businessData = []; // An array of BusinessEntry objects retrieved from the database.
-  dataSource = new MatTableDataSource(this.businessData); // MatTableDataSource<BusinessEntry> used as the tab
+  workoutData = []; // An array of BusinessEntry objects retrieved from the database.
+  dataSource = new MatTableDataSource(this.workoutData); // MatTableDataSource<BusinessEntry> used as the tab
 
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
@@ -45,11 +41,12 @@ export class ManageMyBusinessComponent implements OnInit {
   dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
   dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
 
-  detailsEditDialogRef: MatDialogRef<MyBusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
-  addEntryDialogRef: MatDialogRef<MyBusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
+  detailsEditDialogRef: MatDialogRef<WorkoutDetailsEditDialogComponent>; // Reference to the spawned "Details/Edit" dialog window.
+  addEntryDialogRef: MatDialogRef<WorkoutAddEntryDialogComponent>; // Reference to the spawned "Add Entry" dialog window.
 
-  constructor(private manageMyBusinessService: ManageMyBusinessService, private alertService: AlertService, public dialog: MatDialog) {
-  }
+
+  constructor(private manageWorkoutEntriesService: ManageWorkoutEntriesService, public dialog: MatDialog,
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -60,15 +57,15 @@ export class ManageMyBusinessComponent implements OnInit {
         };
       }
     });
-    this.getMyBusinessEntries();
+    this.getWorkoutEntries();
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
   }
 
-  getMyBusinessEntries() {
-    this.manageMyBusinessService.getBusinesses(JSON.parse(sessionStorage.getItem('currentUser'))._id).toPromise().then(res => {
-        this.businessData = res.body.data;
-        this.dataSource.data = this.businessData;
+  getWorkoutEntries() {
+    this.manageWorkoutEntriesService.getWorkouts().toPromise().then(res => {
+        this.workoutData = res.body.data;
+        this.dataSource.data = this.workoutData;
       },
       error => {
         this.alertService.error(error.errror);
@@ -113,8 +110,6 @@ export class ManageMyBusinessComponent implements OnInit {
    */
   @HostListener('window:resize')
   onResize() {
-    console.log('window height: ', window.innerHeight);
-    console.log('window width: ', window.innerWidth);
     this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
     this.dialogWidth = window.innerWidth;
 
@@ -130,36 +125,26 @@ export class ManageMyBusinessComponent implements OnInit {
   /** Spawns the "Details/Edit" dialog window */
   openDetailsEditDialog(element: any): void {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
-    this.detailsEditDialogRef = this.dialog.open(MyBusinessDetailsEditDialogComponent, {
+    this.detailsEditDialogRef = this.dialog.open(WorkoutDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
-      maxWidth: this.dialogMaxWidth,
-      data: {
-        _id: element._id, name: element.name, category: element.category, country: element.country,
-        city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
-        element.phoneNumber, email: element.email, services: element.services, products: element.products,
-        imgPath: element.imgPath
-      }
-    });
+      maxWidth: this.dialogMaxWidth, data: element});
+
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        const formData = new FormData();
-        formData.append('_id', dialogRes.details._id);
-        formData.append('name', dialogRes.details.name);
-        formData.append('category', dialogRes.details.category);
-        formData.append('country', dialogRes.details.country);
-        formData.append('city', dialogRes.details.city);
-        formData.append('address', dialogRes.details.address);
-        formData.append('postalCode', dialogRes.details.postalCode);
-        formData.append('phoneNumber', dialogRes.details.phoneNumber);
-        formData.append('services', dialogRes.details.services);
-        formData.append('products', dialogRes.details.products);
-        formData.append('file', dialogRes.details.file);
-        formData.append('imgPath', dialogRes.details.imgPath);
-        formData.append('email', dialogRes.details.email);
+        const requestData: object = {
+          _id: dialogRes.details._id,
+          name: dialogRes.details.name,
+          category: dialogRes.details.category,
+          muscleGroups: dialogRes.details.muscleGroups,
+          sets: dialogRes.details.sets,
+          videoUrl: dialogRes.details.videoUrl,
+          advisedFor: dialogRes.details.advisedFor,
+          difficulty: dialogRes.details.difficulty,
+          equipment: dialogRes.details.equipment
+        };
 
-        this.manageMyBusinessService.updateEntry(formData).toPromise().then(data => {
-            this.getMyBusinessEntries();
-            this.alertService.success('Entry updated successfully');
+        this.manageWorkoutEntriesService.updateEntry(requestData).toPromise().then(data => {
+            this.alertService.success('Data updated successfully');
           },
           error => {
             this.alertService.error(error);
@@ -168,36 +153,29 @@ export class ManageMyBusinessComponent implements OnInit {
     });
   }
 
-
   /** Spawns the "Add Entry" dialog window */
   openAddEntryDialog() {
     this.onResize();
-    this.addEntryDialogRef = this.dialog.open(MyBusinessAddEntryDialogComponent, {
+    this.addEntryDialogRef = this.dialog.open(WorkoutAddEntryDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
       maxWidth: this.dialogMaxWidth
     });
     this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        const formData = new FormData();
-        formData.append('ownerId', dialogRes.details.ownerId);
-        formData.append('name', dialogRes.details.name);
-        formData.append('category', dialogRes.details.category);
-        formData.append('country', dialogRes.details.country);
-        formData.append('city', dialogRes.details.city);
-        formData.append('address', dialogRes.details.address);
-        formData.append('postalCode', dialogRes.details.postalCode);
-        formData.append('phoneNumber', dialogRes.details.phoneNumber);
-        formData.append('services', dialogRes.details.services);
-        formData.append('products', dialogRes.details.products);
-        formData.append('file', dialogRes.details.file);
-        formData.append('email', dialogRes.details.email);
+        const requestData: object = {
+          _id: dialogRes.details._id,
+          name: dialogRes.details.name,
+          category: dialogRes.details.category,
+          muscleGroups: dialogRes.details.muscleGroups,
+          sets: dialogRes.details.sets,
+          videoUrl: dialogRes.details.videoUrl,
+          advisedFor: dialogRes.details.advisedFor,
+          difficulty: dialogRes.details.difficulty,
+          equipment: dialogRes.details.equipment
+        };
 
-        formData.forEach((value, key) => {
-          console.log(key + " " + value);
-        });
-
-        this.manageMyBusinessService.addEntry(formData).toPromise().then(data => {
-            this.getMyBusinessEntries();
+        this.manageWorkoutEntriesService.addEntry(requestData).toPromise().then(data => {
+            this.getWorkoutEntries();
             this.alertService.success('Entry added successfully');
           },
           error => {
@@ -214,9 +192,9 @@ export class ManageMyBusinessComponent implements OnInit {
       selectedIds.push(entry._id)
     );
 
-    this.manageMyBusinessService.deleteEntries(selectedIds).toPromise().then(
+    this.manageWorkoutEntriesService.deleteEntries(selectedIds).toPromise().then(
       data => {
-        this.getMyBusinessEntries();
+        this.getWorkoutEntries();
         this.alertService.success('Data loaded successfully');
       },
 

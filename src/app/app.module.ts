@@ -50,11 +50,6 @@ import { ContactUsService } from './contact-us/contact-us.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
-import { UpdateDialogMessageComponent } from './myprofile/update-dialog-message/update-dialog-message.component';
-import { BusinessAddEntryDialogService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
-import { BusinessDetailsEditDialogService} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.service';
-import { UserDetailsEditDialogService} from './manage-user-entries/user-details-edit-dialog/user-details-edit-dialog.service';
-import { DeleteDialogMessageService} from './myprofile/delete-dialog-message/delete-dialog-message.service';
 import {JwtInterceptor} from './core/jwt.interceptor';
 import {ErrorInterceptor} from './core/error.interceptor';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -63,6 +58,9 @@ import { ManageMyBusinessComponent } from './manage-my-business/manage-my-busine
 import { MyBusinessDetailsEditDialogComponent } from './manage-my-business/my-business-details-edit-dialog/my-business-details-edit-dialog.component';
 import { MyBusinessAddEntryDialogComponent } from './manage-my-business/my-business-add-entry-dialog/my-business-add-entry-dialog.component';
 import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
+import { ManageWorkoutEntriesComponent } from './manage-workout-entries/manage-workout-entries.component';
+import { WorkoutAddEntryDialogComponent} from './manage-workout-entries/workout-add-entry-dialog/workout-add-entry-dialog.component';
+import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/workout-details-edit-dialog/workout-details-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -92,11 +90,12 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
     HomepageComponent,
     ErrorPageComponent,
     RecoverDialogMessageComponent,
-    UpdateDialogMessageComponent
-    ContactUsDialogMessageComponent,
     ManageMyBusinessComponent,
     MyBusinessDetailsEditDialogComponent,
-    MyBusinessAddEntryDialogComponent
+    MyBusinessAddEntryDialogComponent,
+    ManageWorkoutEntriesComponent,
+    WorkoutAddEntryDialogComponent,
+    WorkoutDetailsEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -131,6 +130,6 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogMessageComponent, RecoverDialogMessageComponent, ContactUsDialogMessageComponent]
+  entryComponents: [DeleteDialogMessageComponent, RecoverDialogMessageComponent]
 })
 export class AppModule { }

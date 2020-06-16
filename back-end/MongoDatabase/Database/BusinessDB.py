@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "C:\\Users\\SierraKilo\\WebstormProjects\\Click4Fit\\back-end")
+sys.path.insert(0, "D:\\WebstormProjects\\Click4Fit\\back-end")
 
 from bson import ObjectId
 

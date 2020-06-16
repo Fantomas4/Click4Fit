@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0,  "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+sys.path.insert(0,  "D:\\WebstormProjects\\Click4Fit\\back-end")
 
 import secrets # to generate session id
 import hashlib, binascii, os # to hash and salt password
