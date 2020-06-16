@@ -29,17 +29,16 @@ export class MyprofileComponent implements OnInit {
   password: string;
   newPassword: string;
   newRepeatedPassword: string;
-  content; // it contains the json data for the request to API 
+  content; // it contains the json data for the request to API
   jsonData; // it contains a json with the current user which has been saved in session storage after log in
-  results; //it contains the results from the request to API 
-  picker;
+  results; //it contains the results from the request to API
   user; // it contains the email of the current logged in user
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
   deleteProfile: boolean; // it contains the choice of user about deleting his profile or not
 
   constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>,
-    private alertService: AlertService, public dialog: MatDialog) { }
+              private alertService: AlertService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -53,13 +52,15 @@ export class MyprofileComponent implements OnInit {
     this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
     this.user = { "email": this.jsonData.email };
     this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
-      this.results = data.user;
-      this.id = this.results._id;
-      this.name = this.results.name;
-      this.surname = this.results.surname;
-      this.email = this.results.email;
-      this.birthdate = new FormControl(new Date(this.results.birthdate));
-    },
+        this.results = data.user;
+        this.id = this.results._id;
+        this.name = this.results.name;
+        this.surname = this.results.surname;
+        this.email = this.results.email;
+        this.birthdate = new FormControl(new Date('2018/09/04'));
+        console.log(new Date(this.results.birthdate));
+        console.log(new Date('17/06/2020'));
+      },
       error => { // if the request returns an error, it shows an alert message with the relevant content
         this.alertService.error(error.errror);
       });
@@ -83,8 +84,8 @@ export class MyprofileComponent implements OnInit {
       this.deleteProfile = result;
       if (this.deleteProfile == true) {
         this.myprofileService.deleteProfile(this.content).toPromise().then(data => {
-          this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
-        },
+            this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
+          },
           error => {  // if the request returns an error, it shows an alert message with the relevant content
             this.alertService.error(error.error);
           })
@@ -96,16 +97,15 @@ export class MyprofileComponent implements OnInit {
     if (this.newPassword == this.newRepeatedPassword) {
       this.content = { "user": { "email": this.email, "password": this.password }, "new_password": this.newPassword };
       this.myprofileService.updateChanges(this.content).toPromise().then(data => {
-        this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
-      },
+          this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
+        },
         error => { // if the request returns an error, it shows an alert message with the relevant content
           this.alertService.error(error.error);
         });
     }
-    else {  // if the user didn't give same new password and new repeated password, 
+    else {  // if the user didn't give same new password and new repeated password,
       //it shows an alert message with the relevant content
       this.alertService.error('New password and new repeated password are not same');
     }
   }
 }
-

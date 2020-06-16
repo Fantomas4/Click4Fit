@@ -125,7 +125,7 @@ import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/worko
     {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService, ContactUsService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    {provide: MAT_DATE_LOCALE, useValue: 'fr'},
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
 
   ],

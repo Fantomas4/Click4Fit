@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs';
 import {AlertService} from '../core/alert.service';
 import {RegistrationService} from './registration.service';
 import {first} from 'rxjs/operators';
+import {DatePipe} from '@angular/common';
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -105,6 +106,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    console.log("TEST:")
+    console.log(new DatePipe('en').transform(this.registerForm.get('birthDate').value, 'dd/MM/yyyy'));
+    console.log(JSON.stringify(new DatePipe('en').transform(this.registerForm.get('birthDate').value, 'dd/MM/yyyy')));
     if (this.registerForm.valid) {
       this.loading = true;
 
@@ -114,7 +118,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         postData = {
           name: this.registerForm.get('firstName').value,
           surname: this.registerForm.get('lastName').value,
-          birthdate: JSON.stringify(this.registerForm.get('birthDate').value.toLocaleString('fr')).substring(1, 11),
+          birthdate: new DatePipe('en').transform(this.registerForm.get('birthDate').value, 'dd/MM/yyyy'),
           email: this.registerForm.get('email').value,
           password: this.registerForm.get('password').value,
           privilegeLevel: this.selectedType
