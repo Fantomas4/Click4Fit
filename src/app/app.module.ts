@@ -46,7 +46,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
 import { WorkoutService } from './workout/workout.service';
-import { ContactUsService } from './contact-us/contact-us.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
 import { RecoverPasswordService } from './recover-password/recover-password.service';
@@ -122,7 +121,7 @@ import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/worko
     MatSelectCountryModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService, ContactUsService,
+    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

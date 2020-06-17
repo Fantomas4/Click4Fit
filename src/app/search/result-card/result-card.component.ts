@@ -20,7 +20,6 @@ export class ResultCardComponent implements OnInit {
   city: string; // Card city text.
   imgPath: string; // Card preview image path.
   jsonData; // Json data for the request to API
-  content; // Json with the current user which has been saved in session storage after log in
   user:string; // Email of current user
   favorite = false; //it shows if the workout entry has been added in favorites successfully and
   //in this way the empty heart icon changes to full heart icon
@@ -70,16 +69,32 @@ export class ResultCardComponent implements OnInit {
       }
     });
   }
-  onClick(entry){
+  onClick(){
     this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
     this.user = this.jsonData.email;
-    this.content = {
+    switch (this.category) {
+      case 'Gym':
+        this.category = 'gym';
+        break;
+
+      case 'Personal Trainer':
+        this.category = 'personal trainer';
+        break;
+
+      case 'Fitness Shop':
+        this.category = 'fitness shop';
+        break;
+    }
+    var content = {
       "user": { "email": this.user }, "new_favorite": {
-        "name": entry.title, "country": entry.country, "city": entry.city, "imgPath":entry.imgPath
-      }
+        "name": this.title, "category": this.category, "country": this.country, "city": this.city, 
+        "imgPath": this.businessData.imgPath}
     };
-    this.resultCardService.addFavoritePlace(this.content).toPromise().then(data => {
+    this.resultCardService.addFavoritePlace(content).toPromise().then(data => {
       this.favorite = true;
+    },
+    error=>{
+
     });
   }
 }

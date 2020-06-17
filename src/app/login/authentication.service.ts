@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { UserEntry} from '../user-entry';
 import {AlertService} from '../core/alert.service';
 import {environment} from '../../environments/environment';
 import {LoggedInUser} from './logged-in-user';

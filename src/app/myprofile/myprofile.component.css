@@ -2,7 +2,7 @@
 
 /*!* The general card of profile details *!*/
 .details-card {
-  width: 25%;
+  width: 30%;
   margin: 5% auto;
 }
 /*!* The title of card *!*/
@@ -78,7 +78,7 @@
     font-size: 20px;
   }
   .details-card{
-    width: 25%;
+    width: 32%;
     margin: 10% auto;
     display:block;
   }
@@ -98,7 +98,7 @@
     font-size: 20px;
   }
   .details-card{
-    width: 25%;
+    width: 27%;
     margin: 10% auto;
     display:block;
   }
@@ -140,7 +140,7 @@
     font-size: 20px;
   }
   .details-card{
-    width: 30%;
+    width: 37%;
     margin: 10% auto;
     display:block;
   }
@@ -150,7 +150,7 @@
     font-size: 20px;
   }
   .details-card{
-    width: 40%;
+    width: 30%;
     margin: 10% auto;
     display:block;
   }
@@ -160,7 +160,7 @@
     font-size: 20px;
   }
   .details-card{
-    width: 25%;
+    width: 27%;
     margin: 10% auto;
     display:block;
   }
@@ -170,7 +170,7 @@
     font-size: 20px;
   }
   .details-card{
-    width: 20%;
+    width: 22%;
     margin: 10% auto;
     display:block;
   }

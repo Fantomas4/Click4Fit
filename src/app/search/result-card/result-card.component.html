@@ -3,13 +3,13 @@
     <mat-card-header>
       <mat-card-title><span id="title-text">{{title}}</span></mat-card-title>
       <mat-card-subtitle>{{category}}</mat-card-subtitle>
-      <button mat-icon-button *ngIf="!favorite" (click)="onClick(businessData)">
+      <button mat-icon-button *ngIf="!favorite" (click)="onClick()">
         <mat-icon class="icon">favorite_border</mat-icon>
         <!--It is displayed when the workout entry is not favorite-->
       </button>
       <button mat-icon-button *ngIf="favorite">
         <mat-icon class="icon">favorite</mat-icon> <!-- It is displayed when the workout entry is favorite-->
-      </button>
+      </button><br>
     </mat-card-header>
     <img mat-card-image id="preview-img"  [src]="imgPath" alt="Business Preview Image.">
     <mat-card-content>

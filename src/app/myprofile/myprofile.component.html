@@ -5,52 +5,63 @@
   </mat-card-header>
   <mat-card-content>
     <!-- The form place with each detail -->
-    <form class="form">
+    <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="onClickUpdate()" class="form">
       <table class="table" cellspacing="0">
         <tr>
           <mat-form-field>
             <mat-label>First name</mat-label>
-            <input matInput placeholder="e.g. George" [(ngModel)]="name" name="first-name" required>
+            <input matInput placeholder="e.g. George" formControlName="name" name="name" required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>Last name</mat-label>
-            <input matInput placeholder="e.g. Brown" [(ngModel)]="surname" name="last-name" required>
+            <input matInput placeholder="e.g. Brown" formControlName="lastName" name="lastName" required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <mat-label>Date of birth</mat-label>
-            <input matInput [matDatepicker]="picker" [formControl]="birthdate">
+            <input matInput [matDatepicker]="picker" formControlName="birthDate" name="birthDate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </tr>
-      </table>
-      <mat-form-field class="email-input-field">
-        <mat-label>E-mail</mat-label>
-        <input matInput placeholder="address@example.com" [formControl]="emailFormControl" type="email" name="email"
-               required [(ngModel)]="email">
-        <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-      <table>
         <tr>
-          <mat-form-field>
-            <input matInput placeholder="Old password" [(ngModel)]="password" type="password" name="old-password"
-                   required>
+          <mat-form-field class="email-input-field">
+            <mat-label>E-mail</mat-label>
+            <input matInput placeholder="e.g. address@example.com" formControlName="email" name="email"
+              type="email" required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
-            <input matInput placeholder="New password" [(ngModel)]="newPassword" type="password" name="new-password"
-                   required>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" name="password" [errorStateMatcher]="genericErrorStateMatcher"
+              required>
+            <mat-error *ngIf="entryForm.get('password').hasError('required')">
+              Please enter your old password
+            </mat-error>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
-            <input matInput placeholder="New repeated password" [(ngModel)]="newRepeatedPassword" type="password"
-                   name="new-repeated-password" required>
+            <mat-label>New password</mat-label>
+            <input matInput  type="password" formControlName="newPassword" name="newPassword" 
+              [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('newPassword').hasError('required')">
+              Please enter a new password
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Repeated password</mat-label>
+            <input matInput type="password" formControlName="repeatedPassword" name="repeatedPassword"
+              [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('repeatedPassword').hasError('required')">
+              Please enter your new password again
+            </mat-error>
           </mat-form-field>
         </tr>
       </table>
@@ -58,9 +69,9 @@
   </mat-card-content>
   <!-- The buttons of card -->
   <mat-card-actions class="buttons">
-    <button mat-raised-button color="primary" id="update-details-button" (click)="onClickUpdate()">Update
-      details</button>
-    <button mat-raised-button color="warn" id="delete-button" (click)="onClickDelete()">Delete account</button>
+    <button mat-raised-button color="primary" type="submit" form="entry-form" (click)="onClickUpdate">Update
+      account</button>
+    <button mat-raised-button color="warn" (click)="onClickDelete()">Delete account</button>
   </mat-card-actions>
   <div id="alert-message"
        [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
