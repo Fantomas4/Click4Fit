@@ -60,7 +60,8 @@ export class ContactUsComponent implements OnInit {
   }
 
   onClick() {
+    if (this.entryForm.valid){
       this.alertService.success("Your message has been sent.")
-    
+    }
   }
 }
