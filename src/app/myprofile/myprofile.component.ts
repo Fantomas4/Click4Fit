@@ -25,6 +25,19 @@ export class GenericErrorStateMatcher implements ErrorStateMatcher {
 export class MyprofileComponent implements OnInit {
 
   entryForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    lastName: new FormControl('', [
+      Validators.required
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+    birthDate: new FormControl('', [
+      Validators.required,
+    ]),
     password: new FormControl('', [
       Validators.required
     ]),
@@ -35,8 +48,9 @@ export class MyprofileComponent implements OnInit {
       Validators.required
     ]),
   })
+  password: string;
   newPassword: string;
-  newRepeatedPassword: string;
+  repeatedPassword: string;
   jsonData: any; // it contains a json with the current user which has been saved in session storage after log in
   results: any; //it contains the results from the request to API 
   picker: any;
@@ -62,13 +76,16 @@ export class MyprofileComponent implements OnInit {
     this.user = { "email": this.jsonData.email };
     this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
       this.results = data.user;
-      console.log(this.results.name);
       this.entryForm.setValue({
         name: this.results.name,
         lastName: this.results.surname,
         email: this.results.email,
-        birthDate: this.results.birthdate
+        birthDate: this.results.birthdate,
+        password: null,
+        newPassword: null,
+        repeatedPassword: null
       });
+      this.password = this.results.password;
     },
       error => { // if the request returns an error, it shows an alert message with the relevant content
         this.alertService.error(error.error);
@@ -89,7 +106,7 @@ export class MyprofileComponent implements OnInit {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
           error => {  // if the request returns an error, it shows an alert message with the relevant content
-            this.alertService.error(error.error);
+            this.alertService.error(error);
           })
       }
     });
@@ -97,22 +114,18 @@ export class MyprofileComponent implements OnInit {
   /*Updates the user's details in the database according to his changes*/
   onClickUpdate() {
     if (this.entryForm.valid) {
-      this.newPassword = this.entryForm.get('password').value;
-      this.newRepeatedPassword = this.entryForm.get('repeatedPassword').value;
-      if (this.newPassword == this.newRepeatedPassword) {
-        const formData = new FormData();
-        formData.append('_id', this.jsonData._id);
-        formData.append('name', this.entryForm.get('name').value);
-        formData.append('lastName', this.entryForm.get('lastName').value);
-        formData.append('birthDate', this.entryForm.get('birthDate').value);
-        formData.append('password', this.newPassword);
-        formData.append('newPassword', this.newRepeatedPassword);
-        formData.append('repeatedPassword', this.entryForm.get('repeatedPassword').value);
-        this.myprofileService.updateChanges(formData).toPromise().then(data => {
+      this.newPassword = this.entryForm.get('newPassword').value;
+      this.repeatedPassword = this.entryForm.get('repeatedPassword').value;
+      if (this.newPassword == this.repeatedPassword) {
+        const content = {
+          "user": { "email": this.jsonData.email, "password": this.entryForm.get('password').value },
+          "new_password": this.newPassword };
+        this.myprofileService.updateChanges(content).toPromise().then(data => {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
           error => { // if the request returns an error, it shows an alert message with the relevant content
-            this.alertService.error(error.error);
+            console.log(error);
+            this.alertService.error(error);
           });
       }
       else {  // if the user didn't give same new password and new repeated password, 

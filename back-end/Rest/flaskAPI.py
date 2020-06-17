@@ -199,7 +199,6 @@ def deleteMyprofile():
             return "Couldn't delete user", 500
         return jsonify("Delete successful")
 
-
 ####################################### Search #######################################
 ######### getResults() #########
 @app.route("/api/search", methods=['POST','GET'])
@@ -252,11 +251,9 @@ def getCities():
 @app.route("/api/add-favorite-place", methods=['POST','GET'])
 def addFavoritePlace():
     place=request.get_json() #get favorite place
-    print(place)
     #connection with mongo sending the place and adding to favorites
     try:
         favorite = MongoDB.addFavoriteBusiness(place)
-        print(favorite)
     except ValueError as value_err:
         return str(value_err), 422
     except:
