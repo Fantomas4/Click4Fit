@@ -31,7 +31,7 @@ export class MyprofileComponent implements OnInit {
   newRepeatedPassword: string;
   content; // it contains the json data for the request to API
   jsonData; // it contains a json with the current user which has been saved in session storage after log in
-  results; //it contains the results from the request to API
+  results; // it contains the results from the request to API
   user; // it contains the email of the current logged in user
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
@@ -50,16 +50,18 @@ export class MyprofileComponent implements OnInit {
       }
     });
     this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user = { "email": this.jsonData.email };
-    this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
+    this.user = { email: this.jsonData.email };
+    this.myprofileService.displayUser(this.user).subscribe(data => { // in case of successful request it shows the data
         this.results = data.user;
         this.id = this.results._id;
         this.name = this.results.name;
         this.surname = this.results.surname;
         this.email = this.results.email;
-        this.birthdate = new FormControl(new Date('2018/09/04'));
-        console.log(new Date(this.results.birthdate));
-        console.log(new Date('17/06/2020'));
+
+        // Use regex to extract date data from the birthday string recovered from DB.
+        const separators = ['-', '/', '\\\.', ','];
+        const dateTokens = this.results.birthdate.split(new RegExp(separators.join('|'), 'g'));
+        this.birthdate = new FormControl(new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])));
       },
       error => { // if the request returns an error, it shows an alert message with the relevant content
         this.alertService.error(error.errror);
@@ -75,36 +77,35 @@ export class MyprofileComponent implements OnInit {
   }
   /*Shows modal message after click on delete account button*/
   onClickDelete() {
-    this.content = { "_id": this.id, "name": this.name, "surname": this.surname, "email": this.email, "password": this.newPassword, "birthdate": this.results.birthdate };
+    this.content = { _id: this.id, name: this.name, surname: this.surname, email: this.email, password: this.newPassword, birthdate: this.results.birthdate };
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = 100;
-    const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig)
+    const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       this.deleteProfile = result;
-      if (this.deleteProfile == true) {
+      if (this.deleteProfile) {
         this.myprofileService.deleteProfile(this.content).toPromise().then(data => {
             this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
           },
           error => {  // if the request returns an error, it shows an alert message with the relevant content
             this.alertService.error(error.error);
-          })
+          });
       }
     });
   }
   /*Updates the user's details in the database according to his changes*/
   onClickUpdate() {
-    if (this.newPassword == this.newRepeatedPassword) {
-      this.content = { "user": { "email": this.email, "password": this.password }, "new_password": this.newPassword };
+    if (this.newPassword === this.newRepeatedPassword) {
+      this.content = { user: { email: this.email, password: this.password }, new_password: this.newPassword };
       this.myprofileService.updateChanges(this.content).toPromise().then(data => {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
         error => { // if the request returns an error, it shows an alert message with the relevant content
-          this.alertService.error(error.error);
+          this.alertService.error(error);
         });
-    }
-    else {  // if the user didn't give same new password and new repeated password,
-      //it shows an alert message with the relevant content
+    } else {  // if the user didn't give same new password and new repeated password,
+      // it shows an alert message with the relevant content
       this.alertService.error('New password and new repeated password are not same');
     }
   }

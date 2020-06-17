@@ -29,10 +29,10 @@ export class UserDetailsEditDialogComponent implements OnInit {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   email;
   picker;
-  clickedSave:boolean;
+  clickedSave: boolean;
 
   constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,private _adapter: DateAdapter<any>) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private _adapter: DateAdapter<any>) { }
 
   ngOnInit(): void {
     this._adapter.setLocale('en');
@@ -40,8 +40,13 @@ export class UserDetailsEditDialogComponent implements OnInit {
     this.id = this.data._id;
     this.name = this.data.name;
     this.surname = this.data.surname;
-    this.birthdate = new FormControl(new Date(this.data.birthdate));
-    this.email=this.data.email;
+
+    // Use regex to extract date data from the birthday string recovered from DB.
+    const separators = ['-', '/', '\\\.', ','];
+    const dateTokens = this.data.birthdate.split(new RegExp(separators.join('|'), 'g'));
+    this.birthdate = new FormControl(new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])));
+
+    this.email = this.data.email;
   }
 
   /**
@@ -64,9 +69,9 @@ export class UserDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    var content = {"_id":this.id,"name":this.name,"surname":this.surname,"birthdate":this.data.birthdate,"email":this.email};
-    this.clickedSave=true;
-    this.dialogRef.close({'save':this.clickedSave,'details':content});
+    const content = {_id: this.id, name: this.name, surname: this.surname, birthdate: this.data.birthdate, email: this.email};
+    this.clickedSave = true;
+    this.dialogRef.close({save: this.clickedSave, details: content});
   }
 
 }
