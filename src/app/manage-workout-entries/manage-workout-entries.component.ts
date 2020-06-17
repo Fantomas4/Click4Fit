@@ -68,7 +68,14 @@ export class ManageWorkoutEntriesComponent implements OnInit {
         this.dataSource.data = this.workoutData;
       },
       error => {
-        this.alertService.error(error.errror);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 
@@ -147,7 +154,14 @@ export class ManageWorkoutEntriesComponent implements OnInit {
             this.alertService.success('Data updated successfully');
           },
           error => {
-            this.alertService.error(error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof(error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
       }
     });
@@ -179,7 +193,14 @@ export class ManageWorkoutEntriesComponent implements OnInit {
             this.alertService.success('Entry added successfully');
           },
           error => {
-            this.alertService.error(error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof(error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
       }
     });
@@ -199,7 +220,14 @@ export class ManageWorkoutEntriesComponent implements OnInit {
       },
 
       error => {
-        this.alertService.error(error);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 }
