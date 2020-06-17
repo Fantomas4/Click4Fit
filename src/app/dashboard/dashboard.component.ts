@@ -13,9 +13,9 @@ export class DashboardComponent implements OnInit {
   favoritePlacesResults = [];
   workoutIsEmpty = false;
   placeIsEmpty = false;
-  jsonData;
+  jsonData: any;
   currentTime: any;
-  user;
+  user: any;
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService) {
     setInterval(() => {
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getFavoriteWorkout(this.user).subscribe(data => {
       this.favoriteWorkoutResults = data.workoutList;
       if (this.favoriteWorkoutResults.length == 0) { //check if the list with the results is empty or not
-        this.workoutIsEmpty = true;                  
+        this.workoutIsEmpty = true;
       }
     });
     this.dashboardService.getFavoritePlaces(this.user).subscribe(data => {

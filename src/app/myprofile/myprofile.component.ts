@@ -94,7 +94,7 @@ export class MyprofileComponent implements OnInit {
 
   /*Shows modal message after click on delete account button*/
   onClickDelete() {
-    const content = { "_id": this.jsonData._id }; // it contains the json data for the request to API 
+    var content = { "_id": this.jsonData._id }; // it contains the json data for the request to API 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = 100;
@@ -117,14 +117,13 @@ export class MyprofileComponent implements OnInit {
       this.newPassword = this.entryForm.get('newPassword').value;
       this.repeatedPassword = this.entryForm.get('repeatedPassword').value;
       if (this.newPassword == this.repeatedPassword) {
-        const content = {
+        var content = {
           "user": { "email": this.jsonData.email, "password": this.entryForm.get('password').value },
           "new_password": this.newPassword };
         this.myprofileService.updateChanges(content).toPromise().then(data => {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
           error => { // if the request returns an error, it shows an alert message with the relevant content
-            console.log(error);
             this.alertService.error(error);
           });
       }

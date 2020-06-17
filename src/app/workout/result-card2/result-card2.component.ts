@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlertService } from '../../core/alert.service';
-import { Subscription } from 'rxjs';
 import { ResultCard2Service } from './result-card2.service';
 
 
@@ -15,8 +13,7 @@ export class ResultCard2Component implements OnInit {
   @Input() workoutEntry; // it gets each entry of results
 
   user: string;
-  jsonData; // it contains the json data for the request to API 
-  content; // it contains a json with the current user which has been saved in session storage after log in
+  jsonData: any; // it contains the json data for the request to API  content; // it contains a json with the current user which has been saved in session storage after log in
   name: string;
   category: string;
   muscleGroups: [];
@@ -47,19 +44,19 @@ export class ResultCard2Component implements OnInit {
   onClick(entry) {
     this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
     this.user = this.jsonData.email;
-    this.content = {
+    var content = {
       "user": { "email": this.user }, "new_favorite": {
         "name": entry.name, "category": entry.category,
         "muscleGroups": entry.muscleGroups, "advisedFor": entry.advisedFor, "difficulty": entry.difficulty,
         "equipment": entry.equipment, "sets": entry.sets, "videoUrl": entry.videoUrl
       }
     };
-    this.resultCardSrvice.addFavoriteWorkout(this.content).toPromise().then(data => {
+    this.resultCardSrvice.addFavoriteWorkout(content).toPromise().then(data => {
       this.favorite = true;
     },
-    error=>{
-      
-    });
+      error => {
+
+      });
   }
 
 }

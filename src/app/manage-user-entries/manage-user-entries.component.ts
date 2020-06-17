@@ -1,11 +1,11 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {UserDetailsEditDialogComponent} from './user-details-edit-dialog/user-details-edit-dialog.component';
-import {ManageUserEntriesService} from './manage-user-entries.service';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { UserDetailsEditDialogComponent } from './user-details-edit-dialog/user-details-edit-dialog.component';
+import { ManageUserEntriesService } from './manage-user-entries.service';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 
@@ -21,8 +21,8 @@ interface AlertMessage {
 })
 export class ManageUserEntriesComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
-  @ViewChild(MatSort, {static: true}) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
+  @ViewChild(MatSort, { static: true }) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
 
   // Holds a SelectionModel<UserEntry> object used to get the table checkboxes' state.
   selection = new SelectionModel<any>(true, []);
@@ -30,7 +30,7 @@ export class ManageUserEntriesComponent implements OnInit {
   // Determines the columns to be displayed in the table's header row.
   displayedColumns = ['checkboxes', 'name', 'last-name', 'buttons'];
 
-  userData=[]; // An array of UserEntry objects retrieved from the database.
+  userData = []; // An array of UserEntry objects retrieved from the database.
   dataSource = new MatTableDataSource(this.userData); // MatTableDataSource<UserEntry> used as the table's data source.
 
   dialogHeight: number; // Height of the dialog window.
@@ -41,9 +41,7 @@ export class ManageUserEntriesComponent implements OnInit {
   selected = []; //List with selected checkboxes
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  result:boolean;
-  content;
-  i:number;
+  result: boolean;
 
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog,
     private alertService: AlertService) { }
@@ -108,12 +106,12 @@ export class ManageUserEntriesComponent implements OnInit {
 
     /*this.manageUserEntriesService.getResults()
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
-      this.manageUserEntriesService.getResults().toPromise().then(data =>{
-          this.userData=data.userList;
-          this.dataSource.data=this.userData;
-      },
+    this.manageUserEntriesService.getResults().toPromise().then(data => {
+      this.userData = data.userList;
+      this.dataSource.data = this.userData;
+    },
       error => {
-        this.alertService.error(error.errror);
+        this.alertService.error(error);
       });
   }
 
@@ -136,9 +134,9 @@ export class ManageUserEntriesComponent implements OnInit {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
-      data: {_id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email}
+      data: { _id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
     });
-    this.detailsEditDialogRef.afterClosed().subscribe(result=>{
+    this.detailsEditDialogRef.afterClosed().subscribe(result => {
       this.result = result.save;
       if (this.result == true) {
         this.manageUserEntriesService.updateEntry(result.details).toPromise().then(data => {
@@ -148,27 +146,27 @@ export class ManageUserEntriesComponent implements OnInit {
           this.alertService.success(data);
         },
           error => {
-            this.alertService.error(error.error);
+            this.alertService.error(error);
           })
       }
     })
   }
-  deleteEntries(){
-    this.selected=this.selection.selected;
-    for (this.i=0;this.i<this.selection.selected.length;this.i++){
-      this.selected[this.i]=this.selection.selected[this.i].email;
+  deleteEntries() {
+    this.selected = this.selection.selected;
+    let i;
+    for (i = 0; i < this.selection.selected.length; i++) {
+      this.selected[i] = this.selection.selected[i].email;
     }
-    this.content={"email":this.selected};
-    this.manageUserEntriesService.deleteEntries(this.content).toPromise().then(data=>
-    {
+    const content = { "email": this.selected };
+    this.manageUserEntriesService.deleteEntries(content).toPromise().then(data => {
       this.getUsersEntries();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.alertService.success(data);
     },
-    error => {
-      this.alertService.error(error.errror);
-    });
+      error => {
+        this.alertService.error(error);
+      });
   }
 }
 

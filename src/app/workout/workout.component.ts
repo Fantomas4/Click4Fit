@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkoutService } from './workout.service';
 import { ResultCard2Service } from './result-card2/result-card2.service';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router} from '@angular/router';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 
@@ -20,12 +20,7 @@ export class WorkoutComponent implements OnInit {
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
   isClicked = false;
-  results;  //it contains the results from the request to API 
-  content; // it contains the json data for the request to API 
-  categories;
-  advisedFor;
-  level;
-  equipment;
+  results: any;  //it contains the results from the request to API 
   categoriesFilters: string[] = ['legs', 'back', 'chest', 'shoulders', 'biceps', 'tricpes', 'abs', 'core'];
   advisedForFilters: string[] = ['women', 'men'];
   difficultyFilters: string[] = ['easy', 'medium', 'hard'];
@@ -34,10 +29,10 @@ export class WorkoutComponent implements OnInit {
   selectedAdvisedFor = [];
   selectedDifficulty = [];
   selectedEquipment = [];
-  selectedOptionsCategories; //they contain the choices of user 
-  selectedOptionsAdvisedFor;
-  selectedOptionsDifficulty;
-  selectedOptionsEquipment;
+  selectedOptionsCategories:any; //they contain the choices of user 
+  selectedOptionsAdvisedFor: any;
+  selectedOptionsDifficulty:any;
+  selectedOptionsEquipment:any;
 
   constructor(private workoutService: WorkoutService, private resultCardService: ResultCard2Service,
     private router: Router, private alertService: AlertService) { }
@@ -53,20 +48,19 @@ export class WorkoutComponent implements OnInit {
     });
 
   }
-  
+
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    this.content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
-    console.log(this.content);
-    this.workoutService.getResults(this.content).toPromise().then(data => {
+    var content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
+    this.workoutService.getResults(content).toPromise().then(data => {
       this.results = data.workoutList;
     },
       error => {
-        this.alertService.error(error.error);
+        this.alertService.error(error);
       })
   }
-  
+
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {
     if (document.getElementById('filtersButton').innerText === 'Show Filters') {
