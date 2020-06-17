@@ -116,10 +116,17 @@ export class MyprofileComponent implements OnInit {
     if (this.entryForm.valid) {
       this.newPassword = this.entryForm.get('newPassword').value;
       this.repeatedPassword = this.entryForm.get('repeatedPassword').value;
-      if (this.newPassword == this.repeatedPassword) {
+      if (this.newPassword != this.repeatedPassword) {
+        // if the user didn't give same new password and new repeated password, 
+        //it shows an alert message with the relevant content
+        this.alertService.error('New password and new repeated password are not same');
+      }
+      else {
         var content = {
-          "user": { "email": this.jsonData.email, "password": this.entryForm.get('password').value },
-          "new_password": this.newPassword };
+          "_id": this.jsonData._id, "email": this.entryForm.get('email').value, "name": this.entryForm.get('name').value,
+          "surname": this.entryForm.get('lastName').value, "birthdate": this.entryForm.get('birthDate').value,
+          "password": this.entryForm.get('password').value
+        }
         this.myprofileService.updateChanges(content).toPromise().then(data => {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
@@ -127,11 +134,8 @@ export class MyprofileComponent implements OnInit {
             this.alertService.error(error);
           });
       }
-      else {  // if the user didn't give same new password and new repeated password, 
-        //it shows an alert message with the relevant content
-        this.alertService.error('New password and new repeated password are not same');
-      }
     }
   }
+
 }
 

@@ -160,7 +160,7 @@ def updateMyprofile():
     details=request.get_json() #get modifying details
     #connection with mongo sending the details and modifying the profile's details
     try:
-        user_wrapper: UserWrapper = MongoDB.changeUserPassword(details)
+        user_wrapper: UserWrapper = MongoDB.updateUser(details)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -168,9 +168,9 @@ def updateMyprofile():
     except:
         return "Bad error", 500
     else:
-        if user_wrapper.user is None:
+        if user_wrapper.user is None and not user_wrapper.operationDone and not user_wrapper.found:
             return "Something is wrong with the database", 500
-        if not user_wrapper.operationDone and not user_wrapper.found:
+        if user_wrapper.user is dict and not user_wrapper.operationDone and not user_wrapper.found:
             return "User does not exist", 404
         if not user_wrapper.operationDone and user_wrapper.found:
             return "Wrong old password", 401
