@@ -16,6 +16,6 @@ import { environment } from 'src/environments/environment';
     getResults(content): Observable<any>{
       const headers = {'content-type':'application/json'}; 
       const jsonData=JSON.stringify(content);
-      return this.http.post(`${environment.apiUrl}/api/display-workout`,jsonData,{'headers':headers});  
+      return this.http.post(`${environment.apiUrl}/display-workout`,jsonData,{'headers':headers});  
     }
   }

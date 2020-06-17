@@ -15,7 +15,7 @@ export class ResultCard2Service {
   addFavoriteWorkout(content): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/api/add-favorite-workout`, jsonData, { 'headers': headers });
+    return this.http.post(`${environment.apiUrl}/add-favorite-workout`, jsonData, { 'headers': headers });
 
   }
 }

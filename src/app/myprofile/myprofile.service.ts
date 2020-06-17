@@ -13,17 +13,17 @@ export class MyProfileService {
   displayUser(email): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const jsonData = JSON.stringify(email);
-    return this.http.post(`${environment.apiUrl}/api/display-myprofile`, jsonData, { 'headers': headers });
+    return this.http.post(`${environment.apiUrl}/display-myprofile`, jsonData, { 'headers': headers });
   }
   updateChanges(content): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/api/update-myprofile`, jsonData, { 'headers': headers });
+    return this.http.post(`${environment.apiUrl}/update-myprofile`, jsonData, { 'headers': headers });
   }
   deleteProfile(content): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/api/delete-myprofile`, jsonData, { 'headers': headers });
+    return this.http.post(`${environment.apiUrl}/delete-myprofile`, jsonData, { 'headers': headers });
   }
 
 }

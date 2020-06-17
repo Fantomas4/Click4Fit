@@ -19,7 +19,7 @@ export class DashboardService {
   getFavoritePlaces(user):Observable<any>{
     const headers = {'content-type':'application/json'};
     const jsonData=JSON.stringify(user);
-    return this.http.post(`${environment.apiUrl}/api/favorite-places`,jsonData,{'headers':headers});
+    return this.http.post(`${environment.apiUrl}/favorite-places`,jsonData,{'headers':headers});
   }
 
 }

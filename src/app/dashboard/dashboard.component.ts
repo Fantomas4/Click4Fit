@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FavoriteWorkout, FavoritePlace } from '../favorite-entry';
 import { DashboardService } from './dashboard.service';
 
 @Component({

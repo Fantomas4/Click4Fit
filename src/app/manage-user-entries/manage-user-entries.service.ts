@@ -11,9 +11,6 @@ export class ManageUserEntriesService {
 
   constructor(private http: HttpClient) { }
 
-  /*getResults(): Observable<UserEntry[]> {
-    return of(USERENTRIES);
-  }*/
   getResults(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/manage-user-display-entries`);
   }
