@@ -38,8 +38,7 @@ def view_resource(filename):
 @app.route("/api/contactus",methods=['POST','GET'])
 def getContact():
     details=request.get_json() #get all the details of form
-    #connection with mongo sending details and adding contact message
-    return jsonify(respone=200,msg="Everything is okey")
+    return jsonify("Successful send")
 
 
 ####################################### Login ########################################

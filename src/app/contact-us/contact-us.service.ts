@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ContactUsService {
@@ -11,7 +12,7 @@ export class ContactUsService {
     postDetails(content): Observable<any>{
         const headers = { 'content-type': 'application/json'}  
         const jsonData=JSON.stringify(content);
-        return this.http.post('http://localhost:5000/api/contactus',jsonData,{'headers':headers});
+        return this.http.post(`${environment.apiUrl}/contactus`,jsonData,{'headers':headers});
     }
     
 }

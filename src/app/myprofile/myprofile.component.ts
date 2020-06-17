@@ -88,7 +88,7 @@ export class MyprofileComponent implements OnInit {
       this.password = this.results.password;
     },
       error => { // if the request returns an error, it shows an alert message with the relevant content
-        this.alertService.error(error.error);
+        this.alertService.error(error);
       });
   }
 

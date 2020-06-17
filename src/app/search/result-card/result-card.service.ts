@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ResultCardService {
   addFavoritePlace(content): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const jsonData = JSON.stringify(content);
-    return this.http.post('http://localhost:5000/api/add-favorite-place', jsonData, { 'headers': headers });
+    return this.http.post(`${environment.apiUrl}/add-favorite-place`, jsonData, { 'headers': headers });
 
   }
 }
