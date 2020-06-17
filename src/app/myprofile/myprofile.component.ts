@@ -61,7 +61,7 @@ export class MyprofileComponent implements OnInit {
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
   constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>,
-    private alertService: AlertService, public dialog: MatDialog) { }
+              private alertService: AlertService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -76,11 +76,16 @@ export class MyprofileComponent implements OnInit {
     this.user = { "email": this.jsonData.email };
     this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
       this.results = data.user;
+      
+      // Use regex to extract date data from the birthday string recovered from DB.
+      const separators = ['-', '/', '\\\.', ','];
+      const dateTokens = this.results.birthdate.split(new RegExp(separators.join('|'), 'g'));
+      
       this.entryForm.setValue({
         name: this.results.name,
         lastName: this.results.surname,
         email: this.results.email,
-        birthDate: this.results.birthdate,
+        birthDate: new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])),
         password: null,
         newPassword: null,
         repeatedPassword: null
@@ -88,8 +93,15 @@ export class MyprofileComponent implements OnInit {
       this.password = this.results.password;
     },
       error => { // if the request returns an error, it shows an alert message with the relevant content
-        this.alertService.error(error);
-      });
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+    });
   }
 
   /*Shows modal message after click on delete account button*/
@@ -98,7 +110,7 @@ export class MyprofileComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = 100;
-    const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig)
+    const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       this.deleteProfile = result;
       if (this.deleteProfile == true) {
@@ -106,7 +118,14 @@ export class MyprofileComponent implements OnInit {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
           error => {  // if the request returns an error, it shows an alert message with the relevant content
-            this.alertService.error(error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof(error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           })
       }
     });
@@ -124,7 +143,14 @@ export class MyprofileComponent implements OnInit {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
           error => { // if the request returns an error, it shows an alert message with the relevant content
-            this.alertService.error(error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof(error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
       }
       else {  // if the user didn't give same new password and new repeated password, 
@@ -134,4 +160,3 @@ export class MyprofileComponent implements OnInit {
     }
   }
 }
-

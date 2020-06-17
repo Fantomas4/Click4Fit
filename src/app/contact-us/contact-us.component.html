@@ -30,7 +30,6 @@
                     </mat-form-field>
                     <!-- Phone Number -->
                     <mat-form-field class="phonenumber-area">
-                        <span matPrefix>+30 &nbsp;</span>
                         <input type="tel" matInput placeholder="Phone number" formControlName="phoneNumber"
                             name="phoneNumber" [errorStateMatcher]="genericErrorStateMatcher" required>
                         <mat-error *ngIf="entryForm.get('phoneNumber').hasError('required')">

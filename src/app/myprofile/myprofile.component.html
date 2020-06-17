@@ -74,7 +74,7 @@
     <button mat-raised-button color="warn" (click)="onClickDelete()">Delete account</button>
   </mat-card-actions>
   <div id="alert-message"
-    [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-    *ngIf="alertMessage">{{alertMessage.text}}
+       [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+       *ngIf="alertMessage">{{alertMessage.text}}
   </div>
 </mat-card>

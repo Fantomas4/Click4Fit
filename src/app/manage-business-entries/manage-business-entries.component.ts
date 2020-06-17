@@ -87,11 +87,6 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
   }
-  ngOnDestroy() {
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
-  }
 
   /**
    * Method called when a key is pressed inside the Filter input field of the UI.
@@ -119,7 +114,14 @@ export class ManageBusinessEntriesComponent implements OnInit {
       this.dataSource.data = this.businessData;
     },
       error => {
-        this.alertService.error(error);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 
@@ -159,7 +161,14 @@ export class ManageBusinessEntriesComponent implements OnInit {
           this.alertService.success(data);
         },
           error => {
-            this.alertService.error(error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof(error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
       }
     });
@@ -172,19 +181,26 @@ export class ManageBusinessEntriesComponent implements OnInit {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')
     });
     this.addEntryDialogRef.afterClosed().subscribe(result => {
-      this.result = result.save;
-      if (this.result === true) {
-        this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
-          this.getBusinessEntries();
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.alertService.success(data);
-        },
-          error => {
-            this.alertService.error(error);
-          });
-      }
-    });
+        this.result = result.save;
+        if (this.result === true) {
+          this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
+            this.getBusinessEntries();
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.alertService.success(data);
+          },
+            error => {
+              // If error is not a string received from the API, handle the ProgressEvent
+              // returned due to the inability to connect to the API by printing an appropriate
+              // warning message
+              if (typeof(error) !== 'string') {
+                this.alertService.error('Error: No connection to the API');
+              } else {
+                this.alertService.error(error);
+              }
+            });
+        }
+      });
   }
 
   /** Click on delete button */
@@ -201,8 +217,15 @@ export class ManageBusinessEntriesComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.alertService.success(data);
     },
-      error => {
+    error => {
+      // If error is not a string received from the API, handle the ProgressEvent
+      // returned due to the inability to connect to the API by printing an appropriate
+      // warning message
+      if (typeof(error) !== 'string') {
+        this.alertService.error('Error: No connection to the API');
+      } else {
         this.alertService.error(error);
-      });
+      }
+    });
   }
 }
