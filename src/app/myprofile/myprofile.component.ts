@@ -64,7 +64,14 @@ export class MyprofileComponent implements OnInit {
         this.birthdate = new FormControl(new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])));
       },
       error => { // if the request returns an error, it shows an alert message with the relevant content
-        this.alertService.error(error.errror);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 
@@ -102,7 +109,14 @@ export class MyprofileComponent implements OnInit {
           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
         },
         error => { // if the request returns an error, it shows an alert message with the relevant content
-          this.alertService.error(error);
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof(error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
+            this.alertService.error(error);
+          }
         });
     } else {  // if the user didn't give same new password and new repeated password,
       // it shows an alert message with the relevant content
