@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
-import { ContactUsService } from './contact-us.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 interface AlertMessage {
@@ -47,7 +46,7 @@ export class ContactUsComponent implements OnInit {
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
 
-  constructor(public contanctUsService: ContactUsService, private alertService: AlertService) { }
+  constructor(private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -61,17 +60,7 @@ export class ContactUsComponent implements OnInit {
   }
 
   onClick() {
-    //this.content={'fullname':this.fullName,'email':this.contactEmail,'telephone':this.telephone,'subject':this.subject,'text':this.textarea};
-    if (this.entryForm.valid) {
-      const content = {
-        fullName: this.entryForm.get('fullName').value,
-        email: this.entryForm.get('email').value,
-        phoneNumber: this.entryForm.get('phoneNumber').value,
-        subject: this.entryForm.get('subject').value,
-        text: this.entryForm.get('text').value
-      }
-      this.contanctUsService.postDetails(content);
       this.alertService.success("Your message has been sent.")
-    }
+    
   }
 }
