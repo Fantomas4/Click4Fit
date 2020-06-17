@@ -31,26 +31,26 @@
       <mat-form-field class="email-input-field">
         <mat-label>E-mail</mat-label>
         <input matInput placeholder="address@example.com" [formControl]="emailFormControl" type="email" name="email"
-          required [(ngModel)]="email">
+               required [(ngModel)]="email">
         <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       <table>
         <tr>
           <mat-form-field>
             <input matInput placeholder="Old password" [(ngModel)]="password" type="password" name="old-password"
-              required>
+                   required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <input matInput placeholder="New password" [(ngModel)]="newPassword" type="password" name="new-password"
-              required>
+                   required>
           </mat-form-field>
         </tr>
         <tr>
           <mat-form-field>
             <input matInput placeholder="New repeated password" [(ngModel)]="newRepeatedPassword" type="password"
-              name="new-repeated-password" required>
+                   name="new-repeated-password" required>
           </mat-form-field>
         </tr>
       </table>
@@ -63,7 +63,7 @@
     <button mat-raised-button color="warn" id="delete-button" (click)="onClickDelete()">Delete account</button>
   </mat-card-actions>
   <div id="alert-message"
-    [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-    *ngIf="alertMessage">{{alertMessage.text}}
+       [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+       *ngIf="alertMessage">{{alertMessage.text}}
   </div>
 </mat-card>
