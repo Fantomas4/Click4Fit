@@ -356,8 +356,8 @@ def addFavoriteWorkout():
     except:
         return "Bad error", 500
     else:
-        if favorite is False:
-            return ("Couldn't add entry"), 400
+        if not favorite:
+            return "Couldn't add entry", 400
         return jsonify("Addition successful")
 
 
