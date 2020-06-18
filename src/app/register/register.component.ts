@@ -106,7 +106,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log("TEST:")
     console.log(new DatePipe('en').transform(this.registerForm.get('birthDate').value, 'dd/MM/yyyy'));
     console.log(JSON.stringify(new DatePipe('en').transform(this.registerForm.get('birthDate').value, 'dd/MM/yyyy')));
     if (this.registerForm.valid) {
@@ -142,6 +141,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.alertService.error(error);
             this.loading = false;
           });
+
+      // Reset form group's input fields
+      this.registerForm.reset();
     }
   }
 }
