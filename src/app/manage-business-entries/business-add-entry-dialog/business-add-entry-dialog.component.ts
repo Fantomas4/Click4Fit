@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {ErrorStateMatcher} from '@angular/material/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { BusinessAddEntryService } from './business-add-entry-dialog.service'
 
 interface Country {
   name: string;
@@ -26,7 +27,7 @@ export class GenericErrorStateMatcher implements ErrorStateMatcher {
 })
 export class BusinessAddEntryDialogComponent implements OnInit {
 
-  entryForm = new FormGroup( {
+  entryForm = new FormGroup({
     name: new FormControl('', [
       Validators.required
     ]),
@@ -42,11 +43,15 @@ export class BusinessAddEntryDialogComponent implements OnInit {
     phoneNumber: new FormControl('', [
       Validators.required
     ]),
-    email: new FormControl('', [
+    businessEmail: new FormControl('', [
       Validators.required,
       Validators.email
     ]),
-    },
+    ownerEmail: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+  },
   );
 
   genericErrorStateMatcher = new GenericErrorStateMatcher();
@@ -66,11 +71,13 @@ export class BusinessAddEntryDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  owner: any;
 
 
-  constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private businessAddEntryService: BusinessAddEntryService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onFileSelected(event) {
     this.imgFile = event.target.files[0];
@@ -128,27 +135,34 @@ export class BusinessAddEntryDialogComponent implements OnInit {
 
   onDiscardClick(): void {
     // method is called when the "Close" button is pressed
-    this.dialogRef.close({clickedSave: false});
+    this.dialogRef.close({ clickedSave: false });
   }
 
   onSaveClick(): void {
     if (this.entryForm.valid) {
-      const content = {
-        ownerId: JSON.parse(sessionStorage.getItem('currentUser'))._id,
-        name: this.entryForm.get('name').value,
-        category: this.category,
-        country: this.country,
-        city: this.entryForm.get('city').value,
-        address: this.entryForm.get('address').value,
-        postalCode: this.entryForm.get('postalCode').value,
-        phoneNumber: this.entryForm.get('phoneNumber').value,
-        services: this.services,
-        products: this.products,
-        file: this.imgFile,
-        email: this.entryForm.get('email').value
-      };
-      console.log('onSaveClick result: ', content);
-      this.dialogRef.close({clickedSave: true, details: content});
+      var user = { "email": this.entryForm.get('ownerEmail').value };
+      this.businessAddEntryService.getOwner(user).toPromise().then(data => {
+        this.owner = data.user;
+        var content = {
+          ownerId: this.owner["_id"],
+          name: this.entryForm.get('name').value,
+          category: this.category,
+          country: this.country,
+          city: this.entryForm.get('city').value,
+          address: this.entryForm.get('address').value,
+          postalCode: this.entryForm.get('postalCode').value,
+          phoneNumber: this.entryForm.get('phoneNumber').value,
+          services: this.services,
+          products: this.products,
+          file: this.imgFile,
+          email: this.entryForm.get('businessEmail').value
+        };
+        this.dialogRef.close({ clickedSave: true, details: content });
+      },
+        error => {
+
+        });
+      
     }
   }
 }

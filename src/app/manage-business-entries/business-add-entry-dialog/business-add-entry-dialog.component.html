@@ -70,14 +70,27 @@
         </tr>
         <tr>
           <mat-form-field class="email-input-field">
-            <mat-label>E-mail</mat-label>
-            <input matInput placeholder="address@example.com" formControlName="email" name="registration-email"
+            <mat-label>Business e-mail</mat-label>
+            <input matInput placeholder="address@example.com" formControlName="businessEmail" name="businessEmail"
                    type="email" [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="entryForm.get('email').hasError('required')">
+            <mat-error *ngIf="entryForm.get('businessEmail').hasError('required')">
               Please enter an e-mail
             </mat-error>
-            <mat-error *ngIf="entryForm.get('email').hasError('email')">
-              Please a valid email address
+            <mat-error *ngIf="entryForm.get('businessEmail').hasError('businessEmail')">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field class="email-input-field">
+            <mat-label>Owner e-mail</mat-label>
+            <input matInput placeholder="address@example.com" formControlName="ownerEmail" name="ownerEmail"
+                   type="email" [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="entryForm.get('ownerEmail').hasError('required')">
+              Please enter an e-mail
+            </mat-error>
+            <mat-error *ngIf="entryForm.get('ownerEmail').hasError('ownerEmail')">
+              Please enter a valid email address
             </mat-error>
           </mat-form-field>
         </tr>

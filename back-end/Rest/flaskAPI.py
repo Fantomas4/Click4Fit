@@ -566,6 +566,23 @@ def manageBusinessModify():
             return "Update successful", 200
     return "Not a POST request", 422
 
+@app.route("/api/get-owner", methods=['POST','GET'])
+def getOwner():
+    owner=request.get_json() #get owner
+    try:
+        user_wrapper: UserWrapper = MongoDB.getUser(owner)
+    except TypeError as type_err: #Checking for errors
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if user_wrapper.user is None:
+            return "Something is wrong with the database", 500
+        if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
+            return "Couldn't find user", 500
+        return jsonify(user=user_wrapper.user), 200
 
 ####################################### Manage user ##################################
 @app.route("/api/manage-user-display-entry",methods=['POST','GET'])
