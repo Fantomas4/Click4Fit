@@ -5,7 +5,7 @@
   </mat-card-header>
   <mat-card-content>
     <!-- The form place with each detail -->
-    <form [formGroup]="firstEntryForm" (ngSubmit)="onClickUpdate()" class="form">
+    <form [formGroup]="firstEntryForm" class="form" id="firstEntryForm">
       <table class="table" cellspacing="0">
         <tr>
           <mat-form-field>
@@ -53,7 +53,7 @@
         </tr>
       </table>
     </form>
-    <form [formGroup]="secondEntryForm" (ngSubmit)="onClickUpdate()" class="form">
+    <form [formGroup]="secondEntryForm" class="form" id="secondEntryForm">
       <table class="table" cellspacing="0">
         <tr>
           <mat-form-field>
@@ -90,7 +90,7 @@
   </mat-card-content>
   <!-- The buttons of card -->
   <mat-card-actions class="buttons">
-    <button mat-raised-button color="primary" type="submit" form="entry-form" (click)="onClickUpdate()">Update
+    <button mat-raised-button color="primary" type="submit" form="secondEntryForm && firstEntryForm" (click)="onClickUpdate()">Update
       account</button>
     <button mat-raised-button color="warn" (click)="onClickDelete()">Delete account</button>
   </mat-card-actions>

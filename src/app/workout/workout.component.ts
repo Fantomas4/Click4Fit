@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkoutService } from './workout.service';
 import { ResultCard2Service } from './result-card2/result-card2.service';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 
@@ -29,10 +29,10 @@ export class WorkoutComponent implements OnInit {
   selectedAdvisedFor = [];
   selectedDifficulty = [];
   selectedEquipment = [];
-  selectedOptionsCategories:any; //they contain the choices of user 
+  selectedOptionsCategories: any; //they contain the choices of user 
   selectedOptionsAdvisedFor: any;
-  selectedOptionsDifficulty:any;
-  selectedOptionsEquipment:any;
+  selectedOptionsDifficulty: any;
+  selectedOptionsEquipment: any;
 
   constructor(private workoutService: WorkoutService, private resultCardService: ResultCard2Service,
     private router: Router, private alertService: AlertService) { }
@@ -52,13 +52,23 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    var content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
-    this.workoutService.getResults(content).toPromise().then(data => {
-      this.results = data.workoutList;
-    },
-      error => {
-        this.alertService.error(error);
-      })
+    if (this.selectedOptionsAdvisedFor == null && this.selectedOptionsCategories == null && this.selectedOptionsDifficulty == null && this.selectedOptionsEquipment == null) {
+      this.workoutService.getAllWorkout().toPromise().then(data => {
+        this.results = data.data;
+      },
+        error => {
+          this.alertService.error(error);
+        })
+    }
+    else {
+      var content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
+      this.workoutService.getResults(content).toPromise().then(data => {
+        this.results = data.workoutList;
+      },
+        error => {
+          this.alertService.error(error);
+        })
+    }
   }
 
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/

@@ -121,9 +121,9 @@ export class MyprofileComponent implements OnInit {
   /*Updates the user's details in the database according to his changes*/
   onClickUpdate() {
     var content;
-    if (this.secondEntryForm.dirty) {
+    if (this.secondEntryForm.valid) {
       console.log('no');
-      if (this.secondEntryForm.valid) {
+      if (this.secondEntryForm.dirty) {
         console.log('now');
         this.newPassword = this.secondEntryForm.get('newPassword').value;
         this.repeatedPassword = this.secondEntryForm.get('repeatedPassword').value;
@@ -137,12 +137,9 @@ export class MyprofileComponent implements OnInit {
           console.log('yes');
         }
       }
-      else{
-        this.secondEntryForm.get('repeatedPassword').updateValueAndValidity();
-      }
     }
-    if (this.firstEntryForm.dirty) {
-      if (this.firstEntryForm.valid) {
+    if (this.firstEntryForm.valid) {
+      if (this.firstEntryForm.dirty) {
         this.fieldChanged = true;
         console.log('yes2');
       }
@@ -198,7 +195,7 @@ export class MyprofileComponent implements OnInit {
           this.alertService.error(error);
         });
     }
-    else {
+    else if (!this.firstEntryForm.dirty && !this.secondEntryForm.dirty) {
       this.alertService.error("You haven't changed anything");
     }
   }
