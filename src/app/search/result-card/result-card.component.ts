@@ -22,6 +22,7 @@ export class ResultCardComponent implements OnInit {
   jsonData; // Json data for the request to API
   user:string; // Email of current user
   favorite = false; //it shows if the workout entry has been added in favorites successfully and
+  categoryBusiness: string;
   //in this way the empty heart icon changes to full heart icon
 
   constructor(public dialog: MatDialog, private resultCardService: ResultCardService) {
@@ -74,20 +75,20 @@ export class ResultCardComponent implements OnInit {
     this.user = this.jsonData.email;
     switch (this.category) {
       case 'Gym':
-        this.category = 'gym';
+        this.categoryBusiness = 'gym';
         break;
 
       case 'Personal Trainer':
-        this.category = 'personal trainer';
+        this.categoryBusiness = 'personal trainer';
         break;
 
       case 'Fitness Shop':
-        this.category = 'fitness shop';
+        this.categoryBusiness = 'fitness shop';
         break;
     }
     var content = {
       "user": { "email": this.user }, "new_favorite": {
-        "name": this.title, "category": this.category, "country": this.country, "city": this.city, 
+        "name": this.title, "category": this.categoryBusiness, "country": this.country, "city": this.city, 
         "imgPath": this.businessData.imgPath}
     };
     this.resultCardService.addFavoritePlace(content).toPromise().then(data => {
