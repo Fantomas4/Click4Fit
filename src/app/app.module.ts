@@ -64,7 +64,6 @@ import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/worko
 import {BusinessAddEntryService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
 import {ManageUserEntriesService} from './manage-user-entries/manage-user-entries.service';
 import {ManageBusinessEntriesService} from './manage-business-entries/manage-business-entries.service';
-import { BusinessEditEntryService } from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.service';
 
 @NgModule({
   declarations: [
@@ -126,7 +125,7 @@ import { BusinessEditEntryService } from './manage-business-entries/business-det
     MatSelectCountryModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService, ContactUsService, BusinessAddEntryService, ManageBusinessEntriesService, ManageUserEntriesService, BusinessEditEntryService,
+    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService, ContactUsService, BusinessAddEntryService, ManageBusinessEntriesService, ManageUserEntriesService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},

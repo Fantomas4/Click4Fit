@@ -160,7 +160,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
         const formData = new FormData();
-        formData.append('ownerId', dialogRes.details.ownerId);
+        formData.append('_id', dialogRes.details._id);
         formData.append('name', dialogRes.details.name);
         formData.append('category', dialogRes.details.category);
         formData.append('country', dialogRes.details.country);

@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { BusinessEditEntryService } from './business-details-edit-dialog.service';
+
 
 interface Country {
   name: string;
@@ -45,17 +45,13 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
     businessEmail: new FormControl('', [
       Validators.required,
       Validators.email
-    ]),
-    ownerEmail: new FormControl('', [
-      Validators.required,
-      Validators.email
-    ]),
+    ])
   },
   );
 
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-  id: number; // The displayed entry's id.
+  _id: number; // The displayed entry's id.
   category: string; // The displayed entry's category.
   country: string; // The displayed entry's country location.
   services: string[]; // List containing the titles of the available services offered by the displayed entry.
@@ -74,33 +70,24 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
 
 
   constructor(public dialogRef: MatDialogRef<BusinessDetailsEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private businessEditEntryService: BusinessEditEntryService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     // Extract the data from the payload and store it into the class properties
-    this.id = this.data._id;
-    console.log(this.id);
-    var user = { "_id": this.id };
-    this.businessEditEntryService.getOwner(user).toPromise().then(data => {
-      this.owner = data.user;
-      console.log(this.owner);
-      this.entryForm.setValue({
-        name: this.data.name,
-        city: this.data.city,
-        address: this.data.address,
-        postalCode: this.data.postalCode,
-        phoneNumber: this.data.phoneNumber,
-        businessEmail: this.data.email,
-        ownerEmail: this.owner["email"]
-      });
-      this.category = this.data.category;
-      this.country = this.data.country;
-      this.services = this.data.services;
-      this.products = this.data.products;
-      this.imgPath = this.data.imgPath;
-    }, error => {
-
+    this._id = this.data._id;
+    this.entryForm.setValue({
+      name: this.data.name,
+      city: this.data.city,
+      address: this.data.address,
+      postalCode: this.data.postalCode,
+      phoneNumber: this.data.phoneNumber,
+      businessEmail: this.data.email
     });
+    this.category = this.data.category;
+    this.country = this.data.country;
+    this.services = this.data.services;
+    this.products = this.data.products;
+    this.imgPath = this.data.imgPath;
   }
 
   onFileSelected(event) {
@@ -168,29 +155,21 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
 
   onSaveClick(): void {
     if (this.entryForm.valid) {
-      var user = { "email": this.entryForm.get('ownerEmail').value };
-      this.businessEditEntryService.getOwner(user).toPromise().then(data => {
-        this.owner = data.user;
-        var content = {
-          ownerId: this.owner["_id"],
-          name: this.entryForm.get('name').value,
-          category: this.category,
-          country: this.country,
-          city: this.entryForm.get('city').value,
-          address: this.entryForm.get('address').value,
-          postalCode: this.entryForm.get('postalCode').value,
-          phoneNumber: this.entryForm.get('phoneNumber').value,
-          services: this.services,
-          products: this.products,
-          file: this.imgFile,
-          email: this.entryForm.get('businessEmail').value
-        };
-        this.dialogRef.close({ clickedSave: true, details: content });
-      },
-        error => {
-
-        });
-
+      var content = {
+        _id: this._id,
+        name: this.entryForm.get('name').value,
+        category: this.category,
+        country: this.country,
+        city: this.entryForm.get('city').value,
+        address: this.entryForm.get('address').value,
+        postalCode: this.entryForm.get('postalCode').value,
+        phoneNumber: this.entryForm.get('phoneNumber').value,
+        services: this.services,
+        products: this.products,
+        file: this.imgFile,
+        email: this.entryForm.get('businessEmail').value
+      };
+      this.dialogRef.close({ clickedSave: true, details: content });
     }
   }
 }

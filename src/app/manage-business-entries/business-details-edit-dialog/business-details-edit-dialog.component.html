@@ -83,19 +83,6 @@
           </mat-form-field>
         </tr>
         <tr>
-          <mat-form-field class="email-input-field">
-            <mat-label>Owner e-mail</mat-label>
-            <input matInput placeholder="address@example.com" formControlName="ownerEmail" name="ownerEmail"
-                   type="email" [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="entryForm.get('ownerEmail').hasError('required')">
-              Please enter an e-mail
-            </mat-error>
-            <mat-error *ngIf="entryForm.get('ownerEmail').hasError('ownerEmail')">
-              Please enter a valid email address
-            </mat-error>
-          </mat-form-field>
-        </tr>
-        <tr>
           <div class="services-and-products-container">
             <p class="section-title">My Services and Products</p>
             <!--            <p class="section-subtitle">Please write a name and press enter to add...</p>-->
