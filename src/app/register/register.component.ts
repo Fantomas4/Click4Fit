@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -57,6 +57,8 @@ interface AlertMessage {
 })
 
 export class RegisterComponent implements OnInit, OnDestroy {
+  @ViewChild(FormGroupDirective) formGroupDirective;
+
   registerForm = new FormGroup( {
     firstName: new FormControl('', [
       Validators.required
@@ -135,6 +137,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.registrationService.register(postData).pipe(first()).subscribe(
           data => {
             this.alertService.success(data.body);
+
+            // Reset form group's input fields
+            this.formGroupDirective.resetForm();
+
             this.loading = false;
           },
           error => {
@@ -146,10 +152,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
             } else {
               this.alertService.error(error);
             }
+            this.loading = false;
           });
-
-      // Reset form group's input fields
-      this.registerForm.reset();
     }
   }
 }
