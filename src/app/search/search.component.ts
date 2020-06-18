@@ -5,11 +5,9 @@ import {FormControl} from '@angular/forms';
 import {LocationAutocompleteComponent} from './location-autocomplete/location-autocomplete.component';
 import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
+import {AlertMessage} from '../core/alert-message';
 
-interface AlertMessage {
-  type: string;
-  text: string;
-}
+
 
 @Component({
   selector: 'app-search',
@@ -66,10 +64,10 @@ export class SearchComponent implements OnInit {
       city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
 
     res => {
-            this.searchResults = res.body.data;
-            // console.log(res.body.data);
-            this.alertService.success('Found ' + res.body.data.length + ' results...');
-        },
+              this.searchResults = res.body.data;
+              // console.log(res.body.data);
+              this.alertService.success('Found ' + res.body.data.length + ' results...');
+            },
 
     error => {
               // If error is not a string received from the API, handle the ProgressEvent
@@ -79,8 +77,8 @@ export class SearchComponent implements OnInit {
                 this.alertService.error('Error: No connection to the API');
               } else {
                 this.alertService.error(error);
-          }
-        });
+              }
+            });
 
   }
 

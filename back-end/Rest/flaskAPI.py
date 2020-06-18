@@ -1,4 +1,4 @@
-import os
+﻿import os
 from flask import Flask, jsonify, request, json, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -6,7 +6,7 @@ from pprint import pprint
 from time import time
 
 import sys
-sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+sys.path.insert(0, "D:\\WebstormProjects\\Click4Fit\\back-end")
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper

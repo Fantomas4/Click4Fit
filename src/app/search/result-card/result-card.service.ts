@@ -12,10 +12,20 @@ export class ResultCardService {
 
   constructor(private http: HttpClient) { }
 
-  addFavoritePlace(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/add-favorite-place`, jsonData, { 'headers': headers });
+  addFavoriteBusiness(request: object) {
+    console.log(request);
+    return this.http.post(`${environment.apiUrl}/add-favorite-business`, JSON.stringify(request),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'});
+  }
 
+  removeFavoriteBusiness(request: object) {
+    console.log(request);
+    return this.http.post(`${environment.apiUrl}/remove-favorite-business`, JSON.stringify(request),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'});
+  }
+
+  updateUser(request: object) {
+    return this.http.post(`${environment.apiUrl}/display-myprofile`, JSON.stringify(request),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'});
   }
 }

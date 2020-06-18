@@ -4,6 +4,9 @@ import {DetailsDialogComponent} from '../details-dialog/details-dialog.component
 import {BusinessEntry} from '../../business-entry';
 import {ResultCardService} from './result-card.service';
 import {environment} from '../../../environments/environment';
+import {Subscription} from 'rxjs';
+import {AlertMessage} from '../../core/alert-message';
+import {AlertService} from '../../core/alert.service';
 
 @Component({
   selector: 'app-result-card',
@@ -19,16 +22,25 @@ export class ResultCardComponent implements OnInit {
   country: string; // Card country text.
   city: string; // Card city text.
   imgPath: string; // Card preview image path.
-  jsonData; // Json data for the request to API
-  user:string; // Email of current user
-  favorite = false; //it shows if the workout entry has been added in favorites successfully and
-  categoryBusiness: string;
-  //in this way the empty heart icon changes to full heart icon
+  mail: string; // Email of current user
 
-  constructor(public dialog: MatDialog, private resultCardService: ResultCardService) {
+  favorite = false; // Whether the result card has been marked as a favorite from the current user or not
+
+  alertSubscription: Subscription;
+  alertMessage: AlertMessage;
+
+  constructor(public dialog: MatDialog, private resultCardService: ResultCardService, private alertService: AlertService) {
   }
 
   ngOnInit(): void {
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
     // Load data from businessData into the result card object's properties.
     this.title = this.businessData.name;
 
@@ -47,10 +59,35 @@ export class ResultCardComponent implements OnInit {
         break;
     }
 
+    // console.log(JSON.parse(sessionStorage.getItem('currentUser')));
+    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.businessData._id);
+
     this.country = this.businessData.country;
     this.city = this.businessData.city;
     this.imgPath = environment.apiUrl + '/uploads/' + this.businessData.imgPath;
-    console.log("RESULT CARD imgPath: ", this.imgPath);
+  }
+
+  /**
+   * Called when a user adds or removes favorites from his preferences, in order to update
+   * the local storage user data with the latest input from the Data Base.
+   */
+  updateUserData() {
+    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
+    this.resultCardService.updateUser(request).toPromise().then(
+      data => {
+        sessionStorage.setItem('currentUser', JSON.stringify(data));
+      },
+
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+      });
   }
 
   /**
@@ -70,32 +107,53 @@ export class ResultCardComponent implements OnInit {
       }
     });
   }
-  onClick(){
-    this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user = this.jsonData.email;
-    switch (this.category) {
-      case 'Gym':
-        this.categoryBusiness = 'gym';
-        break;
 
-      case 'Personal Trainer':
-        this.categoryBusiness = 'personal trainer';
-        break;
-
-      case 'Fitness Shop':
-        this.categoryBusiness = 'fitness shop';
-        break;
-    }
-    var content = {
-      "user": { "email": this.user }, "new_favorite": {
-        "name": this.title, "category": this.categoryBusiness, "country": this.country, "city": this.city, 
-        "imgPath": this.businessData.imgPath}
+  onFavoriteClick() {
+    const request = {
+      user: {
+        _id: JSON.parse(sessionStorage.getItem('currentUser'))._id
+      },
+      favorite_id: this.businessData._id
     };
-    this.resultCardService.addFavoritePlace(content).toPromise().then(data => {
-      this.favorite = true;
-    },
-    error=>{
 
-    });
+    if (!this.favorite) {
+      // The card is currently not selected as a user favorite, so the user requested an addition
+      this.resultCardService.addFavoriteBusiness(request).toPromise().then(
+
+        data => {
+          this.favorite = true;
+        },
+
+        error => {
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof(error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
+            this.alertService.error(error);
+          }
+        });
+    } else {
+      // The card is currently selected as a user favorite, so the user requested a removal
+      this.resultCardService.removeFavoriteBusiness(request).toPromise().then(
+
+        data => {
+          this.favorite = false;
+        },
+
+        error => {
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof(error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
+            this.alertService.error(error);
+          }
+        });
+    }
+    // Update logged in user's data after adding or removing favorites.
+    this.updateUserData();
   }
 }
