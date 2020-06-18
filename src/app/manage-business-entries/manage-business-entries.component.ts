@@ -49,11 +49,10 @@ export class ManageBusinessEntriesComponent implements OnInit {
   result: boolean;
   i: number;
   content;
-  mySubscription;
-  
+
 
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog,
-    private alertService: AlertService, private router:Router) {
+              private alertService: AlertService, private router: Router) {
     }
 
   /** Method used to change the dialog's height and width according to
@@ -89,11 +88,6 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
   }
-  ngOnDestroy(){
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
-  }
 
   /**
    * Method called when a key is pressed inside the Filter input field of the UI.
@@ -124,7 +118,14 @@ export class ManageBusinessEntriesComponent implements OnInit {
         this.dataSource.data = this.businessData;
       },
       error => {
-        this.alertService.error(error.errror);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 
@@ -157,12 +158,19 @@ export class ManageBusinessEntriesComponent implements OnInit {
       if (this.result === true) {
         this.manageBusinessEntriesService.updateEntry(result.details).toPromise().then(data => {
           this.getBusinessEntries();
-          this.dataSource.paginator = this.paginator; 
+          this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.alertService.success(data);
         },
           error => {
-            this.alertService.error(error.error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof(error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
       }
     });
@@ -178,12 +186,19 @@ export class ManageBusinessEntriesComponent implements OnInit {
         if (this.result === true) {
           this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
             this.getBusinessEntries();
-            this.dataSource.paginator = this.paginator; 
+            this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.alertService.success(data);
           },
             error => {
-              this.alertService.error(error.error);
+              // If error is not a string received from the API, handle the ProgressEvent
+              // returned due to the inability to connect to the API by printing an appropriate
+              // warning message
+              if (typeof(error) !== 'string') {
+                this.alertService.error('Error: No connection to the API');
+              } else {
+                this.alertService.error(error);
+              }
             });
         }
       });
@@ -195,17 +210,23 @@ export class ManageBusinessEntriesComponent implements OnInit {
     for (this.i = 0; this.i < this.selection.selected.length; this.i++) {
       this.selected[this.i] = this.selection.selected[this.i].email;
     }
-    this.content={email: this.selected};
-    this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data =>
-    {
+    this.content = {email: this.selected};
+    this.manageBusinessEntriesService.deleteEntries(this.content).toPromise().then(data => {
       this.getBusinessEntries();
-      this.dataSource.paginator = this.paginator; 
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.alertService.success(data);
       this.alertService.success(data);
     },
     error => {
-      this.alertService.error(error.errror);
+      // If error is not a string received from the API, handle the ProgressEvent
+      // returned due to the inability to connect to the API by printing an appropriate
+      // warning message
+      if (typeof(error) !== 'string') {
+        this.alertService.error('Error: No connection to the API');
+      } else {
+        this.alertService.error(error);
+      }
     });
   }
 }

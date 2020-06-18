@@ -138,8 +138,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
-            this.loading = false;
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof(error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
 
       // Reset form group's input fields
