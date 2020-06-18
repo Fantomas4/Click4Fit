@@ -220,14 +220,14 @@ class MongoDB:
                                         "user": {
                                             "_id": '<user_id>'
                                         },
-                                        "new_favorite_id": "<business_id>"
+                                        "favorite_id": "<business_id>"
                                     }
                             user must contain an unique identifier (_id or email)
         :return: True if successfull and False if something failed in mongo
         """
         if "user" not in favorite_query:
             raise ValueError("favorite_query doesn't contain user")
-        if "new_favorite_id" not in favorite_query:
+        if "favorite_id" not in favorite_query:
             raise ValueError("favorite_query doesn't contain new favorite business id")
 
         user: dict = favorite_query["user"]
@@ -239,7 +239,7 @@ class MongoDB:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
         if not self.userDB.get(user).found:
             raise ValueError("user doesn't exist")
-        return self.userDB.addFavorite(user, "favoriteBusiness", favorite_query["new_favorite_id"])
+        return self.userDB.addFavorite(user, "favoriteBusiness", favorite_query["favorite_id"])
     
     def addFavoriteWorkout(self, favorite_query: dict):
         """
@@ -248,7 +248,7 @@ class MongoDB:
                                         "user": {
                                             "email"    : 'nikosalex@gmail.com',
                                         },
-                                        "new_favorite_id": "<workout_id>"
+                                        "favorite_id": "<workout_id>"
                                     }
                             user must contain an unique identifier (_id or email)
         :return: True if successfull and False if something failed in mongo
@@ -267,7 +267,63 @@ class MongoDB:
             raise ValueError("user doesn't contain a unique identifier (email or _id)")
         if not self.userDB.get(user).found:
             raise ValueError("user doesn't exist")
-        return self.userDB.addFavorite(user, "favoriteWorkout", favorite_query["new_favorite_id"])
+        return self.userDB.addFavorite(user, "favoriteWorkout", favorite_query["favorite_id"])
+
+    def removeFavoriteBusiness(self, favorite_query: dict):
+        """
+        :param favorite_query: a dict containing the user and the favorite_id.
+                            Example: favorite_query = {
+                                        "user": {
+                                            "_id": "<user_id>"
+                                        },
+                                        "favorite_id": "<business_id>"
+                                    }
+                            user must contain an unique identifier (_id or email)
+        :return: True if successfull and False if something failed in mongo
+        """
+        if "user" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain user")
+        if "favorite_id" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain new favorite business id")
+
+        user: dict = favorite_query["user"]
+
+        # validate user
+        self.validator.validate(user, "user")
+        # make sure necessary attributes exist and are correct
+        if "email" not in user and "_id" not in user:
+            raise ValueError("user doesn't contain a unique identifier (email or _id)")
+        if not self.userDB.get(user).found:
+            raise ValueError("user doesn't exist")
+        return self.userDB.removeFavorite(user, "favoriteBusiness", favorite_query["favorite_id"])
+
+    def removeFavoriteWorkout(self, favorite_query: dict):
+        """
+        :param favorite_query: a dict containing the user and the favorite_id.
+                            Example: favorite_query = {
+                                        "user": {
+                                            "_id": "<user_id>"
+                                        },
+                                        "favorite_id": "<workout_id>"
+                                    }
+                            user must contain an unique identifier (_id or email)
+        :return: True if successfull and False if something failed in mongo
+        """
+        if "user" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain user")
+        if "favorite_id" not in favorite_query:
+            raise ValueError("favorite_query doesn't contain new favorite workout id")
+
+        user: dict = favorite_query["user"]
+
+        # validate user
+        self.validator.validate(user, "user")
+        # make sure necessary attributes exist and are correct
+        if "email" not in user and "_id" not in user:
+            raise ValueError("user doesn't contain a unique identifier (email or _id)")
+        if not self.userDB.get(user).found:
+            raise ValueError("user doesn't exist")
+        return self.userDB.removeFavorite(user, "favoriteWorkout", favorite_query["favorite_id"])
     
     def updateUser(self, new_user: dict):
         """
