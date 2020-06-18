@@ -160,7 +160,13 @@ def updateMyprofile():
     details=request.get_json() #get modifying details
     #connection with mongo sending the details and modifying the profile's details
     try:
-        user_wrapper: UserWrapper = MongoDB.updateUser(details)
+        if details["passwordChanged"] is True and details["fieldChanged"] is True:
+            user_wrapper_password: UserWrapper = MongoDB.changeUserPassword(details["passwordJson"])
+            user_wrapper_field : UserWrapper = MongoDB.updateUser(details["userJson"])
+        elif details["passwordChanged"] is True and details["fieldChanged"] is False:
+            user_wrapper_password: UserWrapper = MongoDB.changeUserPassword(details["passwordJson"])
+        elif details["passwordChanged"] is False and details["fieldChanged"] is True:
+            user_wrapper_field : UserWrapper = MongoDB.updateUser(details["userJson"])  
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
@@ -168,14 +174,28 @@ def updateMyprofile():
     except:
         return "Bad error", 500
     else:
-        if user_wrapper.user is None and not user_wrapper.operationDone and not user_wrapper.found:
-            return "Something is wrong with the database", 500
-        if user_wrapper.user is dict and not user_wrapper.operationDone and not user_wrapper.found:
-            return "User does not exist", 404
-        if not user_wrapper.operationDone and user_wrapper.found:
-            return "Wrong old password", 401
-        return jsonify("Save successful")
-
+        if details["passwordChanged"] is False and details["fieldChanged"] is True:
+            if user_wrapper_field.user is None and not user_wrapper_field.operationDone and not user_wrapper_field.found:
+                return "Something is wrong with the database", 500
+            if user_wrapper_field.user is dict and not user_wrapper_field.operationDone and not user_wrapper_field.found:
+                return "User does not exist", 404
+            return jsonify("Save successful")
+        elif details["passwordChanged"] is True and details["fieldChanged"] is False:
+            if user_wrapper_password.user is None:
+                return "Something is wrong with the database", 500
+            if user_wrapper_password.user is dict and not user_wrapper_password.operationDone and not user_wrapper_password.found:
+                return "User does not exist", 404
+            if not user_wrapper_password.operationDone and user_wrapper_password.found:
+                return "Wrong old password", 401
+            return jsonify("Save successful")
+        elif details["passwordChanged"] is True and details["fieldChanged"] is True:
+            if (user_wrapper_field.user is None and not user_wrapper_field.operationDone and not user_wrapper_field.found) or (user_wrapper_password.user is None):
+                return "Something is wrong with the database", 500
+            if (user_wrapper_password.user is dict and not user_wrapper_password.operationDone and not user_wrapper_password.found) or (user_wrapper_field.user is dict and not user_wrapper_field.operationDone and not user_wrapper_field.found):
+                return "User does not exist", 404
+            if not user_wrapper_password.operationDone and user_wrapper_password.found:
+                return "Wrong old password", 401
+            return jsonify("Save successful")
 
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
 def deleteMyprofile():

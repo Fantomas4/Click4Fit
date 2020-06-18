@@ -6,6 +6,7 @@ import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 import { DeleteDialogMessageComponent } from './delete-dialog-message/delete-dialog-message.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 interface AlertMessage {
   type: string;
@@ -24,7 +25,7 @@ export class GenericErrorStateMatcher implements ErrorStateMatcher {
 })
 export class MyprofileComponent implements OnInit {
 
-  entryForm = new FormGroup({
+  firstEntryForm = new FormGroup({
     name: new FormControl('', [
       Validators.required
     ]),
@@ -38,6 +39,8 @@ export class MyprofileComponent implements OnInit {
     birthDate: new FormControl('', [
       Validators.required,
     ]),
+  })
+  secondEntryForm = new FormGroup({
     password: new FormControl('', [
       Validators.required
     ]),
@@ -59,6 +62,8 @@ export class MyprofileComponent implements OnInit {
   alertSubscription: Subscription;
   deleteProfile: boolean; // it contains the choice of user about deleting his profile or not
   genericErrorStateMatcher = new GenericErrorStateMatcher();
+  passwordChanged: boolean = false;
+  fieldChanged: boolean = false;
 
   constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>,
     private alertService: AlertService, public dialog: MatDialog) { }
@@ -76,16 +81,18 @@ export class MyprofileComponent implements OnInit {
     this.user = { "email": this.jsonData.email };
     this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
       this.results = data.user;
-      this.entryForm.setValue({
+      this.firstEntryForm.setValue({
         name: this.results.name,
         lastName: this.results.surname,
         email: this.results.email,
-        birthDate: this.results.birthdate,
+        birthDate: new Date('07.02.1997')
+      });
+      this.password = this.results.password;
+      this.secondEntryForm.setValue({
         password: null,
         newPassword: null,
         repeatedPassword: null
-      });
-      this.password = this.results.password;
+      })
     },
       error => { // if the request returns an error, it shows an alert message with the relevant content
         this.alertService.error(error);
@@ -113,27 +120,86 @@ export class MyprofileComponent implements OnInit {
   }
   /*Updates the user's details in the database according to his changes*/
   onClickUpdate() {
-    if (this.entryForm.valid) {
-      this.newPassword = this.entryForm.get('newPassword').value;
-      this.repeatedPassword = this.entryForm.get('repeatedPassword').value;
-      if (this.newPassword != this.repeatedPassword) {
-        // if the user didn't give same new password and new repeated password, 
-        //it shows an alert message with the relevant content
-        this.alertService.error('New password and new repeated password are not same');
-      }
-      else {
-        var content = {
-          "_id": this.jsonData._id, "email": this.entryForm.get('email').value, "name": this.entryForm.get('name').value,
-          "surname": this.entryForm.get('lastName').value, "birthdate": this.entryForm.get('birthDate').value,
-          "password": this.entryForm.get('password').value
+    var content;
+    if (this.secondEntryForm.dirty) {
+      console.log('no');
+      if (this.secondEntryForm.valid) {
+        console.log('now');
+        this.newPassword = this.secondEntryForm.get('newPassword').value;
+        this.repeatedPassword = this.secondEntryForm.get('repeatedPassword').value;
+        if (this.newPassword != this.repeatedPassword) {
+          // if the user didn't give same new password and new repeated password, 
+          //it shows an alert message with the relevant content
+          this.alertService.error('New password and new repeated password are not same');
         }
-        this.myprofileService.updateChanges(content).toPromise().then(data => {
-          this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
-        },
-          error => { // if the request returns an error, it shows an alert message with the relevant content
-            this.alertService.error(error);
-          });
+        else {
+          this.passwordChanged = true;
+          console.log('yes');
+        }
       }
+      else{
+        this.secondEntryForm.get('repeatedPassword').updateValueAndValidity();
+      }
+    }
+    if (this.firstEntryForm.dirty) {
+      if (this.firstEntryForm.valid) {
+        this.fieldChanged = true;
+        console.log('yes2');
+      }
+    }
+    if (this.passwordChanged == true && this.fieldChanged == true) {
+      content = {
+        "passwordChanged": true, "fieldChanged": true,
+        "userJson": {
+          "_id": this.jsonData._id, "email": this.firstEntryForm.get('email').value, "name": this.firstEntryForm.get('name').value,
+          "surname": this.firstEntryForm.get('lastName').value, "birthdate": this.firstEntryForm.get('birthDate').value,
+          "password": this.secondEntryForm.get('password').value
+        },
+        "passwordJson": {
+          "user": { "email": this.firstEntryForm.get('email').value, "password": this.secondEntryForm.get('password').value },
+          "new_password": this.secondEntryForm.get('newPassword').value
+        }
+      }
+      this.myprofileService.updateChanges(content).toPromise().then(data => {
+        this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
+      },
+        error => { // if the request returns an error, it shows an alert message with the relevant content
+          this.alertService.error(error);
+        });
+    }
+    else if (this.passwordChanged == false && this.fieldChanged == true) {
+      content = {
+        "passwordChanged": false, "fieldChanged": true,
+        "userJson": {
+          "_id": this.jsonData._id, "email": this.firstEntryForm.get('email').value, "name": this.firstEntryForm.get('name').value,
+          "surname": this.firstEntryForm.get('lastName').value, "birthdate": this.firstEntryForm.get('birthDate').value,
+          "password": this.secondEntryForm.get('password').value
+        }
+      }
+      this.myprofileService.updateChanges(content).toPromise().then(data => {
+        this.alertService.success(data);
+      },
+        error => {
+          this.alertService.error(error);
+        });
+    }
+    else if (this.firstEntryForm.valid && this.secondEntryForm.valid && this.passwordChanged == true && this.fieldChanged == false) {
+      content = {
+        "passwordChanged": true, "fieldChanged": false,
+        "passwordJson": {
+          "user": { "email": this.firstEntryForm.get('email').value, "password": this.secondEntryForm.get('password').value },
+          "new_password": this.secondEntryForm.get('newPassword').value
+        }
+      };
+      this.myprofileService.updateChanges(content).toPromise().then(data => {
+        this.alertService.success(data);
+      },
+        error => {
+          this.alertService.error(error);
+        });
+    }
+    else {
+      this.alertService.error("You haven't changed anything");
     }
   }
 
