@@ -28,6 +28,21 @@ mat-drawer-content {
   width: auto;
 }
 
+#alert-message {
+  text-align: center;
+  font-style: italic;
+  font-size: large;
+}
+.alert-error-text {
+  color: red;
+  font-weight: bold;
+}
+
+.alert-success-text {
+  color: green;
+  font-weight: bold;
+}
+
 /* ============= START: Styling concerning search container and its elements ============= */
 .search-form {
   margin: auto;
@@ -61,16 +76,6 @@ mat-drawer-content {
 .button-container {
   display: flex;
   margin-right: 0;
-}
-
-button {
-  /* Just a little styling to make it pretty */
-  font-weight: bold;
-  font-size: medium;
-  width: 4em;
-  border:1px solid #2E7D32;
-  background: #2E7D32;
-  color:white;
 }
 
 #search-button {
