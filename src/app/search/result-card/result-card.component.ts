@@ -59,7 +59,6 @@ export class ResultCardComponent implements OnInit {
         break;
     }
 
-    // console.log(JSON.parse(sessionStorage.getItem('currentUser')));
     this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.businessData._id);
 
     this.country = this.businessData.country;
@@ -73,9 +72,24 @@ export class ResultCardComponent implements OnInit {
    */
   updateUserData() {
     const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
-    this.resultCardService.updateUser(request).toPromise().then(
+    this.resultCardService.updateUser(request).subscribe(
+
       data => {
-        sessionStorage.setItem('currentUser', JSON.stringify(data));
+        // @ts-ignore
+        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
+        const loggedInUserData = {
+          _id,
+          name,
+          surname,
+          email,
+          privilegeLevel,
+          token,
+          favoriteBusiness,
+          favoriteWorkout
+        };
+
+        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
+
       },
 
       error => {
