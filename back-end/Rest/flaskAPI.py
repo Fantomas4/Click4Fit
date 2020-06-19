@@ -1,4 +1,4 @@
-import os
+﻿import os
 from flask import Flask, jsonify, request, json, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -6,7 +6,7 @@ from pprint import pprint
 from time import time
 
 import sys
-sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
+sys.path.insert(0, "D:\\WebstormProjects\\Click4Fit\\back-end")
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper
@@ -68,7 +68,9 @@ def login():
             "surname": user_wrapper.user["surname"],
             "email": user_wrapper.user["email"],
             "privilegeLevel": user_wrapper.user["privilegeLevel"],
-            "token": user_wrapper.user["token"]
+            "token": user_wrapper.user["token"],
+            "favoriteBusiness": user_wrapper.user["favoriteBusiness"],
+            "favoriteWorkout": user_wrapper.user["favoriteWorkout"]
         })
 
 
@@ -247,21 +249,47 @@ def getCities():
     return jsonify(data=cities_list)
 
 
-@app.route("/api/add-favorite-place", methods=['POST','GET'])
-def addFavoritePlace():
-    place=request.get_json() #get favorite place
-    #connection with mongo sending the place and adding to favorites
+@app.route("/api/add-favorite-business", methods=['POST','GET'])
+def addFavoriteBusiness():
+    business = request.get_json()
     try:
-        favorite = MongoDB.addFavoriteBusiness(place)
+        favorite = MongoDB.addFavoriteBusiness(business)
     except ValueError as value_err:
         return str(value_err), 422
     except:
         return "Bad error", 500
     else:
-        if favorite is False:
+        if not favorite:
             return "Couldn't add entry", 400
         return jsonify("Addition successful")
 
+@app.route("/api/remove-favorite-business", methods=['POST','GET'])
+def removeFavoriteBusiness():
+    business = request.get_json()
+    try:
+        favorite = MongoDB.removeFavoriteBusiness(business)
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if not favorite:
+            return "Couldn't remove entry", 400
+        return jsonify("Business removal successful")
+
+@app.route("/api/remove-favorite-workout", methods=['POST','GET'])
+def removeFavoriteWorkout():
+    business = request.get_json()
+    try:
+        favorite = MongoDB.removeFavoriteWorkout(business)
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if not favorite:
+            return "Couldn't remove entry", 400
+        return jsonify("Workout removal successful")
 
 ####################################### Workout ######################################
 @app.route("/api/workouts", methods=["POST"])
@@ -356,8 +384,8 @@ def addFavoriteWorkout():
     except:
         return "Bad error", 500
     else:
-        if favorite is False:
-            return ("Couldn't add entry"), 400
+        if not favorite:
+            return "Couldn't add entry", 400
         return jsonify("Addition successful")
 
 

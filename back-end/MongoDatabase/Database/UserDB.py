@@ -168,20 +168,34 @@ class UserDB:
         else:
             return favorites
     
-    def addFavorite(self, user: dict, favorite: str, new_favorite: str):
+    def addFavorite(self, user: dict, favorite: str, favorite_id: str):
         """
         :param user:
         :param favorite:
-        :param new_favorite:
+        :param favorite_id:
         :return:
         """
         try:
-            self.db.update_one(user, {"$push": {favorite: new_favorite}})
+            self.db.update_one(user, {"$push": {favorite: favorite_id}})
         except:
             return False
         else:
             return True
-        
+    
+    def removeFavorite(self, user: dict, favorite: str, favorite_id: str):
+        """
+        :param user:
+        :param favorite:
+        :param favorite_id:
+        :return:
+        """
+        try:
+            self.db.update_one(user, {"$pull": {favorite: favorite_id}})
+        except:
+            return False
+        else:
+            return True
+
     def addBusiness(self, user: dict, new_business: str):
         """
         :param user:

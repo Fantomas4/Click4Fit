@@ -4,6 +4,9 @@ import {BusinessEntry} from '../business-entry';
 import {FormControl} from '@angular/forms';
 import {LocationAutocompleteComponent} from './location-autocomplete/location-autocomplete.component';
 import {AlertService} from '../core/alert.service';
+import {Subscription} from 'rxjs';
+import {AlertMessage} from '../core/alert-message';
+
 
 
 @Component({
@@ -16,6 +19,9 @@ export class SearchComponent implements OnInit {
   @ViewChild(LocationAutocompleteComponent) locationAutocomplete; // Used to access LocationAutocompleteComponent
 
   searchKeywords = new FormControl();
+
+  alertSubscription: Subscription;
+  alertMessage: AlertMessage;
 
   searchResults: BusinessEntry[];
 
@@ -41,8 +47,14 @@ export class SearchComponent implements OnInit {
   constructor(private searchService: SearchService, private alertService: AlertService) { }
 
   ngOnInit(): void {
-    // TEMP! FOR DEBUGGING ONLY!!!
-    // this.getResults();
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
   }
 
   getResults() {
@@ -50,20 +62,23 @@ export class SearchComponent implements OnInit {
     this.searchService.getResults({keywords: this.searchKeywords.value === null ? '' : this.searchKeywords.value,
       category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
       city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
-        res => {
-        this.searchResults = res.body.data;
-    },
 
-      error => {
-        // If error is not a string received from the API, handle the ProgressEvent
-        // returned due to the inability to connect to the API by printing an appropriate
-        // warning message
-        if (typeof(error) !== 'string') {
-          this.alertService.error('Error: No connection to the API');
-        } else {
-          this.alertService.error(error);
-        }
-    });
+    res => {
+              this.searchResults = res.body.data;
+              // console.log(res.body.data);
+              this.alertService.success('Found ' + res.body.data.length + ' results...');
+            },
+
+    error => {
+              // If error is not a string received from the API, handle the ProgressEvent
+              // returned due to the inability to connect to the API by printing an appropriate
+              // warning message
+              if (typeof(error) !== 'string') {
+                this.alertService.error('Error: No connection to the API');
+              } else {
+                this.alertService.error(error);
+              }
+            });
 
   }
 
