@@ -6,7 +6,7 @@ import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 import { DeleteDialogMessageComponent } from './delete-dialog-message/delete-dialog-message.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import * as moment from 'moment';
+
 
 interface AlertMessage {
   type: string;
@@ -64,6 +64,9 @@ export class MyprofileComponent implements OnInit {
   genericErrorStateMatcher = new GenericErrorStateMatcher();
   passwordChanged: boolean = false;
   fieldChanged: boolean = false;
+  birthDate: number;
+  birth: any;
+  date;
 
   constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>,
     private alertService: AlertService, public dialog: MatDialog) { }
@@ -80,12 +83,18 @@ export class MyprofileComponent implements OnInit {
     this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
     this.user = { "email": this.jsonData.email };
     this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
-      this.results = data.user;
+    this.results = data.user;
+    const separators = ['-', '/', '\\\.', ','];
+    console.log(this.results.birthdate);
+    const dateTokens = this.results.birthdate.split(new RegExp(separators.join('|'), 'g'));
+    this.date=new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0]));
+    console.log(this.date);
+    console.log(this.results.birthdate);
       this.firstEntryForm.setValue({
         name: this.results.name,
         lastName: this.results.surname,
         email: this.results.email,
-        birthDate: new Date('07.02.1997')
+        birthDate: new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0]))
       });
       this.password = this.results.password;
       this.secondEntryForm.setValue({
@@ -97,6 +106,7 @@ export class MyprofileComponent implements OnInit {
       error => { // if the request returns an error, it shows an alert message with the relevant content
         this.alertService.error(error);
       });
+      console.log(this.firstEntryForm.get('birthDate').value);
   }
 
   /*Shows modal message after click on delete account button*/
@@ -121,21 +131,18 @@ export class MyprofileComponent implements OnInit {
   /*Updates the user's details in the database according to his changes*/
   onClickUpdate() {
     var content;
-    if (this.secondEntryForm.valid) {
+    if (this.secondEntryForm.dirty && !this.secondEntryForm.valid) {
       console.log('no');
-      if (this.secondEntryForm.dirty) {
-        console.log('now');
-        this.newPassword = this.secondEntryForm.get('newPassword').value;
-        this.repeatedPassword = this.secondEntryForm.get('repeatedPassword').value;
-        if (this.newPassword != this.repeatedPassword) {
-          // if the user didn't give same new password and new repeated password, 
-          //it shows an alert message with the relevant content
-          this.alertService.error('New password and new repeated password are not same');
-        }
-        else {
-          this.passwordChanged = true;
-          console.log('yes');
-        }
+      this.newPassword = this.secondEntryForm.get('newPassword').value;
+      this.repeatedPassword = this.secondEntryForm.get('repeatedPassword').value;
+      if (this.newPassword != this.repeatedPassword) {
+        // if the user didn't give same new password and new repeated password, 
+        //it shows an alert message with the relevant content
+        this.alertService.error('New password and new repeated password are not same');
+      }
+      else {
+        this.passwordChanged = true;
+        console.log('yes');
       }
     }
     if (this.firstEntryForm.valid) {
@@ -144,6 +151,13 @@ export class MyprofileComponent implements OnInit {
         console.log('yes2');
       }
     }
+    else{
+      console.log('no2');
+      this.firstEntryForm.updateValueAndValidity();
+    }
+    const separators = ['-', '/', '\\\.', ','];
+    this.birth=this.firstEntryForm.get('birthDate').value;
+    console.log(this.birth);
     if (this.passwordChanged == true && this.fieldChanged == true) {
       content = {
         "passwordChanged": true, "fieldChanged": true,
@@ -165,11 +179,12 @@ export class MyprofileComponent implements OnInit {
         });
     }
     else if (this.passwordChanged == false && this.fieldChanged == true) {
+      console.log(this.birth);
       content = {
         "passwordChanged": false, "fieldChanged": true,
         "userJson": {
           "_id": this.jsonData._id, "email": this.firstEntryForm.get('email').value, "name": this.firstEntryForm.get('name').value,
-          "surname": this.firstEntryForm.get('lastName').value, "birthdate": this.firstEntryForm.get('birthDate').value,
+          "surname": this.firstEntryForm.get('lastName').value, "birthdate": this.birth,
           "password": this.secondEntryForm.get('password').value
         }
       }
