@@ -51,26 +51,26 @@
             </mat-error>
           </mat-form-field>
         </tr>
+        <tr>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" name="password"
+              [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-error *ngIf="firstEntryForm.get('password').hasError('required')">
+              Please enter your old password
+            </mat-error>
+          </mat-form-field>
+        </tr>
       </table>
     </form>
     <form [formGroup]="secondEntryForm" class="form" id="secondEntryForm">
       <table class="table" cellspacing="0">
         <tr>
           <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" name="password"
-              [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="secondEntryForm.get('password').hasError('required')">
-              Please enter your old password
-            </mat-error>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field>
             <mat-label>New password</mat-label>
             <input matInput type="password" formControlName="newPassword" name="newPassword"
               [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="secondEntryForm.get('password').value!=null && secondEntryForm.get('newPassword').hasError('required')">
+            <mat-error *ngIf="secondEntryForm.get('newPassword').hasError('required')">
               Please enter a new password
             </mat-error>
           </mat-form-field>
@@ -80,7 +80,7 @@
             <mat-label>Repeated password</mat-label>
             <input matInput type="password" formControlName="repeatedPassword" name="repeatedPassword"
               [errorStateMatcher]="genericErrorStateMatcher" required>
-            <mat-error *ngIf="secondEntryForm.get('password').value!=null && secondEntryForm.get('repeatedPassword').hasError('required')">
+            <mat-error *ngIf="secondEntryForm.get('repeatedPassword').hasError('required')">
               Please enter your new password again
             </mat-error>
           </mat-form-field>

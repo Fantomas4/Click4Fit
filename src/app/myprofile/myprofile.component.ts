@@ -6,6 +6,7 @@ import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 import { DeleteDialogMessageComponent } from './delete-dialog-message/delete-dialog-message.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 
 interface AlertMessage {
@@ -39,11 +40,11 @@ export class MyprofileComponent implements OnInit {
     birthDate: new FormControl('', [
       Validators.required,
     ]),
-  })
-  secondEntryForm = new FormGroup({
     password: new FormControl('', [
       Validators.required
     ]),
+  })
+  secondEntryForm = new FormGroup({
     newPassword: new FormControl('', [
       Validators.required
     ]),
@@ -64,9 +65,10 @@ export class MyprofileComponent implements OnInit {
   genericErrorStateMatcher = new GenericErrorStateMatcher();
   passwordChanged: boolean = false;
   fieldChanged: boolean = false;
-  birthDate: number;
-  birth: any;
-  date;
+  name: any;
+  lastName: any;
+  email: any;
+  birthDate: any;
 
   constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>,
     private alertService: AlertService, public dialog: MatDialog) { }
@@ -83,22 +85,22 @@ export class MyprofileComponent implements OnInit {
     this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
     this.user = { "email": this.jsonData.email };
     this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
-    this.results = data.user;
-    const separators = ['-', '/', '\\\.', ','];
-    console.log(this.results.birthdate);
-    const dateTokens = this.results.birthdate.split(new RegExp(separators.join('|'), 'g'));
-    this.date=new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0]));
-    console.log(this.date);
-    console.log(this.results.birthdate);
+      this.results = data.user;
+      const separators = ['-', '/', '\\\.', ','];
+      const dateTokens = this.results.birthdate.split(new RegExp(separators.join('|'), 'g'));
       this.firstEntryForm.setValue({
         name: this.results.name,
         lastName: this.results.surname,
         email: this.results.email,
-        birthDate: new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0]))
+        birthDate: new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])),
+        password: null
       });
       this.password = this.results.password;
+      this.name = this.results.name;
+      this.lastName = this.results.surname;
+      this.email = this.results.email;
+      this.birthDate = this.results.birthdate;
       this.secondEntryForm.setValue({
-        password: null,
         newPassword: null,
         repeatedPassword: null
       })
@@ -106,7 +108,6 @@ export class MyprofileComponent implements OnInit {
       error => { // if the request returns an error, it shows an alert message with the relevant content
         this.alertService.error(error);
       });
-      console.log(this.firstEntryForm.get('birthDate').value);
   }
 
   /*Shows modal message after click on delete account button*/
@@ -131,43 +132,43 @@ export class MyprofileComponent implements OnInit {
   /*Updates the user's details in the database according to his changes*/
   onClickUpdate() {
     var content;
-    if (this.secondEntryForm.dirty && !this.secondEntryForm.valid) {
-      console.log('no');
+    if (this.secondEntryForm.get('newPassword').value != null || this.secondEntryForm.get('repeatedPassword').value != null) {
       this.newPassword = this.secondEntryForm.get('newPassword').value;
       this.repeatedPassword = this.secondEntryForm.get('repeatedPassword').value;
-      if (this.newPassword != this.repeatedPassword) {
+      if (this.newPassword != this.repeatedPassword && this.newPassword != null && this.repeatedPassword != null) {
         // if the user didn't give same new password and new repeated password, 
         //it shows an alert message with the relevant content
         this.alertService.error('New password and new repeated password are not same');
       }
-      else {
+      else if (this.newPassword == this.repeatedPassword && this.newPassword != null && this.repeatedPassword != null) {
         this.passwordChanged = true;
-        console.log('yes');
+      }
+      else if (this.newPassword != null && this.repeatedPassword == null) {
+        this.alertService.error('Enter the new password again');
+      }
+      else if (this.newPassword == null && this.repeatedPassword != null) {
+        this.alertService.error('Enter the new password ');
       }
     }
-    if (this.firstEntryForm.valid) {
-      if (this.firstEntryForm.dirty) {
+    if (this.firstEntryForm.valid && (this.firstEntryForm.get('name').value != this.name || this.firstEntryForm.get('lastName').value != this.lastName
+      || new DatePipe('en').transform(this.firstEntryForm.get('birthDate').value, 'dd/MM/yyyy') != this.birthDate || this.firstEntryForm.get('email').value != this.email)) {
+      if (this.password != this.firstEntryForm.get('password').value) {
+        this.alertService.error('Wrong password');
+      }
+      else {
         this.fieldChanged = true;
-        console.log('yes2');
       }
     }
-    else{
-      console.log('no2');
-      this.firstEntryForm.updateValueAndValidity();
-    }
-    const separators = ['-', '/', '\\\.', ','];
-    this.birth=this.firstEntryForm.get('birthDate').value;
-    console.log(this.birth);
     if (this.passwordChanged == true && this.fieldChanged == true) {
       content = {
         "passwordChanged": true, "fieldChanged": true,
         "userJson": {
           "_id": this.jsonData._id, "email": this.firstEntryForm.get('email').value, "name": this.firstEntryForm.get('name').value,
-          "surname": this.firstEntryForm.get('lastName').value, "birthdate": this.firstEntryForm.get('birthDate').value,
-          "password": this.secondEntryForm.get('password').value
+          "surname": this.firstEntryForm.get('lastName').value, "birthdate": new DatePipe('en').transform(this.firstEntryForm.get('birthDate').value, 'dd/MM/yyyy'),
+          "password": this.firstEntryForm.get('password').value
         },
         "passwordJson": {
-          "user": { "email": this.firstEntryForm.get('email').value, "password": this.secondEntryForm.get('password').value },
+          "user": { "email": this.firstEntryForm.get('email').value, "password": this.firstEntryForm.get('password').value },
           "new_password": this.secondEntryForm.get('newPassword').value
         }
       }
@@ -179,13 +180,12 @@ export class MyprofileComponent implements OnInit {
         });
     }
     else if (this.passwordChanged == false && this.fieldChanged == true) {
-      console.log(this.birth);
       content = {
         "passwordChanged": false, "fieldChanged": true,
         "userJson": {
           "_id": this.jsonData._id, "email": this.firstEntryForm.get('email').value, "name": this.firstEntryForm.get('name').value,
-          "surname": this.firstEntryForm.get('lastName').value, "birthdate": this.birth,
-          "password": this.secondEntryForm.get('password').value
+          "surname": this.firstEntryForm.get('lastName').value, "birthdate": new DatePipe('en').transform(this.firstEntryForm.get('birthDate').value, 'dd/MM/yyyy'),
+          "password": this.firstEntryForm.get('password').value
         }
       }
       this.myprofileService.updateChanges(content).toPromise().then(data => {
@@ -199,7 +199,7 @@ export class MyprofileComponent implements OnInit {
       content = {
         "passwordChanged": true, "fieldChanged": false,
         "passwordJson": {
-          "user": { "email": this.firstEntryForm.get('email').value, "password": this.secondEntryForm.get('password').value },
+          "user": { "email": this.firstEntryForm.get('email').value, "password": this.firstEntryForm.get('password').value },
           "new_password": this.secondEntryForm.get('newPassword').value
         }
       };
@@ -210,7 +210,9 @@ export class MyprofileComponent implements OnInit {
           this.alertService.error(error);
         });
     }
-    else if (!this.firstEntryForm.dirty && !this.secondEntryForm.dirty) {
+    else if ((this.firstEntryForm.get('name').value == this.name && this.firstEntryForm.get('lastName').value == this.lastName
+      && new DatePipe('en').transform(this.firstEntryForm.get('birthDate').value, 'dd/MM/yyyy') == this.birthDate && this.firstEntryForm.get('email').value == this.email)
+      && !this.secondEntryForm.dirty) {
       this.alertService.error("You haven't changed anything");
     }
   }
