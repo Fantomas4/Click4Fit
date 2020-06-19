@@ -141,17 +141,14 @@ export class ManageUserEntriesComponent implements OnInit {
     });
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        console.log('yes');
         const formData = new FormData();
         formData.append('_id', dialogRes.details._id);
         formData.append('name', dialogRes.details.name);
-        formData.append('surname', dialogRes.data.surname);
-        formData.append('email', dialogRes.data.email);
-        formData.append('birthdate', dialogRes.data.birthdate);
+        formData.append('surname', dialogRes.details.surname);
+        formData.append('email', dialogRes.details.email);
+        formData.append('birthdate', dialogRes.details.birthdate);
         this.manageUserEntriesService.updateEntry(formData).toPromise().then(data => {
-          console.log('what');
           this.getUsersEntries();
-          console.log('no');
           this.alertService.success('Entry updated successfully');
         },
           error => {

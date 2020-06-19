@@ -640,7 +640,7 @@ def manageUserDelete():
 
 @app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
 def manageUserModify():
-    user=request.get_json() #get modifying user's details
+    user = request.form.to_dict() #get modifying user's details
     #connection with mongo sending the details of modified entry
     try:
         user_wrapper: UserWrapper = MongoDB.updateUser(user)
@@ -651,7 +651,7 @@ def manageUserModify():
     except:
         return "Bad error", 500
     else:
-        if user_wrapper.user is None:
+        if type(user_wrapper.user) is not dict:
             return "Something is wrong with the database", 500
         if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
             return "Couldn't update user entry", 500

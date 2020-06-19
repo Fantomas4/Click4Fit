@@ -76,7 +76,7 @@
             <mat-error *ngIf="entryForm.get('businessEmail').hasError('required')">
               Please enter an e-mail
             </mat-error>
-            <mat-error *ngIf="entryForm.get('businessEmail').hasError('businessEmail')">
+            <mat-error *ngIf="entryForm.get('businessEmail').hasError('email')">
               Please enter a valid email address
             </mat-error>
           </mat-form-field>
@@ -89,7 +89,7 @@
             <mat-error *ngIf="entryForm.get('ownerEmail').hasError('required')">
               Please enter an e-mail
             </mat-error>
-            <mat-error *ngIf="entryForm.get('ownerEmail').hasError('ownerEmail')">
+            <mat-error *ngIf="entryForm.get('ownerEmail').hasError('email')">
               Please enter a valid email address
             </mat-error>
           </mat-form-field>
