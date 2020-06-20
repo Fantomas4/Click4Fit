@@ -135,7 +135,7 @@ export class ManageUserEntriesComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight-200).toString().concat('px'), minWidth: this.dialogMinWidth,
       maxWidth: this.dialogMaxWidth,
       data: { _id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
     });
