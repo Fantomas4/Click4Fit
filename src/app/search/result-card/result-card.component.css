@@ -1,11 +1,11 @@
 
->>> .mat-card-header-text {
+.mat-card-header-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
->>> .mat-card-title {
+.mat-card-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
