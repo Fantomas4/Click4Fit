@@ -25,70 +25,77 @@ h1{
   font-size:23px;
   text-align:center;
 }
-/*!* The second card about favorites *!*/
-.favorites{
-  margin:0 auto;
-  margin-top:5%;
-  margin-bottom:5%;
-  display:block;
-  width:80%;
-  height:160%;
-  background-color: lightgray;
-  border-radius:30px;
-  box-shadow: 10px 10px 5px grey;
+
+.mat-expansion-panel {
+  margin: 5%;
 }
-.favorites-title{
-  text-align:center;
-  font-size:30px;
-}
-.icon{
-  color:darkred;
-}
-/*!* The subcard which contains favorite workout or places *!*/
-.content{
-  display:flex;
-  flex-direction: row;
-}
-/*!* The subcard of favorite workout *!*/
-.workout{
-  width:34%;
-  height:50%;
-  margin:0 auto;
-  display:block;
-  background-color: white;
-}
-.frame{
-  width:100%;
-  height:100%;
-}
-.sets{
-  font-style: italic;
-  font-size:17px;
-}
-/*!* The subcard of favorite places *!*/
-.places{
-  width:35%;
-  height:70%;
-  margin:0 auto;
-  display:block;
-  background-color: white;
-}
-/*!* The title of each subcard *!*/
-.category-title{
-  text-align: center;
-  font-size:25px;
-  font-weight: bold;
-}
-/*!* The subcard of each favorite (exercise/place)*!*/
-.sub-card{
-  background-color:white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  
-}
-/*!* The title of each favorite (exercise/place)*!*/
-.title{
-  font-size:22px;
-}
+/*!*!* The second card about favorites *!*!*/
+/*.favorites{*/
+/*  margin:0 auto;*/
+/*  margin-top:5%;*/
+/*  margin-bottom:5%;*/
+/*  display:block;*/
+/*  width:80%;*/
+/*  height:160%;*/
+/*  background-color: lightgray;*/
+/*  border-radius:30px;*/
+/*  box-shadow: 10px 10px 5px grey;*/
+/*}*/
+/*.favorites-title{*/
+/*  text-align:center;*/
+/*  font-size:30px;*/
+/*}*/
+/*.icon{*/
+/*  color:darkred;*/
+/*}*/
+/*!*!* The subcard which contains favorite workout or places *!*!*/
+/*.content{*/
+/*  display:flex;*/
+/*  flex-direction: row;*/
+/*}*/
+/*!*!* The subcard of favorite workout *!*!*/
+/*.workout{*/
+/*  width:34%;*/
+/*  height:50%;*/
+/*  margin:0 auto;*/
+/*  display:block;*/
+/*  background-color: white;*/
+/*}*/
+/*.frame{*/
+/*  width:100%;*/
+/*  height:100%;*/
+/*}*/
+/*.sets{*/
+/*  font-style: italic;*/
+/*  font-size:17px;*/
+/*}*/
+/*!*!* The subcard of favorite places *!*!*/
+/*.places{*/
+/*  width:35%;*/
+/*  height:70%;*/
+/*  margin:0 auto;*/
+/*  display:block;*/
+/*  background-color: white;*/
+/*}*/
+/*!*!* The title of each subcard *!*!*/
+/*.category-title{*/
+/*  text-align: center;*/
+/*  font-size:25px;*/
+/*  font-weight: bold;*/
+/*}*/
+/*!*!* The subcard of each favorite (exercise/place)*!*!*/
+/*.sub-card{*/
+/*  background-color:white;*/
+/*  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+/*  */
+/*}*/
+/*!*!* The title of each favorite (exercise/place)*!*!*/
+/*.title{*/
+/*  font-size:22px;*/
+/*}*/
+
+
+
 /*!* Configuration only for mobile view *!*/
 
 /*!* vertical mobile responsiveness *!*/
@@ -216,7 +223,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  }    
+  }
 }
 @media screen and (min-width:426px) and (max-width:768px) and (orientation:portrait){
   .date{
@@ -259,7 +266,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  } 
+  }
 }
 @media screen and (min-width:769px) and (max-width:999px) and (orientation:portrait){
   .date{
@@ -302,7 +309,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  } 
+  }
 }
 @media screen and (min-width:1000px) and (max-width:1366px) and (orientation:portrait){
   .date{
@@ -345,7 +352,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  } 
+  }
 }
 /*!* horizontal mobile responsiveness *!*/
 @media screen and (max-width:1023px) and (max-height:320px) and (orientation:landscape){
@@ -434,7 +441,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  }  
+  }
 }
 
 @media screen and (max-width:1023px) and (min-height:376px) and (max-height:425px) and (orientation:landscape){
@@ -478,7 +485,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  }    
+  }
 }
 @media screen and (min-width:426px) and (max-width:768px) and (orientation:landscape){
   .date{
@@ -521,7 +528,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  } 
+  }
 }
 @media screen and (min-width:769px) and (max-width:999px) and (orientation:landscape){
   .date{
@@ -564,7 +571,7 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  } 
+  }
 }
 @media screen and (min-width:1000px) and (max-width:1366px) and (orientation:landscape){
   .date{
@@ -607,5 +614,5 @@ h1{
     margin-top: 5%;
     display: flex;
     flex-wrap: wrap;
-  } 
+  }
 }
