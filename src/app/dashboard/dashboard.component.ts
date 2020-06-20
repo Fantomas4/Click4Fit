@@ -21,8 +21,9 @@ export class DashboardComponent implements OnInit {
 
   placesChecked = true;
   workoutsChecked = true;
-  favoritePlaces: BusinessEntry[];
-  favoriteWorkouts: WorkoutEntry[];
+  loading = true; // Flag used to determine if the loading of the data is in progress or has finished.
+  favoritePlaces: BusinessEntry[] = [];
+  favoriteWorkouts: WorkoutEntry[] = [];
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService, private alertService: AlertService) {
     setInterval(() => {
@@ -32,8 +33,6 @@ export class DashboardComponent implements OnInit {
   }
 
   today: number = Date.now(); // It gets the current date
-
-
 
   ngOnInit(): void {
     // Subscribe to the alert service in order to get any alert messages
@@ -79,16 +78,7 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-
-
-
-
-    // this.dashboardService.getFavoritePlaces(this.user).subscribe(data => {
-    //   this.favoritePlacesResults = data.businessList;
-    //   if (this.favoritePlacesResults.length == 0) { // check if the list with the results is empty or not
-    //     this.placeIsEmpty = true;
-    //   }
-    // });
+    // Set the loading flag to false after a small delay
+    setTimeout(function stopLoading() { this.loading = false; }.bind(this), 1000);
   }
-
 }

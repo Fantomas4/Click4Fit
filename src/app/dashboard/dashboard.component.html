@@ -19,20 +19,32 @@
   <!--    /*Favorite Places Card deck component */-->
   <div *ngIf="placesChecked">
     <div class="favorites-card-deck-title">Favorite Places</div>
-    <div class="card-deck-container">
-      <div *ngFor="let entry of favoritePlaces" class="card-item">
-        <app-result-card [businessData]="entry"></app-result-card>
+    <mat-spinner *ngIf="loading" mode="indeterminate" diameter="70"></mat-spinner>
+    <div *ngIf="favoritePlaces.length !== 0 && !loading">
+      <div class="card-deck-container">
+        <div *ngFor="let entry of favoritePlaces" class="card-item">
+          <app-result-card [businessData]="entry"></app-result-card>
+        </div>
       </div>
+    </div>
+    <div *ngIf="favoritePlaces.length === 0 && !loading">
+      <div id="no-places-message">You have not added any favorite places (yet!)</div>
     </div>
   </div>
 
   <!--    /*Favorite Workouts Card deck component */-->
   <div *ngIf="workoutsChecked">
     <div class="favorites-card-deck-title">Favorite Workouts</div>
-    <div class="card-deck-container">
-      <div *ngFor="let entry of favoriteWorkouts" class="card-item">
-        <app-result-card2 [workoutEntry]="entry"></app-result-card2>
+    <mat-spinner *ngIf="loading" mode="indeterminate" diameter="70"></mat-spinner>
+    <div *ngIf="favoriteWorkouts.length !== 0 && !loading">
+      <div class="card-deck-container">
+        <div *ngFor="let entry of favoriteWorkouts" class="card-item">
+          <app-result-card2 [workoutEntry]="entry"></app-result-card2>
+        </div>
       </div>
+    </div>
+    <div *ngIf="favoriteWorkouts.length === 0 && !loading">
+      <div id="no-workouts-message">You have not added any favorite workouts (yet!)</div>
     </div>
   </div>
 
