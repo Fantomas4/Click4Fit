@@ -78,18 +78,19 @@ export class WorkoutComponent implements OnInit {
         content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": this.selectedOptionsEquipment };
       }
       this.workoutService.getResults(content).toPromise().then(data => {
-        this.results = [{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
+        /*this.results = [{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
         "difficulty": 'hard', "equipment": true, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'},
 
        {"name": 'Lunges', "category": "legs", "muscleGroups": ["quads"], "advisedFor": 'women',
         "difficulty": 'easy', "equipment": false, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/a7amnNyWNxo'},
 
        {"name": 'Hack squat', "category": "legs", "muscleGroups": ["quads", "core"], "advisedFor": 'men',
-        "difficulty": 'hard', "equipment": true, "sets": '3x6 150kg+150kg ', "videoUrl": 'https://www.youtube.com/embed/0tn5K9NlCfo'}]
+        "difficulty": 'hard', "equipment": true, "sets": '3x6 150kg+150kg ', "videoUrl": 'https://www.youtube.com/embed/0tn5K9NlCfo'}]*/
+        this.results = data.workoutList
       },
         error => {
           this.alertService.error(error);
-        })
+        });
     }
   }
 
