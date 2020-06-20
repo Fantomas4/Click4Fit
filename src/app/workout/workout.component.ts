@@ -52,6 +52,7 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
+    var content;
     if (this.selectedOptionsAdvisedFor == null && this.selectedOptionsCategories == null && this.selectedOptionsDifficulty == null && this.selectedOptionsEquipment == null) {
       this.workoutService.getAllWorkout().toPromise().then(data => {
         this.results = data.data;
@@ -70,11 +71,12 @@ export class WorkoutComponent implements OnInit {
             this.selectedOptionsEquipment = false;
           }
         }
+        content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
       }
       else {
         this.selectedOptionsEquipment = [true, false];
+        content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": this.selectedOptionsEquipment };
       }
-      var content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": this.selectedOptionsEquipment };
       this.workoutService.getResults(content).toPromise().then(data => {
         this.results = data.workoutList;
       },
@@ -105,7 +107,6 @@ export class WorkoutComponent implements OnInit {
   }
   onNgModelChangeEquipment($event) {
     this.selectedOptionsEquipment = $event;
-    console.log(this.selectedOptionsEquipment);
   }
 }
 

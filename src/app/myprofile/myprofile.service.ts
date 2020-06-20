@@ -10,9 +10,9 @@ export class MyProfileService {
 
   constructor(public dialog: MatDialog, private http: HttpClient) { }
 
-  displayUser(email): Observable<any> {
+  displayUser(id): Observable<any> {
     const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(email);
+    const jsonData = JSON.stringify(id);
     return this.http.post(`${environment.apiUrl}/display-myprofile`, jsonData, { 'headers': headers });
   }
   updateChanges(content): Observable<any> {
