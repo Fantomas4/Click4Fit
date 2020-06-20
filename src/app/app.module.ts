@@ -11,7 +11,6 @@ import { AboutComponent } from './about/about.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {MaterialModule} from './core/material.module';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -20,18 +19,12 @@ import { UserMainViewComponent } from './user-main-view/user-main-view.component
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
 import { ResultCardComponent } from './search/result-card/result-card.component';
-import {MatGridListModule} from '@angular/material/grid-list';
 import { LocationAutocompleteComponent } from './search/location-autocomplete/location-autocomplete.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatChipsModule} from '@angular/material/chips';
 import { DeleteDialogMessageComponent } from './myprofile/delete-dialog-message/delete-dialog-message.component';
 import {MyProfileService} from './myprofile/myprofile.service';
 import { ResultCard2Component } from './workout/result-card2/result-card2.component';
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 import { BusinessDetailsEditDialogComponent} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.component';
 import { BusinessAddEntryDialogComponent } from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.component';
 import { ManageUserEntriesComponent } from './manage-user-entries/manage-user-entries.component';
@@ -40,10 +33,6 @@ import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './homepage/homepage.component';
 import { WorkoutService } from './workout/workout.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -102,23 +91,12 @@ import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/worko
     MaterialModule,
     AppRoutingModule,
     RouterModule,
-    MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
-    MatGridListModule,
-    MatAutocompleteModule,
-    MatTabsModule,
-    MatChipsModule,
-    MatPaginatorModule,
-    MatSortModule,
     FlexLayoutModule,
     LayoutModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
     HttpClientModule,
-    MatSelectCountryModule
+    MatSelectCountryModule,
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService,

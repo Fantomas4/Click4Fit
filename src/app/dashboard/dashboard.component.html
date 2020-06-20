@@ -4,64 +4,48 @@
    <p class="medium">{{today | date:'fullDate'}}</p>
    <p class="mini">{{currentTime | date:'HH:mm'}}</p>
 </mat-card><br>
-<div class="flex">
-    <!-- The class flex aplies its configuration only on mobile view -->
-    <!-- THe second card about favorites -->
-    <mat-card class="favorites">
-        <mat-card-title class="favorites-title">
-            Favorites <mat-icon class="icon">favorite</mat-icon>
-        </mat-card-title><br>
-        <mat-card-content class="content">
-            <!-- The subcard of favorite workout -->
-            <mat-card class="workout" *ngIf="!workoutIsEmpty">
-                <mat-card-title class="category-title">
-                    Your Workout
-                </mat-card-title><br>
-                <mat-card-content>
-                    <!--The subcard of each favorite -->
-                    <mat-card *ngFor="let entry of favoriteWorkoutResults" class="sub-card">
-                        <mat-card-title class="title">
-                            {{entry.name}}<br>
-                            <mat-chip-list>
-                                <mat-chip>{{entry.advisedFor}}</mat-chip>
-                                <mat-chip *ngIf="entry.equipment">With Equipment</mat-chip>
-                                <mat-chip *ngIf="!entry.equipment">No Equipment</mat-chip>
-                                <mat-chip>{{entry.difficulty}}</mat-chip>
-                                <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>
-                            </mat-chip-list>
-                        </mat-card-title>
-                        <mat-card-content>
-                            <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)'
-                                frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                            <p class="sets">Recommended sets: {{entry.sets}}</p>
-                        </mat-card-content>
-                    </mat-card><br>
-                </mat-card-content>
-            </mat-card><br>
-            <!-- The subcard of favorite places -->
-            <mat-card class="places" *ngIf="!placeIsEmpty">
-                <mat-card-title class="category-title">
-                    Your Places
-                </mat-card-title><br>
-                <mat-card-content>
-                    <!-- The subcard of each favorite -->
-                    <mat-card *ngFor="let entry of favoritePlacesResults" class="sub-card">
-                        <mat-card-header>
-                            <mat-card-title class="title">{{entry.name}}</mat-card-title>
-                            <mat-card-subtitle>{{entry.category}}</mat-card-subtitle>
-                        </mat-card-header>
-                        <img mat-card-image [src]="entry.imgPath">
-                        <mat-card-content>
-                            <div>
-                                {{entry.country}}
-                                {{entry.city}}
-                            </div>
-                        </mat-card-content>
-                    </mat-card>
-                </mat-card-content>
-            </mat-card><br>
-        </mat-card-content>
-    </mat-card>
+
+<div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+     *ngIf="alertMessage">{{alertMessage.text}}
+</div>
+
+<div id="favorites-container">
+  <div id="favorites-container-title">Show me my favorite: </div>
+  <section id="favorite-checkboxes-section">
+    <mat-checkbox class="example-margin" [(ngModel)]="placesChecked">Places</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="workoutsChecked">Workouts</mat-checkbox>
+  </section>
+
+  <!--    /*Favorite Places Card deck component */-->
+  <div *ngIf="placesChecked">
+    <div class="favorites-card-deck-title">Favorite Places</div>
+    <mat-spinner *ngIf="loading" mode="indeterminate" diameter="70"></mat-spinner>
+    <div *ngIf="favoritePlaces.length !== 0 && !loading">
+      <div class="card-deck-container">
+        <div *ngFor="let entry of favoritePlaces" class="card-item">
+          <app-result-card [businessData]="entry"></app-result-card>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="favoritePlaces.length === 0 && !loading">
+      <div id="no-places-message">You have not added any favorite places (yet!)</div>
+    </div>
+  </div>
+
+  <!--    /*Favorite Workouts Card deck component */-->
+  <div *ngIf="workoutsChecked">
+    <div class="favorites-card-deck-title">Favorite Workouts</div>
+    <mat-spinner *ngIf="loading" mode="indeterminate" diameter="70"></mat-spinner>
+    <div *ngIf="favoriteWorkouts.length !== 0 && !loading">
+      <div class="card-deck-container">
+        <div *ngFor="let entry of favoriteWorkouts" class="card-item">
+          <app-result-card2 [workoutEntry]="entry"></app-result-card2>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="favoriteWorkouts.length === 0 && !loading">
+      <div id="no-workouts-message">You have not added any favorite workouts (yet!)</div>
+    </div>
+  </div>
+
 </div>
