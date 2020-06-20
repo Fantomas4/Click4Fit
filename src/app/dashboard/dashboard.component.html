@@ -5,6 +5,28 @@
    <p class="mini">{{currentTime | date:'HH:mm'}}</p>
 </mat-card><br>
 
+<div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+     *ngIf="alertMessage">{{alertMessage.text}}
+</div>
+
+<div id="favorites-container">
+  <div id="favorites-container-title">Show me my favorite: </div>
+  <section id="favorite-checkboxes-section">
+    <mat-checkbox class="example-margin" [(ngModel)]="placesChecked">Places</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="workoutsChecked">Workouts</mat-checkbox>
+  </section>
+
+  <!--    /*Card deck component */-->
+    <div *ngIf="placesChecked">
+      <div id="favorite-places-title">Favorite Places</div>
+      <div class="card-deck-container">
+        <div *ngFor="let entry of favoritePlaces" class="card-item">
+          <app-result-card [businessData]="entry"></app-result-card>
+        </div>
+      </div>
+    </div>
+
+</div>
 
 
 

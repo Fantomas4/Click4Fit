@@ -103,24 +103,7 @@ mat-drawer-content {
   grid-gap: 1rem;
 }
 
-.card-item {
-  /*justify-items: stretch;*/
-  /*justify-content: stretch;*/
-  /*align-items: stretch;*/
-  /*align-content: stretch;*/
-  /*!*flex-basis: 20%;*!*/
-  /*!*padding: 1%;*!*/
-
-}
-
 /*============= START: Styling concerning filter sidebar and its elements ============= */
-/*mat-drawer {*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*}*/
-
 .filter-type-subheader {
   font-size: large;
 }
