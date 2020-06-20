@@ -61,7 +61,20 @@ export class WorkoutComponent implements OnInit {
         })
     }
     else {
-      var content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
+      if (this.selectedOptionsEquipment != null) {
+        for (var i = 0; i < this.selectedOptionsEquipment.length; i++) {
+          if (this.selectedOptionsEquipment[i] == 'yes') {
+            this.selectedOptionsEquipment = true;
+          }
+          else {
+            this.selectedOptionsEquipment = false;
+          }
+        }
+      }
+      else {
+        this.selectedOptionsEquipment = [true, false];
+      }
+      var content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": this.selectedOptionsEquipment };
       this.workoutService.getResults(content).toPromise().then(data => {
         this.results = data.workoutList;
       },
@@ -91,12 +104,8 @@ export class WorkoutComponent implements OnInit {
     this.selectedOptionsDifficulty = $event;
   }
   onNgModelChangeEquipment($event) {
-    if ($event == 'yes') {
-      this.selectedOptionsEquipment = true;
-    }
-    else {
-      this.selectedOptionsEquipment = false;
-    }
+    this.selectedOptionsEquipment = $event;
+    console.log(this.selectedOptionsEquipment);
   }
 }
 

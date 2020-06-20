@@ -355,7 +355,10 @@ def getWorkout():
     #connection with mongo sending the filters and getting the matched workout
     try:
         workout_wrapper_list : WorkoutListWrapper = MongoDB.workoutSearch(filters)
-    except:
+    except TypeError as type_err: #Checking for errors
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
         return "Bad error", 500
     else:
         if workout_wrapper_list.workout_list is None:

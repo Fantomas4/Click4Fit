@@ -2,13 +2,13 @@
 
 /*!* The  card *!*/
 mat-card {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
     background-color: lightgray;
 }
 .exercise-title{
     font-size:22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .icon{
     color:red;
@@ -16,6 +16,9 @@ mat-card {
 .frame{
     width:100%;
     height:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
 }
 .sets{
     font-style: italic;
