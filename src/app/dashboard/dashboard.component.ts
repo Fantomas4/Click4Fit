@@ -45,12 +45,9 @@ export class DashboardComponent implements OnInit {
         };
       }
     });
-    console.log("I SEND DIS: ");
-    console.log(JSON.parse(sessionStorage.getItem('currentUser'))._id);
+
     this.dashboardService.getFavoritePlaces({_id: JSON.parse(sessionStorage.getItem('currentUser'))._id}).subscribe(
       res => {
-        console.log("I GET :");
-        console.log(res);
         this.favoritePlaces = res.body.businessList;
       },
 
@@ -65,6 +62,22 @@ export class DashboardComponent implements OnInit {
         }
       });
 
+    this.dashboardService.getFavoriteWorkouts({_id: JSON.parse(sessionStorage.getItem('currentUser'))._id}).subscribe(
+      res => {
+        console.log(res);
+        this.favoriteWorkouts = res.body.workoutList;
+      },
+
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+      });
 
 
 

@@ -16,79 +16,24 @@
     <mat-checkbox class="example-margin" [(ngModel)]="workoutsChecked">Workouts</mat-checkbox>
   </section>
 
-  <!--    /*Card deck component */-->
-    <div *ngIf="placesChecked">
-      <div id="favorite-places-title">Favorite Places</div>
-      <div class="card-deck-container">
-        <div *ngFor="let entry of favoritePlaces" class="card-item">
-          <app-result-card [businessData]="entry"></app-result-card>
-        </div>
+  <!--    /*Favorite Places Card deck component */-->
+  <div *ngIf="placesChecked">
+    <div class="favorites-card-deck-title">Favorite Places</div>
+    <div class="card-deck-container">
+      <div *ngFor="let entry of favoritePlaces" class="card-item">
+        <app-result-card [businessData]="entry"></app-result-card>
       </div>
     </div>
+  </div>
+
+  <!--    /*Favorite Workouts Card deck component */-->
+  <div *ngIf="workoutsChecked">
+    <div class="favorites-card-deck-title">Favorite Workouts</div>
+    <div class="card-deck-container">
+      <div *ngFor="let entry of favoriteWorkouts" class="card-item">
+        <app-result-card2 [workoutEntry]="entry"></app-result-card2>
+      </div>
+    </div>
+  </div>
 
 </div>
-
-
-
-
-<!--<div class="flex">-->
-<!--    &lt;!&ndash; The class flex aplies its configuration only on mobile view &ndash;&gt;-->
-<!--    &lt;!&ndash; THe second card about favorites &ndash;&gt;-->
-<!--    <mat-card class="favorites">-->
-<!--        <mat-card-title class="favorites-title">-->
-<!--            Favorites <mat-icon class="icon">favorite</mat-icon>-->
-<!--        </mat-card-title><br>-->
-<!--        <mat-card-content class="content">-->
-<!--            &lt;!&ndash; The subcard of favorite workout &ndash;&gt;-->
-<!--            <mat-card class="workout" *ngIf="!workoutIsEmpty">-->
-<!--                <mat-card-title class="category-title">-->
-<!--                    Your Workout-->
-<!--                </mat-card-title><br>-->
-<!--                <mat-card-content>-->
-<!--                    &lt;!&ndash;The subcard of each favorite &ndash;&gt;-->
-<!--                    <mat-card *ngFor="let entry of favoriteWorkoutResults" class="sub-card">-->
-<!--                        <mat-card-title class="title">-->
-<!--                            {{entry.name}}<br>-->
-<!--                            <mat-chip-list>-->
-<!--                                <mat-chip>{{entry.advisedFor}}</mat-chip>-->
-<!--                                <mat-chip *ngIf="entry.equipment">With Equipment</mat-chip>-->
-<!--                                <mat-chip *ngIf="!entry.equipment">No Equipment</mat-chip>-->
-<!--                                <mat-chip>{{entry.difficulty}}</mat-chip>-->
-<!--                                <mat-chip *ngFor="let muscleGroup of entry.muscleGroups">{{muscleGroup}}</mat-chip>-->
-<!--                            </mat-chip-list>-->
-<!--                        </mat-card-title>-->
-<!--                        <mat-card-content>-->
-<!--                            <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(entry.videoUrl)'-->
-<!--                                frameborder="0"-->
-<!--                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"-->
-<!--                                allowfullscreen></iframe>-->
-<!--                            <p class="sets">Recommended sets: {{entry.sets}}</p>-->
-<!--                        </mat-card-content>-->
-<!--                    </mat-card><br>-->
-<!--                </mat-card-content>-->
-<!--            </mat-card><br>-->
-<!--            &lt;!&ndash; The subcard of favorite places &ndash;&gt;-->
-<!--            <mat-card class="places" *ngIf="!placeIsEmpty">-->
-<!--                <mat-card-title class="category-title">-->
-<!--                    Your Places-->
-<!--                </mat-card-title><br>-->
-<!--                <mat-card-content>-->
-<!--                    &lt;!&ndash; The subcard of each favorite &ndash;&gt;-->
-<!--                    <mat-card *ngFor="let entry of favoritePlacesResults" class="sub-card">-->
-<!--                        <mat-card-header>-->
-<!--                            <mat-card-title class="title">{{entry.name}}</mat-card-title>-->
-<!--                            <mat-card-subtitle>{{entry.category}}</mat-card-subtitle>-->
-<!--                        </mat-card-header>-->
-<!--                        <img mat-card-image [src]="entry.imgPath">-->
-<!--                        <mat-card-content>-->
-<!--                            <div>-->
-<!--                                {{entry.country}}-->
-<!--                                {{entry.city}}-->
-<!--                            </div>-->
-<!--                        </mat-card-content>-->
-<!--                    </mat-card>-->
-<!--                </mat-card-content>-->
-<!--            </mat-card><br>-->
-<!--        </mat-card-content>-->
-<!--    </mat-card>-->
-<!--</div>-->

@@ -12,18 +12,19 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getFavoritePlaces(user) {
+  getFavoritePlaces(user: object) {
     return this.http.post<any>(`${environment.apiUrl}/favorite-places`, user, {headers: {'Content-type': 'application/json'},
       observe: 'response'}).pipe(map((res: any) => {
       return res;
     }));
   }
 
-  // getFavoriteWorkouts(user): Observable<any> {
-  //   const headers = { 'content-type': 'application/json' };
-  //   const jsonData = JSON.stringify(user);
-  //   return this.http.post(`${environment.apiUrl}/favorite-workout`, jsonData, { 'headers': headers });
-  // }
+  getFavoriteWorkouts(user: object) {
+    return this.http.post<any>(`${environment.apiUrl}/favorite-workout`, user, {headers: {'Content-type': 'application/json'},
+      observe: 'response'}).pipe(map((res: any) => {
+      return res;
+    }));
+  }
 
 
 }
