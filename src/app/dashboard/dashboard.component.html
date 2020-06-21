@@ -12,23 +12,23 @@
 <div id="favorites-container">
   <div id="favorites-container-title">Show me my favorite: </div>
   <section id="favorite-checkboxes-section">
-    <mat-checkbox class="example-margin" [(ngModel)]="placesChecked">Places</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="businessesChecked">Businesses</mat-checkbox>
     <mat-checkbox class="example-margin" [(ngModel)]="workoutsChecked">Workouts</mat-checkbox>
   </section>
 
-  <!--    /*Favorite Places Card deck component */-->
-  <div *ngIf="placesChecked">
-    <div class="favorites-card-deck-title">Favorite Places</div>
+  <!--    /*Favorite Businesses Card deck component */-->
+  <div *ngIf="businessesChecked">
+    <div class="favorites-card-deck-title">Favorite Businesses</div>
     <mat-spinner *ngIf="loading" mode="indeterminate" diameter="70"></mat-spinner>
-    <div *ngIf="favoritePlaces.length !== 0 && !loading">
+    <div *ngIf="favoriteBusinesses.length !== 0 && !loading">
       <div class="card-deck-container">
-        <div *ngFor="let entry of favoritePlaces" class="card-item">
+        <div *ngFor="let entry of favoriteBusinesses" class="card-item">
           <app-result-card [businessData]="entry"></app-result-card>
         </div>
       </div>
     </div>
-    <div *ngIf="favoritePlaces.length === 0 && !loading">
-      <div id="no-places-message">You have not added any favorite places (yet!)</div>
+    <div *ngIf="favoriteBusinesses.length === 0 && !loading">
+      <div id="no-businesses-message">You have not added any favorite businesses (yet!)</div>
     </div>
   </div>
 

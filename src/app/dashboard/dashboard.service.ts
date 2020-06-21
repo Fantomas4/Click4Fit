@@ -12,7 +12,7 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getFavoritePlaces(user: object) {
+  getFavoriteBusinesses(user: object) {
     return this.http.post<any>(`${environment.apiUrl}/favorite-places`, user, {headers: {'Content-type': 'application/json'},
       observe: 'response'}).pipe(map((res: any) => {
       return res;
