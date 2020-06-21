@@ -16,8 +16,13 @@ footer {
 
 img {
   padding: 5px;
+  padding-top: 10px;
   max-width: 40px;
   height: auto;
+}
+
+.Copyright{
+  margin-left: 20px;
 }
 
 .spacer {
