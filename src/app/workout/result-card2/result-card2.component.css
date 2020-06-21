@@ -8,13 +8,14 @@ mat-card-title{
     font-size:22px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+
 }
 mat-card-header-text{
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+
 }
+
 .icon{
     color:red;
 }
