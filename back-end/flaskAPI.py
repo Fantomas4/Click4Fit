@@ -66,9 +66,7 @@ def login():
             "surname": user_wrapper.user["surname"],
             "email": user_wrapper.user["email"],
             "privilegeLevel": user_wrapper.user["privilegeLevel"],
-            "token": user_wrapper.user["token"],
-            "favoriteBusiness": user_wrapper.user["favoriteBusiness"],
-            "favoriteWorkout": user_wrapper.user["favoriteWorkout"]
+            "token": user_wrapper.user["token"]
         })
 
 
@@ -154,9 +152,28 @@ def displayMyprofile():
             return "User does not exist", 404
         return jsonify(user=user_wrapper.user)
 
-
 @app.route("/api/update-myprofile", methods=['POST','GET'])
 def updateMyprofile():
+    details=request.get_json() #get modifying details
+    print(details)
+    #connection with mongo sending the details and modifying the profile's details
+    try:
+        user_wrapper : UserWrapper = MongoDB.updateUser(details)
+    except TypeError as type_err: #Checking for errors
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if user_wrapper.user is None:
+            return "Something is wrong with the database", 500
+        if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
+            return "Couldn't update user entry", 500
+        return jsonify("Save successful")
+
+@app.route("/api/change-password", methods=['POST','GET'])
+def changePassword():
     details=request.get_json() #get modifying details
     #connection with mongo sending the details and modifying the profile's details
     try:
@@ -175,7 +192,6 @@ def updateMyprofile():
         if not user_wrapper.operationDone and user_wrapper.found:
             return "Wrong old password", 401
         return jsonify("Save successful")
-
 
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
 def deleteMyprofile():
@@ -247,47 +263,21 @@ def getCities():
     return jsonify(data=cities_list)
 
 
-@app.route("/api/add-favorite-business", methods=['POST','GET'])
-def addFavoriteBusiness():
-    business = request.get_json()
+@app.route("/api/add-favorite-place", methods=['POST','GET'])
+def addFavoritePlace():
+    place=request.get_json() #get favorite place
+    #connection with mongo sending the place and adding to favorites
     try:
-        favorite = MongoDB.addFavoriteBusiness(business)
+        favorite = MongoDB.addFavoriteBusiness(place)
     except ValueError as value_err:
         return str(value_err), 422
     except:
         return "Bad error", 500
     else:
-        if not favorite:
+        if favorite is False:
             return "Couldn't add entry", 400
         return jsonify("Addition successful")
 
-@app.route("/api/remove-favorite-business", methods=['POST','GET'])
-def removeFavoriteBusiness():
-    business = request.get_json()
-    try:
-        favorite = MongoDB.removeFavoriteBusiness(business)
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if not favorite:
-            return "Couldn't remove entry", 400
-        return jsonify("Business removal successful")
-
-@app.route("/api/remove-favorite-workout", methods=['POST','GET'])
-def removeFavoriteWorkout():
-    business = request.get_json()
-    try:
-        favorite = MongoDB.removeFavoriteWorkout(business)
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if not favorite:
-            return "Couldn't remove entry", 400
-        return jsonify("Workout removal successful")
 
 ####################################### Workout ######################################
 @app.route("/api/workouts", methods=["POST"])
@@ -361,7 +351,10 @@ def getWorkout():
     #connection with mongo sending the filters and getting the matched workout
     try:
         workout_wrapper_list : WorkoutListWrapper = MongoDB.workoutSearch(filters)
-    except:
+    except TypeError as type_err: #Checking for errors
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
         return "Bad error", 500
     else:
         if workout_wrapper_list.workout_list is None:
@@ -382,8 +375,8 @@ def addFavoriteWorkout():
     except:
         return "Bad error", 500
     else:
-        if not favorite:
-            return "Couldn't add entry", 400
+        if favorite is False:
+            return ("Couldn't add entry"), 400
         return jsonify("Addition successful")
 
 
@@ -664,4 +657,5 @@ if __name__ == '__main__':
     MongoDB.createMockDatabase()
     app.debug = True
     app.run()
+
 
