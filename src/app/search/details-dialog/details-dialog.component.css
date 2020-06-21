@@ -1,13 +1,12 @@
-#title-text {
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
 .preview-image {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 80%;
+}
+
+.info-title {
+  font-weight: bold;
 }
 
 .chip-list {

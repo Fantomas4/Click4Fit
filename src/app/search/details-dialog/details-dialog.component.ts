@@ -20,6 +20,8 @@ export class DetailsDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data);
+  }
 
 }

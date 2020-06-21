@@ -116,8 +116,12 @@ export class ResultCardComponent implements OnInit {
         category: this.category,
         country: this.country,
         city: this.city,
+        address: this.businessData.address,
+        postalCode: this.businessData.postalCode,
         services: this.businessData.services,
-        products: this.businessData.products
+        products: this.businessData.products,
+        phoneNumber: this.businessData.phoneNumber,
+        email: this.businessData.email
       }
     });
   }
