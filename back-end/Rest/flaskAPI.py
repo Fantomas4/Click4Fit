@@ -158,15 +158,10 @@ def displayMyprofile():
 @app.route("/api/update-myprofile", methods=['POST','GET'])
 def updateMyprofile():
     details=request.get_json() #get modifying details
+    print(details)
     #connection with mongo sending the details and modifying the profile's details
     try:
-        if details["passwordChanged"] is True and details["fieldChanged"] is True:
-            user_wrapper_password: UserWrapper = MongoDB.changeUserPassword(details["passwordJson"])
-            user_wrapper_field : UserWrapper = MongoDB.updateUser(details["userJson"])
-        elif details["passwordChanged"] is True and details["fieldChanged"] is False:
-            user_wrapper_password: UserWrapper = MongoDB.changeUserPassword(details["passwordJson"])
-        elif details["passwordChanged"] is False and details["fieldChanged"] is True:
-            user_wrapper_field : UserWrapper = MongoDB.updateUser(details["userJson"])  
+        user_wrapper_field : UserWrapper = MongoDB.updateUser(details)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:

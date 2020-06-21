@@ -1,4 +1,5 @@
 <div id="cards-container">
+
   <!-- The general card of profile details -->
   <mat-card id="details-card">
     <mat-card-header>
@@ -6,14 +7,14 @@
     </mat-card-header>
     <mat-card-content>
       <!-- Details Form Group -->
-      <form [formGroup]="firstEntryForm" class="form" id="firstEntryForm">
+      <form [formGroup]="detailsEntryForm" class="form" id="details-entry-form">
         <table class="table" cellspacing="0">
           <tr>
             <mat-form-field>
               <mat-label>First name</mat-label>
-              <input matInput placeholder="e.g. George" formControlName="name" name="name"
+              <input matInput placeholder="e.g. George" formControlName="firstName" name="first-name"
                      [errorStateMatcher]="genericErrorStateMatcher" required>
-              <mat-error *ngIf="firstEntryForm.get('name').hasError('required')">
+              <mat-error *ngIf="detailsEntryForm.get('firstName').hasError('required')">
                 Please enter your name
               </mat-error>
             </mat-form-field>
@@ -21,9 +22,9 @@
           <tr>
             <mat-form-field>
               <mat-label>Last name</mat-label>
-              <input matInput placeholder="e.g. Brown" formControlName="lastName" name="lastName"
+              <input matInput placeholder="e.g. Brown" formControlName="lastName" name="last-name"
                      [errorStateMatcher]="genericErrorStateMatcher" required>
-              <mat-error *ngIf="firstEntryForm.get('lastName').hasError('required')">
+              <mat-error *ngIf="detailsEntryForm.get('lastName').hasError('required')">
                 Please enter your last name
               </mat-error>
             </mat-form-field>
@@ -31,10 +32,7 @@
           <tr>
             <mat-form-field>
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="picker" formControlName="birthDate" name="birthDate"[errorStateMatcher]="genericErrorStateMatcher" required>
-              <mat-error *ngIf="firstEntryForm.get('birthDate').hasError('required')">
-                Please choose your birth date
-              </mat-error>
+              <input matInput [matDatepicker]="picker" formControlName="birthDate" name="birth-date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -44,10 +42,10 @@
               <mat-label>E-mail</mat-label>
               <input matInput placeholder="e.g. address@example.com" formControlName="email" name="email" type="email"
                      [errorStateMatcher]="genericErrorStateMatcher" required>
-              <mat-error *ngIf="firstEntryForm.get('email').hasError('required')">
+              <mat-error *ngIf="detailsEntryForm.get('email').hasError('required')">
                 Please enter your e-mail
               </mat-error>
-              <mat-error *ngIf="firstEntryForm.get('email').hasError('email')">
+              <mat-error *ngIf="detailsEntryForm.get('email').hasError('email')">
                 Please a valid email address
               </mat-error>
             </mat-form-field>
@@ -55,36 +53,28 @@
         </table>
       </form>
     </mat-card-content>
-    <!-- Alert message diplay -->
-    <div class="alert-message"
-         [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-         *ngIf="alertMessage">{{alertMessage.text}}
-    </div>
     <!-- The buttons of the card -->
     <mat-card-actions class="buttons">
-      <button mat-raised-button color="primary" type="submit" form="firstEntryForm" (click)="onClickUpdate()">Update
+      <button mat-raised-button color="primary" type="submit" form="details-entry-form" (click)="onDetailsUpdate()">Update
         Details</button>
     </mat-card-actions>
   </mat-card>
-
-
 
   <!-- The card used to update the user's password -->
   <mat-card id="password-card">
     <mat-card-header>
       <mat-card-title>Password Management</mat-card-title>
-
     </mat-card-header>
     <mat-card-content>
-
-      <form [formGroup]="secondEntryForm" class="form" id="secondEntryForm">
+      <!-- Password Form Group -->
+      <form [formGroup]="passwordEntryForm" class="form" id="passwordEntryForm">
         <table class="table" cellspacing="0">
           <tr>
             <mat-form-field>
               <mat-label>Password</mat-label>
               <input matInput type="password" formControlName="password" name="password"
-                     [errorStateMatcher]="genericErrorStateMatcher" required>
-              <mat-error *ngIf="secondEntryForm.get('password').hasError('required')">
+                     [errorStateMatcher]="passwordsErrorStateMatcher" required>
+              <mat-error *ngIf="passwordEntryForm.get('password').hasError('required')">
                 Please enter your old password
               </mat-error>
             </mat-form-field>
@@ -93,8 +83,8 @@
             <mat-form-field>
               <mat-label>New password</mat-label>
               <input matInput type="password" formControlName="newPassword" name="newPassword"
-                     [errorStateMatcher]="genericErrorStateMatcher" required>
-              <mat-error *ngIf="secondEntryForm.get('newPassword').hasError('required')">
+                     [errorStateMatcher]="passwordsErrorStateMatcher" required>
+              <mat-error *ngIf="passwordEntryForm.get('newPassword').hasError('required')">
                 Please enter a new password
               </mat-error>
             </mat-form-field>
@@ -103,33 +93,39 @@
             <mat-form-field>
               <mat-label>Repeated password</mat-label>
               <input matInput type="password" formControlName="repeatedPassword" name="repeatedPassword"
-                     [errorStateMatcher]="genericErrorStateMatcher" required>
-              <mat-error *ngIf="secondEntryForm.get('repeatedPassword').hasError('required')">
-                Please enter your new password again
+                     [errorStateMatcher]="passwordsErrorStateMatcher" required>
+              <mat-error *ngIf="passwordEntryForm.get('repeatedPassword').hasError('required')">
+                Please repeat your new password
+              </mat-error>
+              <mat-error *ngIf="passwordEntryForm.hasError('passwordMismatch')">
+                Passwords do not match!
               </mat-error>
             </mat-form-field>
           </tr>
         </table>
       </form>
     </mat-card-content>
-    <!-- Alert message diplay -->
-    <div class="alert-message"
-         [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-         *ngIf="alertMessage">{{alertMessage.text}}
-    </div>
     <!-- The buttons of the card -->
     <mat-card-actions class="buttons">
-      <button mat-raised-button color="primary" type="submit" form="firstEntryForm" (click)="onClickUpdate()">Update
-        Password</button>
+<!--      <button mat-raised-button color="primary" type="submit" form="passwordEntryForm" (click)="onClickUpdate()">Update-->
+<!--        Password</button>-->
     </mat-card-actions>
   </mat-card>
 
+  <!-- Delete user account card -->
   <mat-card id="delete-account-card">
     <mat-card-header>
       <mat-card-title>Delete Account</mat-card-title>
     </mat-card-header>
     <mat-card-actions>
-      <button mat-raised-button id="delete-account-button" color="warn" (click)="onClickDelete()">Delete your account</button>
+<!--      <button mat-raised-button id="delete-account-button" color="warn" (click)="onClickDelete()">Delete your account</button>-->
     </mat-card-actions>
   </mat-card>
+
+</div>
+
+<!-- Alert message diplay -->
+<div class="alert-message"
+     [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+     *ngIf="alertMessage">{{alertMessage.text}}
 </div>
