@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0, "C:\\Users\\alexw\\OneDrive\\Dokumente\\Click4Fit\\back-end")
-
 import unittest
 
 from MongoDatabase.MongoDB import MongoDB
