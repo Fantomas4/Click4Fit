@@ -18,4 +18,8 @@ export class WorkoutService {
     const jsonData = JSON.stringify(content);
     return this.http.post(`${environment.apiUrl}/display-workout`, jsonData, { 'headers': headers });
   }
+  getAllWorkout(): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.http.get(`${environment.apiUrl}/workouts`);
+  }
 }

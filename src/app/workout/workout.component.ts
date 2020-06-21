@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkoutService } from './workout.service';
 import { ResultCard2Service } from './result-card2/result-card2.service';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 
@@ -29,10 +29,10 @@ export class WorkoutComponent implements OnInit {
   selectedAdvisedFor = [];
   selectedDifficulty = [];
   selectedEquipment = [];
-  selectedOptionsCategories:any; //they contain the choices of user 
+  selectedOptionsCategories: any; //they contain the choices of user 
   selectedOptionsAdvisedFor: any;
-  selectedOptionsDifficulty:any;
-  selectedOptionsEquipment:any;
+  selectedOptionsDifficulty: any;
+  selectedOptionsEquipment: any;
 
   constructor(private workoutService: WorkoutService, private resultCardService: ResultCard2Service,
     private router: Router, private alertService: AlertService) { }
@@ -52,13 +52,46 @@ export class WorkoutComponent implements OnInit {
   /* In the case of clicking search button */
   getResults() {
     this.isClicked = true;
-    var content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
-    this.workoutService.getResults(content).toPromise().then(data => {
-      this.results = data.workoutList;
-    },
-      error => {
-        this.alertService.error(error);
-      })
+    var content;
+    if (this.selectedOptionsAdvisedFor == null && this.selectedOptionsCategories == null && this.selectedOptionsDifficulty == null && this.selectedOptionsEquipment == null) {
+      this.workoutService.getAllWorkout().toPromise().then(data => {
+        this.results = data.data;
+      },
+        error => {
+          this.alertService.error(error);
+        })
+    }
+    else {
+      if (this.selectedOptionsEquipment != null) {
+        for (var i = 0; i < this.selectedOptionsEquipment.length; i++) {
+          if (this.selectedOptionsEquipment[i] == 'yes') {
+            this.selectedOptionsEquipment = true;
+          }
+          else {
+            this.selectedOptionsEquipment = false;
+          }
+        }
+        content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
+      }
+      else {
+        this.selectedOptionsEquipment = [true, false];
+        content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": this.selectedOptionsEquipment };
+      }
+      this.workoutService.getResults(content).toPromise().then(data => {
+        /*this.results = [{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
+        "difficulty": 'hard', "equipment": true, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'},
+
+       {"name": 'Lunges', "category": "legs", "muscleGroups": ["quads"], "advisedFor": 'women',
+        "difficulty": 'easy', "equipment": false, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/a7amnNyWNxo'},
+
+       {"name": 'Hack squat', "category": "legs", "muscleGroups": ["quads", "core"], "advisedFor": 'men',
+        "difficulty": 'hard', "equipment": true, "sets": '3x6 150kg+150kg ', "videoUrl": 'https://www.youtube.com/embed/0tn5K9NlCfo'}]*/
+        this.results = data.workoutList
+      },
+        error => {
+          this.alertService.error(error);
+        });
+    }
   }
 
   /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
@@ -81,12 +114,7 @@ export class WorkoutComponent implements OnInit {
     this.selectedOptionsDifficulty = $event;
   }
   onNgModelChangeEquipment($event) {
-    if ($event == 'yes') {
-      this.selectedOptionsEquipment = true;
-    }
-    else {
-      this.selectedOptionsEquipment = false;
-    }
+    this.selectedOptionsEquipment = $event;
   }
 }
 

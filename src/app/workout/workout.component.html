@@ -1,7 +1,7 @@
 <!-- The general container -->
 <mat-drawer-container>
     <!-- The right sidenav with the filters -->
-    <mat-drawer #sidenav mode="over" position="end">
+    <mat-drawer #sidenav mode="over" position="end"  #sidenav (openedChange)="onToggleSidenav()">
         <mat-selection-list id="categories" [(ngModel)]="selectedCategories"
             (ngModelChange)="onNgModelChangeCategories($event)">
             <div mat-subheader class="filter-type-subheader">Part of body</div>

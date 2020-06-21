@@ -6,38 +6,63 @@ import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
 import { DeleteDialogMessageComponent } from './delete-dialog-message/delete-dialog-message.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
+import {AuthenticationService} from '../login/authentication.service';
+import {Router} from '@angular/router';
+import {first} from 'rxjs/operators';
+
 
 interface AlertMessage {
   type: string;
   text: string;
 }
+
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
+
+export class PasswordsErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+
+    return !!(form.hasError('passwordMismatch') || control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
+function matchingPasswordsValidator(group: FormGroup): { [key: string]: boolean } | null {
+  if ((group.get('newPassword').value !== '' && group.get('repeatedPassword').value !== '') &&
+    group.get('newPassword').value !== group.get('repeatedPassword').value) {
+    return {passwordMismatch : true};
+  }
+  return null;
+}
+
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
   styleUrls: ['./myprofile.component.css']
 })
+
 export class MyprofileComponent implements OnInit {
 
-  entryForm = new FormGroup({
-    name: new FormControl('', [
+  detailsEntryForm = new FormGroup({
+    firstName: new FormControl('', [
       Validators.required
     ]),
     lastName: new FormControl('', [
       Validators.required
     ]),
+    birthDate: new FormControl(),
     email: new FormControl('', [
       Validators.required,
       Validators.email
     ]),
-    birthDate: new FormControl('', [
-      Validators.required,
-    ]),
+  });
+
+  passwordEntryForm = new FormGroup({
     password: new FormControl('', [
       Validators.required
     ]),
@@ -47,21 +72,19 @@ export class MyprofileComponent implements OnInit {
     repeatedPassword: new FormControl('', [
       Validators.required
     ]),
-  })
-  password: string;
-  newPassword: string;
-  repeatedPassword: string;
-  jsonData: any; // it contains a json with the current user which has been saved in session storage after log in
-  results: any; //it contains the results from the request to API 
+  }, [matchingPasswordsValidator]);
+
+  genericErrorStateMatcher = new GenericErrorStateMatcher();
+  passwordsErrorStateMatcher = new PasswordsErrorStateMatcher();
+
   picker: any;
-  user: any; // it contains the email of the current logged in user
+
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  deleteProfile: boolean; // it contains the choice of user about deleting his profile or not
-  genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-  constructor(public myprofileService: MyProfileService, private _adapter: DateAdapter<any>,
-              private alertService: AlertService, public dialog: MatDialog) { }
+  constructor(public myprofileService: MyProfileService, private authenticationService: AuthenticationService,
+              private router: Router, private alertService: AlertService, public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -72,91 +95,174 @@ export class MyprofileComponent implements OnInit {
         };
       }
     });
-    this.jsonData = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user = { "email": this.jsonData.email };
-    this.myprofileService.displayUser(this.user).subscribe(data => { //in case of successful request it shows the data
-      this.results = data.user;
-      
-      // Use regex to extract date data from the birthday string recovered from DB.
-      const separators = ['-', '/', '\\\.', ','];
-      const dateTokens = this.results.birthdate.split(new RegExp(separators.join('|'), 'g'));
-      
-      this.entryForm.setValue({
-        name: this.results.name,
-        lastName: this.results.surname,
-        email: this.results.email,
-        birthDate: new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])),
-        password: null,
-        newPassword: null,
-        repeatedPassword: null
-      });
-      this.password = this.results.password;
-    },
-      error => { // if the request returns an error, it shows an alert message with the relevant content
+
+    const requestData = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
+    this.myprofileService.getUser(requestData).subscribe(
+      data => { // in case of successful request it shows the data
+        console.log(data.body.user);
+        const userData = data.body.user;
+
+        const separators = ['-', '/', '\\\.', ','];
+        const dateTokens = userData.birthdate.split(new RegExp(separators.join('|'), 'g'));
+        console.log(dateTokens);
+        console.log(new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])));
+
+        this.detailsEntryForm.setValue({
+          firstName: userData.name,
+          lastName: userData.surname,
+          birthDate: new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])),
+          email: userData.email
+        });
+
+      },
+      error => {
         // If error is not a string received from the API, handle the ProgressEvent
         // returned due to the inability to connect to the API by printing an appropriate
         // warning message
-        if (typeof(error) !== 'string') {
+        if (typeof (error) !== 'string') {
           this.alertService.error('Error: No connection to the API');
         } else {
           this.alertService.error(error);
         }
-    });
+      });
   }
 
-  /*Shows modal message after click on delete account button*/
-  onClickDelete() {
-    var content = { "_id": this.jsonData._id }; // it contains the json data for the request to API 
+  /**
+   * Called when a user adds or removes favorites from his preferences, in order to update
+   * the local storage user data with the latest input from the Data Base.
+   */
+  updateUserData() {
+    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
+    this.myprofileService.getUser(request).subscribe(
+      data => {
+        // @ts-ignore
+        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
+        const loggedInUserData = {
+          _id,
+          name,
+          surname,
+          email,
+          privilegeLevel,
+          token,
+          favoriteBusiness,
+          favoriteWorkout
+        };
+
+        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
+      },
+
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof (error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+      });
+
+  }
+
+  onDetailsModify() {
+    if (this.detailsEntryForm.valid) {
+      const datePipe = new DatePipe('en').transform(this.detailsEntryForm.get('birthDate').value, 'dd/MM/yyyy');
+
+      const requestData: object = {
+        _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
+        name: this.detailsEntryForm.get('firstName').value,
+        surname: this.detailsEntryForm.get('lastName').value,
+        birthdate: datePipe ? datePipe : '',
+        email: this.detailsEntryForm.get('email').value,
+      };
+
+      this.myprofileService.modifyUser(requestData).pipe(first()).subscribe(
+        data => {
+          this.alertService.success(data.body);
+        },
+
+        error => {
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof (error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
+            this.alertService.error(error);
+          }
+        }
+      );
+      // Get the updated user data from the Data Base and update the local user data.
+      this.updateUserData();
+    }
+  }
+
+  onPasswordUpdate() {
+    if (this.passwordEntryForm.valid) {
+      const requestData: object = {
+        user: {
+          _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
+          password: this.passwordEntryForm.get('password').value
+        },
+        new_password: this.passwordEntryForm.get('newPassword').value
+      };
+
+      this.myprofileService.updatePassword(requestData).pipe(first()).subscribe(
+        data => {
+          this.alertService.success(data.body);
+        },
+
+        error => {
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof (error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
+            this.alertService.error(error);
+          }
+        });
+    }
+
+  }
+
+  /***
+   * Logs out the user and redirects him to the main paige
+   */
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/']);
+  }
+
+  onDelete() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = 100;
     const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
+
     dialogRef.afterClosed().subscribe(result => {
-      this.deleteProfile = result;
-      if (this.deleteProfile == true) {
-        this.myprofileService.deleteProfile(content).toPromise().then(data => {
-          this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
-        },
-          error => {  // if the request returns an error, it shows an alert message with the relevant content
+      if (result) {
+        // If the user has confirmed his choice, proceed with the account deletion
+        const requestData: object = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
+
+        this.myprofileService.deleteUser(requestData).pipe(first()).subscribe(
+          data => {
+            this.alertService.success(data.body);
+            // If the user was deleted successfully from the database, call logout()
+            this.logout();
+          },
+
+          error => {
             // If error is not a string received from the API, handle the ProgressEvent
             // returned due to the inability to connect to the API by printing an appropriate
             // warning message
-            if (typeof(error) !== 'string') {
+            if (typeof (error) !== 'string') {
               this.alertService.error('Error: No connection to the API');
             } else {
               this.alertService.error(error);
             }
-          })
+        });
       }
     });
-  }
-  /*Updates the user's details in the database according to his changes*/
-  onClickUpdate() {
-    if (this.entryForm.valid) {
-      this.newPassword = this.entryForm.get('newPassword').value;
-      this.repeatedPassword = this.entryForm.get('repeatedPassword').value;
-      if (this.newPassword == this.repeatedPassword) {
-        var content = {
-          "user": { "email": this.jsonData.email, "password": this.entryForm.get('password').value },
-          "new_password": this.newPassword };
-        this.myprofileService.updateChanges(content).toPromise().then(data => {
-          this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
-        },
-          error => { // if the request returns an error, it shows an alert message with the relevant content
-            // If error is not a string received from the API, handle the ProgressEvent
-            // returned due to the inability to connect to the API by printing an appropriate
-            // warning message
-            if (typeof(error) !== 'string') {
-              this.alertService.error('Error: No connection to the API');
-            } else {
-              this.alertService.error(error);
-            }
-          });
-      }
-      else {  // if the user didn't give same new password and new repeated password, 
-        //it shows an alert message with the relevant content
-        this.alertService.error('New password and new repeated password are not same');
-      }
-    }
   }
 }
