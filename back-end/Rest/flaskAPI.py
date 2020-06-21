@@ -154,7 +154,6 @@ def displayMyprofile():
             return "User does not exist", 404
         return jsonify(user=user_wrapper.user)
 
-
 @app.route("/api/update-myprofile", methods=['POST','GET'])
 def updateMyprofile():
     details=request.get_json() #get modifying details
@@ -173,6 +172,27 @@ def updateMyprofile():
             return "Something is wrong with the database", 500
         if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
             return "Couldn't update user entry", 500
+        return jsonify("Save successful")
+
+@app.route("/api/change-password", methods=['POST','GET'])
+def changePassword():
+    details=request.get_json() #get modifying details
+    #connection with mongo sending the details and modifying the profile's details
+    try:
+        user_wrapper: UserWrapper = MongoDB.changeUserPassword(details)
+    except TypeError as type_err: #Checking for errors
+        return str(type_err), 422
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if user_wrapper.user is None:
+            return "Something is wrong with the database", 500
+        if not user_wrapper.operationDone and not user_wrapper.found:
+            return "User does not exist", 404
+        if not user_wrapper.operationDone and user_wrapper.found:
+            return "Wrong old password", 401
         return jsonify("Save successful")
 
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
