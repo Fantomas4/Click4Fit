@@ -2,7 +2,9 @@
 
 #cards-container {
   width: fit-content;
-  margin: 5% auto;
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /*!* The general card of profile details *!*/
@@ -37,21 +39,21 @@
 /*}*/
 
 #alert-message {
-  margin-top: 2%;
+  margin-top: 1%;
 }
 
 .alert-error-text {
   color: red;
   font-weight: bold;
   text-align:center;
-  margin:10% auto;
+  margin: auto;
 }
 
 .alert-success-text {
   color: green;
   font-weight: bold;
   text-align:center;
-  margin:10% auto;
+  margin: auto;
 }
 
 

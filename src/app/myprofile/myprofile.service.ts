@@ -15,15 +15,19 @@ export class MyProfileService {
       {headers: {'Content-type': 'application/json'}, observe: 'response'});
   }
 
-  updateUser(content: object) {
+  modifyUser(content: object) {
     return this.http.post<any>(`${environment.apiUrl}/update-myprofile`, JSON.stringify(content),
       {headers: {'Content-type': 'application/json'}, observe: 'response'});
   }
 
-  deleteProfile(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/delete-myprofile`, jsonData, { headers: headers });
+  updatePassword(content: object) {
+    return this.http.post<any>(`${environment.apiUrl}/change-password`, JSON.stringify(content),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'});
+  }
+
+  deleteUser(content): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/delete-myprofile`, JSON.stringify(content),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'});
   }
 
 }

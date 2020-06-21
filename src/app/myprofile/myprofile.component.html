@@ -55,7 +55,7 @@
     </mat-card-content>
     <!-- The buttons of the card -->
     <mat-card-actions class="buttons">
-      <button mat-raised-button color="primary" type="submit" form="details-entry-form" (click)="onDetailsUpdate()">Update
+      <button mat-raised-button color="primary" type="submit" form="details-entry-form" (click)="onDetailsModify()">Update
         Details</button>
     </mat-card-actions>
   </mat-card>
@@ -107,8 +107,8 @@
     </mat-card-content>
     <!-- The buttons of the card -->
     <mat-card-actions class="buttons">
-<!--      <button mat-raised-button color="primary" type="submit" form="passwordEntryForm" (click)="onClickUpdate()">Update-->
-<!--        Password</button>-->
+      <button mat-raised-button color="primary" type="submit" form="passwordEntryForm" (click)="onPasswordUpdate()">Update
+        Password</button>
     </mat-card-actions>
   </mat-card>
 
@@ -118,14 +118,14 @@
       <mat-card-title>Delete Account</mat-card-title>
     </mat-card-header>
     <mat-card-actions>
-<!--      <button mat-raised-button id="delete-account-button" color="warn" (click)="onClickDelete()">Delete your account</button>-->
+      <button mat-raised-button id="delete-account-button" color="warn" (click)="onDelete()">Delete your account</button>
     </mat-card-actions>
   </mat-card>
 
 </div>
 
 <!-- Alert message diplay -->
-<div class="alert-message"
+<div id="alert-message"
      [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
      *ngIf="alertMessage">{{alertMessage.text}}
 </div>

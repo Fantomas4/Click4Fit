@@ -130,29 +130,56 @@ export class MyprofileComponent implements OnInit {
       });
   }
 
-  onDetailsUpdate() {
+  /**
+   * Called when a user adds or removes favorites from his preferences, in order to update
+   * the local storage user data with the latest input from the Data Base.
+   */
+  updateUserData() {
+    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
+    this.myprofileService.getUser(request).subscribe(
+      data => {
+        // @ts-ignore
+        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
+        const loggedInUserData = {
+          _id,
+          name,
+          surname,
+          email,
+          privilegeLevel,
+          token,
+          favoriteBusiness,
+          favoriteWorkout
+        };
+
+        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
+      },
+
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof (error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+      });
+
+  }
+
+  onDetailsModify() {
     if (this.detailsEntryForm.valid) {
-      let requestData: object;
+      const datePipe = new DatePipe('en').transform(this.detailsEntryForm.get('birthDate').value, 'dd/MM/yyyy');
 
-      console.log(this.detailsEntryForm.get('firstName').value);
-      if (this.detailsEntryForm.get('birthDate').value !== null) {
-        requestData = {
-          _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
-          name: this.detailsEntryForm.get('firstName').value,
-          surname: this.detailsEntryForm.get('lastName').value,
-          birthdate: new DatePipe('en').transform(this.detailsEntryForm.get('birthDate').value, 'dd/MM/yyyy'),
-          email: this.detailsEntryForm.get('email').value,
-        };
-      } else {
-        requestData = {
-          _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
-          name: this.detailsEntryForm.get('firstName').value,
-          surname: this.detailsEntryForm.get('lastName').value,
-          email: this.detailsEntryForm.get('email').value,
-        };
-      }
+      const requestData: object = {
+        _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
+        name: this.detailsEntryForm.get('firstName').value,
+        surname: this.detailsEntryForm.get('lastName').value,
+        birthdate: datePipe ? datePipe : '',
+        email: this.detailsEntryForm.get('email').value,
+      };
 
-      this.myprofileService.updateUser(requestData).pipe(first()).subscribe(
+      this.myprofileService.modifyUser(requestData).pipe(first()).subscribe(
         data => {
           this.alertService.success(data.body);
         },
@@ -168,43 +195,39 @@ export class MyprofileComponent implements OnInit {
           }
         }
       );
-
-
+      // Get the updated user data from the Data Base and update the local user data.
+      this.updateUserData();
     }
   }
 
+  onPasswordUpdate() {
+    if (this.passwordEntryForm.valid) {
+      const requestData: object = {
+        user: {
+          _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
+          password: this.passwordEntryForm.get('password').value
+        },
+        new_password: this.passwordEntryForm.get('newPassword').value
+      };
 
+      this.myprofileService.updatePassword(requestData).pipe(first()).subscribe(
+        data => {
+          this.alertService.success(data.body);
+        },
 
+        error => {
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof (error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
+            this.alertService.error(error);
+          }
+        });
+    }
 
-  // /*Shows modal message after click on delete account button*/
-  // onClickDelete() {
-  //   const content = {_id: this.jsonData._id}; // it contains the json data for the request to API
-  //   const dialogConfig = new MatDialogConfig();
-  //   dialogConfig.autoFocus = true;
-  //   dialogConfig.minWidth = 100;
-  //   const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     this.deleteProfile = result;
-  //     if (this.deleteProfile) {
-  //       this.myprofileService.deleteProfile(content).toPromise().then(
-  //         data => {
-  //           this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
-  //           this.logout();
-  //         },
-  //
-  //         error => {
-  //           // If error is not a string received from the API, handle the ProgressEvent
-  //           // returned due to the inability to connect to the API by printing an appropriate
-  //           // warning message
-  //           if (typeof (error) !== 'string') {
-  //             this.alertService.error('Error: No connection to the API');
-  //           } else {
-  //             this.alertService.error(error);
-  //           }
-  //         });
-  //     }
-  //   });
-  // }
+  }
 
   /***
    * Logs out the user and redirects him to the main paige
@@ -214,110 +237,35 @@ export class MyprofileComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  onDelete() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = 100;
+    const dialogRef = this.dialog.open(DeleteDialogMessageComponent, dialogConfig);
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // If the user has confirmed his choice, proceed with the account deletion
+        const requestData: object = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
+
+        this.myprofileService.deleteUser(requestData).pipe(first()).subscribe(
+          data => {
+            this.alertService.success(data.body);
+            // If the user was deleted successfully from the database, call logout()
+            this.logout();
+          },
+
+          error => {
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof (error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
+        });
+      }
+    });
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   /*Updates the user's details in the database according to his changes*/
-//   onClickUpdate() {
-//     this.error = false;
-//     let content;
-//     if (this.detailsEntryForm.valid && this.detailsEntryForm.dirty) {
-//       this.fieldChanged = true;
-//     }
-//     if (this.passwordEntryForm.dirty) {
-//       this.newPassword = this.passwordEntryForm.get('newPassword').value;
-//       this.repeatedPassword = this.passwordEntryForm.get('repeatedPassword').value;
-//       this.password = this.passwordEntryForm.get('password').value;
-//       console.log(this.repeatedPassword);
-//       if (this.password == null) {
-//         this.alertService.error('Give your old password');
-//         this.error = true;
-//       } else if (this.password != null && this.newPassword != this.repeatedPassword && this.newPassword != null && this.repeatedPassword != null) {
-//         // if the user didn't give same new password and new repeated password,
-//         // it shows an alert message with the relevant content
-//         this.alertService.error('New password and new repeated password are not same');
-//         this.error = true;
-//       } else if (this.password != null && this.newPassword == this.repeatedPassword && this.newPassword != null && this.repeatedPassword != null) {
-//         this.passwordChanged = true;
-//       } else if (this.password != null && this.newPassword != null && this.repeatedPassword == null) {
-//         this.alertService.error('Enter the new password again');
-//         this.error = true;
-//       } else if (this.password != null && this.newPassword == null && this.repeatedPassword != null) {
-//         this.alertService.error('Enter the new password ');
-//         this.error = true;
-//       } else if (this.password != null && this.newPassword == null && this.repeatedPassword == null) {
-//         this.alertService.error('Give a new password');
-//         this.error = true;
-//       }
-//     }
-//     if (this.error == false && this.passwordChanged == true && this.fieldChanged == true) {
-//       content = {
-//         passwordChanged: true, fieldChanged: true,
-//         userJson: {
-//           _id: this.jsonData._id, email: this.detailsEntryForm.get('email').value, name: this.detailsEntryForm.get('name').value,
-//           surname: this.detailsEntryForm.get('lastName').value, birthdate: new DatePipe('en').transform(this.detailsEntryForm.get('birthDate').value, 'dd/MM/yyyy'),
-//           password: this.passwordEntryForm.get('password').value
-//         },
-//         passwordJson: {
-//           user: { email: this.detailsEntryForm.get('email').value, password: this.passwordEntryForm.get('password').value },
-//           new_password: this.passwordEntryForm.get('newPassword').value
-//         }
-//       };
-//       this.myprofileService.updateChanges(content).toPromise().then(data => {
-//         this.alertService.success(data); // in case of successful request it shows an alert message with the relevant content
-//       },
-//         error => { // if the request returns an error, it shows an alert message with the relevant content
-//           this.alertService.error(error);
-//           this.error = true;
-//         });
-//     } else if (this.error == false && this.passwordChanged == false && this.fieldChanged == true) {
-//       console.log(this.detailsEntryForm.get('name').value);
-//       content = {
-//         passwordChanged: false, fieldChanged: true,
-//         userJson: {
-//           _id: this.jsonData._id, email: this.detailsEntryForm.get('email').value, name: this.detailsEntryForm.get('name').value,
-//           surname: this.detailsEntryForm.get('lastName').value, birthdate: new DatePipe('en').transform(this.detailsEntryForm.get('birthDate').value, 'dd/MM/yyyy'),
-//           password: this.password
-//         }
-//       };
-//       this.myprofileService.updateChanges(content).toPromise().then(data => {
-//         this.alertService.success(data);
-//       },
-//         error => {
-//           this.alertService.error(error);
-//           this.error = true;
-//         });
-//     } else if (this.error == false && this.detailsEntryForm.valid && this.passwordEntryForm.valid && this.passwordChanged == true && this.fieldChanged == false) {
-//       content = {
-//         passwordChanged: true, fieldChanged: false,
-//         passwordJson: {
-//           user: { email: this.detailsEntryForm.get('email').value, password: this.passwordEntryForm.get('password').value },
-//           new_password: this.passwordEntryForm.get('newPassword').value
-//         }
-//       };
-//       this.myprofileService.updateChanges(content).toPromise().then(data => {
-//         this.alertService.success(data);
-//       },
-//         error => {
-//           this.alertService.error(error);
-//           this.error = true;
-//         });
-//     } else if (!this.detailsEntryForm.dirty && !this.passwordEntryForm.dirty) {
-//       this.alertService.error('You haven\'t changed anything');
-//     }
-//   }
-//
-// }
-//
