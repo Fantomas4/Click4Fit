@@ -161,7 +161,7 @@ def updateMyprofile():
     print(details)
     #connection with mongo sending the details and modifying the profile's details
     try:
-        user_wrapper_field : UserWrapper = MongoDB.updateUser(details)
+        user_wrapper : UserWrapper = MongoDB.updateUser(details)
     except TypeError as type_err: #Checking for errors
         return str(type_err), 422
     except ValueError as value_err:
