@@ -7,8 +7,10 @@
   <mat-tab-group dynamicHeight>
     <mat-tab label="Location">
       <div>
-        <p>Country: {{data.country}}</p>
-        <p>City: {{data.city}}</p>
+        <p><span class="info-title">Country: </span><span class="info-data">{{data.country}}</span></p>
+        <p><span class="info-title">City: </span><span class="info-data">{{data.city}}</span></p>
+        <p><span class="info-title">Address: </span><span class="info-data">{{data.address}}</span></p>
+        <p><span class="info-title">Postal Code: </span><span class="info-data">{{data.postalCode}}</span></p>
       </div>
     </mat-tab>
     <mat-tab label="Services">
@@ -27,6 +29,8 @@
     </mat-tab>
     <mat-tab label="Contact Details">
       <div>
+        <p><span class="info-title">Phone Number: </span><span class="info-data">{{data.phoneNumber}}</span></p>
+        <p><span class="info-title">Email: </span><span class="info-data">{{data.email}}</span></p>
       </div>
     </mat-tab>
   </mat-tab-group>

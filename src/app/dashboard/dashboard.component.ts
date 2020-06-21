@@ -19,10 +19,10 @@ export class DashboardComponent implements OnInit {
   alertSubscription: Subscription;
   alertMessage: AlertMessage;
 
-  placesChecked = true;
+  businessesChecked = true;
   workoutsChecked = true;
   loading = true; // Flag used to determine if the loading of the data is in progress or has finished.
-  favoritePlaces: BusinessEntry[] = [];
+  favoriteBusinesses: BusinessEntry[] = [];
   favoriteWorkouts: WorkoutEntry[] = [];
 
   constructor(public sanitizer: DomSanitizer, private dashboardService: DashboardService, private alertService: AlertService) {
@@ -45,9 +45,9 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.dashboardService.getFavoritePlaces({_id: JSON.parse(sessionStorage.getItem('currentUser'))._id}).subscribe(
+    this.dashboardService.getFavoriteBusinesses({_id: JSON.parse(sessionStorage.getItem('currentUser'))._id}).subscribe(
       res => {
-        this.favoritePlaces = res.body.businessList;
+        this.favoriteBusinesses = res.body.businessList;
       },
 
       error => {
