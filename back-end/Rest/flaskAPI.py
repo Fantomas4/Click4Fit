@@ -169,28 +169,11 @@ def updateMyprofile():
     except:
         return "Bad error", 500
     else:
-        if details["passwordChanged"] is False and details["fieldChanged"] is True:
-            if user_wrapper_field.user is None and not user_wrapper_field.operationDone and not user_wrapper_field.found:
-                return "Something is wrong with the database", 500
-            if user_wrapper_field.user is dict and not user_wrapper_field.operationDone and not user_wrapper_field.found:
-                return "User does not exist", 404
-            return jsonify("Save successful")
-        elif details["passwordChanged"] is True and details["fieldChanged"] is False:
-            if user_wrapper_password.user is None:
-                return "Something is wrong with the database", 500
-            if user_wrapper_password.user is dict and not user_wrapper_password.operationDone and not user_wrapper_password.found:
-                return "User does not exist", 404
-            if not user_wrapper_password.operationDone and user_wrapper_password.found:
-                return "Wrong old password", 401
-            return jsonify("Save successful")
-        elif details["passwordChanged"] is True and details["fieldChanged"] is True:
-            if (user_wrapper_field.user is None and not user_wrapper_field.operationDone and not user_wrapper_field.found) or (user_wrapper_password.user is None):
-                return "Something is wrong with the database", 500
-            if (user_wrapper_password.user is dict and not user_wrapper_password.operationDone and not user_wrapper_password.found) or (user_wrapper_field.user is dict and not user_wrapper_field.operationDone and not user_wrapper_field.found):
-                return "User does not exist", 404
-            if not user_wrapper_password.operationDone and user_wrapper_password.found:
-                return "Wrong old password", 401
-            return jsonify("Save successful")
+        if user_wrapper.user is None:
+            return "Something is wrong with the database", 500
+        if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
+            return "Couldn't update user entry", 500
+        return jsonify("Save successful")
 
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
 def deleteMyprofile():
