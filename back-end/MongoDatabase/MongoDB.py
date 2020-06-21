@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0, "D:\\WebstormProjects\\Click4Fit\\back-end")
-
 from pymongo import MongoClient
 from re import fullmatch # for new password validation
 
@@ -9,9 +6,8 @@ from MongoDatabase.Database.UserDB import UserDB
 from MongoDatabase.Database.BusinessDB import BusinessDB
 from MongoDatabase.Database.WorkoutDB import WorkoutDB
 
-from mock_data import data # mock database entries
-
-from Validator import Validator
+from MongoDatabase.mock_data import data # mock database entries
+from MongoDatabase.Validator import Validator
 
 class MongoDB:
     """

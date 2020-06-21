@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0, "D:\\WebstormProjects\\Click4Fit\\back-end")
-
 from bson import ObjectId
 
 from MongoDatabase.Wrappers.BusinessWrapper import BusinessWrapper

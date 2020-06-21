@@ -5,8 +5,6 @@ from flask_cors import CORS
 from pprint import pprint
 from time import time
 
-import sys
-sys.path.insert(0, "D:\\WebstormProjects\\Click4Fit\\back-end")
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper
