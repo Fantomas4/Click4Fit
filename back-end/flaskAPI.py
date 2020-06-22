@@ -65,9 +65,9 @@ def login():
             "surname": user_wrapper.user["surname"],
             "email": user_wrapper.user["email"],
             "privilegeLevel": user_wrapper.user["privilegeLevel"],
-            "token": user_wrapper.user["token"],
-            "favoriteWorkout": user_wrapper.user["favoriteWorkout"],
-            "favoriteBusiness": user_wrapper.user["favoriteBusiness"]
+            "token": user_wrapper.user["token"]
+            # "favoriteWorkout": user_wrapper.user["favoriteWorkout"],
+            # "favoriteBusiness": user_wrapper.user["favoriteBusiness"]
         })
  
  

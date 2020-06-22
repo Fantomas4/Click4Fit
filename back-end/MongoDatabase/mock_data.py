@@ -112,7 +112,7 @@ data = {
            'products': ['product_1', 'product_2', 'service_1', 'service_2']},
 
          { 'name': 'Giorgos Anastasiou', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Xanthi', 'address': 'Adrianou Street 12', 'postalCode': '587 05',
-           'phoneNumber': '202-555-0227', 'email': 'anastgiog@gmail.com', 'imgPath': 'pr1.jpg', 'services': ['service_1', 'service_2'],
+           'phoneNumber': '202-555-0227', 'email': 'anastgiog@gmail.com', 'imgPath': 'pr3.jpg', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Hybrid Fitness', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Aiolou Street 45', 'postalCode': '534 85',
@@ -132,7 +132,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Vasillis Baskos', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Kavala', 'address': 'Evripidou Street', 'postalCode': '670 00',
-           'phoneNumber': '202-555-0406', 'email': 'vasillisb@gmail.com', 'imgPath': 'pr2.jpg', 'services': ['service_1', 'service_2'],
+           'phoneNumber': '202-555-0406', 'email': 'vasillisb@gmail.com', 'imgPath': 'pr4.jpg', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Anytime Fitness', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Ioanninon Street 34', 'postalCode': '778 66',
@@ -152,7 +152,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Niki Karaila', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Athens', 'address': 'Palamidiou Street 6', 'postalCode': '233 67',
-           'phoneNumber': '202-555-0819', 'email': 'nikik@gmail.com', 'imgPath': 'pr3.jpg', 'services': ['service_1', 'service_2'],
+           'phoneNumber': '202-555-0819', 'email': 'nikik@gmail.com', 'imgPath': 'pr1.jpg', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Fitclub Bootcamps', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Petrou Ralli Street 77', 'postalCode': '667 00',
@@ -168,7 +168,7 @@ data = {
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Anna Lazarou', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Vyssis Street 56', 'postalCode': '667 00',
-           'phoneNumber': '307-555-0188', 'email': 'annalaz@gmail.com', 'imgPath': 'pr4.jpg', 'services': ['service_1', 'service_2'],
+           'phoneNumber': '307-555-0188', 'email': 'annalaz@gmail.com', 'imgPath': 'pr2.jpg', 'services': ['service_1', 'service_2'],
            'products': ['product_1', 'product_2']},
 
          { 'name': 'Athletic Fluency', 'category': 'gym', 'country': 'Greece', 'city': 'Athens', 'address': 'Stadiou Street 12', 'postalCode': '128 02',
