@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {WorkoutEntry} from '../workout-entry';
+import {WorkoutEntry} from '../../workout-entry';
 
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {

@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
 
   searchKeywords = new FormControl();
 
-  searchResults: BusinessEntry[];
+  searchResults: BusinessEntry[] = [];
 
   selectedOptions = [];
   businessCategories: {
@@ -41,12 +41,10 @@ export class SearchComponent implements OnInit {
   constructor(private searchService: SearchService, private alertService: AlertService) { }
 
   ngOnInit(): void {
-    // TEMP! FOR DEBUGGING ONLY!!!
-    // this.getResults();
+    this.getResults();
   }
 
   getResults() {
-    this.searchResults = [];
     this.searchService.getResults({keywords: this.searchKeywords.value === null ? '' : this.searchKeywords.value,
       category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
       city: this.locationAutocomplete.getUserCityChoices()}).subscribe(

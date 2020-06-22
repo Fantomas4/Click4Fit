@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {map} from 'rxjs/operators';
 
 
 /* This service is about getting workout entries from API and displaying them */
@@ -13,13 +14,11 @@ export class WorkoutService {
 
   constructor(private http: HttpClient) { }
 
-  getResults(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/display-workout`, jsonData, { 'headers': headers });
-  }
-  getAllWorkout(): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    return this.http.get(`${environment.apiUrl}/workouts`);
+  getResults(filterData) {
+    console.log(filterData);
+    return this.http.post<any>(`${environment.apiUrl}/display-workout`, filterData, {headers: {'Content-type': 'application/json'},
+      observe: 'response'}).pipe(map((res: any) => {
+      return res;
+    }));
   }
 }

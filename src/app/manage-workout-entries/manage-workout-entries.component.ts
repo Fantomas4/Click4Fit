@@ -9,7 +9,7 @@ import {AlertService} from '../core/alert.service';
 import {ManageWorkoutEntriesService} from './manage-workout-entries.service';
 import {WorkoutDetailsEditDialogComponent} from './workout-details-edit-dialog/workout-details-edit-dialog.component';
 import {WorkoutAddEntryDialogComponent} from './workout-add-entry-dialog/workout-add-entry-dialog.component';
-import { WorkoutEntry } from './workout-entry';
+import { WorkoutEntry } from '../workout-entry';
 
 interface AlertMessage {
   type: string;

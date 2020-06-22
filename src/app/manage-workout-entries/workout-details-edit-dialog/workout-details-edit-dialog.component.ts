@@ -4,7 +4,7 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {WorkoutEntry} from '../workout-entry';
+import {WorkoutEntry} from '../../workout-entry';
 
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
