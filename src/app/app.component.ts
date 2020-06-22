@@ -19,5 +19,4 @@ export class AppComponent {
       }
     };
   }
-  // logoUrl = './assets/logo.png';
 }
