@@ -4,14 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { BusinessAddEntryService } from './business-add-entry-dialog.service'
-import { AlertService } from '../../core/alert.service';
 import { Subscription } from 'rxjs';
 
-interface AlertMessage {
-  type: string;
-  text: string;
-}
 
 interface Country {
   name: string;
@@ -84,19 +78,9 @@ export class BusinessAddEntryDialogComponent implements OnInit {
 
 
   constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private businessAddEntryService: BusinessAddEntryService,
-    private alertService: AlertService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit(): void { 
-    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
-      if (value !== undefined) {
-        this.alertMessage = {
-          type: value.type,
-          text: value.text
-        };
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   onFileSelected(event) {
     this.imgFile = event.target.files[0];
@@ -159,29 +143,23 @@ export class BusinessAddEntryDialogComponent implements OnInit {
 
   onSaveClick(): void {
     if (this.entryForm.valid) {
-      var user = { "email": this.entryForm.get('ownerEmail').value };
-      this.businessAddEntryService.getOwner(user).toPromise().then(data => {
-        this.owner = data.user;
-        var content = {
-          ownerId: this.owner["_id"],
-          name: this.entryForm.get('name').value,
-          category: this.category,
-          country: this.country,
-          city: this.entryForm.get('city').value,
-          address: this.entryForm.get('address').value,
-          postalCode: this.entryForm.get('postalCode').value,
-          phoneNumber: this.entryForm.get('phoneNumber').value,
-          services: this.services,
-          products: this.products,
-          file: this.imgFile,
-          email: this.entryForm.get('businessEmail').value
-        };
-        this.dialogRef.close({ clickedSave: true, details: content });
-      },
-        error => {
-          this.alertService.error(error);
-        });
-      
+      const content = {
+        _id: this.id,
+        name: this.entryForm.get('name').value,
+        category: this.category,
+        country: this.country,
+        city: this.entryForm.get('city').value,
+        address: this.entryForm.get('address').value,
+        postalCode: this.entryForm.get('postalCode').value,
+        phoneNumber: this.entryForm.get('phoneNumber').value,
+        services: this.services,
+        products: this.products,
+        file: this.imgFile,
+        imgPath: this.imgFile,
+        email: this.entryForm.get('businessEmail').value,
+        ownerEmail: this.entryForm.get('ownerEmail').value
+      };
+      this.dialogRef.close({clickedSave: true, details: content});
     }
   }
 }

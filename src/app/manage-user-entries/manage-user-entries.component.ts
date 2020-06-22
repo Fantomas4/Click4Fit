@@ -40,12 +40,12 @@ export class ManageUserEntriesComponent implements OnInit {
   dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
 
   detailsEditDialogRef: MatDialogRef<UserDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
-  selected = []; //List with selected checkboxes
+  selected = []; // List with selected checkboxes
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
 
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog,
-    private alertService: AlertService) { }
+              private alertService: AlertService) { }
 
   /** Method used to change the dialog's height and width according to
    * the window's size.
@@ -105,7 +105,7 @@ export class ManageUserEntriesComponent implements OnInit {
 
     /*this.manageUserEntriesService.getResults()
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
-    this.manageUserEntriesService.getResults().toPromise().then(data => {
+    this.manageUserEntriesService.getUsers().toPromise().then(data => {
       this.userData = data.userList;
       this.dataSource.data = this.userData;
     },
@@ -139,8 +139,8 @@ export class ManageUserEntriesComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight-200).toString().concat('px'), minWidth: this.dialogMinWidth,
-      maxWidth: this.dialogMaxWidth,
+      width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight - 200).toString().concat('px'),
+      minWidth: this.dialogMinWidth, maxWidth: this.dialogMaxWidth,
       data: { _id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
     });
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
@@ -166,9 +166,10 @@ export class ManageUserEntriesComponent implements OnInit {
           }
         });
       }
-    })
+    });
   }
-    /** Click on delete button */
+
+  /** Click on delete button */
   deleteEntries() {
     const selectedIds = [];
     this.selection.selected.forEach(entry =>

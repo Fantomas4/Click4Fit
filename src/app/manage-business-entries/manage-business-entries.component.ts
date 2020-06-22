@@ -214,6 +214,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
         formData.append('products', dialogRes.details.products);
         formData.append('file', dialogRes.details.file);
         formData.append('email', dialogRes.details.email);
+        formData.append('ownerEmail', dialogRes.details.ownerEmail);
         this.manageBusinessEntriesService.addEntry(formData).toPromise().then(
           data => {
             this.alertService.success('Entry added successfully');
