@@ -1,77 +1,77 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FormControl, Validators} from '@angular/forms';
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 
+
+export class GenericErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
-  selector: 'app-details-user-edit',
-  templateUrl: './user-details-edit-dialog.html',
-  styleUrls: ['./user-details-edit-dialog.css'],
-   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-  ],
+  selector: 'app-user-details-edit-dialog',
+  templateUrl: './user-details-edit-dialog.component.html',
+  styleUrls: ['./user-details-edit-dialog.component.css']
 })
 export class UserDetailsEditDialogComponent implements OnInit {
 
-  id: number; // The displayed entry's id.
-  name: string; // The displayed entry's first name.
-  surname: string; // The displayed entry's last name.
-  birthdate: FormControl; // Form Control used to receive the user's birth date input.
-  // Form Control used to receive and validate the user's email input.
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  email;
-  picker;
-  clickedSave: boolean;
+  entryForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    surname: new FormControl('', [
+      Validators.required
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+    birthdate: new FormControl('', [
+      Validators.required
+    ])
+  },
+  );
 
-  constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private _adapter: DateAdapter<any>) { }
+  genericErrorStateMatcher = new GenericErrorStateMatcher();
+
+  clickedSave: boolean;
+  id: number;
+
+  constructor(public dialogRef: MatDialogRef<UserDetailsEditDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    this._adapter.setLocale('en');
-    // Extract the data from the payload and store it into the class properties
-    this.id = this.data._id;
-    this.name = this.data.name;
-    this.surname = this.data.surname;
-
-    // Use regex to extract date data from the birthday string recovered from DB.
     const separators = ['-', '/', '\\\.', ','];
     const dateTokens = this.data.birthdate.split(new RegExp(separators.join('|'), 'g'));
-    this.birthdate = new FormControl(new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])));
-
-    this.email = this.data.email;
+    this.id = this.data._id;
+    this.entryForm.setValue({
+      name: this.data.name,
+      surname: this.data.surname,
+      email: this.data.email,
+      birthdate: new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])),
+    });
   }
 
-  /**
-   *  Retrieves and returns any errors that have occurred in
-   *  the email Form Control.
-   */
-  getErrorMessage() {
-    if (this.emailFormControl.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
-  }
-
-  /**
-   * Called to close the "Edit/Details" dialog window.
-   */
-  onCloseClick(): void {
+  onDiscardClick(): void {
     // method is called when the "Close" button is pressed
-    this.dialogRef.close();
+    this.dialogRef.close({ clickedSave: false });
   }
 
   onSaveClick(): void {
-    const content = {_id: this.id, name: this.name, surname: this.surname, birthdate: this.data.birthdate, email: this.email};
-    this.clickedSave = true;
-    this.dialogRef.close({save: this.clickedSave, details: content});
+    if (this.entryForm.valid) {
+      const content = {
+        _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
+        name: this.entryForm.get('name').value,
+        surname: this.entryForm.get('surname').value,
+        email: this.entryForm.get('email').value,
+        birthdate: new DatePipe('en').transform(this.entryForm.get('birthdate').value, 'dd/MM/yyyy')
+      };
+      this.dialogRef.close({ clickedSave: true, details: content });
+    }
   }
+
 
 }

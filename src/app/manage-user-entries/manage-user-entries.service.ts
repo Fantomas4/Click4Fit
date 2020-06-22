@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +10,24 @@ export class ManageUserEntriesService {
 
   constructor(private http: HttpClient) { }
 
-  getResults(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/manage-user-display-entries`);
+  getUsers() {
+    return this.http.get<any>(`${environment.apiUrl}/manage-user-display-entries`);
   }
-  deleteEntries(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/manage-user-delete-entries`, jsonData, { 'headers': headers });
+
+  updateEntry(data: FormData) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-user-modify-entry`, data,
+      {observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
   }
-  updateEntry(content): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
-    const jsonData = JSON.stringify(content);
-    return this.http.post(`${environment.apiUrl}/manage-user-modify-entry`, jsonData, { 'headers': headers });
+
+  deleteEntries(data: object) {
+    return this.http.post<any>(`${environment.apiUrl}/manage-user-delete-entries`, JSON.stringify({_id: data}),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+      console.log('RECEIVED 1: ', res);
+      return res;
+    }));
   }
 }
 

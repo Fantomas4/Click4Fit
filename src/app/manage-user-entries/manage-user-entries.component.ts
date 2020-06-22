@@ -35,16 +35,17 @@ export class ManageUserEntriesComponent implements OnInit {
 
   dialogHeight: number; // Height of the dialog window.
   dialogWidth: number; // Width of the dialog window.
-  dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size
+  dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
+  dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
+  dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
 
   detailsEditDialogRef: MatDialogRef<UserDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
-  selected = []; //List with selected checkboxes
+  selected = []; // List with selected checkboxes
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  result: boolean;
 
   constructor(private manageUserEntriesService: ManageUserEntriesService, public dialog: MatDialog,
-    private alertService: AlertService) { }
+              private alertService: AlertService) { }
 
   /** Method used to change the dialog's height and width according to
    * the window's size.
@@ -65,8 +66,6 @@ export class ManageUserEntriesComponent implements OnInit {
     if (typeof this.detailsEditDialogRef !== 'undefined') {
       this.detailsEditDialogRef.updateSize(this.dialogWidth.toString(), this.dialogHeight.toString());
     }
-
-    console.log('onresize height is: ' + this.dialogHeight);
   }
 
   ngOnInit(): void {
@@ -106,7 +105,7 @@ export class ManageUserEntriesComponent implements OnInit {
 
     /*this.manageUserEntriesService.getResults()
       .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
-    this.manageUserEntriesService.getResults().toPromise().then(data => {
+    this.manageUserEntriesService.getUsers().toPromise().then(data => {
       this.userData = data.userList;
       this.dataSource.data = this.userData;
     },
@@ -140,47 +139,57 @@ export class ManageUserEntriesComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
+      width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight - 200).toString().concat('px'),
+      minWidth: this.dialogMinWidth, maxWidth: this.dialogMaxWidth,
       data: { _id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
     });
-    this.detailsEditDialogRef.afterClosed().subscribe(result => {
-      this.result = result.save;
-      if (this.result == true) {
-        this.manageUserEntriesService.updateEntry(result.details).toPromise().then(data => {
+    this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
+      if (dialogRes && dialogRes.clickedSave) {
+        const formData = new FormData();
+        formData.append('_id', dialogRes.details._id);
+        formData.append('name', dialogRes.details.name);
+        formData.append('surname', dialogRes.details.surname);
+        formData.append('email', dialogRes.details.email);
+        formData.append('birthdate', dialogRes.details.birthdate);
+        this.manageUserEntriesService.updateEntry(formData).toPromise().then(data => {
           this.getUsersEntries();
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.alertService.success(data);
+          this.alertService.success('Entry updated successfully');
         },
-          error => {
+        error => {
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof(error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
             this.alertService.error(error);
-          })
-      }
-    })
-  }
-  deleteEntries() {
-    this.selected = this.selection.selected;
-    let i;
-    for (i = 0; i < this.selection.selected.length; i++) {
-      this.selected[i] = this.selection.selected[i].email;
-    }
-    const content = { "email": this.selected };
-    this.manageUserEntriesService.deleteEntries(content).toPromise().then(data => {
-      this.getUsersEntries();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.alertService.success(data);
-    },
-    error => {
-      // If error is not a string received from the API, handle the ProgressEvent
-      // returned due to the inability to connect to the API by printing an appropriate
-      // warning message
-      if (typeof(error) !== 'string') {
-        this.alertService.error('Error: No connection to the API');
-      } else {
-        this.alertService.error(error);
+          }
+        });
       }
     });
   }
-}
 
+  /** Click on delete button */
+  deleteEntries() {
+    const selectedIds = [];
+    this.selection.selected.forEach(entry =>
+      selectedIds.push(entry._id)
+    );
+
+    this.manageUserEntriesService.deleteEntries(selectedIds).toPromise().then(
+      data => {
+        this.getUsersEntries();
+        this.alertService.success('Data loaded successfully');
+      },
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+      });
+  }
+}
