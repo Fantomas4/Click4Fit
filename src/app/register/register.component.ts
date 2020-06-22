@@ -15,8 +15,6 @@ import {DatePipe} from '@angular/common';
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    // console.log(control);
-    // console.log(form);
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
@@ -25,10 +23,6 @@ export class GenericErrorStateMatcher implements ErrorStateMatcher {
 export class PasswordsErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    // console.log(control);
-    // console.log(form);
-    // console.log('form.hasError(\'passwordMismatch\'): ' + form.hasError('passwordMismatch'));
-    // console.log('return: ' + form.hasError('passwordMismatch'));
 
     return !!(form.hasError('passwordMismatch') || control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
@@ -108,8 +102,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(new DatePipe('en').transform(this.registerForm.get('birthDate').value, 'dd/MM/yyyy'));
-    console.log(JSON.stringify(new DatePipe('en').transform(this.registerForm.get('birthDate').value, 'dd/MM/yyyy')));
     if (this.registerForm.valid) {
       this.loading = true;
 

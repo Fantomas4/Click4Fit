@@ -18,7 +18,6 @@ export class ManageBusinessEntriesService {
   updateEntry(data: FormData) {
     return this.http.post<any>(`${environment.apiUrl}/manage-business-modify-entry`, data,
       {observe: 'response'}).pipe(map((res: any) => {
-      console.log('RECEIVED 1: ', res);
       return res;
     }));
   }
@@ -26,7 +25,6 @@ export class ManageBusinessEntriesService {
   addEntry(data: FormData) {
     return this.http.post<any>(`${environment.apiUrl}/manage-business-add-entry`, data,
       {observe: 'response'}).pipe(map((res: any) => {
-      console.log('RECEIVED 1: ', res);
       return res;
     }));
   }
@@ -34,7 +32,6 @@ export class ManageBusinessEntriesService {
   deleteEntries(data: object) {
     return this.http.post<any>(`${environment.apiUrl}/manage-business-delete-entries`, JSON.stringify({_id: data}),
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
-      console.log('RECEIVED 1: ', res);
       return res;
     }));
   }

@@ -65,7 +65,6 @@ export class SearchComponent implements OnInit {
 
     res => {
               this.searchResults = res.body.data;
-              // console.log(res.body.data);
               this.alertService.success('Found ' + res.body.data.length + ' results...');
             },
 

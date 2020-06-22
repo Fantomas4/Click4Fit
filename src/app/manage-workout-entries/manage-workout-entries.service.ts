@@ -12,17 +12,13 @@ export class ManageWorkoutEntriesService {
   getWorkouts() {
     return this.http.get<any>(`${environment.apiUrl}/workouts`,
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
-      console.log('RECEIVED 1: ', res);
       return res;
     }));
   }
 
   updateEntry(data: object) {
-    console.log("data is:");
-    console.log(data);
     return this.http.put<any>(`${environment.apiUrl}/workouts`, data,
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
-      console.log('RECEIVED 1: ', res);
       return res;
     }));
   }
@@ -30,7 +26,6 @@ export class ManageWorkoutEntriesService {
   addEntry(data: object) {
     return this.http.post<any>(`${environment.apiUrl}/workouts`, data,
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
-      console.log('RECEIVED 1: ', res);
       return res;
     }));
   }
@@ -38,7 +33,6 @@ export class ManageWorkoutEntriesService {
   deleteEntries(data: object) {
     return this.http.post<any>(`${environment.apiUrl}/delete-workouts`, JSON.stringify({_id: data}),
       {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
-      console.log('RECEIVED 1: ', res);
       return res;
     }));
   }

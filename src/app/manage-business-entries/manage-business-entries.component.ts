@@ -172,8 +172,6 @@ export class ManageBusinessEntriesComponent implements OnInit {
         formData.append('email', dialogRes.details.email);
         this.manageBusinessEntriesService.updateEntry(formData).toPromise().then(
           data => {
-            console.log("MPIKA1");
-            console.log(data);
             this.getBusinessEntries();
             this.alertService.success('Entry updated successfully');
           },

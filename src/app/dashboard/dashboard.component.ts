@@ -63,7 +63,6 @@ export class DashboardComponent implements OnInit {
 
     this.dashboardService.getFavoriteWorkouts({_id: JSON.parse(sessionStorage.getItem('currentUser'))._id}).subscribe(
       res => {
-        console.log(res);
         this.favoriteWorkouts = res.body.workoutList;
       },
 

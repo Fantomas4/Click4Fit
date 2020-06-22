@@ -2,7 +2,6 @@
 from flask import Flask, jsonify, request, json, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
-from pprint import pprint
 from time import time
  
 from MongoDatabase.MongoDB import MongoDB
@@ -155,7 +154,6 @@ def displayMyprofile():
 @app.route("/api/update-myprofile", methods=['POST','GET'])
 def updateMyprofile():
     details=request.get_json() #get modifying details
-    print(details)
     #connection with mongo sending the details and modifying the profile's details
     try:
         user_wrapper : UserWrapper = MongoDB.updateUser(details)
@@ -220,7 +218,6 @@ def deleteMyprofile():
 def search():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the fitlers and return the matched place
-    print(filters)
     try:
         business_wrapper_list : BusinessListWrapper = MongoDB.businessSearch(filters)
     except TypeError as type_err: #Checking for errors
@@ -471,9 +468,6 @@ def manageBusinessAdd():
    }
    """
     if request.method == "POST":
-        print(request.files)
-        print(request.form)
-        print("UPLOAD FOLDER: " + UPLOAD_FOLDER)
         # check if the post request has the file part
         if "file" in request.files:
             file = request.files["file"]
@@ -494,7 +488,7 @@ def manageBusinessAdd():
             owner: UserWrapper = MongoDB.getUser({"email": business["ownerEmail"]})
             if not owner.found:
                 return "owner email invalid", 422
-            business["ownerId"] = owner.user["_id"]
+            business["ownerId"] = owner.user["_id"] 
             del business["ownerEmail"]
         if "file" in business:
             del business["file"]

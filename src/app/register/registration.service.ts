@@ -15,7 +15,6 @@ export class RegistrationService {
     return this.http.post<any>(`${environment.apiUrl}/register`, JSON.stringify(postData), {headers: {'Content-type': 'application/json'},
       observe: 'response'}).pipe(map(
         (res: any) => {
-          console.log('RECEIVED 1: ', res);
           return res;
     }));
   }

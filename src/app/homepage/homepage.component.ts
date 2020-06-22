@@ -14,7 +14,6 @@ export class HomepageComponent implements OnInit {
     // clear alert message on route change
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        console.log('HOMEPAGE Detected route change!');
         this.checkPrivilegeLevel();
       }
     });
@@ -30,6 +29,5 @@ export class HomepageComponent implements OnInit {
     } else {
       this.privilegeLevel = undefined;
     }
-    console.log('HOMEPAGE privilegeLevel: ', this.privilegeLevel);
   }
 }

@@ -91,7 +91,6 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    console.log(event);
     this.imgFile = event.target.files[0];
   }
 
@@ -154,8 +153,6 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    console.log("IMAGE FILE:?");
-    console.log(this.imgFile);
     if (this.entryForm.valid) {
       const content = {
         _id: this._id,
