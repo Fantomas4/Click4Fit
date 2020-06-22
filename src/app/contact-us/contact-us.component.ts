@@ -30,7 +30,8 @@ export class ContactUsComponent implements OnInit {
       Validators.email
     ]),
     phoneNumber: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern('[0-9 ]*')
     ]),
     subject: new FormControl('', [
       Validators.required
