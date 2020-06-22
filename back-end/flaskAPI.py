@@ -491,7 +491,7 @@ def manageBusinessAdd():
  
         business = request.form.to_dict()
         if "ownerEmail" in business:
-            owner: UserWrapper = mongo.getUser({"email": business["ownerEmail"]})
+            owner: UserWrapper = MongoDB.getUser({"email": business["ownerEmail"]})
             if not owner.found:
                 return "owner email invalid", 422
             business["ownerId"] = owner.user["_id"]
