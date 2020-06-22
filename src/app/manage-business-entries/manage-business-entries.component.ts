@@ -45,17 +45,12 @@ export class ManageBusinessEntriesComponent implements OnInit {
   detailsEditDialogRef: MatDialogRef<BusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<BusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
 
-  selected = []; // List with selected checkboxes alertMessage: AlertMessage;
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  result: boolean;
-  i: number;
-  content;
-  mySubscription;
 
 
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog,
-    private alertService: AlertService, private router: Router) {
+              private alertService: AlertService, private router: Router) {
   }
 
   /** Method used to change the dialog's height and width according to
@@ -90,11 +85,6 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.getBusinessEntries();
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
-  }
-  ngOnDestroy() {
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
   }
 
   /**
@@ -180,12 +170,14 @@ export class ManageBusinessEntriesComponent implements OnInit {
         formData.append('file', dialogRes.details.file);
         formData.append('imgPath', dialogRes.details.imgPath);
         formData.append('email', dialogRes.details.email);
-        this.manageBusinessEntriesService.updateEntry(formData).toPromise().then(data => {
-          console.log('yes');
-          this.getBusinessEntries();
-          console.log('no');
-          this.alertService.success('Entry updated successfully');
-        },
+        this.manageBusinessEntriesService.updateEntry(formData).toPromise().then(
+          data => {
+            console.log("MPIKA1");
+            console.log(data);
+            this.getBusinessEntries();
+            this.alertService.success('Entry updated successfully');
+          },
+
           error => {
             // If error is not a string received from the API, handle the ProgressEvent
             // returned due to the inability to connect to the API by printing an appropriate
@@ -222,10 +214,12 @@ export class ManageBusinessEntriesComponent implements OnInit {
         formData.append('products', dialogRes.details.products);
         formData.append('file', dialogRes.details.file);
         formData.append('email', dialogRes.details.email);
-        this.manageBusinessEntriesService.addEntry(formData).toPromise().then(data => {
-          this.getBusinessEntries();
-          this.alertService.success('Entry added successfully');
-        },
+        this.manageBusinessEntriesService.addEntry(formData).toPromise().then(
+          data => {
+            this.alertService.success('Entry added successfully');
+            this.getBusinessEntries();
+          },
+
           error => {
             // If error is not a string received from the API, handle the ProgressEvent
             // returned due to the inability to connect to the API by printing an appropriate
