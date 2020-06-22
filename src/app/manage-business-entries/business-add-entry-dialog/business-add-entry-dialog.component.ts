@@ -5,6 +5,13 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { BusinessAddEntryService } from './business-add-entry-dialog.service'
+import { AlertService } from '../../core/alert.service';
+import { Subscription } from 'rxjs';
+
+interface AlertMessage {
+  type: string;
+  text: string;
+}
 
 interface Country {
   name: string;
@@ -72,12 +79,24 @@ export class BusinessAddEntryDialogComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   owner: any;
+  alertSubscription: Subscription;
+  alertMessage: any;
 
 
   constructor(public dialogRef: MatDialogRef<BusinessAddEntryDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private businessAddEntryService: BusinessAddEntryService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private businessAddEntryService: BusinessAddEntryService,
+    private alertService: AlertService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.alertSubscription = this.alertService.getMessage().subscribe(value => {
+      if (value !== undefined) {
+        this.alertMessage = {
+          type: value.type,
+          text: value.text
+        };
+      }
+    });
+  }
 
   onFileSelected(event) {
     this.imgFile = event.target.files[0];
@@ -160,7 +179,7 @@ export class BusinessAddEntryDialogComponent implements OnInit {
         this.dialogRef.close({ clickedSave: true, details: content });
       },
         error => {
-
+          this.alertService.error(error.error);
         });
       
     }

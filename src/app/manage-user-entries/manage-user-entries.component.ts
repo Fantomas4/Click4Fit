@@ -151,9 +151,16 @@ export class ManageUserEntriesComponent implements OnInit {
           this.getUsersEntries();
           this.alertService.success('Entry updated successfully');
         },
-          error => {
-            this.alertService.error(error.error);
-          })
+        error => {
+          // If error is not a string received from the API, handle the ProgressEvent
+          // returned due to the inability to connect to the API by printing an appropriate
+          // warning message
+          if (typeof(error) !== 'string') {
+            this.alertService.error('Error: No connection to the API');
+          } else {
+            this.alertService.error(error);
+          }
+        });
       }
     })
   }
@@ -169,9 +176,15 @@ export class ManageUserEntriesComponent implements OnInit {
         this.getUsersEntries();
         this.alertService.success('Data loaded successfully');
       },
-
       error => {
-        this.alertService.error(error.error);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 }

@@ -1,15 +1,15 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {BusinessDetailsEditDialogComponent} from './business-details-edit-dialog/business-details-edit-dialog.component';
-import {BusinessAddEntryDialogComponent} from './business-add-entry-dialog/business-add-entry-dialog.component';
-import {ManageBusinessEntriesService} from './manage-business-entries.service';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { BusinessDetailsEditDialogComponent } from './business-details-edit-dialog/business-details-edit-dialog.component';
+import { BusinessAddEntryDialogComponent } from './business-add-entry-dialog/business-add-entry-dialog.component';
+import { ManageBusinessEntriesService } from './manage-business-entries.service';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
-import {Router, NavigationEnd} from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 interface AlertMessage {
   type: string;
@@ -24,8 +24,8 @@ interface AlertMessage {
 
 export class ManageBusinessEntriesComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
-  @ViewChild(MatSort, {static: true}) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; // MatPaginator used to divide table data into multiple pages.
+  @ViewChild(MatSort, { static: true }) sort: MatSort; // MatSort used to provide column data sorting functionality to the table.
 
   // Holds a SelectionModel<BusinessEntry> object used to get the table checkboxes' state.
   selection = new SelectionModel<any>(true, []);
@@ -52,11 +52,11 @@ export class ManageBusinessEntriesComponent implements OnInit {
   i: number;
   content;
   mySubscription;
-  
+
 
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog,
-    private alertService: AlertService, private router:Router) {
-    }
+    private alertService: AlertService, private router: Router) {
+  }
 
   /** Method used to change the dialog's height and width according to
    * the window's size.
@@ -91,7 +91,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
     this.dataSource.paginator = this.paginator; // Add the paginator object to the dataSource data that will be presented on the table.
     this.dataSource.sort = this.sort; // Add the sort object to the dataSource data that will be presented on the table.
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     if (this.mySubscription) {
       this.mySubscription.unsubscribe();
     }
@@ -121,12 +121,19 @@ export class ManageBusinessEntriesComponent implements OnInit {
 
     /*this.manageBusinessEntriesService.getResults()
       .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
-      this.manageBusinessEntriesService.getBusinesses().toPromise().then(data => {
-        this.businessData = data.businessList;
-        this.dataSource.data = this.businessData;
-      },
+    this.manageBusinessEntriesService.getBusinesses().toPromise().then(data => {
+      this.businessData = data.businessList;
+      this.dataSource.data = this.businessData;
+    },
       error => {
-        this.alertService.error(error.errror);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof (error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 
@@ -153,7 +160,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
       data: {
         _id: element._id, name: element.name, category: element.category, country: element.country,
         city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
-        element.phoneNumber, email: element.email, services: element.services, products: element.products,
+          element.phoneNumber, email: element.email, services: element.services, products: element.products,
         imgPath: element.imgPath
       }
     });
@@ -174,11 +181,20 @@ export class ManageBusinessEntriesComponent implements OnInit {
         formData.append('imgPath', dialogRes.details.imgPath);
         formData.append('email', dialogRes.details.email);
         this.manageBusinessEntriesService.updateEntry(formData).toPromise().then(data => {
-            this.getBusinessEntries();
-            this.alertService.success('Entry updated successfully');
-          },
+          console.log('yes');
+          this.getBusinessEntries();
+          console.log('no');
+          this.alertService.success('Entry updated successfully');
+        },
           error => {
-            this.alertService.error(error.error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof (error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
       }
     });
@@ -207,11 +223,18 @@ export class ManageBusinessEntriesComponent implements OnInit {
         formData.append('file', dialogRes.details.file);
         formData.append('email', dialogRes.details.email);
         this.manageBusinessEntriesService.addEntry(formData).toPromise().then(data => {
-            this.getBusinessEntries();
-            this.alertService.success('Entry added successfully');
-          },
+          this.getBusinessEntries();
+          this.alertService.success('Entry added successfully');
+        },
           error => {
-            this.alertService.error(error.error);
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof (error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
           });
       }
     });
@@ -229,9 +252,15 @@ export class ManageBusinessEntriesComponent implements OnInit {
         this.getBusinessEntries();
         this.alertService.success('Data loaded successfully');
       },
-
       error => {
-        this.alertService.error(error.error);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof (error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
 }
