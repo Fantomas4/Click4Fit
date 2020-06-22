@@ -135,7 +135,7 @@ class MongoDB:
     def getUser(self, user_query: dict):
         """
         Gets first user which has the same attribute-value pairs as user_query.
-        Example: {"name": ["Nikos"], "birthdate": ["02.02.2020"]}
+        Example: {"name": "Nikos", "birthdate": "02.02.2020"}
         Will return all users that have name Nikos AND birthdate 02.02.2020.
         The user need to have both to match the pattern
 
@@ -176,6 +176,8 @@ class MongoDB:
 
     def getFavoriteBusiness(self, user: dict):
         """
+        Gets favoriteBusiness list
+
         :param user: a dict containing a unique identifier to find the user. Example: _id, email
         :return: a list with favorite businesses of user
                 Will be None if something failed inside mongo.
@@ -187,6 +189,8 @@ class MongoDB:
     
     def getFavoriteWorkout(self, user: dict):
         """
+        Gets favoriteWorkout list
+
         :param user: a dict containing a unique identifier to find the user. Example: _id, email
         :return: a list with favorite workout of user
                 Will be None if something failed inside mongo.
@@ -198,6 +202,10 @@ class MongoDB:
     
     def getUserBusinesses(self, user: dict):
         """
+        Gets businessList of an owner
+
+        :param user: a dict containing a unique identifier to find the user. Example: _id, email
+        :return: BusinessListWrapper
         """
         self.validator.validate(user, "user")
         user_wrapper = self.userDB.get(user)
@@ -211,6 +219,8 @@ class MongoDB:
     
     def addFavoriteBusiness(self, favorite_query: dict):
         """
+        Adds a business to the users favoriteBusiness list
+
         :param favorite_query: a dict containing the user and the new_favorite.
                             Example: favorite_query = {
                                         "user": {
@@ -239,6 +249,8 @@ class MongoDB:
     
     def addFavoriteWorkout(self, favorite_query: dict):
         """
+        Adds a business to the users favoriteWorkout list
+
         :param favorite_query: a dict containing the user and the new_favorite.
                             Example: favorite_query = {
                                         "user": {
@@ -267,6 +279,8 @@ class MongoDB:
 
     def removeFavoriteBusiness(self, favorite_query: dict):
         """
+        Removes a business from the 
+
         :param favorite_query: a dict containing the user and the favorite_id.
                             Example: favorite_query = {
                                         "user": {
@@ -370,6 +384,10 @@ class MongoDB:
     
     def createNewBusiness(self, business: dict):
         """
+        Creates a new business in the database. While inserting the business gets an unique identifier attribute _id,
+        which will be contained in the business dict returned in the BusinessWrapper. The owner with _id specified in
+        the ownerId will get assigned the businesses _id in his businessList.
+
         :param business:
         {
             'name': 'FitClub',
@@ -385,7 +403,7 @@ class MongoDB:
             'products': ['product_1', 'product_2'],
             'ownerId': "<business owners id>"
         }
-        :return:
+        :return: BusinessWrapper
         """
         self.validator.validate(business, "business")
         user_wrapper = self.userDB.get(business["ownerId"])
@@ -407,7 +425,7 @@ class MongoDB:
     def businessSearch(self, search_query: dict):
         """
         :param search_query:
-        :return:
+        :return: BusinessListWrapper
         """
         if "keywords" not in search_query:
             raise ValueError("search_query doesn't contain keywords")
