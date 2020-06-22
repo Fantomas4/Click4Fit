@@ -9,7 +9,7 @@ import { BusinessAddEntryDialogComponent } from './business-add-entry-dialog/bus
 import { ManageBusinessEntriesService } from './manage-business-entries.service';
 import { AlertService } from '../core/alert.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 interface AlertMessage {
   type: string;
@@ -39,19 +39,18 @@ export class ManageBusinessEntriesComponent implements OnInit {
   dialogHeight: number; // Height of the dialog window.
   dialogWidth: number; // Width of the dialog window.
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
+  dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
+  dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
 
   detailsEditDialogRef: MatDialogRef<BusinessDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<BusinessAddEntryDialogComponent, any>; // Reference to the spawned "Add Entry" dialog window.
 
-  selected = []; // List with selected checkboxes alertMessage: AlertMessage;
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  result: boolean;
-  mySubscription: any;
 
 
   constructor(private manageBusinessEntriesService: ManageBusinessEntriesService, public dialog: MatDialog,
-    private alertService: AlertService, private router: Router) {
+              private alertService: AlertService, private router: Router) {
   }
 
   /** Method used to change the dialog's height and width according to
@@ -109,7 +108,10 @@ export class ManageBusinessEntriesComponent implements OnInit {
    * the manageBusinessEntriesService.
    */
   getBusinessEntries() {
-    this.manageBusinessEntriesService.getResults().toPromise().then(data => {
+
+    /*this.manageBusinessEntriesService.getResults()
+      .subscribe(results => {this.businessData = results; this.dataSource.data = this.businessData; });*/
+    this.manageBusinessEntriesService.getBusinesses().toPromise().then(data => {
       this.businessData = data.businessList;
       this.dataSource.data = this.businessData;
     },
@@ -117,7 +119,7 @@ export class ManageBusinessEntriesComponent implements OnInit {
         // If error is not a string received from the API, handle the ProgressEvent
         // returned due to the inability to connect to the API by printing an appropriate
         // warning message
-        if (typeof(error) !== 'string') {
+        if (typeof (error) !== 'string') {
           this.alertService.error('Error: No connection to the API');
         } else {
           this.alertService.error(error);
@@ -143,7 +145,8 @@ export class ManageBusinessEntriesComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
     this.detailsEditDialogRef = this.dialog.open(BusinessDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'),
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      maxWidth: this.dialogMaxWidth,
       data: {
         _id: element._id, name: element.name, category: element.category, country: element.country,
         city: element.city, address: element.address, postalCode: element.postalCode, phoneNumber:
@@ -151,20 +154,35 @@ export class ManageBusinessEntriesComponent implements OnInit {
         imgPath: element.imgPath
       }
     });
-    this.detailsEditDialogRef.afterClosed().subscribe(result => {
-      this.result = result.save;
-      if (this.result === true) {
-        this.manageBusinessEntriesService.updateEntry(result.details).toPromise().then(data => {
-          this.getBusinessEntries();
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.alertService.success(data);
-        },
+    this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
+      if (dialogRes && dialogRes.clickedSave) {
+        const formData = new FormData();
+        formData.append('_id', dialogRes.details._id);
+        formData.append('name', dialogRes.details.name);
+        formData.append('category', dialogRes.details.category);
+        formData.append('country', dialogRes.details.country);
+        formData.append('city', dialogRes.details.city);
+        formData.append('address', dialogRes.details.address);
+        formData.append('postalCode', dialogRes.details.postalCode);
+        formData.append('phoneNumber', dialogRes.details.phoneNumber);
+        formData.append('services', dialogRes.details.services);
+        formData.append('products', dialogRes.details.products);
+        formData.append('file', dialogRes.details.file);
+        formData.append('imgPath', dialogRes.details.imgPath);
+        formData.append('email', dialogRes.details.email);
+        this.manageBusinessEntriesService.updateEntry(formData).toPromise().then(
+          data => {
+            console.log("MPIKA1");
+            console.log(data);
+            this.getBusinessEntries();
+            this.alertService.success('Entry updated successfully');
+          },
+
           error => {
             // If error is not a string received from the API, handle the ProgressEvent
             // returned due to the inability to connect to the API by printing an appropriate
             // warning message
-            if (typeof(error) !== 'string') {
+            if (typeof (error) !== 'string') {
               this.alertService.error('Error: No connection to the API');
             } else {
               this.alertService.error(error);
@@ -178,54 +196,65 @@ export class ManageBusinessEntriesComponent implements OnInit {
   openAddEntryDialog() {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(BusinessAddEntryDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px')
+      width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
+      maxWidth: this.dialogMaxWidth
     });
-    this.addEntryDialogRef.afterClosed().subscribe(result => {
-        this.result = result.save;
-        if (this.result === true) {
-          this.manageBusinessEntriesService.addEntry(result.details).toPromise().then(data => {
+    this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
+      if (dialogRes && dialogRes.clickedSave) {
+        const formData = new FormData();
+        formData.append('ownerId', dialogRes.details.ownerId);
+        formData.append('name', dialogRes.details.name);
+        formData.append('category', dialogRes.details.category);
+        formData.append('country', dialogRes.details.country);
+        formData.append('city', dialogRes.details.city);
+        formData.append('address', dialogRes.details.address);
+        formData.append('postalCode', dialogRes.details.postalCode);
+        formData.append('phoneNumber', dialogRes.details.phoneNumber);
+        formData.append('services', dialogRes.details.services);
+        formData.append('products', dialogRes.details.products);
+        formData.append('file', dialogRes.details.file);
+        formData.append('email', dialogRes.details.email);
+        this.manageBusinessEntriesService.addEntry(formData).toPromise().then(
+          data => {
+            this.alertService.success('Entry added successfully');
             this.getBusinessEntries();
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.alertService.success(data);
           },
-            error => {
-              // If error is not a string received from the API, handle the ProgressEvent
-              // returned due to the inability to connect to the API by printing an appropriate
-              // warning message
-              if (typeof(error) !== 'string') {
-                this.alertService.error('Error: No connection to the API');
-              } else {
-                this.alertService.error(error);
-              }
-            });
-        }
-      });
+
+          error => {
+            // If error is not a string received from the API, handle the ProgressEvent
+            // returned due to the inability to connect to the API by printing an appropriate
+            // warning message
+            if (typeof (error) !== 'string') {
+              this.alertService.error('Error: No connection to the API');
+            } else {
+              this.alertService.error(error);
+            }
+          });
+      }
+    });
   }
 
   /** Click on delete button */
   deleteEntries() {
-    this.selected = this.selection.selected;
-    let i;
-    for (i = 0; i < this.selection.selected.length; i++) {
-      this.selected[i] = this.selection.selected[i].email;
-    }
-    const content = { email: this.selected };
-    this.manageBusinessEntriesService.deleteEntries(content).toPromise().then(data => {
-      this.getBusinessEntries();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.alertService.success(data);
-    },
-    error => {
-      // If error is not a string received from the API, handle the ProgressEvent
-      // returned due to the inability to connect to the API by printing an appropriate
-      // warning message
-      if (typeof(error) !== 'string') {
-        this.alertService.error('Error: No connection to the API');
-      } else {
-        this.alertService.error(error);
-      }
-    });
+    const selectedIds = [];
+    this.selection.selected.forEach(entry =>
+      selectedIds.push(entry._id)
+    );
+
+    this.manageBusinessEntriesService.deleteEntries(selectedIds).toPromise().then(
+      data => {
+        this.getBusinessEntries();
+        this.alertService.success('Data loaded successfully');
+      },
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof (error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+      });
   }
 }

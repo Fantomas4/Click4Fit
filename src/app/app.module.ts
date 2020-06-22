@@ -49,6 +49,9 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
 import { ManageWorkoutEntriesComponent } from './manage-workout-entries/manage-workout-entries.component';
 import { WorkoutAddEntryDialogComponent} from './manage-workout-entries/workout-add-entry-dialog/workout-add-entry-dialog.component';
 import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/workout-details-edit-dialog/workout-details-edit-dialog.component';
+import {BusinessAddEntryService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
+import {ManageUserEntriesService} from './manage-user-entries/manage-user-entries.service';
+import {ManageBusinessEntriesService} from './manage-business-entries/manage-business-entries.service';
 
 @NgModule({
   declarations: [
