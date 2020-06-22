@@ -1,15 +1,10 @@
-﻿import os
+﻿﻿import os
 from flask import Flask, jsonify, request, json, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from pprint import pprint
 from time import time
 
-<<<<<<< HEAD:back-end/flaskAPI.py
-=======
-import sys
-sys.path.insert(0, "C:\\Users\\Ειρήνη Μήτσα\\Click4Fit\\back-end")
->>>>>>> manageUserBusinessDialogs:back-end/Rest/flaskAPI.py
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
 from MongoDatabase.Wrappers.BusinessListWrapper import BusinessListWrapper
@@ -580,23 +575,6 @@ def manageBusinessModify():
             return jsonify("Update successful")
     return "Not a POST request", 422
 
-@app.route("/api/get-owner", methods=['POST','GET'])
-def getOwner():
-    owner=request.get_json() #get owner
-    try:
-        user_wrapper: UserWrapper = MongoDB.getUser(owner)
-    except TypeError as type_err: #Checking for errors
-        return str(type_err), 422
-    except ValueError as value_err:
-        return str(value_err), 422
-    except:
-        return "Bad error", 500
-    else:
-        if user_wrapper.user is None:
-            return "Something is wrong with the database", 500
-        if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
-            return "Couldn't find user", 500
-        return jsonify(user=user_wrapper.user), 200
 
 ####################################### Manage user ##################################
 @app.route("/api/manage-user-display-entry",methods=['POST','GET'])
@@ -654,7 +632,7 @@ def manageUserDelete():
 
 @app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
 def manageUserModify():
-    user = request.form.to_dict() #get modifying user's details
+    user=request.get_json() #get modifying user's details
     #connection with mongo sending the details of modified entry
     try:
         user_wrapper: UserWrapper = MongoDB.updateUser(user)
@@ -665,7 +643,7 @@ def manageUserModify():
     except:
         return "Bad error", 500
     else:
-        if type(user_wrapper.user) is not dict:
+        if user_wrapper.user is None:
             return "Something is wrong with the database", 500
         if type(user_wrapper.user) is dict and not user_wrapper.operationDone and not user_wrapper.found:
             return "Couldn't update user entry", 500
@@ -679,5 +657,3 @@ if __name__ == '__main__':
     MongoDB.createMockDatabase()
     app.debug = True
     app.run()
-
-
