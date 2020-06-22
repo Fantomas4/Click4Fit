@@ -448,16 +448,15 @@ class MongoDB:
             raise ValueError("new_business doesn't contain _id attribute, which is needed for updating")
         return self.businessDB.update(new_business)
 
-    #TODO: DELETE THIS
-    # def deleteBusiness(self, business: dict):
-    #     """
-    #     :param business:
-    #     :return:
-    #     """
-    #     self.validator.validate(business, "business")
-    #     if "_id" not in business:
-    #         raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
-    #     return self.businessDB.delete(business)
+    def deleteBusiness(self, business: dict):
+        """
+        :param business:
+        :return:
+        """
+        self.validator.validate(business, "business")
+        if "_id" not in business:
+            raise ValueError("business doesn't contain _id attribute, which is needed for deletion")
+        return self.businessDB.delete(business)
 
     def deleteBusinesses(self, delete_query: dict):
         """
@@ -581,147 +580,3 @@ class MongoDB:
             else:
                 print("Could not insert workout: " + str(workout))
         return returned_data
-
-
-
-
-# from pprint import pprint
-
-# mongo = MongoDB()
-# mongo.dropDatabases()
-# returned_data = mongo.createMockDatabase()
-# pprint(returned_data)
-# pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
-
-# search_query = {
-#     "keywords" : "",
-#     "category": ["gym"],
-#     "country": [],
-#     "city": ["Thessaloniki"]
-# }
-
-# pprint(mongo.businessSearch(search_query).business_list)
-
-# keywords = search_query["keywords"]
-# del search_query["keywords"]
-
-# mongo.businessDB.db.create_index([
-#                                 ("name", "text"),
-#                                 ("category", "text"),
-#                                 ("country", "text"),
-#                                 ("city", "text"),
-#                                 ("address", "text"),
-#                                 ("postalCode", "text"),
-#                                 ("phoneNumber", "text")
-#                                 ])
-
-# pprint(list(mongo.businessDB.db.find({"$and": [
-#     {"$text": {"$search": keywords}} if keywords else {},
-#     {key: {"$in": search_query[key]} for key in search_query.keys() if search_query[key]}
-#     ]})))
-
-# pprint(mongo.createNewBusiness(
-#     {
-#     "user": {
-#       "_id": "12313213"
-#     },
-#     "business": {
-#       "name": "test",
-#       "category": "gym",
-#       "country": "Greece",
-#       "city": "Thessaloniki",
-#       "address": "dasdas",
-#       "postalCode": "432423",
-#       "phoneNumber": "3424232324",
-#       "imgPath": "",
-#       "services"    : [],
-#         "products"    : [],
-#       "email": "daaaasd@gmail.com"
-#     }
-# }
-# ).business)
-
-
-
-# favorite_query = {
-#                 "user": {
-#                     "email"    : 'nikosalex@gmail.com',
-#                 },
-#                 "new_favorite" : {
-#                     "name": 'Hammer curls',
-#                     "category": "biceps",
-#                     "muscleGroups": ["branchialis", "forearms", "biceps"],
-#                     "advisedFor": 'women',
-#                     "difficulty": 'medium',
-#                     "equipment": True,
-#                     "sets": '4x15 10kg ',
-#                     "videoUrl": 'https://www.youtube.com/embed/iOwrtesXiDw'
-#                 }
-#             }
-# mongo.addFavoriteWorkout(favorite_query)
-# pprint(mongo.userDB.db.find_one(favorite_query["user"]))
-
-# mongo.userDB.db.update_one({"email": "nikosalex@gmail.com"}, {"$push": {'favoriteWorkout': "Squat"}})
-# pprint(mongo.userDB.db.find_one({"email": "nikosalex@gmail.com"}))
-
-# pprint(mongo.businessSearch({
-#     "category": [],
-#     "country": ["Greece"],
-#     "city": ["Thessaloniki"]
-# }).business_list)
-
-# pprint(mongo.businessDB.db.distinct("country"))
-
-
-# delete_query = {
-#     "name": ["Kostas", "Nikos"]
-# }
-
-# pprint(mongo.userSearch(delete_query).user_list)
-# if mongo.deleteUsers(delete_query): print("DELETED")
-# pprint(mongo.userSearch(delete_query).user_list)
-
-
-
-# pprint(returned_data)
-
-# pprint(mongo.getUser({"email": 'nikosalex@gmail.com'}).user)
-
-# change_query = {
-#     "user": {
-#         "email"    : 'nikosalex@gmail.com',
-#         "password" : 'gp123456'
-#     },
-#     "new_password": "kodikoss"
-# }
-
-# user_wrapper = mongo.changeUserPassword(change_query)
-# pprint(user_wrapper.user)
-
-# user_wrapper = mongo.logIn({"email": 'nikosalex@gmail.com', "password": "kodikoss"})
-# pprint(user_wrapper.user)
-# print(user_wrapper.found)
-# print(user_wrapper.operationDone)
-
-
-
-
-
-# url = "mongodb://localhost:27017/"
-# database = "test_database"
-# client = MongoClient(url)[database]
-# db = client.test_database
-
-# db.drop()
-
-# user = {
-#     "_id": "1",
-#     "name": "alex"
-# }
-
-# db.insert_one(user)
-# print(type(db.find()))
-# for json in db.find():
-#     print(type(json))
-#     print(json)
-

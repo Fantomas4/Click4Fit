@@ -8,7 +8,6 @@ class BusinessDB:
     def __init__(self, client):
         self.client = client
         self.db = self.client.BusinessDB
-        # self.db.create_index([('name', 'text')])
 
     ################################################# Private Methods ##################################################
 
@@ -32,12 +31,12 @@ class BusinessDB:
         if self._findByEmail(business["email"]): # Checks if user already exists
             return BusinessWrapper({}, found=True, operationDone=False)
         business = {
-            "_id"          : str(ObjectId()),
-            "name"         : business["name"],
-            "category"     : business["category"],
-            "country"      : business["country"],
-            "city"         : business["city"],
-            "address"      : business["address"],
+            "_id"         : str(ObjectId()),
+            "name"        : business["name"],
+            "category"    : business["category"],
+            "country"     : business["country"],
+            "city"        : business["city"],
+            "address"     : business["address"],
             "postalCode"  : business["postalCode"],
             "phoneNumber" : business["phoneNumber"],
             "email"       : business["email"],
@@ -140,21 +139,20 @@ class BusinessDB:
         except:
             return BusinessWrapper(None, found=False, operationDone=False)
 
-    #TODO: DELETE THIS
-    # def delete(self, business: dict):
-    #     """
-    #     :param business:
-    #     :return:
-    #     """
-    #     try:
-    #         wrapper: BusinessWrapper = self.get({"_id": business["_id"]})
-    #         if wrapper.operationDone:
-    #             return BusinessWrapper(wrapper.business, found=True,
-    #                     operationDone=bool(
-    #                         self.db.delete_one({"_id": business["_id"]}).deleted_count))
-    #         return wrapper
-    #     except:
-    #         return BusinessWrapper(None, found=False, operationDone=False)
+    def delete(self, business: dict):
+        """
+        :param business:
+        :return:
+        """
+        try:
+            wrapper: BusinessWrapper = self.get({"_id": business["_id"]})
+            if wrapper.operationDone:
+                return BusinessWrapper(wrapper.business, found=True,
+                        operationDone=bool(
+                            self.db.delete_one({"_id": business["_id"]}).deleted_count))
+            return wrapper
+        except:
+            return BusinessWrapper(None, found=False, operationDone=False)
     
     def deleteMany(self, delete_query: dict):
         """
