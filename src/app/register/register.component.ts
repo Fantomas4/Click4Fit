@@ -102,6 +102,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    // Clear any existing alert messages
+    this.alertService.clearMessage();
+
     if (this.registerForm.valid) {
       this.loading = true;
 

@@ -64,6 +64,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    // Clear any existing alert messages
+    this.alertService.clearMessage();
+
+    this.loading = false;
 
     if (this.loginForm.valid) {
       // Update loading flag value for mat-spinner
@@ -91,8 +95,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.alertService.error('Error: No connection to the API');
           } else {
             this.alertService.error(error);
-            this.loading = false;
           }
+          this.loading = false;
         }
       );
     }
