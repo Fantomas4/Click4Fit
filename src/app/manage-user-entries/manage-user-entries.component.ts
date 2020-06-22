@@ -113,7 +113,7 @@ export class ManageUserEntriesComponent implements OnInit {
       this.dataSource.data = this.userData;
     },
       error => {
-        this.alertService.error(error.errror);
+        this.alertService.error(error);
       });
   }
 

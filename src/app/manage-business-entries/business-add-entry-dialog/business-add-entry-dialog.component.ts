@@ -179,7 +179,7 @@ export class BusinessAddEntryDialogComponent implements OnInit {
         this.dialogRef.close({ clickedSave: true, details: content });
       },
         error => {
-          this.alertService.error(error.error);
+          this.alertService.error(error);
         });
       
     }
