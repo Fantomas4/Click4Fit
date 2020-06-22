@@ -154,8 +154,10 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
+    console.log("IMAGE FILE:?");
+    console.log(this.imgFile);
     if (this.entryForm.valid) {
-      var content = {
+      const content = {
         _id: this._id,
         name: this.entryForm.get('name').value,
         category: this.category,
@@ -166,6 +168,7 @@ export class BusinessDetailsEditDialogComponent implements OnInit {
         phoneNumber: this.entryForm.get('phoneNumber').value,
         services: this.services,
         products: this.products,
+        imgPath: this.imgPath,
         file: this.imgFile,
         email: this.entryForm.get('businessEmail').value
       };
