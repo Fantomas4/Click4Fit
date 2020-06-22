@@ -120,8 +120,6 @@ export class ManageMyBusinessComponent implements OnInit {
    */
   @HostListener('window:resize')
   onResize() {
-    console.log('window height: ', window.innerHeight);
-    console.log('window width: ', window.innerWidth);
     this.dialogHeight = window.innerHeight * this.dialogHeightRatio;
     this.dialogWidth = window.innerWidth;
 
@@ -206,9 +204,6 @@ export class ManageMyBusinessComponent implements OnInit {
         formData.append('file', dialogRes.details.file);
         formData.append('email', dialogRes.details.email);
 
-        formData.forEach((value, key) => {
-          console.log(key + " " + value);
-        });
 
         this.manageMyBusinessService.addEntry(formData).toPromise().then(data => {
             this.getMyBusinessEntries();

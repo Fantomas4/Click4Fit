@@ -99,13 +99,10 @@ export class MyprofileComponent implements OnInit {
     const requestData = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
     this.myprofileService.getUser(requestData).subscribe(
       data => { // in case of successful request it shows the data
-        console.log(data.body.user);
         const userData = data.body.user;
 
         const separators = ['-', '/', '\\\.', ','];
         const dateTokens = userData.birthdate.split(new RegExp(separators.join('|'), 'g'));
-        console.log(dateTokens);
-        console.log(new Date(Number(dateTokens[2]), Number(dateTokens[1]) - 1, Number(dateTokens[0])));
 
         this.detailsEntryForm.setValue({
           firstName: userData.name,
