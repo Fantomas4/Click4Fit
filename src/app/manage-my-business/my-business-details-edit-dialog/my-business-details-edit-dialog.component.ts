@@ -40,7 +40,8 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
         Validators.required
       ]),
       phoneNumber: new FormControl('', [
-        Validators.required
+        Validators.required,
+        Validators.pattern('[0-9 ]*')
       ]),
       email: new FormControl('', [
         Validators.required,
@@ -72,6 +73,7 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
+    console.log(this.data.country);
     // Extract the data from the payload and store it into the class properties
     this.id = this.data._id;
     this.entryForm.setValue({

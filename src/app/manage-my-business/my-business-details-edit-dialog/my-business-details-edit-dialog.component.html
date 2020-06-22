@@ -26,7 +26,7 @@
           </mat-button-toggle-group>
         </tr>
         <tr>
-          <mat-select-country country="Greece" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
+          <mat-select-country country="{{country}}" (onCountrySelected)="onCountrySelected($event)"> </mat-select-country>
         </tr>
         <tr>
           <mat-form-field>
@@ -64,6 +64,9 @@
                    [errorStateMatcher]="genericErrorStateMatcher" required>
             <mat-error *ngIf="entryForm.get('phoneNumber').hasError('required')">
               Please enter a phone number
+            </mat-error>
+            <mat-error *ngIf="entryForm.get('phoneNumber').hasError('pattern')">
+              Invalid phone number
             </mat-error>
             <mat-icon matSuffix>call</mat-icon>
           </mat-form-field>
