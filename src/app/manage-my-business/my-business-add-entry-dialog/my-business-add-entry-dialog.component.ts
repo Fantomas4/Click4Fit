@@ -39,7 +39,8 @@ export class MyBusinessAddEntryDialogComponent implements OnInit {
       Validators.required
     ]),
     phoneNumber: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern('[0-9 ]*')
     ]),
     email: new FormControl('', [
       Validators.required,
