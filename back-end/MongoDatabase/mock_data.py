@@ -114,68 +114,68 @@ data = {
            'products': []},
 
          {'name': 'Mindful Body Fitness', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Kavala', 'address': 'Akadimias Street', 'postalCode': '515 75',
-           'phoneNumber': '2025550781', 'email': 'mindful@gmail.com', 'imgPath': 'shop1.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550781', 'email': 'mindful@gmail.com', 'imgPath': 'shop1.jpg', 'services': [],
+           'products': ['trainer clothes', 'train equipment', 'nutrition supplements']},
 
          {'name': 'CrossFit Gym', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Benaki Street 4', 'postalCode': '567 00',
-           'phoneNumber': '2025550486', 'email': 'crossfit@gmail.com', 'imgPath': 'gym4.jpg',  'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550486', 'email': 'crossfit@gmail.com', 'imgPath': 'gym4.jpg',  'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Movati Athletic', 'category': 'gym', 'country': 'Greece', 'city': 'Athens', 'address': 'Chalkokondyli Street 7', 'postalCode': '552 99',
-           'phoneNumber': '2025550722', 'email': 'movatiathletic@gmail.com', 'imgPath': 'gym5.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550722', 'email': 'movatiathletic@gmail.com', 'imgPath': 'gym5.jpg', 'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Vasillis Baskos', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Kavala', 'address': 'Evripidou Street', 'postalCode': '670 00',
-           'phoneNumber': '2025550406', 'email': 'vasillisb@gmail.com', 'imgPath': 'pr4.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550406', 'email': 'vasillisb@gmail.com', 'imgPath': 'pr4.jpg', 'services': ['face to face exercise', 'online exercise'],
+           'products': []},
 
          {'name': 'Anytime Fitness', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Ioanninon Street 34', 'postalCode': '778 66',
-           'phoneNumber': '2025550537', 'email': 'anytime@gmail.com', 'imgPath': 'gym6.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550537', 'email': 'anytime@gmail.com', 'imgPath': 'gym6.jpg', 'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Six Pack Abs Class Room', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Lada Street 77', 'postalCode': '445 00',
-           'phoneNumber': '2025550331', 'email': 'sixabs@gmail.com', 'imgPath': 'shop2.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550331', 'email': 'sixabs@gmail.com', 'imgPath': 'shop2.jpg', 'services': [],
+           'products': ['trainer clothes', 'train equipment', 'nutrition supplements']},
 
          {'name': 'Adrenaline Training', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Larissis Street 3', 'postalCode': '457 88',
-           'phoneNumber': '2025550735', 'email': 'andrenaline@gmail.com', 'imgPath': 'gym7.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550735', 'email': 'andrenaline@gmail.com', 'imgPath': 'gym7.jpg', 'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Rush Hour', 'category': 'gym', 'country': 'Greece', 'city': 'Athens', 'address': 'Marni Street 44', 'postalCode': '333 78',
-           'phoneNumber': '2025550664', 'email': 'rushhour@gmail.com', 'imgPath': 'gym8.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550664', 'email': 'rushhour@gmail.com', 'imgPath': 'gym8.jpg', 'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Niki Karaila', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Athens', 'address': 'Palamidiou Street 6', 'postalCode': '233 67',
-           'phoneNumber': '2025550819', 'email': 'nikik@gmail.com', 'imgPath': 'pr1.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550819', 'email': 'nikik@gmail.com', 'imgPath': 'pr1.jpg', 'services': ['face to face exercise', 'online exercise'],
+           'products': []},
 
          {'name': 'Fitclub Bootcamps', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Petrou Ralli Street 77', 'postalCode': '667 00',
-           'phoneNumber': '2025550747', 'email': 'fitclubbootcamps@gmail.com', 'imgPath': 'gym9.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550747', 'email': 'fitclubbootcamps@gmail.com', 'imgPath': 'gym9.jpg', 'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Your Wellbeing', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Voreou Street 66', 'postalCode': '888 32',
-           'phoneNumber': '2025550747', 'email': 'yourwellbeing@gmail.com', 'imgPath': 'shop3.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550747', 'email': 'yourwellbeing@gmail.com', 'imgPath': 'shop3.jpg', 'services': [],
+           'products': ['trainer clothes', 'train equipment', 'nutrition supplements']},
 
          {'name': 'Restore Total Wellness', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Athens', 'address': 'Sepolion Street 45', 'postalCode': '907 55',
-           'phoneNumber': '2025550735', 'email': 'restore@gmail.com', 'imgPath': 'shop4.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550735', 'email': 'restore@gmail.com', 'imgPath': 'shop4.jpg', 'services': [],
+           'products': ['trainer clothes', 'train equipment', 'nutrition supplements']},
 
          {'name': 'Anna Lazarou', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Vyssis Street 56', 'postalCode': '667 00',
-           'phoneNumber': '3075550188', 'email': 'annalaz@gmail.com', 'imgPath': 'pr2.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '3075550188', 'email': 'annalaz@gmail.com', 'imgPath': 'pr2.jpg', 'services': ['face to face exercise', 'online exercise'],
+           'products': []},
 
          {'name': 'Athletic Fluency', 'category': 'gym', 'country': 'Greece', 'city': 'Athens', 'address': 'Stadiou Street 12', 'postalCode': '128 02',
-           'phoneNumber': '3075550148', 'email': 'athleticfluency@gmail.com', 'imgPath': 'gym10.jpg',  'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '3075550148', 'email': 'athleticfluency@gmail.com', 'imgPath': 'gym10.jpg',  'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Wellness Rediscovery', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Kavala', 'address': 'Petrou Ralli Street 12', 'postalCode': '866 32',
-           'phoneNumber': '3075550106', 'email': 'wellnessred@gmail.com', 'imgPath': 'shop5.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '3075550106', 'email': 'wellnessred@gmail.com', 'imgPath': 'shop5.jpg', 'services': [],
+           'products': ['trainer clothes', 'train equipment', 'nutrition supplements']},
 
          {'name': 'PureGym', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Stavrou Street 17', 'postalCode': '564 32',
-           'phoneNumber': '3075550184', 'email': 'puregym@gmail.com', 'imgPath': 'gym11.jpg',  'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']}
+           'phoneNumber': '3075550184', 'email': 'puregym@gmail.com', 'imgPath': 'gym11.jpg',  'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []}
     ],
     "workout": [
         {"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
