@@ -38,6 +38,8 @@ export class ManageUserEntriesComponent implements OnInit {
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
   dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
   dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
+  dialogMinHeight = 390;
+  dialogMaxHeight = 430;
 
   detailsEditDialogRef: MatDialogRef<UserDetailsEditDialogComponent, any>; // Reference to the spawned "Details/Edit" dialog window.
   selected = []; // List with selected checkboxes
@@ -139,8 +141,8 @@ export class ManageUserEntriesComponent implements OnInit {
   openDetailsEditDialog(element: any): void {
     this.onResize();
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
-      width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight - 200).toString().concat('px'),
-      minWidth: this.dialogMinWidth, maxWidth: this.dialogMaxWidth,
+      width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight).toString().concat('px'),
+      minWidth: this.dialogMinWidth, maxWidth: this.dialogMaxWidth, minHeight: this.dialogMinHeight, maxHeight: this.dialogMaxHeight,
       data: { _id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
     });
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
