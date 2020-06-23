@@ -10,7 +10,7 @@
       <mat-icon class="icon">favorite_border</mat-icon>
       <!--It is displayed when the workout entry is not favorite-->
     </button>
-    <button mat-icon-button *ngIf="favorite">
+    <button mat-icon-button *ngIf="favorite" (click)="onFavoriteClick()">
       <mat-icon class="icon">favorite</mat-icon> <!-- It is displayed when the workout entry is favorite-->
     </button><br>
 

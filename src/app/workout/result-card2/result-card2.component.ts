@@ -43,7 +43,7 @@ export class ResultCard2Component implements OnInit {
     });
 
     // Check favorite status and set the favorite flag accordingly
-    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.workoutData._id);
+    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteWorkout.includes(this.workoutData._id);
 
     this.name = this.workoutData.name;
     this.category = this.workoutData.category;
@@ -101,8 +101,6 @@ export class ResultCard2Component implements OnInit {
       },
       favorite_id: this.workoutData._id
     };
-
-    console.log(request);
 
     if (!this.favorite) {
       // The card is currently not selected as a user favorite, so the user requested an addition
