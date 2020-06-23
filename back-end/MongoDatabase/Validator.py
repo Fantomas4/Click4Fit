@@ -66,13 +66,12 @@ class Validator:
                 }
             },
             "workout" : {
-                "legal-attributes" : ["name", "category", "muscleGroups", "advisedFor", "difficulty",
+                "legal-attributes" : ["name", "category", "advisedFor", "difficulty",
                                     "equipment", "sets", "videoUrl", "_id"],
                 "type" : {
                     "_id"          : str,
                     "name"         : str,
                     "category"     : str,
-                    "muscleGroups" : list, 
                     "advisedFor"   : str,
                     "difficulty"   : str,
                     "equipment"    : bool,

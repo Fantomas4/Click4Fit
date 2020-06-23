@@ -21,7 +21,6 @@ class WorkoutDB:
             "_id"          : str(ObjectId()),
             "name"         : workout["name"],
             "category"     : workout["category"],
-            "muscleGroups" : workout["muscleGroups"], 
             "advisedFor"   : workout["advisedFor"],
             "difficulty"   : workout["difficulty"],
             "equipment"    : workout["equipment"],
