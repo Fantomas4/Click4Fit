@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, json, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from time import time
+from functools import wraps
  
 from MongoDatabase.MongoDB import MongoDB
 from MongoDatabase.Wrappers.UserWrapper import UserWrapper
@@ -21,7 +22,20 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 MongoDB=MongoDB()
 CORS(app)
  
- 
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers["Authorization"]
+        if not token:
+            return "token is missing", 401
+        user_wrapper = MongoDB.getUser({"token": token})
+        if not user_wrapper.found:
+            return "token is invalid", 403
+        return f(*args, **kwargs)
+    return decorated
+
  
 def allowed_file(filename):
     return '.' in filename and \
@@ -96,6 +110,7 @@ def register():
  
 ####################################### Dashboard ####################################
 @app.route("/api/favorite-workout", methods=['POST','GET'])
+@token_required
 def displayFavoriteWorkout():
     user=request.get_json()
     #connection wit mongo sending the user and getting his favorite workout
@@ -115,6 +130,7 @@ def displayFavoriteWorkout():
  
  
 @app.route("/api/favorite-places", methods=['POST','GET'])
+@token_required
 def displayFavoritePlaces():
     user=request.get_json()
     #connection wit mongo sending the user and getting his favorite places
@@ -135,6 +151,7 @@ def displayFavoritePlaces():
  
 ####################################### My Profile ###################################
 @app.route("/api/display-myprofile", methods=['POST','GET'])
+@token_required
 def displayMyprofile():
     user=request.get_json()
     #connection with mongo sending the user and modifying the profile's details
@@ -154,6 +171,7 @@ def displayMyprofile():
         return jsonify(user=user_wrapper.user)
  
 @app.route("/api/update-myprofile", methods=['POST','GET'])
+@token_required
 def updateMyprofile():
     details=request.get_json() #get modifying details
     #connection with mongo sending the details and modifying the profile's details
@@ -173,6 +191,7 @@ def updateMyprofile():
         return jsonify("Save successful")
  
 @app.route("/api/change-password", methods=['POST','GET'])
+@token_required
 def changePassword():
     details=request.get_json() #get modifying details
     #connection with mongo sending the details and modifying the profile's details
@@ -194,6 +213,7 @@ def changePassword():
         return jsonify("Save successful")
  
 @app.route("/api/delete-myprofile", methods=['POST','GET'])
+@token_required
 def deleteMyprofile():
     user=request.get_json() #get profile for delete
     #connection with mongo sending the details and delete the profile's details
@@ -217,6 +237,7 @@ def deleteMyprofile():
 ####################################### Search #######################################
 ######### getResults() #########
 @app.route("/api/search", methods=['POST','GET'])
+@token_required
 def search():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the fitlers and return the matched place
@@ -238,6 +259,7 @@ def search():
  
 ######### getCountries() #########
 @app.route("/api/getCountries", methods=['GET'])
+@token_required
 def getCountries():
   try:
     countries_list = MongoDB.getCountries()
@@ -251,6 +273,7 @@ def getCountries():
  
 ######### getCities() #########
 @app.route("/api/getCities", methods=['GET'])
+@token_required
 def getCities():
   try:
     cities_list = MongoDB.getCities()
@@ -263,6 +286,7 @@ def getCities():
  
  
 @app.route("/api/add-favorite-business", methods=['POST','GET'])
+@token_required
 def addFavoriteBusiness():
     business = request.get_json()
     try:
@@ -277,6 +301,7 @@ def addFavoriteBusiness():
         return jsonify("Addition successful")
  
 @app.route("/api/remove-favorite-business", methods=['POST','GET'])
+@token_required
 def removeFavoriteBusiness():
     business = request.get_json()
     try:
@@ -291,6 +316,7 @@ def removeFavoriteBusiness():
         return jsonify("Business removal successful")
  
 @app.route("/api/remove-favorite-workout", methods=['POST','GET'])
+@token_required
 def removeFavoriteWorkout():
     business = request.get_json()
     try:
@@ -307,6 +333,7 @@ def removeFavoriteWorkout():
  
 ####################################### Workout ######################################
 @app.route("/api/workouts", methods=["POST"])
+@token_required
 def create_workout():
     workout = request.get_json()
     try:
@@ -328,6 +355,7 @@ def create_workout():
  
  
 @app.route("/api/workouts", methods=["GET"])
+@token_required
 def get_workouts():
     try:
         workout_list_wrapper: WorkoutListWrapper = MongoDB.getAllWorkouts()
@@ -340,6 +368,7 @@ def get_workouts():
  
  
 @app.route("/api/workouts", methods=["PUT"])
+@token_required
 def update_workout():
     new_workout = request.get_json()
     try:
@@ -359,6 +388,7 @@ def update_workout():
  
  
 @app.route("/api/delete-workouts", methods=["POST"])
+@token_required
 def delete_workouts():
     delete_query = request.get_json()
     try:
@@ -372,6 +402,7 @@ def delete_workouts():
  
  
 @app.route("/api/display-workout", methods=['POST','GET'])
+@token_required
 def getWorkout():
     filters=request.get_json() #get chosen filters by user
     #connection with mongo sending the filters and getting the matched workout
@@ -391,6 +422,7 @@ def getWorkout():
  
  
 @app.route("/api/add-favorite-workout", methods=['POST','GET'])
+@token_required
 def addFavoriteWorkout():
     workout=request.get_json() #get new workout
     #connection with mongo sending the filters and creating the workout
@@ -407,6 +439,7 @@ def addFavoriteWorkout():
  
  
 @app.route("/api/delete-workout", methods=['POST','GET'])
+@token_required
 def deleteWorkout():
     workout=request.get_json() #get workout for delete
     #connection with mongo sending the filters and deleting the workout
@@ -428,6 +461,7 @@ def deleteWorkout():
  
 ####################################### Business Management ##############################
 @app.route("/api/manage-business-display-entry", methods=['POST', 'GET'])
+@token_required
 def manageOneBusinessDisplay():
     entry=request.get_json() #get entry's id for display
     #connection with mongo getting all current business entry
@@ -448,6 +482,7 @@ def manageOneBusinessDisplay():
  
  
 @app.route("/api/manage-business-display-entries",methods=['POST','GET'])
+@token_required
 def manageAllBusinessesDisplay():
     #connection with mongo getting all the existed business entries
     try:
@@ -463,6 +498,7 @@ def manageAllBusinessesDisplay():
  
  
 @app.route("/api/get-my-business", methods=['POST','GET'])
+@token_required
 def getMyBusiness():
     user = request.get_json()
     #connection with mongo sending the user and modifying the profile's details
@@ -481,6 +517,7 @@ def getMyBusiness():
  
  
 @app.route("/api/manage-business-add-entry", methods=['POST', 'GET'])
+@token_required
 def manageBusinessAdd():
     """
    {
@@ -547,6 +584,7 @@ def manageBusinessAdd():
  
  
 @app.route("/api/manage-business-delete-entries", methods=['POST', 'GET'])
+@token_required
 def manageBusinessDelete():
     entries = request.get_json() #get entries for delete
     #connection with mongo sending the entry
@@ -565,6 +603,7 @@ def manageBusinessDelete():
  
  
 @app.route("/api/manage-business-modify-entry", methods=['POST', 'GET'])
+@token_required
 def manageBusinessModify():
     if request.method == "POST":
         business = request.form.to_dict()
@@ -607,6 +646,7 @@ def manageBusinessModify():
  
 ####################################### Manage user ##################################
 @app.route("/api/manage-user-display-entry",methods=['POST','GET'])
+@token_required
 def manageOneUserDisplay():
     user=request.get_json() #get user for display
     #connection with mongo getting the current user entry
@@ -627,6 +667,7 @@ def manageOneUserDisplay():
  
  
 @app.route("/api/manage-user-display-entries",methods=['POST','GET'])
+@token_required
 def manageAllUsersDisplay():
     #connection with mongo getting all the existed user entries
     try:
@@ -642,6 +683,7 @@ def manageAllUsersDisplay():
  
  
 @app.route("/api/manage-user-delete-entries",methods=['POST','GET'])
+@token_required
 def manageUserDelete():
     users=request.get_json() #get users for delete
     #connection with mongo sending the id
@@ -660,6 +702,7 @@ def manageUserDelete():
  
  
 @app.route("/api/manage-user-modify-entry",methods=['POST','GET'])
+@token_required
 def manageUserModify():
     user=request.get_json() #get modifying user's details
     #connection with mongo sending the details of modified entry
