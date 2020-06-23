@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import { ResultCard2Service } from './result-card2.service';
 import {AlertService} from '../../core/alert.service';
 import {Subscription} from 'rxjs';
@@ -21,7 +21,7 @@ export class ResultCard2Component implements OnInit {
   advisedFor: string;
   difficulty: string;
   sets: string;
-  videoUrl: string;
+  trustedVideoResource: SafeResourceUrl;
   equipment: boolean;
   favorite = false; // it shows if the workout entry has been added in favorites successfully and
   // in this way the empty heart icon changes to full heart icon
@@ -30,7 +30,7 @@ export class ResultCard2Component implements OnInit {
   alertMessage: AlertMessage;
 
   // DomSanitizer helps to pass url video safe
-  constructor(public sanitizer: DomSanitizer, private workoutCardService: ResultCard2Service, private alertService: AlertService) { }
+  constructor(private sanitizer: DomSanitizer, private workoutCardService: ResultCard2Service, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -51,7 +51,7 @@ export class ResultCard2Component implements OnInit {
     this.advisedFor = this.workoutData.advisedFor;
     this.equipment = this.workoutData.equipment;
     this.difficulty = this.workoutData.difficulty.charAt(0).toUpperCase() + this.workoutData.difficulty.slice(1); // Capitalize the first letter
-    this.videoUrl = this.workoutData.videoUrl;
+    this.trustedVideoResource = this.sanitizer.bypassSecurityTrustResourceUrl(this.workoutData.videoUrl);
     this.sets = this.workoutData.sets;
 
   }

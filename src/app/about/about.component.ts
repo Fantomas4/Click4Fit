@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-about',
@@ -7,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
   title = 'About us';
+  videoUrl1 = 'https://www.youtube.com/embed/BHY0FxzoKZE';
+  videoUrl2 = 'https://www.youtube.com/embed/LkXwfTsqQgQ';
 
-  constructor() { }
+  trustedVideoResource1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoUrl1);
+  trustedVideoResource2 = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoUrl2);
 
-  ngOnInit(): void {
-  }
 
+  constructor(private sanitizer: DomSanitizer) { }
+
+  ngOnInit(): void {}
 
 }

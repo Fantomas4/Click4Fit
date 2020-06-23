@@ -29,7 +29,7 @@
       </mat-chip-list>
     </div>
 
-          <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(videoUrl)' frameborder="0"
+          <iframe class="frame" [src]='trustedVideoResource' frameborder="0"
               allowfullscreen>
           </iframe>
     <p id="recommended-sets">Recommended sets: {{sets}}</p>
