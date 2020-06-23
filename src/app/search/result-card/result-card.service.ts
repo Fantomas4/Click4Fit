@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 /** This service  is about sending request to API for addition of a favorite place*/
 export class ResultCardService {
 

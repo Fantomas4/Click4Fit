@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { WorkoutService } from './workout.service';
-import { ResultCard2Service } from './result-card2/result-card2.service';
-import { Router } from '@angular/router';
-import { AlertService } from '../core/alert.service';
-import { Subscription } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {WorkoutService} from './workout.service';
+import {ResultCard2Service} from './result-card2/result-card2.service';
+import {Router} from '@angular/router';
+import {AlertService} from '../core/alert.service';
+import {Subscription} from 'rxjs';
+import {WorkoutEntry} from '../workout-entry';
 
 interface AlertMessage {
   type: string;
@@ -19,23 +20,37 @@ export class WorkoutComponent implements OnInit {
 
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  isClicked = false;
-  results: any;  //it contains the results from the request to API 
-  categoriesFilters: string[] = ['legs', 'back', 'chest', 'shoulders', 'biceps', 'tricpes', 'abs', 'core'];
-  advisedForFilters: string[] = ['women', 'men'];
-  difficultyFilters: string[] = ['easy', 'medium', 'hard'];
-  equipmentFilters: string[] = ['yes', 'no'];
-  selectedCategories = []; //they contain values of each selection list
+  searchClicked = false;
+  results: any;  // it contains the results from the request to API
+  categoriesFilters: string[] = ['Legs', 'Back', 'Chest', 'Shoulders', 'Biceps', 'Triceps', 'Abs', 'Core'];
+  advisedForFilters: string[] = ['Women', 'Men'];
+  difficultyFilters: string[] = ['Easy', 'Medium', 'Hard'];
+  // equipmentFilters: string[] = ['Yes', 'No'];
+  selectedGroups = []; // they contain values of each selection list
   selectedAdvisedFor = [];
   selectedDifficulty = [];
   selectedEquipment = [];
-  selectedOptionsCategories: any; //they contain the choices of user 
-  selectedOptionsAdvisedFor: any;
-  selectedOptionsDifficulty: any;
-  selectedOptionsEquipment: any;
+
+  equipmentFilters: {
+    name: string;
+    value: boolean;
+  }[] = [
+    {
+      name: 'Yes',
+      value: true
+    },
+    {
+      name: 'No',
+      value: false
+    },
+  ];
+
+  workoutResults: WorkoutEntry[] = [];
+
 
   constructor(private workoutService: WorkoutService, private resultCardService: ResultCard2Service,
-    private router: Router, private alertService: AlertService) { }
+              private router: Router, private alertService: AlertService) {
+  }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
@@ -47,74 +62,101 @@ export class WorkoutComponent implements OnInit {
       }
     });
 
+    this.getResults();
   }
 
-  /* In the case of clicking search button */
+  prepareRequest() {
+    return {
+      category: this.selectedGroups.map(item => item.toLowerCase()),
+      advisedFor: this.selectedAdvisedFor.map(item => item.toLowerCase()),
+      difficulty: this.selectedDifficulty.map(item => item.toLowerCase()),
+      equipment: this.selectedEquipment
+    };
+  }
+
   getResults() {
-    this.isClicked = true;
-    var content;
-    if (this.selectedOptionsAdvisedFor == null && this.selectedOptionsCategories == null && this.selectedOptionsDifficulty == null && this.selectedOptionsEquipment == null) {
-      this.workoutService.getAllWorkout().toPromise().then(data => {
-        this.results = data.data;
+    // Clear any existing results
+    this.workoutResults = [];
+
+    // Clear any existing error messages
+    this.alertService.clearMessage();
+
+    this.workoutService.getResults(this.prepareRequest()).subscribe(
+      res => {
+        console.log(res);
+        this.workoutResults = res.body.workoutList;
+        this.alertService.success('Found ' + res.body.workoutList.length + ' workouts');
       },
-        error => {
+
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof (error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
           this.alertService.error(error);
-        })
-    }
-    else {
-      if (this.selectedOptionsEquipment != null) {
-        for (var i = 0; i < this.selectedOptionsEquipment.length; i++) {
-          if (this.selectedOptionsEquipment[i] == 'yes') {
-            this.selectedOptionsEquipment = true;
-          }
-          else {
-            this.selectedOptionsEquipment = false;
-          }
         }
-        content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": [this.selectedOptionsEquipment] };
-      }
-      else {
-        this.selectedOptionsEquipment = [true, false];
-        content = { "category": this.selectedOptionsCategories, "advisedFor": this.selectedOptionsAdvisedFor, "difficulty": this.selectedOptionsDifficulty, "equipment": this.selectedOptionsEquipment };
-      }
-      this.workoutService.getResults(content).toPromise().then(data => {
-        /*this.results = [{"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
-        "difficulty": 'hard', "equipment": true, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'},
-
-       {"name": 'Lunges', "category": "legs", "muscleGroups": ["quads"], "advisedFor": 'women',
-        "difficulty": 'easy', "equipment": false, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/a7amnNyWNxo'},
-
-       {"name": 'Hack squat', "category": "legs", "muscleGroups": ["quads", "core"], "advisedFor": 'men',
-        "difficulty": 'hard', "equipment": true, "sets": '3x6 150kg+150kg ', "videoUrl": 'https://www.youtube.com/embed/0tn5K9NlCfo'}]*/
-        this.results = data.workoutList
-      },
-        error => {
-          this.alertService.error(error);
-        });
-    }
+      });
   }
 
-  /* When the user clicks on Show Filters, the button changes to Hide Filters and the opposite*/
   onToggleSidenav() {
-    if (document.getElementById('filtersButton').innerText === 'Show Filters') {
-      document.getElementById('filtersButton').innerText = 'Hide Filters';
+    if (document.getElementById('filters-button').innerText === 'Show Filters') {
+      document.getElementById('filters-button').innerText = 'Hide Filters';
     } else {
-      document.getElementById('filtersButton').innerText = 'Show Filters';
+      document.getElementById('filters-button').innerText = 'Show Filters';
+      // Sidenav closes, so we apply the filters and automatically fetch new results
+      this.getResults();
     }
   }
-  /*Each method gets the current click event which shows the choise of user
-   and saves it in the suitable variable */
-  onNgModelChangeCategories($event) {
-    this.selectedOptionsCategories = $event;
-  }
-  onNgModelChangeAdvisedFor($event) {
-    this.selectedOptionsAdvisedFor = $event;
-  }
-  onNgModelChangeDifficulty($event) {
-    this.selectedOptionsDifficulty = $event;
-  }
-  onNgModelChangeEquipment($event) {
-    this.selectedOptionsEquipment = $event;
-  }
+
+  // /* In the case of clicking search button */
+  // getResults() {
+  //   this.searchClicked = true;
+  //   let content;
+  //   if (this.selectedOptionsAdvisedFor == null && this.selectedOptionsCategories == null && this.selectedOptionsDifficulty == null &&
+  //     this.selectedOptionsEquipment == null) {
+  //     this.workoutService.getAllWorkout().toPromise().then(data => {
+  //         this.results = data.data;
+  //       },
+  //       error => {
+  //         this.alertService.error(error);
+  //       });
+  //   } else {
+  //     if (this.selectedOptionsEquipment != null) {
+  //       for (let i = 0; i < this.selectedOptionsEquipment.length; i++) {
+  //         if (this.selectedOptionsEquipment[i] === 'yes') {
+  //           this.selectedOptionsEquipment = true;
+  //         } else {
+  //           this.selectedOptionsEquipment = false;
+  //         }
+  //       }
+  //
+  //       content = {
+  //         category: this.selectedOptionsCategories,
+  //         advisedFor: this.selectedOptionsAdvisedFor,
+  //         difficulty: this.selectedOptionsDifficulty,
+  //         equipment: [this.selectedOptionsEquipment]
+  //       };
+  //     } else {
+  //       this.selectedOptionsEquipment = [true, false];
+  //       content = {
+  //         category: this.selectedOptionsCategories,
+  //         advisedFor: this.selectedOptionsAdvisedFor,
+  //         difficulty: this.selectedOptionsDifficulty,
+  //         equipment: this.selectedOptionsEquipment
+  //       };
+  //     }
+  //     this.workoutService.getResults(content).toPromise().then(data => {
+  //         this.results = data.workoutList;
+  //       },
+  //       error => {
+  //         this.alertService.error(error);
+  //       });
+  //   }
+  // }
+  //
+
+
 }
 

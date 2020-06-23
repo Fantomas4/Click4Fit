@@ -178,64 +178,64 @@ data = {
            'products': []}
     ],
     "workout": [
-        {"name": 'Squat with weight', "category": "legs", "muscleGroups": ["quads", "glutes", "hamstrings", "core"], "advisedFor": 'women',
+        {"name": 'Squat with weight', "category": "legs", "advisedFor": 'women',
          "difficulty": 'hard', "equipment": True, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'},
 
-        {"name": 'Lunges', "category": "legs", "muscleGroups": ["quads"], "advisedFor": 'women',
+        {"name": 'Lunges', "category": "legs", "advisedFor": 'women',
          "difficulty": 'easy', "equipment": False, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/a7amnNyWNxo'},
 
-        {"name": 'Hack squat', "category": "legs", "muscleGroups": ["quads", "core"], "advisedFor": 'men',
+        {"name": 'Hack squat', "category": "legs", "advisedFor": 'men',
          "difficulty": 'hard', "equipment": True, "sets": '3x6 150kg+150kg ', "videoUrl": 'https://www.youtube.com/embed/0tn5K9NlCfo'},
 
-        {"name": 'Lat pulldown', "category": "back", "muscleGroups": ["lats", "traps", "rear delts", "forearms"], "advisedFor": 'women',
+        {"name": 'Lat pulldown', "category": "back","advisedFor": 'women',
          "difficulty": 'medium', "equipment": True, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/j9jtjL8FhPI'},
 
-        {"name": 'Barbell row', "category": "back", "muscleGroups": ["lats", "traps", "rear delts", "forearms"], "advisedFor": 'men',
+        {"name": 'Barbell row', "category": "back", "advisedFor": 'men',
          "difficulty": 'hard', "equipment": True, "sets": '3x10 60kg+60kg', "videoUrl": 'https://www.youtube.com/embed/kBWAon7ItDw'},
 
-        {"name": 'Incline dumbbell press', "category": "chest", "muscleGroups": ["chest", "triceps", "front delts"], "advisedFor": 'women',
+        {"name": 'Incline dumbbell press', "category": "chest", "advisedFor": 'women',
          "difficulty": 'easy', "equipment": True, "sets": '3x12 2kg+2kg', "videoUrl": 'https://www.youtube.com/embed/6tW4LUaOxlE'},
 
-        {"name": 'Incline bench press', "category": "chest", "muscleGroups": ["chest", "triceps", "front delts"], "advisedFor": 'men',
+        {"name": 'Incline bench press', "category": "chest", "advisedFor": 'men',
          "difficulty": 'medium', "equipment": True, "sets": '3x10 70kg+70kg', "videoUrl": 'https://www.youtube.com/embed/SrqOu55lrYU'},
 
-        {"name": 'Push ups', "category": "chest", "muscleGroups": ["chest", "triceps", "core", "front delts"], "advisedFor": 'men',
+        {"name": 'Push ups', "category": "chest","advisedFor": 'men',
          "difficulty": 'easy', "equipment": False, "sets": '4x15', "videoUrl": 'https://www.youtube.com/embed/0-k1CkNGb4U'},
 
-        {"name": 'Front raise', "category": "shoulders", "muscleGroups": ["front delts"], "advisedFor": 'women',
+        {"name": 'Front raise', "category": "shoulders", "advisedFor": 'women',
          "difficulty": 'easy', "equipment": True, "sets": '3x12 2kg+2kg', "videoUrl": 'https://www.youtube.com/embed/D-3JnFrFUOw'},
 
-        {"name": 'Rear delt fly', "category": "shoulders", "muscleGroups": ["rear delts", "traps"], "advisedFor": 'men',
+        {"name": 'Rear delt fly', "category": "shoulders", "advisedFor": 'men',
          "difficulty": 'hard', "equipment": True, "sets": '3x10 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/EA7u4Q_8HQ0'},
 
-        {"name": 'Hammer curls', "category": "biceps", "muscleGroups": ["branchialis", "forearms", "biceps"], "advisedFor": 'women',
+        {"name": 'Hammer curls', "category": "biceps", "advisedFor": 'women',
          "difficulty": 'medium', "equipment": True, "sets": '4x15 10kg ', "videoUrl": 'https://www.youtube.com/embed/iOwrtesXiDw'},
 
-        {"name": 'EZ-Bar Preacher Curl', "category": "biceps", "muscleGroups": ["biceps", "branchialis", "forearms"], "advisedFor": 'men',
+        {"name": 'EZ-Bar Preacher Curl', "category": "biceps", "advisedFor": 'men',
          "difficulty": 'hard', "equipment": True, "sets": '3x6 40kg+40kg ', "videoUrl": 'https://www.youtube.com/embed/Gydpcouclx8'},
 
-        {"name": 'Kickbacks', "category": "triceps", "muscleGroups": ["triceps"], "advisedFor": 'men',
+        {"name": 'Kickbacks', "category": "triceps", "advisedFor": 'men',
          "difficulty": 'medium', "equipment": True, "sets": '3x10 20kg+20kg', "videoUrl": 'https://www.youtube.com/embed/ShCYaoHmWmk'},
 
-        {"name": 'Dips on bench', "category": "triceps", "muscleGroups": ["triceps", "chest", "front delt"], "advisedFor": 'women',
+        {"name": 'Dips on bench', "category": "triceps", "advisedFor": 'women',
          "difficulty": 'medium', "equipment": True, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/dl8_opV0A0Y'},
 
-        {"name": 'Obliques', "category": "abs", "muscleGroups": ["obliques", "abs", "delts", "glutes", "quads"], "advisedFor": 'men',
+        {"name": 'Obliques', "category": "abs", "advisedFor": 'men',
          "difficulty": 'hard', "equipment": False, "sets": '4x15', "videoUrl": 'https://www.youtube.com/embed/9Q0D6xAyrOI'},
 
-        {"name": 'Scissors', "category": "abs", "muscleGroups": ["abs", "obliques", "quads"], "advisedFor": 'women',
+        {"name": 'Scissors', "category": "abs", "advisedFor": 'women',
          "difficulty": 'medium', "equipment": False, "sets": '4x15 ', "videoUrl": 'https://www.youtube.com/embed/WoNCIBVLbgY'},
 
-        {"name": 'Crunches', "category": "abs", "muscleGroups": ["abs"], "advisedFor": 'women',
+        {"name": 'Crunches', "category": "abs", "advisedFor": 'women',
          "difficulty": 'easy', "equipment": False, "sets": '3x12 ', "videoUrl": 'https://www.youtube.com/embed/Xyd_fa5zoEU'},
 
-        {"name": 'Plank', "category": "abs", "muscleGroups": ["obliques", "abs", "delts", "glutes", "quads"], "advisedFor": 'men',
+        {"name": 'Plank', "category": "abs", "advisedFor": 'men',
          "difficulty": 'medium', "equipment": False, "sets": '2x40sec ', "videoUrl": 'https://www.youtube.com/embed/YuVr-YPGRUI'},
 
-        {"name": 'Plank to pike TRX', "category": "core", "muscleGroups": ["abs", "quads", "glutes"], "advisedFor": 'women',
+        {"name": 'Plank to pike TRX', "category": "core", "advisedFor": 'women',
          "difficulty": 'hard', "equipment": True, "sets": '4x15 ', "videoUrl": 'https://www.youtube.com/embed/To2LJgb-_FI'},
 
-        {"name": 'T Stabilization', "category": "core", "muscleGroups": [], "advisedFor": 'men',
+        {"name": 'T Stabilization', "category": "core", "advisedFor": 'men',
          "difficulty": 'hard', "equipment": True, "sets": '4x15 6kg+6kg', "videoUrl": 'https://www.youtube.com/embed/QjBpbXPmRSU'}
     ]
 }

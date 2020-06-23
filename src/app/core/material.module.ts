@@ -22,7 +22,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -48,6 +48,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatSortModule,
     MatGridListModule,
     MatTabsModule,
+    MatSelectModule
   ],
   exports: [
     MatToolbarModule,
@@ -72,6 +73,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatGridListModule,
     MatTabsModule,
     MatAutocompleteModule,
+    MatSelectModule
   ]
 })
 
