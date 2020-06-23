@@ -181,13 +181,13 @@ data = {
         {"name": 'Squat with weight', "category": "legs", "advisedFor": 'women',
          "difficulty": 'hard', "equipment": True, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'},
 
-        {"name": 'Lunges', "category": "legs",
+        {"name": 'Lunges', "category": "advisedFor": 'women',
          "difficulty": 'easy', "equipment": False, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/a7amnNyWNxo'},
 
         {"name": 'Hack squat', "category": "legs", "advisedFor": 'men',
          "difficulty": 'hard', "equipment": True, "sets": '3x6 150kg+150kg ', "videoUrl": 'https://www.youtube.com/embed/0tn5K9NlCfo'},
 
-        {"name": 'Lat pulldown', "category": "back", "advisedFor": 'women',
+        {"name": 'Lat pulldown', "category": "back","advisedFor": 'women',
          "difficulty": 'medium', "equipment": True, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/j9jtjL8FhPI'},
 
         {"name": 'Barbell row', "category": "back", "advisedFor": 'men',
@@ -199,7 +199,7 @@ data = {
         {"name": 'Incline bench press', "category": "chest", "advisedFor": 'men',
          "difficulty": 'medium', "equipment": True, "sets": '3x10 70kg+70kg', "videoUrl": 'https://www.youtube.com/embed/SrqOu55lrYU'},
 
-        {"name": 'Push ups', "category": "chest", "advisedFor": 'men',
+        {"name": 'Push ups', "category": "chest","advisedFor": 'men',
          "difficulty": 'easy', "equipment": False, "sets": '4x15', "videoUrl": 'https://www.youtube.com/embed/0-k1CkNGb4U'},
 
         {"name": 'Front raise', "category": "shoulders", "advisedFor": 'women',
