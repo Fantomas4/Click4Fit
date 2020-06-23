@@ -181,7 +181,7 @@ data = {
         {"name": 'Squat with weight', "category": "legs", "advisedFor": 'women',
          "difficulty": 'hard', "equipment": True, "sets": '4x15 10kg+10kg', "videoUrl": 'https://www.youtube.com/embed/MVMNk0HiTMg'},
 
-        {"name": 'Lunges', "category": "advisedFor": 'women',
+        {"name": 'Lunges', "category": "legs", "advisedFor": 'women',
          "difficulty": 'easy', "equipment": False, "sets": '4x12', "videoUrl": 'https://www.youtube.com/embed/a7amnNyWNxo'},
 
         {"name": 'Hack squat', "category": "legs", "advisedFor": 'men',
