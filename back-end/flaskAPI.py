@@ -262,18 +262,18 @@ def getCities():
     return jsonify(data=cities_list)
  
  
-@app.route("/api/add-favorite-place", methods=['POST','GET'])
+@app.route("/api/add-favorite-business", methods=['POST','GET'])
 def addFavoritePlace():
-    place=request.get_json() #get favorite place
+    business = request.get_json() #get favorite place
     #connection with mongo sending the place and adding to favorites
     try:
-        favorite = MongoDB.addFavoriteBusiness(place)
+        favorite = MongoDB.addFavoriteBusiness(business)
     except ValueError as value_err:
         return str(value_err), 422
     except:
         return "Bad error", 500
     else:
-        if favorite is False:
+        if not favorite:
             return "Couldn't add entry", 400
         return jsonify("Addition successful")
  
