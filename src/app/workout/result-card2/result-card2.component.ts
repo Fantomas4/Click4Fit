@@ -46,11 +46,11 @@ export class ResultCard2Component implements OnInit {
     this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.workoutData._id);
 
     this.name = this.workoutData.name;
-    this.category = this.workoutData.category.charAt(0).toUpperCase() + this.workoutData.category.slice(1); // Capitalize the first letter
+    this.category = this.workoutData.category;
     this.muscleGroups = this.workoutData.muscleGroups;
     this.advisedFor = this.workoutData.advisedFor;
     this.equipment = this.workoutData.equipment;
-    this.difficulty = this.workoutData.difficulty;
+    this.difficulty = this.workoutData.difficulty.charAt(0).toUpperCase() + this.workoutData.difficulty.slice(1); // Capitalize the first letter
     this.videoUrl = this.workoutData.videoUrl;
     this.sets = this.workoutData.sets;
 
@@ -101,6 +101,8 @@ export class ResultCard2Component implements OnInit {
       },
       favorite_id: this.workoutData._id
     };
+
+    console.log(request);
 
     if (!this.favorite) {
       // The card is currently not selected as a user favorite, so the user requested an addition

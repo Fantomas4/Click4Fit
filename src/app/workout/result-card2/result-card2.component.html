@@ -1,54 +1,38 @@
-<div>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title><span id="title-text">{{name}}</span></mat-card-title>
-      <mat-card-subtitle>{{difficulty}}</mat-card-subtitle>
+<mat-card>
+  <div class="card-data-container">
 
-      <button mat-icon-button *ngIf="!favorite" (click)="onFavoriteClick()">
-        <mat-icon class="icon">favorite_border</mat-icon>
-        <!--It is displayed when the workout entry is not favorite-->
-      </button>
-      <button mat-icon-button *ngIf="favorite">
-        <mat-icon class="icon">favorite</mat-icon> <!-- It is displayed when the workout entry is favorite-->
-      </button><br>
+  </div>
+  <mat-card-header>
+    <mat-card-title><span id="title-text">{{name}}</span></mat-card-title>
+    <mat-card-subtitle>Difficulty: {{difficulty}}</mat-card-subtitle>
 
-
-
-
-    </mat-card-header>
+    <button mat-icon-button *ngIf="!favorite" (click)="onFavoriteClick()">
+      <mat-icon class="icon">favorite_border</mat-icon>
+      <!--It is displayed when the workout entry is not favorite-->
+    </button>
+    <button mat-icon-button *ngIf="favorite">
+      <mat-icon class="icon">favorite</mat-icon> <!-- It is displayed when the workout entry is favorite-->
+    </button><br>
 
 
-<!--            <mat-card-title class="exercise-title">-->
-<!--                {{name}}<button mat-icon-button *ngIf="!favorite" (click)="onClick(workoutEntry)">-->
-<!--                    <mat-icon class="icon">favorite_border</mat-icon>-->
-<!--                    &lt;!&ndash;It is displayed when the workout entry is not favorite&ndash;&gt;-->
-<!--                </button>-->
-<!--                <button mat-icon-button *ngIf="favorite">-->
-<!--                    <mat-icon class="icon">favorite</mat-icon>-->
-<!--                    &lt;!&ndash; It is displayed when the workout entry is favorite&ndash;&gt;-->
-<!--                </button><br>-->
-<!--                <mat-chip-list>-->
-<!--                    <mat-chip class="chip">{{category}}</mat-chip>-->
-<!--                    <mat-chip class="chip">{{advisedFor}}</mat-chip>-->
-<!--                    <mat-chip *ngIf="!equipment" class="chip">no equipment</mat-chip>-->
-<!--                    <mat-chip *ngIf="equipment" class="chip">with equipment</mat-chip>-->
-<!--                    <mat-chip class="chip">{{difficulty}}</mat-chip>-->
-<!--                    <mat-chip *ngFor="let muscleGroup of muscleGroups" class="chip">{{muscleGroup}}</mat-chip>-->
-<!--                </mat-chip-list>-->
-<!--            </mat-card-title>-->
 
-    <mat-card-content>
+
+  </mat-card-header>
+
+  <mat-card-content>
+    <div id="tags-chip-list">
       <mat-chip-list>
-        <mat-chip class="chip">{{category}}</mat-chip>
         <mat-chip class="chip">{{advisedFor}}</mat-chip>
         <mat-chip *ngIf="!equipment" class="chip">no equipment</mat-chip>
         <mat-chip *ngIf="equipment" class="chip">with equipment</mat-chip>
         <mat-chip *ngFor="let muscleGroup of muscleGroups" class="chip">{{muscleGroup}}</mat-chip>
       </mat-chip-list>
-      <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(videoUrl)' frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-      <p class="sets">Recommended sets: {{sets}}</p>
-    </mat-card-content>
-  </mat-card><br>
-</div>
+    </div>
+
+          <iframe class="frame" [src]='sanitizer.bypassSecurityTrustResourceUrl(videoUrl)' frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+          </iframe>
+    <p id="recommended-sets">Recommended sets: {{sets}}</p>
+  </mat-card-content>
+</mat-card><br>

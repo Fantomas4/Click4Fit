@@ -39,7 +39,7 @@
     <div *ngIf="favoriteWorkouts.length !== 0 && !loading">
       <div class="card-deck-container">
         <div *ngFor="let entry of favoriteWorkouts" class="card-item">
-          <app-result-card2 [workoutEntry]="entry"></app-result-card2>
+          <app-result-card2 [workoutData]="entry"></app-result-card2>
         </div>
       </div>
     </div>

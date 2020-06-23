@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DashboardService } from './dashboard.service';
 import {BusinessEntry} from '../business-entry';
-import {WorkoutEntry} from '../manage-workout-entries/workout-entry';
+import {WorkoutEntry} from '../workout-entry';
 import {Subscription} from 'rxjs';
 import {AlertMessage} from '../core/alert-message';
 import {AlertService} from '../core/alert.service';
