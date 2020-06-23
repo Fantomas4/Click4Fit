@@ -16,36 +16,15 @@
         <tr>
           <mat-form-field>
             <mat-label>Category</mat-label>
-            <input matInput formControlName="category" name="category" placeholder="e.g. Legs"
-                   [errorStateMatcher]="genericErrorStateMatcher" required>
+            <mat-select formControlName="category" [errorStateMatcher]="genericErrorStateMatcher" required>
+              <mat-option *ngFor="let option of workoutCategories" [value]="option.value">
+                {{option.name}}
+              </mat-option>
+            </mat-select>
             <mat-error *ngIf="entryForm.get('category').hasError('required')">
-              Please enter a workout category
+              Please select a workout category
             </mat-error>
           </mat-form-field>
-        </tr>
-        <tr>
-          <td>
-            <div id="chip-list-container">
-              <mat-form-field id="chip-list">
-                <mat-label>Muscle Groups</mat-label>
-                <mat-chip-list formControlName="muscleGroups" #muscleGroupsChipList aria-label="Muscle Groups selection" [errorStateMatcher]="genericErrorStateMatcher" required>
-                  <mat-chip *ngFor="let muscleGroup of muscleGroups" [selectable]="selectable"
-                            [removable]="removable" (removed)="removeMuscleGroupChip(muscleGroup)">
-                    {{muscleGroup}}
-                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                  </mat-chip>
-                  <input placeholder="new muscle group..."
-                         [matChipInputFor]="muscleGroupsChipList"
-                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                         [matChipInputAddOnBlur]="addOnBlur"
-                         (matChipInputTokenEnd)="addMuscleGroupChip($event)">
-                </mat-chip-list>
-                <mat-error *ngIf="entryForm.get('muscleGroups').hasError('required')">
-                  Please enter workout muscle groups
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </td>
         </tr>
         <tr>
           <div class="toggle-group-container">

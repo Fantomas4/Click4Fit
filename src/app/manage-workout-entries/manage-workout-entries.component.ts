@@ -39,6 +39,8 @@ export class ManageWorkoutEntriesComponent implements OnInit {
   dialogHeightRatio = 0.9; // Determines the dialog box height relevant to the screen size.
   dialogMinWidth = 250; // Defines the maximum width of the dialog window (px).
   dialogMaxWidth = 310; // Defines the maximum width of the dialog window (px).
+  dialogMinHeight;
+  dialogMaxHeight = 650;
 
   detailsEditDialogRef: MatDialogRef<WorkoutDetailsEditDialogComponent>; // Reference to the spawned "Details/Edit" dialog window.
   addEntryDialogRef: MatDialogRef<WorkoutAddEntryDialogComponent>; // Reference to the spawned "Add Entry" dialog window.
@@ -133,7 +135,7 @@ export class ManageWorkoutEntriesComponent implements OnInit {
     this.onResize(); // Call onResize() to update this.dialogWidth and this.dialogHeight with the display window's current dimensions.
     this.detailsEditDialogRef = this.dialog.open(WorkoutDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
-      maxWidth: this.dialogMaxWidth, data: element});
+      maxWidth: this.dialogMaxWidth, minHeight: this.dialogMinHeight, maxHeight: this.dialogMaxHeight, data: element});
 
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
@@ -141,7 +143,6 @@ export class ManageWorkoutEntriesComponent implements OnInit {
           _id: dialogRes.details._id,
           name: dialogRes.details.name,
           category: dialogRes.details.category,
-          muscleGroups: dialogRes.details.muscleGroups,
           sets: dialogRes.details.sets,
           videoUrl: dialogRes.details.videoUrl,
           advisedFor: dialogRes.details.advisedFor,
@@ -162,6 +163,8 @@ export class ManageWorkoutEntriesComponent implements OnInit {
               this.alertService.error(error);
             }
           });
+        // Update table entries
+        this.getWorkoutEntries();
       }
     });
   }
@@ -171,7 +174,7 @@ export class ManageWorkoutEntriesComponent implements OnInit {
     this.onResize();
     this.addEntryDialogRef = this.dialog.open(WorkoutAddEntryDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: this.dialogHeight.toString().concat('px'), minWidth: this.dialogMinWidth,
-      maxWidth: this.dialogMaxWidth
+      maxWidth: this.dialogMaxWidth, minHeight: this.dialogMinHeight, maxHeight: this.dialogMaxHeight
     });
     this.addEntryDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
@@ -179,7 +182,6 @@ export class ManageWorkoutEntriesComponent implements OnInit {
           _id: dialogRes.details._id,
           name: dialogRes.details.name,
           category: dialogRes.details.category,
-          muscleGroups: dialogRes.details.muscleGroups,
           sets: dialogRes.details.sets,
           videoUrl: dialogRes.details.videoUrl,
           advisedFor: dialogRes.details.advisedFor,

@@ -14,11 +14,11 @@ export class ManageUserEntriesService {
     return this.http.get<any>(`${environment.apiUrl}/manage-user-display-entries`);
   }
 
-  updateEntry(data: FormData) {
-    return this.http.post<any>(`${environment.apiUrl}/manage-user-modify-entry`, data,
-      {observe: 'response'}).pipe(map((res: any) => {
-      return res;
-    }));
+  updateUserEntry(data: object) {
+  return this.http.post<any>(`${environment.apiUrl}/manage-user-modify-entry`, data,
+    {headers: {'Content-type': 'application/json'}, observe: 'response'}).pipe(map((res: any) => {
+    return res;
+  }));
   }
 
   deleteEntries(data: object) {

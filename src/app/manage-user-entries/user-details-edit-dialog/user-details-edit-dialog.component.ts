@@ -63,7 +63,6 @@ export class UserDetailsEditDialogComponent implements OnInit {
   onSaveClick(): void {
     if (this.entryForm.valid) {
       const content = {
-        _id: JSON.parse(sessionStorage.getItem('currentUser'))._id,
         name: this.entryForm.get('name').value,
         surname: this.entryForm.get('surname').value,
         email: this.entryForm.get('email').value,
