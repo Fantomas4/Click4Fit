@@ -263,9 +263,8 @@ def getCities():
  
  
 @app.route("/api/add-favorite-business", methods=['POST','GET'])
-def addFavoritePlace():
-    business = request.get_json() #get favorite place
-    #connection with mongo sending the place and adding to favorites
+def addFavoriteBusiness():
+    business = request.get_json()
     try:
         favorite = MongoDB.addFavoriteBusiness(business)
     except ValueError as value_err:
@@ -276,6 +275,34 @@ def addFavoritePlace():
         if not favorite:
             return "Couldn't add entry", 400
         return jsonify("Addition successful")
+ 
+@app.route("/api/remove-favorite-business", methods=['POST','GET'])
+def removeFavoriteBusiness():
+    business = request.get_json()
+    try:
+        favorite = MongoDB.removeFavoriteBusiness(business)
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if not favorite:
+            return "Couldn't remove entry", 400
+        return jsonify("Business removal successful")
+ 
+@app.route("/api/remove-favorite-workout", methods=['POST','GET'])
+def removeFavoriteWorkout():
+    business = request.get_json()
+    try:
+        favorite = MongoDB.removeFavoriteWorkout(business)
+    except ValueError as value_err:
+        return str(value_err), 422
+    except:
+        return "Bad error", 500
+    else:
+        if not favorite:
+            return "Couldn't remove entry", 400
+        return jsonify("Workout removal successful")
  
  
 ####################################### Workout ######################################
