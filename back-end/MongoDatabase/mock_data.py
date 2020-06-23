@@ -3,9 +3,6 @@ data = {
       {'name': 'Paulos', 'surname': 'Kostopoulos', 'email':'pauloskostop@gmail.com', 'password':'pk123456','birthdate': '28.06.1980',
         'privilegeLevel':'admin', 'favoriteWorkout':[], 'favoriteBusiness':[]},
 
-       {'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex1@gmail.com', 'password': 'na123456', 'birthdate': '16.04.1997',
-        'privilegeLevel': 'client', 'favoriteWorkout':[], 'favoriteBusiness':[]},
-
        {'name': 'Nikos', 'surname': 'Alexopoulos', 'email': 'nikosalex@gmail.com', 'password': 'na123456', 'birthdate': '16.04.1997',
         'privilegeLevel': 'business', 'favoriteWorkout': [], 'favoriteBusiness': []},
 
