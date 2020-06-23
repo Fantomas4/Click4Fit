@@ -4,7 +4,7 @@ import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@a
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {WorkoutEntry} from '../workout-entry';
+import {WorkoutEntry} from '../../workout-entry';
 
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
@@ -42,7 +42,7 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
 
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-  id: number; // The displayed entry's id.
+  id: string; // The displayed entry's id.
   advisedFor = 'both'; // The gender that the exercise is advised for.
   difficulty = 'easy'; // The difficulty level of the exercise.
   equipment = 'no'; // Whether the exercise requires equipment or not.

@@ -2,52 +2,66 @@
 <mat-drawer-container>
     <!-- The right sidenav with the filters -->
     <mat-drawer #sidenav mode="over" position="end"  #sidenav (openedChange)="onToggleSidenav()">
-        <mat-selection-list id="categories" [(ngModel)]="selectedCategories"
-            (ngModelChange)="onNgModelChangeCategories($event)">
-            <div mat-subheader class="filter-type-subheader">Part of body</div>
+        <mat-selection-list id="categories" [(ngModel)]="selectedGroups">
+            <div mat-subheader class="filter-type-subheader">Parts of body</div>
             <mat-list-option *ngFor="let category of categoriesFilters" [value]="category">{{category}}
             </mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list [(ngModel)]="selectedAdvisedFor" (ngModelChange)="onNgModelChangeAdvisedFor($event)">
+        <mat-selection-list [(ngModel)]="selectedAdvisedFor">
             <div mat-subheader class="filter-type-subheader">Advised for</div>
             <mat-list-option *ngFor="let advisedFor of advisedForFilters" [value]="advisedFor">{{advisedFor}}
             </mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list [(ngModel)]="selectedDifficulty" (ngModelChange)="onNgModelChangeDifficulty($event)">
+        <mat-selection-list [(ngModel)]="selectedDifficulty">
             <div mat-subheader class="filter-type-subheader">Level of difficulty</div>
             <mat-list-option *ngFor="let difficulty of difficultyFilters" [value]="difficulty">{{difficulty}}
             </mat-list-option>
         </mat-selection-list>
         <mat-divider></mat-divider>
-        <mat-selection-list [(ngModel)]="selectedEquipment" (ngModelChange)="onNgModelChangeEquipment($event)">
+        <mat-selection-list [(ngModel)]="selectedEquipment">
             <div mat-subheader class="filter-type-subheader">Equipment</div>
-            <mat-list-option *ngFor="let equipment of equipmentFilters" [value]="equipment">{{equipment}}
+            <mat-list-option *ngFor="let equipment of equipmentFilters" [value]="equipment.value">
+              {{equipment.name}}
             </mat-list-option>
         </mat-selection-list>
-        <div><button mat-raised-button id="searchButton" (click)="getResults();sidenav.close()">Search</button><br>
+        <div><button mat-raised-button id="close-button" (click)="sidenav.toggle()" color="primary">Close</button><br>
         </div>
     </mat-drawer>
     <!-- The left content of general container -->
     <mat-drawer-content>
         <h1 id="title">Workout</h1>
-        <button mat-raised-button id="filtersButton" (click)="sidenav.toggle()" background-color="primary">Show
-            Filters</button><br>
+        <div id="button-container">
+          <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">Show Filters</button><br>
+<!--          <button mat-raised-button id="search-button" (click)="onSearch()" color="primary">Go!</button>-->
+        </div>
+
         <div id="alert-message"
             [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
             *ngIf="alertMessage">{{alertMessage.text}}
         </div>
-        <!-- It is shown only when the results of search are absent -->
-        <p class="text" *ngIf="!isClicked">
-            Click the button above to choose filters <br> and find your workout!
-        </p>
-        <!-- The container of results cards -->
-        <div class="card-container" *ngIf="isClicked">
-            <!-- It is shown only when the user has clicked the search button -->
-            <div *ngFor="let entry of results" class="card">
-                <app-result-card2 [workoutEntry]="entry"></app-result-card2>
-            </div>
+
+        <div class="card-deck-container">
+          <div *ngFor="let entry of workoutResults" class="card-item">
+            <app-result-card2 [workoutData]="entry"></app-result-card2>
+          </div>
         </div>
+
+
+<!--      &lt;!&ndash; It is shown only when the results of search are absent &ndash;&gt;-->
+<!--        <p class="text" *ngIf="!searchClicked">-->
+<!--            Ready to workout? <br> Choose your filters and find the ideal workout exercises for you!-->
+<!--        </p>-->
+<!--        &lt;!&ndash; The container of results cards &ndash;&gt;-->
+<!--        <div class="card-container" *ngIf="searchClicked">-->
+<!--            &lt;!&ndash; It is shown only when the user has clicked the search button &ndash;&gt;-->
+<!--            <div *ngFor="let entry of results" class="card">-->
+<!--                <app-result-card2 [workoutEntry]="entry"></app-result-card2>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+
     </mat-drawer-content>
 </mat-drawer-container>
