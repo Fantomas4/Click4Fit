@@ -25,13 +25,27 @@ export class WorkoutComponent implements OnInit {
   categoriesFilters: string[] = ['Legs', 'Back', 'Chest', 'Shoulders', 'Biceps', 'Triceps', 'Abs', 'Core'];
   advisedForFilters: string[] = ['Women', 'Men'];
   difficultyFilters: string[] = ['Easy', 'Medium', 'Hard'];
-  equipmentFilters: string[] = ['Yes', 'No'];
+  // equipmentFilters: string[] = ['Yes', 'No'];
   selectedGroups = []; // they contain values of each selection list
   selectedAdvisedFor = [];
   selectedDifficulty = [];
   selectedEquipment = [];
 
-  searchResults: WorkoutEntry[] = [];
+  equipmentFilters: {
+    name: string;
+    value: boolean;
+  }[] = [
+    {
+      name: 'Yes',
+      value: true
+    },
+    {
+      name: 'No',
+      value: false
+    },
+  ];
+
+  workoutResults: WorkoutEntry[] = [];
 
 
   constructor(private workoutService: WorkoutService, private resultCardService: ResultCard2Service,
@@ -47,29 +61,59 @@ export class WorkoutComponent implements OnInit {
         };
       }
     });
+
+    this.getResults();
   }
 
-  /* When the sidenav opens, the button changes to Hide Filters and the opposite */
-  onToggleSidenav() {
-    if (document.getElementById('filter-button').innerText === 'Show Filters') {
-      document.getElementById('filter-button').innerText = 'Hide Filters';
-    } else {
-      document.getElementById('filter-button').innerText = 'Show Filters';
-    }
+  prepareRequest() {
+
+
+    const requestData = {
+      category: this.selectedGroups.map(item => item.toLowerCase()),
+      advisedFor: this.selectedAdvisedFor.map(item => item.toLowerCase()),
+      difficulty: this.selectedDifficulty.map(item => item.toLowerCase()),
+      equipment: this.selectedEquipment
+    };
+
+    return requestData;
   }
 
-  onSearch() {
-    this.workoutService.getResults({
-      category: this.selectedGroups, country: this.locationAutocomplete.getUserCountryChoices(),
-      city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
+  getResults() {
+    // Clear any existing results
+    this.workoutResults = [];
+
+    // Clear any existing error messages
+    this.alertService.clearMessage();
+
+    this.workoutService.getResults(this.prepareRequest()).subscribe(
       res => {
-        this.searchResults = res.body.data;
+        console.log(res);
+        this.workoutResults = res.body.workoutList;
+        this.alertService.success('Found ' + res.body.workoutList.length + ' workouts');
       },
 
       error => {
-        this.alertService.error(error);
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof (error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
       });
   }
+
+  onToggleSidenav() {
+    if (document.getElementById('filters-button').innerText === 'Show Filters') {
+      document.getElementById('filters-button').innerText = 'Hide Filters';
+    } else {
+      document.getElementById('filters-button').innerText = 'Show Filters';
+      // Sidenav closes, so we apply the filters and automatically fetch new results
+      this.getResults();
+    }
+  }
+
   // /* In the case of clicking search button */
   // getResults() {
   //   this.searchClicked = true;
@@ -116,7 +160,6 @@ export class WorkoutComponent implements OnInit {
   //   }
   // }
   //
-
 
 
 }

@@ -22,34 +22,46 @@
         <mat-divider></mat-divider>
         <mat-selection-list [(ngModel)]="selectedEquipment">
             <div mat-subheader class="filter-type-subheader">Equipment</div>
-            <mat-list-option *ngFor="let equipment of equipmentFilters" [value]="equipment">{{equipment}}
+            <mat-list-option *ngFor="let equipment of equipmentFilters" [value]="equipment.value">
+              {{equipment.name}}
             </mat-list-option>
         </mat-selection-list>
-        <div><button mat-raised-button id="done-button" (click)="sidenav.toggle()" color="primary">Done</button><br>
+        <div><button mat-raised-button id="close-button" (click)="sidenav.toggle()" color="primary">Close</button><br>
         </div>
     </mat-drawer>
     <!-- The left content of general container -->
     <mat-drawer-content>
         <h1 id="title">Workout</h1>
         <div id="button-container">
-          <button mat-raised-button id="filter-button" (click)="sidenav.toggle()" color="primary">Show Filters</button><br>
-          <button mat-raised-button id="search-button" (click)="onSearch()" color="primary">Go!</button>
+          <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">Show Filters</button><br>
+<!--          <button mat-raised-button id="search-button" (click)="onSearch()" color="primary">Go!</button>-->
         </div>
 
         <div id="alert-message"
             [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
             *ngIf="alertMessage">{{alertMessage.text}}
         </div>
-        <!-- It is shown only when the results of search are absent -->
-        <p class="text" *ngIf="!searchClicked">
-            Ready to workout? <br> Choose your filters and find the ideal workout exercises for you!
-        </p>
-        <!-- The container of results cards -->
-        <div class="card-container" *ngIf="searchClicked">
-            <!-- It is shown only when the user has clicked the search button -->
-            <div *ngFor="let entry of results" class="card">
-                <app-result-card2 [workoutEntry]="entry"></app-result-card2>
-            </div>
+
+        <div class="card-deck-container">
+          <div *ngFor="let entry of workoutResults" class="card-item">
+            <app-result-card2 [workoutEntry]="entry"></app-result-card2>
+          </div>
         </div>
+
+
+<!--      &lt;!&ndash; It is shown only when the results of search are absent &ndash;&gt;-->
+<!--        <p class="text" *ngIf="!searchClicked">-->
+<!--            Ready to workout? <br> Choose your filters and find the ideal workout exercises for you!-->
+<!--        </p>-->
+<!--        &lt;!&ndash; The container of results cards &ndash;&gt;-->
+<!--        <div class="card-container" *ngIf="searchClicked">-->
+<!--            &lt;!&ndash; It is shown only when the user has clicked the search button &ndash;&gt;-->
+<!--            <div *ngFor="let entry of results" class="card">-->
+<!--                <app-result-card2 [workoutEntry]="entry"></app-result-card2>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+
     </mat-drawer-content>
 </mat-drawer-container>

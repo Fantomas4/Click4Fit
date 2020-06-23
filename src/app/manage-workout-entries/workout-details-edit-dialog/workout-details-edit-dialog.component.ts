@@ -44,7 +44,7 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
 
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-  id: number; // The displayed entry's id.
+  id: string; // The displayed entry's id.
   advisedFor = 'both'; // The gender that the exercise is advised for.
   difficulty = 'easy'; // The difficulty level of the exercise.
   equipment = 'no'; // Whether the exercise requires equipment or not.

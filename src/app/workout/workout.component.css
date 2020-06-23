@@ -1,5 +1,18 @@
 /*!* Configuration for both desktop and mobile view *!*/
 
+h1{
+  text-align: center;
+  font-style: oblique;
+  font-size: 45px;
+  font-weight: normal;
+}
+
+/*!* The left content of general container *!*/
+mat-drawer-content {
+  width: 100vw;
+}
+
+
 /*!* The general container *!*/
 mat-drawer-container {
     display: flex;
@@ -22,67 +35,57 @@ mat-list-option {
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  /*align-content: center;*/
 }
 
-#search-button {
+/*#search-button {*/
+/*  margin: auto;*/
+/*  alignment: center;*/
+/*  width: fit-content;*/
+/*  text-align: center;*/
+/*}*/
+
+#filters-button{
   margin: auto;
   width: fit-content;
 }
 
-#filter-button{
-  /*margin-left: 2%;*/
-  margin: auto;
-  width: fit-content;
+#close-button {
+  display: block;
+  margin-top: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
 }
 
-#done-button{
-    margin: 10% auto;
-    display: block;
-}
-
-/*!* The left content of general container *!*/
-mat-drawer-content {
-    width: 100vw;
-}
-
-h1{
-    text-align: center;
-    font-style: oblique;
-    font-size: 45px;
-    font-weight: normal;
-}
-
-.text{
-    text-align: center;
-    font-size:40px;
-    margin-top:10%;
-    font-style: oblique;
-}
-
-/*!* The container of results cards *!*/
-.card-container{
-    margin-top: 5%;
-    margin-left: 5%;
-    margin-right: 5%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
-    grid-gap: 1rem;
-    justify-content: center;
+#alert-message {
+  margin-top: 2%;
+  text-align: center;
+  font-style: italic;
+  font-size: large;
 }
 
 .alert-error-text {
-    color: red;
-    font-weight: bold;
-    text-align:center;
-    margin:10% auto;
+  color: red;
+  font-weight: bold;
+  text-align:center;
 }
 .alert-success-text {
-    color: green;
-    font-weight: bold;
-    text-align:center;
-    margin:10% auto;
+  color: green;
+  font-weight: bold;
+  text-align:center;
 }
+
+/*!* The container of results cards *!*/
+.card-deck-container{
+  margin-top: 3%;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+  grid-gap: 1rem;
+  justify-content: center;
+}
+
 
 /*!* Configuration only for mobile view *!*/
 
