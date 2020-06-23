@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {WorkoutEntry} from '../workout-entry';
+import {WorkoutEntry} from '../../workout-entry';
 
 
 export class GenericErrorStateMatcher implements ErrorStateMatcher {
@@ -43,7 +43,7 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
 
   genericErrorStateMatcher = new GenericErrorStateMatcher();
 
-  id: number; // The displayed entry's id.
+  id: string; // The displayed entry's id.
   advisedFor = 'both'; // The gender that the exercise is advised for.
   difficulty = 'easy'; // The difficulty level of the exercise.
   equipment = 'no'; // Whether the exercise requires equipment or not.
