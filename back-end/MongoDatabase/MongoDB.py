@@ -251,7 +251,7 @@ class MongoDB:
         """
         Adds a business to the users favoriteWorkout list
 
-        :param favorite_query: a dict containing the user and the new_favorite.
+        :param favorite_query: a dict containing the user and the favorite_id.
                             Example: favorite_query = {
                                         "user": {
                                             "email"    : 'nikosalex@gmail.com',
@@ -263,7 +263,7 @@ class MongoDB:
         """
         if "user" not in favorite_query:
             raise ValueError("favorite_query doesn't contain user")
-        if "new_favorite" not in favorite_query:
+        if "favorite_id" not in favorite_query:
             raise ValueError("favorite_query doesn't contain new favorite workout id")
 
         user: dict = favorite_query["user"]
