@@ -55,9 +55,13 @@ export class SearchComponent implements OnInit {
         };
       }
     });
+
+    // // Load all available data from DB
+    // this.getResults();
   }
 
   getResults() {
+    console.log(this.locationAutocomplete.getUserCountryChoices());
     this.searchResults = [];
     this.searchService.getResults({keywords: this.searchKeywords.value === null ? '' : this.searchKeywords.value,
       category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
@@ -65,7 +69,7 @@ export class SearchComponent implements OnInit {
 
     res => {
               this.searchResults = res.body.data;
-              this.alertService.success('Found ' + res.body.data.length + ' results...');
+              this.alertService.success('Found ' + res.body.data.length + ' results');
             },
 
     error => {
@@ -86,6 +90,8 @@ export class SearchComponent implements OnInit {
       document.getElementById('filters-button').innerText = 'Hide Filters';
     } else {
       document.getElementById('filters-button').innerText = 'Show Filters';
+      // Sidenav closes, so we apply the filters and automatically fetch new results
+      this.getResults();
     }
   }
 
