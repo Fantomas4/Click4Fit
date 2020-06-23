@@ -43,6 +43,9 @@ export class SearchComponent implements OnInit {
       value: 'fitness shop'
     },
   ];
+  countries: string[] = [];
+  cities: string[] = [];
+
 
   constructor(private searchService: SearchService, private alertService: AlertService) { }
 
@@ -56,16 +59,21 @@ export class SearchComponent implements OnInit {
       }
     });
 
-    // // Load all available data from DB
-    // this.getResults();
+    // Load all available data from DB
+    this.getResults();
   }
 
   getResults() {
-    console.log(this.locationAutocomplete.getUserCountryChoices());
+    // console.log(this.locationAutocomplete.getUserCountryChoices());
+
+    if (this.locationAutocomplete) {
+      this.countries = this.locationAutocomplete.getUserCountryChoices();
+      this.cities = this.locationAutocomplete.getUserCityChoices();
+    }
+
     this.searchResults = [];
     this.searchService.getResults({keywords: this.searchKeywords.value === null ? '' : this.searchKeywords.value,
-      category: this.selectedOptions, country: this.locationAutocomplete.getUserCountryChoices(),
-      city: this.locationAutocomplete.getUserCityChoices()}).subscribe(
+      category: this.selectedOptions, country: this.countries, city: this.cities}).subscribe(
 
     res => {
               this.searchResults = res.body.data;

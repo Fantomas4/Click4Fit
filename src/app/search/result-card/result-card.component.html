@@ -13,10 +13,7 @@
     </mat-card-header>
     <img mat-card-image id="preview-img"  [src]="imgPath" alt="Business Preview Image.">
     <mat-card-content>
-      <div id="card-info">
-        {{country}}
-        {{city}}
-      </div>
+      <div id="card-info">{{city}}, {{country}}</div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="openDetailsDialog()">Details</button>
