@@ -98,20 +98,20 @@ data = {
     ],
     'business': [
          {'name': 'FitClub', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'diagora 20', 'postalCode': '567 55',
-           'phoneNumber': '2310623590', 'email': 'fitclub@gmail.com', 'imgPath': 'gym1.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2310623590', 'email': 'fitclub@gmail.com', 'imgPath': 'gym1.jpg', 'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': ["water bottle", "pre workout drink"]},
 
          {'name': 'Planet Fitness', 'category': 'gym', 'country': 'Greece', 'city': 'Athens', 'address': '3 Septembriou Street 6', 'postalCode': '576 45',
-           'phoneNumber': '2025550376', 'email': 'planetfitness@gmail.com', 'imgPath': 'gym2.png', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2', 'service_1', 'service_2']},
+           'phoneNumber': '2025550376', 'email': 'planetfitness@gmail.com', 'imgPath': 'gym2.png', 'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Giorgos Anastasiou', 'category': 'personal trainer', 'country': 'Greece', 'city': 'Xanthi', 'address': 'Adrianou Street 12', 'postalCode': '587 05',
-           'phoneNumber': '2025550227', 'email': 'anastgiog@gmail.com', 'imgPath': 'pr3.jpg', 'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550227', 'email': 'anastgiog@gmail.com', 'imgPath': 'pr3.jpg', 'services': ['face to face exercise', 'online exercise'],
+           'products': []},
 
          {'name': 'Hybrid Fitness', 'category': 'gym', 'country': 'Greece', 'city': 'Thessaloniki', 'address': 'Aiolou Street 45', 'postalCode': '534 85',
-           'phoneNumber': '2025550004', 'email': 'hybridfitness@gmail.com', 'imgPath': 'gym3.jpg',  'services': ['service_1', 'service_2'],
-           'products': ['product_1', 'product_2']},
+           'phoneNumber': '2025550004', 'email': 'hybridfitness@gmail.com', 'imgPath': 'gym3.jpg',  'services': ['group exercise', 'weight hall', 'spa', 'sauna'],
+           'products': []},
 
          {'name': 'Mindful Body Fitness', 'category': 'fitness shop', 'country': 'Greece', 'city': 'Kavala', 'address': 'Akadimias Street', 'postalCode': '515 75',
            'phoneNumber': '2025550781', 'email': 'mindful@gmail.com', 'imgPath': 'shop1.jpg', 'services': ['service_1', 'service_2'],
