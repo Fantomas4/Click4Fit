@@ -20,12 +20,9 @@ export class WorkoutComponent implements OnInit {
 
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
-  searchClicked = false;
-  results: any;  // it contains the results from the request to API
   categoriesFilters: string[] = ['Legs', 'Back', 'Chest', 'Shoulders', 'Biceps', 'Triceps', 'Abs', 'Core'];
   advisedForFilters: string[] = ['Women', 'Men'];
   difficultyFilters: string[] = ['Easy', 'Medium', 'Hard'];
-  // equipmentFilters: string[] = ['Yes', 'No'];
   selectedGroups = []; // they contain values of each selection list
   selectedAdvisedFor = [];
   selectedDifficulty = [];
@@ -109,54 +106,5 @@ export class WorkoutComponent implements OnInit {
       this.getResults();
     }
   }
-
-  // /* In the case of clicking search button */
-  // getResults() {
-  //   this.searchClicked = true;
-  //   let content;
-  //   if (this.selectedOptionsAdvisedFor == null && this.selectedOptionsCategories == null && this.selectedOptionsDifficulty == null &&
-  //     this.selectedOptionsEquipment == null) {
-  //     this.workoutService.getAllWorkout().toPromise().then(data => {
-  //         this.results = data.data;
-  //       },
-  //       error => {
-  //         this.alertService.error(error);
-  //       });
-  //   } else {
-  //     if (this.selectedOptionsEquipment != null) {
-  //       for (let i = 0; i < this.selectedOptionsEquipment.length; i++) {
-  //         if (this.selectedOptionsEquipment[i] === 'yes') {
-  //           this.selectedOptionsEquipment = true;
-  //         } else {
-  //           this.selectedOptionsEquipment = false;
-  //         }
-  //       }
-  //
-  //       content = {
-  //         category: this.selectedOptionsCategories,
-  //         advisedFor: this.selectedOptionsAdvisedFor,
-  //         difficulty: this.selectedOptionsDifficulty,
-  //         equipment: [this.selectedOptionsEquipment]
-  //       };
-  //     } else {
-  //       this.selectedOptionsEquipment = [true, false];
-  //       content = {
-  //         category: this.selectedOptionsCategories,
-  //         advisedFor: this.selectedOptionsAdvisedFor,
-  //         difficulty: this.selectedOptionsDifficulty,
-  //         equipment: this.selectedOptionsEquipment
-  //       };
-  //     }
-  //     this.workoutService.getResults(content).toPromise().then(data => {
-  //         this.results = data.workoutList;
-  //       },
-  //       error => {
-  //         this.alertService.error(error);
-  //       });
-  //   }
-  // }
-  //
-
-
 }
 
