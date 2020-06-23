@@ -66,16 +66,12 @@ export class WorkoutComponent implements OnInit {
   }
 
   prepareRequest() {
-
-
-    const requestData = {
+    return {
       category: this.selectedGroups.map(item => item.toLowerCase()),
       advisedFor: this.selectedAdvisedFor.map(item => item.toLowerCase()),
       difficulty: this.selectedDifficulty.map(item => item.toLowerCase()),
       equipment: this.selectedEquipment
     };
-
-    return requestData;
   }
 
   getResults() {

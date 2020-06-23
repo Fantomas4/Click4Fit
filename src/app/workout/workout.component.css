@@ -37,13 +37,6 @@ mat-list-option {
   align-content: center;
 }
 
-/*#search-button {*/
-/*  margin: auto;*/
-/*  alignment: center;*/
-/*  width: fit-content;*/
-/*  text-align: center;*/
-/*}*/
-
 #filters-button{
   margin: auto;
   width: fit-content;
@@ -77,13 +70,16 @@ mat-list-option {
 
 /*!* The container of results cards *!*/
 .card-deck-container{
-  margin-top: 3%;
+  margin-top: 5%;
   margin-left: 5%;
   margin-right: 5%;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
   grid-gap: 1rem;
+
   justify-content: center;
+  align-items: stretch;
 }
 
 
