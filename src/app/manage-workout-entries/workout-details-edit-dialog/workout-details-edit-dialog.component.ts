@@ -112,8 +112,6 @@ export class WorkoutDetailsEditDialogComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    console.log(this.entryForm.get('muscleGroups').value);
-
     if (this.entryForm.valid) {
       // Use WorkoutEntry interface to properly format the data
       const content: WorkoutEntry  = {

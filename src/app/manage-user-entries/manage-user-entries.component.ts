@@ -27,11 +27,8 @@ export class ManageUserEntriesComponent implements OnInit {
   // Holds a SelectionModel<UserEntry> object used to get the table checkboxes' state.
   selection = new SelectionModel<any>(true, []);
 
-  // Determines the columns to be displayed in the table's header row.
-  displayedColumns = ['checkboxes', 'name', 'last-name', 'buttons'];
-
-  userData = []; // An array of UserEntry objects retrieved from the database.
-  dataSource = new MatTableDataSource(this.userData); // MatTableDataSource<UserEntry> used as the table's data source.
+  displayedColumns = ['checkboxes', 'name', 'last-name', 'buttons'];  // Determines the columns to be displayed in the table's header row.
+  dataSource = new MatTableDataSource([]); // MatTableDataSource<UserEntry> used as the table's data source.
 
   dialogHeight: number; // Height of the dialog window.
   dialogWidth: number; // Width of the dialog window.
@@ -104,12 +101,8 @@ export class ManageUserEntriesComponent implements OnInit {
    * the manageUserEntriesService.
    */
   getUsersEntries() {
-
-    /*this.manageUserEntriesService.getResults()
-      .subscribe(results => {this.userData = results; this.dataSource.data = this.userData; });*/
     this.manageUserEntriesService.getUsers().toPromise().then(data => {
-      this.userData = data.userList;
-      this.dataSource.data = this.userData;
+      this.dataSource.data = data.userList;
     },
       error => {
         // If error is not a string received from the API, handle the ProgressEvent
@@ -140,21 +133,25 @@ export class ManageUserEntriesComponent implements OnInit {
   /** Spawns the "Details/Edit" dialog window */
   openDetailsEditDialog(element: any): void {
     this.onResize();
+    console.log(element._id);
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight).toString().concat('px'),
       minWidth: this.dialogMinWidth, maxWidth: this.dialogMaxWidth, minHeight: this.dialogMinHeight, maxHeight: this.dialogMaxHeight,
-      data: { _id: element._id, name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
+      data: {name: element.name, surname: element.surname, birthdate: element.birthdate, email: element.email }
     });
     this.detailsEditDialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes && dialogRes.clickedSave) {
-        const formData = new FormData();
-        formData.append('_id', dialogRes.details._id);
-        formData.append('name', dialogRes.details.name);
-        formData.append('surname', dialogRes.details.surname);
-        formData.append('email', dialogRes.details.email);
-        formData.append('birthdate', dialogRes.details.birthdate);
-        this.manageUserEntriesService.updateEntry(formData).toPromise().then(data => {
+        const requestData: object = {
+          _id: element._id,
+          name: dialogRes.details.name,
+          surname: dialogRes.details.surname,
+          email: dialogRes.details.email,
+          birthdate: dialogRes.details.birthdate
+        };
+
+        this.manageUserEntriesService.updateUserEntry(requestData).toPromise().then(data => {
           this.getUsersEntries();
+          console.log(this.dataSource.data);
           this.alertService.success('Entry updated successfully');
         },
         error => {
