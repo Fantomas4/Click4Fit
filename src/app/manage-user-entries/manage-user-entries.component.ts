@@ -135,7 +135,6 @@ export class ManageUserEntriesComponent implements OnInit {
   /** Spawns the "Details/Edit" dialog window */
   openDetailsEditDialog(element: any): void {
     this.onResize();
-    console.log(element._id);
     this.detailsEditDialogRef = this.dialog.open(UserDetailsEditDialogComponent, {
       width: this.dialogWidth.toString().concat('px'), height: (this.dialogHeight).toString().concat('px'),
       minWidth: this.dialogMinWidth, maxWidth: this.dialogMaxWidth, minHeight: this.dialogMinHeight, maxHeight: this.dialogMaxHeight,
@@ -153,7 +152,6 @@ export class ManageUserEntriesComponent implements OnInit {
 
         this.manageUserEntriesService.updateUserEntry(requestData).toPromise().then(data => {
           this.getUsersEntries();
-          console.log(this.dataSource.data);
           this.alertService.success('Entry updated successfully');
         },
         error => {

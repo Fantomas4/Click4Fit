@@ -73,7 +73,6 @@ export class MyBusinessDetailsEditDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    console.log(this.data.country);
     // Extract the data from the payload and store it into the class properties
     this.id = this.data._id;
     this.entryForm.setValue({

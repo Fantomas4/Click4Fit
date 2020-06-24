@@ -80,7 +80,6 @@ export class WorkoutComponent implements OnInit {
 
     this.workoutService.getResults(this.prepareRequest()).subscribe(
       res => {
-        console.log(res);
         this.workoutResults = res.body.workoutList;
         this.alertService.success('Found ' + res.body.workoutList.length + ' workouts');
       },
