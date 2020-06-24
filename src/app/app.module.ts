@@ -36,8 +36,6 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { HomepageComponent } from './homepage/homepage.component';
 import { WorkoutService } from './workout/workout.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
-import { RecoverDialogMessageComponent } from './recover-password/recover-dialog-message/recover-dialog-message.component';
-import { RecoverPasswordService } from './recover-password/recover-password.service';
 import {JwtInterceptor} from './core/jwt.interceptor';
 import {ErrorInterceptor} from './core/error.interceptor';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -80,7 +78,6 @@ import {ManageBusinessEntriesService} from './manage-business-entries/manage-bus
     FooterComponent,
     HomepageComponent,
     ErrorPageComponent,
-    RecoverDialogMessageComponent,
     ManageMyBusinessComponent,
     MyBusinessDetailsEditDialogComponent,
     MyBusinessAddEntryDialogComponent,
@@ -102,7 +99,7 @@ import {ManageBusinessEntriesService} from './manage-business-entries/manage-bus
     MatSelectCountryModule,
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService, RecoverPasswordService,
+    {provide: APP_BASE_HREF, useValue: ''}, MyProfileService, WorkoutService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
@@ -110,6 +107,6 @@ import {ManageBusinessEntriesService} from './manage-business-entries/manage-bus
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogMessageComponent, RecoverDialogMessageComponent]
+  entryComponents: [DeleteDialogMessageComponent]
 })
 export class AppModule { }

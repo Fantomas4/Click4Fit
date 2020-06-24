@@ -112,7 +112,6 @@ export class WorkoutAddEntryDialogComponent implements OnInit {
         difficulty: this.difficulty,
         equipment: (this.equipment === 'true') // Convert string to boolean
       };
-      console.log(content);
       this.dialogRef.close({clickedSave: true, details: content});
     }
   }

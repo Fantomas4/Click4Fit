@@ -64,8 +64,6 @@ export class SearchComponent implements OnInit {
   }
 
   getResults() {
-    // console.log(this.locationAutocomplete.getUserCountryChoices());
-
     if (this.locationAutocomplete) {
       this.countries = this.locationAutocomplete.getUserCountryChoices();
       this.cities = this.locationAutocomplete.getUserCityChoices();
