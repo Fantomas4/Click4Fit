@@ -43,8 +43,6 @@ def allowed_file(filename):
  
 @app.route('/api/uploads/<path:filename>')
 def view_resource(filename):
-    print(UPLOAD_FOLDER)
-    print(filename)
     return send_from_directory(UPLOAD_FOLDER, filename)
  
 ####################################### Contact Us ###################################
