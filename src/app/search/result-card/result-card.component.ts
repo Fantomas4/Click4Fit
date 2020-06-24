@@ -33,6 +33,9 @@ export class ResultCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Check favorite status and set the favorite flag accordingly
+    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.businessData._id);
+
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
         this.alertMessage = {
@@ -58,8 +61,6 @@ export class ResultCardComponent implements OnInit {
         this.category = 'Fitness Shop';
         break;
     }
-
-    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.businessData._id);
 
     this.country = this.businessData.country;
     this.city = this.businessData.city;

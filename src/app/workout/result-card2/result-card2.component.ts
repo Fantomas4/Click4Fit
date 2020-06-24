@@ -33,6 +33,9 @@ export class ResultCard2Component implements OnInit {
   constructor(private sanitizer: DomSanitizer, private workoutCardService: ResultCard2Service, private alertService: AlertService) { }
 
   ngOnInit(): void {
+    // Check favorite status and set the favorite flag accordingly
+    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteWorkout.includes(this.workoutData._id);
+
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
         this.alertMessage = {
@@ -41,9 +44,6 @@ export class ResultCard2Component implements OnInit {
         };
       }
     });
-
-    // Check favorite status and set the favorite flag accordingly
-    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteWorkout.includes(this.workoutData._id);
 
     this.name = this.workoutData.name;
     this.category = this.workoutData.category;
