@@ -46,7 +46,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'manage-user-entries', pathMatch: 'full' },
       { path: 'manage-user-entries', component: ManageUserEntriesComponent },
       { path: 'manage-business-entries', component: ManageBusinessEntriesComponent},
-      { path: 'manage-workout-entries', component: ManageWorkoutEntriesComponent}
+      { path: 'manage-workout-entries', component: ManageWorkoutEntriesComponent},
+      {path: 'myprofile', component: MyprofileComponent},
     ]},
   {path: 'error-page', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent},

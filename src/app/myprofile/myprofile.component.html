@@ -118,7 +118,9 @@
       <mat-card-title>Delete Account</mat-card-title>
     </mat-card-header>
     <mat-card-actions>
-      <button mat-raised-button id="delete-account-button" color="warn" (click)="onDelete()">Delete your account</button>
+      <button mat-raised-button id="delete-account-button" color="warn" (click)="onDelete()" [disabled]="privilegeLevel === 'admin'">
+        Delete your account
+      </button>
     </mat-card-actions>
   </mat-card>
 

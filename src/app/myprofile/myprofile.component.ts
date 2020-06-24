@@ -82,11 +82,17 @@ export class MyprofileComponent implements OnInit {
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
 
+  privilegeLevel: string; // Holds the privilege level of the user whose profile is displayed.
+                            // Initialized with admin until data is fetched.
+
+
   constructor(public myprofileService: MyProfileService, private authenticationService: AuthenticationService,
               private router: Router, private alertService: AlertService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.privilegeLevel = JSON.parse(sessionStorage.getItem('currentUser')).privilegeLevel;
+
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
         this.alertMessage = {
