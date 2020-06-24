@@ -15,7 +15,6 @@ export class WorkoutService {
   constructor(private http: HttpClient) { }
 
   getResults(filterData) {
-    console.log(filterData);
     return this.http.post<any>(`${environment.apiUrl}/display-workout`, filterData, {headers: {'Content-type': 'application/json'},
       observe: 'response'}).pipe(map((res: any) => {
       return res;
