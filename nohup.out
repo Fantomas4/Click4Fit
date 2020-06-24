@@ -1,0 +1,160 @@
+Your global Angular CLI version (9.1.9) is greater than your local
+version (9.0.7). The local Angular CLI version is used.
+
+To disable this warning use "ng config -g cli.warnings.versionMismatch false".
+WARNING: This is a simple server for use in testing or debugging Angular applications
+locally. It hasn't been reviewed for security issues.
+
+Binding this server to an open connection can result in compromising your application or
+computer. Using a different host than the one passed to the "--host" flag might result in
+websocket connection issues. You might need to use "--disableHostCheck" if that's the
+case.
+
+Compiling @angular/core : es2015 as esm2015
+
+Compiling @angular/common : es2015 as esm2015
+
+Compiling @angular/platform-browser : es2015 as esm2015
+
+Compiling @angular/platform-browser-dynamic : es2015 as esm2015
+
+Compiling @angular/router : es2015 as esm2015
+
+Compiling @angular/animations : es2015 as esm2015
+
+Compiling @angular/animations/browser : es2015 as esm2015
+
+Compiling @angular/platform-browser/animations : es2015 as esm2015
+
+Compiling @angular/forms : es2015 as esm2015
+
+Compiling @angular/flex-layout/core : es2015 as esm2015
+
+Compiling @angular/flex-layout/extended : es2015 as esm2015
+
+Compiling @angular/cdk/bidi : es2015 as esm2015
+
+Compiling @angular/flex-layout/flex : es2015 as esm2015
+
+Compiling @angular/flex-layout/grid : es2015 as esm2015
+
+Compiling @angular/flex-layout : es2015 as esm2015
+
+Compiling @angular/common/http : es2015 as esm2015
+
+Compiling @angular/cdk/platform : es2015 as esm2015
+
+Compiling @angular/cdk/layout : es2015 as esm2015
+
+Compiling @angular/cdk/keycodes : es2015 as esm2015
+
+Compiling @angular/cdk/observers : es2015 as esm2015
+
+Compiling @angular/cdk/a11y : es2015 as esm2015
+
+Compiling @angular/material/core : es2015 as esm2015
+
+Compiling @angular/material-moment-adapter : es2015 as esm2015
+
+Compiling @angular/cdk/collections : es2015 as esm2015
+
+Compiling @angular/cdk/scrolling : es2015 as esm2015
+
+Compiling @angular/cdk/portal : es2015 as esm2015
+
+Compiling @angular/cdk/overlay : es2015 as esm2015
+
+Compiling @angular/material/form-field : es2015 as esm2015
+
+Compiling @angular/material/autocomplete : es2015 as esm2015
+
+Compiling @angular/material/button : es2015 as esm2015
+
+Compiling @angular/material/icon : es2015 as esm2015
+
+Compiling @angular/cdk/text-field : es2015 as esm2015
+
+Compiling @angular/material/input : es2015 as esm2015
+
+Compiling @angular/material/menu : es2015 as esm2015
+
+Compiling @angular-material-extensions/select-country : es2015 as esm2015
+
+Compiling @angular/material/dialog : es2015 as esm2015
+
+Compiling @angular/material/sidenav : es2015 as esm2015
+
+Compiling @angular/material/select : es2015 as esm2015
+
+Compiling @angular/material/tooltip : es2015 as esm2015
+
+Compiling @angular/material/paginator : es2015 as esm2015
+
+Compiling @angular/material/sort : es2015 as esm2015
+
+Compiling @angular/cdk/table : es2015 as esm2015
+
+Compiling @angular/material/table : es2015 as esm2015
+
+Compiling @angular/material/chips : es2015 as esm2015
+
+Compiling @angular/material/checkbox : es2015 as esm2015
+
+Compiling @angular/material/radio : es2015 as esm2015
+
+Compiling @angular/material/toolbar : es2015 as esm2015
+
+Compiling @angular/material/card : es2015 as esm2015
+
+Compiling @angular/material/progress-spinner : es2015 as esm2015
+
+Compiling @angular/material/datepicker : es2015 as esm2015
+
+Compiling @angular/material/divider : es2015 as esm2015
+
+Compiling @angular/material/list : es2015 as esm2015
+
+Compiling @angular/material/button-toggle : es2015 as esm2015
+
+Compiling @angular/material/grid-list : es2015 as esm2015
+
+Compiling @angular/material/tabs : es2015 as esm2015
+
+chunk {main} main.js, main.js.map (main) 906 kB [initial] [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 150 kB [initial] [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 6.15 kB [entry] [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 407 kB [initial] [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 7.38 MB [initial] [rendered]
+Date: 2020-06-24T19:28:18.185Z - Hash: 48645e879dfcd81b359f - Time: 243001ms
+** Angular Live Development Server is listening on 0.0.0.0:4200, open your browser on http://localhost:4200/ **
+: Compiled successfully.
+
+Date: 2020-06-24T19:28:30.808Z - Hash: 636a17841db1cf4fd65a
+4 unchanged chunks
+chunk {main} main.js, main.js.map (main) 906 kB [initial] [rendered]
+Time: 11704ms
+: Compiled successfully.
+
+Date: 2020-06-24T19:36:08.913Z - Hash: ac787026ead1976ecd04
+4 unchanged chunks
+chunk {main} main.js, main.js.map (main) 906 kB [initial] [rendered]
+Time: 2928ms
+: Compiled successfully.
+
+Date: 2020-06-24T19:45:17.548Z - Hash: 636a17841db1cf4fd65a
+4 unchanged chunks
+chunk {main} main.js, main.js.map (main) 906 kB [initial] [rendered]
+Time: 2213ms
+: Compiled successfully.
+
+Date: 2020-06-24T19:45:40.286Z - Hash: afc272250d8b854a0923
+4 unchanged chunks
+chunk {main} main.js, main.js.map (main) 900 kB [initial] [rendered]
+Time: 5877ms
+: Compiled successfully.
+
+Date: 2020-06-24T19:46:10.866Z - Hash: 0562b278e04b278bc0b9
+4 unchanged chunks
+chunk {main} main.js, main.js.map (main) 900 kB [initial] [rendered]
+Time: 2067ms
+: Compiled successfully.
