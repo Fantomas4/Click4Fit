@@ -5,8 +5,19 @@
       <a mat-list-item routerLink="/home">Home</a>
       <a mat-list-item routerLink="/about">About Us</a>
       <a mat-list-item routerLink="/contact-us">Contact Us</a>
-      <a mat-list-item routerLink="/login">Login</a>
-      <a mat-list-item routerLink="/register">Register</a>
+      <ng-container *ngIf="privilegeLevel === undefined">
+        <a mat-list-item routerLink="/login">Login</a>
+        <a mat-list-item routerLink="/register">Register</a>
+      </ng-container>
+      <ng-container *ngIf="privilegeLevel === 'client'">
+        <a mat-list-item routerLink="/user">Let's start!</a>
+      </ng-container>
+      <ng-container *ngIf="privilegeLevel === 'business'">
+        <a mat-list-item routerLink="/user">Let's start!</a>
+      </ng-container>
+      <ng-container *ngIf="privilegeLevel === 'admin'">
+        <a mat-list-item routerLink="/admin">Let's start!</a>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
