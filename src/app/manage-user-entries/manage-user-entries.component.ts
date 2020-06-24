@@ -102,7 +102,9 @@ export class ManageUserEntriesComponent implements OnInit {
    */
   getUsersEntries() {
     this.manageUserEntriesService.getUsers().toPromise().then(data => {
-      this.dataSource.data = data.userList;
+      // Filter the recovered user data to remove any occurrences of an admin account
+      // and add the filtered entries to the table's data source
+      this.dataSource.data = data.userList.filter(user => user.privilegeLevel !== 'admin');
     },
       error => {
         // If error is not a string received from the API, handle the ProgressEvent
