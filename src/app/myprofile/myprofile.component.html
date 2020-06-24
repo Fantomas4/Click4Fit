@@ -60,6 +60,12 @@
     </mat-card-actions>
   </mat-card>
 
+  <!-- Alert message diplay -->
+  <div id="alert-message"
+       [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+       *ngIf="alertMessage">{{alertMessage.text}}
+  </div>
+
   <!-- The card used to update the user's password -->
   <mat-card id="password-card">
     <mat-card-header>
@@ -123,11 +129,5 @@
       </button>
     </mat-card-actions>
   </mat-card>
-
 </div>
 
-<!-- Alert message diplay -->
-<div id="alert-message"
-     [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-     *ngIf="alertMessage">{{alertMessage.text}}
-</div>

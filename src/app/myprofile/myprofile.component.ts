@@ -135,6 +135,9 @@ export class MyprofileComponent implements OnInit {
    * the local storage user data with the latest input from the Data Base.
    */
   updateUserData() {
+    // Clear any existing alert messages
+    this.alertService.clearMessage();
+
     const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
     this.myprofileService.getUser(request).subscribe(
       data => {
@@ -168,6 +171,9 @@ export class MyprofileComponent implements OnInit {
   }
 
   onDetailsModify() {
+    // Clear any existing alert messages
+    this.alertService.clearMessage();
+
     if (this.detailsEntryForm.valid) {
       const datePipe = new DatePipe('en').transform(this.detailsEntryForm.get('birthDate').value, 'dd/MM/yyyy');
 

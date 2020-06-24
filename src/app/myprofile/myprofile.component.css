@@ -10,10 +10,10 @@
 /*!* The general card of profile details *!*/
 #details-card {
   width: available;
+  margin-bottom: 10%;
 }
 
 #password-card {
-  margin-top: 10%;
   width: available;
 }
 
@@ -39,7 +39,7 @@
 /*}*/
 
 #alert-message {
-  margin-top: 1%;
+  margin-bottom: 10%;
 }
 
 .alert-error-text {
