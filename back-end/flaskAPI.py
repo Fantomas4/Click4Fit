@@ -17,7 +17,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
  
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "\\uploads"
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "/uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 MongoDB=MongoDB()
 CORS(app)
@@ -728,4 +728,4 @@ if __name__ == '__main__':
     print("Initializing database data...")
     MongoDB.createMockDatabase()
     app.debug = True
-    app.run()
+    app.run(host="0.0.0.0")
