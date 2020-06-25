@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {environment} from '../environments/environment';
-import {AlertService} from './core/alert.service';
+import {environment} from '../../environments/environment';
+import {AlertService} from './alert.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private alertService: AlertService) {
-    console.log("USER SERVICE CONSTRUCTOR");
-  }
+  constructor(private http: HttpClient, private alertService: AlertService) {}
 
   addFavoriteBusiness(request: object) {
     const result = this.http.post(`${environment.apiUrl}/add-favorite-business`, JSON.stringify(request),
@@ -19,7 +17,6 @@ export class UserService {
     // Update user data
     this.updateUserData();
 
-    console.log("add");
     return result;
   }
 
@@ -30,7 +27,6 @@ export class UserService {
     // Update user data
     this.updateUserData();
 
-    console.log("remove");
     return result;
   }
 

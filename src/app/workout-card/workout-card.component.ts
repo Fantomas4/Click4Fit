@@ -3,7 +3,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
 import {AlertMessage} from '../core/alert-message';
-import {UserService} from '../user.service';
+import {UserService} from '../core/user.service';
 
 
 @Component({

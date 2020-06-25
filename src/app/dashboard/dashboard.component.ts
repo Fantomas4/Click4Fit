@@ -5,7 +5,7 @@ import {WorkoutEntry} from '../workout-entry';
 import {Subscription} from 'rxjs';
 import {AlertMessage} from '../core/alert-message';
 import {AlertService} from '../core/alert.service';
-import {UserService} from '../user.service';
+import {UserService} from '../core/user.service';
 
 @Component({
   selector: 'app-dashboard',

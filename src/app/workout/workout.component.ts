@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
 import {WorkoutEntry} from '../workout-entry';
-import {UserService} from '../user.service';
+import {UserService} from '../core/user.service';
 
 interface AlertMessage {
   type: string;
