@@ -5,20 +5,17 @@
   <mat-card-header>
     <mat-card-title><span id="title-text">{{name}}</span></mat-card-title>
     <mat-card-subtitle>Difficulty: {{difficulty}}</mat-card-subtitle>
-
-    <button mat-icon-button *ngIf="!favorite" (click)="onFavoriteClick()">
-      <mat-icon class="icon">favorite_border</mat-icon>
-      <!--It is displayed when the workout entry is not favorite-->
-    </button>
-    <button mat-icon-button *ngIf="favorite" (click)="onFavoriteClick()">
-      <mat-icon class="icon">favorite</mat-icon> <!-- It is displayed when the workout entry is favorite-->
-    </button><br>
-
-
-
-
+    <ng-container *ngIf="!loading">
+      <button mat-icon-button *ngIf="!isFavorite" (click)="onFavoriteClick()">
+        <mat-icon class="icon">favorite_border</mat-icon>
+        <!--It is displayed when the workout entry is not favorite-->
+      </button>
+      <button mat-icon-button *ngIf="isFavorite" (click)="onFavoriteClick()">
+        <mat-icon class="icon">favorite</mat-icon> <!-- It is displayed when the workout entry is favorite-->
+      </button><br>
+    </ng-container>
+    <mat-spinner *ngIf="loading" mode="indeterminate" diameter="30" color="warn"></mat-spinner>
   </mat-card-header>
-
   <mat-card-content>
     <div id="tags-chip-list">
       <mat-chip-list>
@@ -28,7 +25,6 @@
         <mat-chip *ngFor="let muscleGroup of muscleGroups" class="chip">{{muscleGroup}}</mat-chip>
       </mat-chip-list>
     </div>
-
           <iframe class="frame" [src]='trustedVideoResource' frameborder="0"
               allowfullscreen>
           </iframe>

@@ -34,34 +34,19 @@
         <h1 id="title">Workout</h1>
         <div id="button-container">
           <button mat-raised-button id="filters-button" (click)="sidenav.toggle()" color="primary">Show Filters</button><br>
-<!--          <button mat-raised-button id="search-button" (click)="onSearch()" color="primary">Go!</button>-->
         </div>
 
-        <div id="alert-message"
-            [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-            *ngIf="alertMessage">{{alertMessage.text}}
+      <mat-spinner *ngIf="loading; else alertDisplay" mode="indeterminate" diameter="70"></mat-spinner>
+      <ng-template #alertDisplay>
+        <div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+             *ngIf="alertMessage">{{alertMessage.text}}
         </div>
+      </ng-template>
 
-        <div class="card-deck-container">
+      <div class="card-deck-container">
           <div *ngFor="let entry of workoutResults" class="card-item">
             <app-result-card2 [workoutData]="entry"></app-result-card2>
           </div>
         </div>
-
-
-<!--      &lt;!&ndash; It is shown only when the results of search are absent &ndash;&gt;-->
-<!--        <p class="text" *ngIf="!searchClicked">-->
-<!--            Ready to workout? <br> Choose your filters and find the ideal workout exercises for you!-->
-<!--        </p>-->
-<!--        &lt;!&ndash; The container of results cards &ndash;&gt;-->
-<!--        <div class="card-container" *ngIf="searchClicked">-->
-<!--            &lt;!&ndash; It is shown only when the user has clicked the search button &ndash;&gt;-->
-<!--            <div *ngFor="let entry of results" class="card">-->
-<!--                <app-result-card2 [workoutEntry]="entry"></app-result-card2>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
-
     </mat-drawer-content>
 </mat-drawer-container>

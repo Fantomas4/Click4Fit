@@ -44,6 +44,10 @@ mat-drawer-content {
   font-weight: bold;
 }
 
+mat-spinner {
+  margin: auto;
+}
+
 /* ============= START: Styling concerning search container and its elements ============= */
 .search-form {
   margin: auto;

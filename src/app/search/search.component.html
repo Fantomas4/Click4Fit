@@ -29,9 +29,12 @@
       Show Filters
     </button>
 
-    <div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
-         *ngIf="alertMessage">{{alertMessage.text}}
-    </div>
+    <mat-spinner *ngIf="loading; else alertDisplay" mode="indeterminate" diameter="70"></mat-spinner>
+    <ng-template #alertDisplay>
+      <div id="alert-message" [ngClass]="{'alert-error-text' : alertMessage.type === 'error', 'alert-success-text' : alertMessage.type === 'success'}"
+           *ngIf="alertMessage">{{alertMessage.text}}
+      </div>
+    </ng-template>
 
     <!-- Card deck component -->
     <div class="card-deck-container">
