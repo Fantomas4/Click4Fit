@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import { ResultCard2Service } from './result-card2.service';
 import {AlertService} from '../../core/alert.service';
 import {Subscription} from 'rxjs';
 import {AlertMessage} from '../../core/alert-message';
+import {UserService} from '../../user.service';
 
 
 @Component({
@@ -23,18 +23,22 @@ export class ResultCard2Component implements OnInit {
   sets: string;
   trustedVideoResource: SafeResourceUrl;
   equipment: boolean;
-  favorite = false; // it shows if the workout entry has been added in favorites successfully and
+  isFavorite = false; // it shows if the workout entry has been added in favorites successfully and
   // in this way the empty heart icon changes to full heart icon
+
+  loading = false;
 
   alertSubscription: Subscription;
   alertMessage: AlertMessage;
 
   // DomSanitizer helps to pass url video safe
-  constructor(private sanitizer: DomSanitizer, private workoutCardService: ResultCard2Service, private alertService: AlertService) { }
+  constructor(private sanitizer: DomSanitizer, private userService: UserService, private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.loading = true;
+
     // Check favorite status and set the favorite flag accordingly
-    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteWorkout.includes(this.workoutData._id);
+    this.isFavorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteWorkout.includes(this.workoutData._id);
 
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
@@ -54,47 +58,13 @@ export class ResultCard2Component implements OnInit {
     this.trustedVideoResource = this.sanitizer.bypassSecurityTrustResourceUrl(this.workoutData.videoUrl);
     this.sets = this.workoutData.sets;
 
-  }
-
-  /**
-   * Called when a user adds or removes favorites from his preferences, in order to update
-   * the local storage user data with the latest input from the Data Base.
-   */
-  updateUserData() {
-    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
-    this.workoutCardService.updateUser(request).subscribe(
-
-      data => {
-        // @ts-ignore
-        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
-        const loggedInUserData = {
-          _id,
-          name,
-          surname,
-          email,
-          privilegeLevel,
-          token,
-          favoriteBusiness,
-          favoriteWorkout
-        };
-
-        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
-
-      },
-
-      error => {
-        // If error is not a string received from the API, handle the ProgressEvent
-        // returned due to the inability to connect to the API by printing an appropriate
-        // warning message
-        if (typeof(error) !== 'string') {
-          this.alertService.error('Error: No connection to the API');
-        } else {
-          this.alertService.error(error);
-        }
-      });
+    // Set the loading flag to false after a small delay
+    setTimeout(function stopLoading() { this.loading = false; }.bind(this), 1000);
   }
 
   onFavoriteClick() {
+    this.loading = true;
+
     const request = {
       user: {
         _id: JSON.parse(sessionStorage.getItem('currentUser'))._id
@@ -102,12 +72,12 @@ export class ResultCard2Component implements OnInit {
       favorite_id: this.workoutData._id
     };
 
-    if (!this.favorite) {
+    if (!this.isFavorite) {
       // The card is currently not selected as a user favorite, so the user requested an addition
-      this.workoutCardService.addFavoriteWorkout(request).toPromise().then(
+      this.userService.addFavoriteWorkout(request).toPromise().then(
 
         data => {
-          this.favorite = true;
+          this.isFavorite = true;
         },
 
         error => {
@@ -122,10 +92,10 @@ export class ResultCard2Component implements OnInit {
         });
     } else {
       // The card is currently selected as a user favorite, so the user requested a removal
-      this.workoutCardService.removeFavoriteWorkout(request).toPromise().then(
+      this.userService.removeFavoriteWorkout(request).toPromise().then(
 
         data => {
-          this.favorite = false;
+          this.isFavorite = false;
         },
 
         error => {
@@ -139,7 +109,8 @@ export class ResultCard2Component implements OnInit {
           }
         });
     }
-    // Update logged in user's data after adding or removing favorites.
-    this.updateUserData();
+
+    // Set the loading flag to false after a small delay
+    setTimeout(function stopLoading() { this.loading = false; }.bind(this), 1000);
   }
 }

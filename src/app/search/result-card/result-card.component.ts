@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DetailsDialogComponent} from '../details-dialog/details-dialog.component';
 import {BusinessEntry} from '../../business-entry';
-import {ResultCardService} from './result-card.service';
 import {environment} from '../../../environments/environment';
 import {Subscription} from 'rxjs';
 import {AlertMessage} from '../../core/alert-message';
 import {AlertService} from '../../core/alert.service';
+import {UserService} from '../../user.service';
 
 @Component({
   selector: 'app-result-card',
@@ -24,17 +24,20 @@ export class ResultCardComponent implements OnInit {
   imgPath: string; // Card preview image path.
   mail: string; // Email of current user
 
-  favorite = false; // Whether the result card has been marked as a favorite from the current user or not
+  loading = false;
+  isFavorite = false; // Whether the result card has been marked as a favorite from the current user or not
 
   alertSubscription: Subscription;
   alertMessage: AlertMessage;
 
-  constructor(public dialog: MatDialog, private resultCardService: ResultCardService, private alertService: AlertService) {
+  constructor(public dialog: MatDialog, private userService: UserService, private alertService: AlertService) {
   }
 
   ngOnInit(): void {
+    this.loading = true;
+
     // Check favorite status and set the favorite flag accordingly
-    this.favorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.businessData._id);
+    this.isFavorite = JSON.parse(sessionStorage.getItem('currentUser')).favoriteBusiness.includes(this.businessData._id);
 
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
@@ -65,44 +68,9 @@ export class ResultCardComponent implements OnInit {
     this.country = this.businessData.country;
     this.city = this.businessData.city;
     this.imgPath = environment.apiUrl + '/uploads/' + this.businessData.imgPath;
-  }
 
-  /**
-   * Called when a user adds or removes favorites from his preferences, in order to update
-   * the local storage user data with the latest input from the Data Base.
-   */
-  updateUserData() {
-    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
-    this.resultCardService.updateUser(request).subscribe(
-
-      data => {
-        // @ts-ignore
-        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
-        const loggedInUserData = {
-          _id,
-          name,
-          surname,
-          email,
-          privilegeLevel,
-          token,
-          favoriteBusiness,
-          favoriteWorkout
-        };
-
-        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
-
-      },
-
-      error => {
-        // If error is not a string received from the API, handle the ProgressEvent
-        // returned due to the inability to connect to the API by printing an appropriate
-        // warning message
-        if (typeof(error) !== 'string') {
-          this.alertService.error('Error: No connection to the API');
-        } else {
-          this.alertService.error(error);
-        }
-      });
+    // Set the loading flag to false after a small delay
+    setTimeout(function stopLoading() { this.loading = false; }.bind(this), 1000);
   }
 
   /**
@@ -128,6 +96,8 @@ export class ResultCardComponent implements OnInit {
   }
 
   onFavoriteClick() {
+    this.loading = true;
+
     const request = {
       user: {
         _id: JSON.parse(sessionStorage.getItem('currentUser'))._id
@@ -135,12 +105,12 @@ export class ResultCardComponent implements OnInit {
       favorite_id: this.businessData._id
     };
 
-    if (!this.favorite) {
+    if (!this.isFavorite) {
       // The card is currently not selected as a user favorite, so the user requested an addition
-      this.resultCardService.addFavoriteBusiness(request).toPromise().then(
+      this.userService.addFavoriteBusiness(request).toPromise().then(
 
         data => {
-          this.favorite = true;
+          this.isFavorite = true;
         },
 
         error => {
@@ -155,10 +125,10 @@ export class ResultCardComponent implements OnInit {
         });
     } else {
       // The card is currently selected as a user favorite, so the user requested a removal
-      this.resultCardService.removeFavoriteBusiness(request).toPromise().then(
+      this.userService.removeFavoriteBusiness(request).toPromise().then(
 
         data => {
-          this.favorite = false;
+          this.isFavorite = false;
         },
 
         error => {
@@ -172,7 +142,8 @@ export class ResultCardComponent implements OnInit {
           }
         });
     }
-    // Update logged in user's data after adding or removing favorites.
-    this.updateUserData();
+
+    // Set the loading flag to false after a small delay
+    setTimeout(function stopLoading() { this.loading = false; }.bind(this), 1000);
   }
 }

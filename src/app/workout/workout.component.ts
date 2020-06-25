@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {WorkoutService} from './workout.service';
-import {ResultCard2Service} from './result-card2/result-card2.service';
 import {Router} from '@angular/router';
 import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
 import {WorkoutEntry} from '../workout-entry';
+import {UserService} from '../user.service';
 
 interface AlertMessage {
   type: string;
@@ -17,6 +17,7 @@ interface AlertMessage {
   styleUrls: ['./workout.component.css']
 })
 export class WorkoutComponent implements OnInit {
+  loading = true; // Flag used to determine if the loading of the data is in progress or has finished.
 
   alertMessage: AlertMessage;
   alertSubscription: Subscription;
@@ -45,13 +46,12 @@ export class WorkoutComponent implements OnInit {
   workoutResults: WorkoutEntry[] = [];
 
 
-  constructor(private workoutService: WorkoutService, private resultCardService: ResultCard2Service,
-              private router: Router, private alertService: AlertService) {
-  }
+  constructor(private workoutService: WorkoutService, private router: Router, private alertService: AlertService,
+              private userService: UserService) {}
 
   ngOnInit(): void {
     // Called to ensure the local user data are in sync with the Data Base.
-    this.updateUserData();
+    this.userService.updateUserData();
 
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
@@ -63,40 +63,9 @@ export class WorkoutComponent implements OnInit {
     });
 
     this.getResults();
-  }
 
-  updateUserData() {
-    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
-    this.workoutService.updateUser(request).subscribe(
-
-      data => {
-        // @ts-ignore
-        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
-        const loggedInUserData = {
-          _id,
-          name,
-          surname,
-          email,
-          privilegeLevel,
-          token,
-          favoriteBusiness,
-          favoriteWorkout
-        };
-
-        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
-
-      },
-
-      error => {
-        // If error is not a string received from the API, handle the ProgressEvent
-        // returned due to the inability to connect to the API by printing an appropriate
-        // warning message
-        if (typeof(error) !== 'string') {
-          this.alertService.error('Error: No connection to the API');
-        } else {
-          this.alertService.error(error);
-        }
-      });
+    // Set the loading flag to false after a small delay
+    setTimeout(function stopLoading() { this.loading = false; }.bind(this), 1000);
   }
 
   prepareRequest() {

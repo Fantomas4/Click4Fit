@@ -6,6 +6,7 @@ import {LocationAutocompleteComponent} from './location-autocomplete/location-au
 import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
 import {AlertMessage} from '../core/alert-message';
+import {UserService} from '../user.service';
 
 
 
@@ -17,6 +18,8 @@ import {AlertMessage} from '../core/alert-message';
 export class SearchComponent implements OnInit {
 
   @ViewChild(LocationAutocompleteComponent) locationAutocomplete; // Used to access LocationAutocompleteComponent
+
+  loading = true; // Flag used to determine if the loading of the data is in progress or has finished.
 
   searchKeywords = new FormControl();
 
@@ -47,11 +50,11 @@ export class SearchComponent implements OnInit {
   cities: string[] = [];
 
 
-  constructor(private searchService: SearchService, private alertService: AlertService) { }
+  constructor(private searchService: SearchService, private alertService: AlertService, private userService: UserService) { }
 
   ngOnInit(): void {
     // Called to ensure the local user data are in sync with the Data Base.
-    this.updateUserData();
+    this.userService.updateUserData();
 
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
@@ -64,40 +67,9 @@ export class SearchComponent implements OnInit {
 
     // Load all available data from DB
     this.getResults();
-  }
 
-  updateUserData() {
-    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
-    this.searchService.updateUser(request).subscribe(
-
-      data => {
-        // @ts-ignore
-        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
-        const loggedInUserData = {
-          _id,
-          name,
-          surname,
-          email,
-          privilegeLevel,
-          token,
-          favoriteBusiness,
-          favoriteWorkout
-        };
-
-        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
-
-      },
-
-      error => {
-        // If error is not a string received from the API, handle the ProgressEvent
-        // returned due to the inability to connect to the API by printing an appropriate
-        // warning message
-        if (typeof(error) !== 'string') {
-          this.alertService.error('Error: No connection to the API');
-        } else {
-          this.alertService.error(error);
-        }
-      });
+    // Set the loading flag to false after a small delay
+    setTimeout(function stopLoading() { this.loading = false; }.bind(this), 1000);
   }
 
   getResults() {

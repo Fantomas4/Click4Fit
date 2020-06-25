@@ -68,6 +68,10 @@ mat-list-option {
   text-align:center;
 }
 
+mat-spinner {
+  margin: auto;
+}
+
 /*!* The container of results cards *!*/
 .card-deck-container{
   margin-top: 5%;

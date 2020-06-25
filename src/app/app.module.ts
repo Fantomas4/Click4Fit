@@ -50,6 +50,7 @@ import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/worko
 import {BusinessAddEntryService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
 import {ManageUserEntriesService} from './manage-user-entries/manage-user-entries.service';
 import {ManageBusinessEntriesService} from './manage-business-entries/manage-business-entries.service';
+import {AlertService} from './core/alert.service';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import {ManageBusinessEntriesService} from './manage-business-entries/manage-bus
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    AlertService
 
   ],
   bootstrap: [AppComponent],
