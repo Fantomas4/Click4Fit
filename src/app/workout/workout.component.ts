@@ -50,6 +50,9 @@ export class WorkoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Called to ensure the local user data are in sync with the Data Base.
+    this.updateUserData();
+
     this.alertSubscription = this.alertService.getMessage().subscribe(value => {
       if (value !== undefined) {
         this.alertMessage = {
@@ -60,6 +63,40 @@ export class WorkoutComponent implements OnInit {
     });
 
     this.getResults();
+  }
+
+  updateUserData() {
+    const request = {_id: JSON.parse(sessionStorage.getItem('currentUser'))._id};
+    this.workoutService.updateUser(request).subscribe(
+
+      data => {
+        // @ts-ignore
+        const {surname, favoriteWorkout, token, _id, name, email, privilegeLevel, favoriteBusiness} = data.body.user;
+        const loggedInUserData = {
+          _id,
+          name,
+          surname,
+          email,
+          privilegeLevel,
+          token,
+          favoriteBusiness,
+          favoriteWorkout
+        };
+
+        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUserData));
+
+      },
+
+      error => {
+        // If error is not a string received from the API, handle the ProgressEvent
+        // returned due to the inability to connect to the API by printing an appropriate
+        // warning message
+        if (typeof(error) !== 'string') {
+          this.alertService.error('Error: No connection to the API');
+        } else {
+          this.alertService.error(error);
+        }
+      });
   }
 
   prepareRequest() {

@@ -18,4 +18,8 @@ export class SearchService {
     }));
   }
 
+  updateUser(request: object) {
+    return this.http.post(`${environment.apiUrl}/display-myprofile`, JSON.stringify(request),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'});
+  }
 }

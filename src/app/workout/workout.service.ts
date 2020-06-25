@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {map} from 'rxjs/operators';
@@ -19,5 +18,10 @@ export class WorkoutService {
       observe: 'response'}).pipe(map((res: any) => {
       return res;
     }));
+  }
+
+  updateUser(request: object) {
+    return this.http.post(`${environment.apiUrl}/display-myprofile`, JSON.stringify(request),
+      {headers: {'Content-type': 'application/json'}, observe: 'response'});
   }
 }
