@@ -1,19 +1,19 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {DetailsDialogComponent} from '../details-dialog/details-dialog.component';
-import {BusinessEntry} from '../../business-entry';
-import {environment} from '../../../environments/environment';
+import {DetailsDialogComponent} from '../search/details-dialog/details-dialog.component';
+import {BusinessEntry} from '../business-entry';
+import {environment} from '../../environments/environment';
 import {Subscription} from 'rxjs';
-import {AlertMessage} from '../../core/alert-message';
-import {AlertService} from '../../core/alert.service';
-import {UserService} from '../../user.service';
+import {AlertMessage} from '../core/alert-message';
+import {AlertService} from '../core/alert.service';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'app-result-card',
-  templateUrl: './result-card.component.html',
-  styleUrls: ['./result-card.component.css']
+  templateUrl: './business-card.component.html',
+  styleUrls: ['./business-card.component.css']
 })
-export class ResultCardComponent implements OnInit {
+export class BusinessCardComponent implements OnInit {
 
   @Input() businessData: BusinessEntry;
 

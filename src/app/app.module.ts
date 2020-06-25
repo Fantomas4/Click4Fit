@@ -18,12 +18,12 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
 import { UserMainViewComponent } from './user-main-view/user-main-view.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
-import { ResultCardComponent } from './search/result-card/result-card.component';
+import { BusinessCardComponent } from './business-card/business-card.component';
 import { LocationAutocompleteComponent } from './search/location-autocomplete/location-autocomplete.component';
 import { DetailsDialogComponent } from './search/details-dialog/details-dialog.component';
 import { DeleteDialogMessageComponent } from './myprofile/delete-dialog-message/delete-dialog-message.component';
 import {MyProfileService} from './myprofile/myprofile.service';
-import { ResultCard2Component } from './workout/result-card2/result-card2.component';
+import { WorkoutCardComponent } from './workout-card/workout-card.component';
 import { ManageBusinessEntriesComponent } from './manage-business-entries/manage-business-entries.component';
 import { BusinessDetailsEditDialogComponent} from './manage-business-entries/business-details-edit-dialog/business-details-edit-dialog.component';
 import { BusinessAddEntryDialogComponent } from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.component';
@@ -47,9 +47,6 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
 import { ManageWorkoutEntriesComponent } from './manage-workout-entries/manage-workout-entries.component';
 import { WorkoutAddEntryDialogComponent} from './manage-workout-entries/workout-add-entry-dialog/workout-add-entry-dialog.component';
 import { WorkoutDetailsEditDialogComponent} from './manage-workout-entries/workout-details-edit-dialog/workout-details-edit-dialog.component';
-import {BusinessAddEntryService} from './manage-business-entries/business-add-entry-dialog/business-add-entry-dialog.service';
-import {ManageUserEntriesService} from './manage-user-entries/manage-user-entries.service';
-import {ManageBusinessEntriesService} from './manage-business-entries/manage-business-entries.service';
 import {AlertService} from './core/alert.service';
 
 @NgModule({
@@ -66,8 +63,8 @@ import {AlertService} from './core/alert.service';
     UserMainViewComponent,
     ContactUsComponent,
     HomeComponent,
-    ResultCardComponent,
-    ResultCard2Component,
+    BusinessCardComponent,
+    WorkoutCardComponent,
     LocationAutocompleteComponent,
     DetailsDialogComponent,
     DeleteDialogMessageComponent,

@@ -1,17 +1,17 @@
 import { Component, Input, OnInit, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {AlertService} from '../../core/alert.service';
+import {AlertService} from '../core/alert.service';
 import {Subscription} from 'rxjs';
-import {AlertMessage} from '../../core/alert-message';
-import {UserService} from '../../user.service';
+import {AlertMessage} from '../core/alert-message';
+import {UserService} from '../user.service';
 
 
 @Component({
   selector: 'app-result-card2',
-  templateUrl: './result-card2.component.html',
-  styleUrls: ['./result-card2.component.css']
+  templateUrl: './workout-card.component.html',
+  styleUrls: ['./workout-card.component.css']
 })
-export class ResultCard2Component implements OnInit {
+export class WorkoutCardComponent implements OnInit {
 
   @Input() workoutData; // it gets each entry of results
 
