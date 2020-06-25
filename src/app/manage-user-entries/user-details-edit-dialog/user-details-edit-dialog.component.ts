@@ -30,9 +30,7 @@ export class UserDetailsEditDialogComponent implements OnInit {
       Validators.required,
       Validators.email
     ]),
-    birthdate: new FormControl('', [
-      Validators.required
-    ])
+    birthdate: new FormControl()
   },
   );
 
@@ -62,11 +60,13 @@ export class UserDetailsEditDialogComponent implements OnInit {
 
   onSaveClick(): void {
     if (this.entryForm.valid) {
+      const datePipe = new DatePipe('en').transform(this.entryForm.get('birthdate').value, 'dd/MM/yyyy');
+
       const content = {
         name: this.entryForm.get('name').value,
         surname: this.entryForm.get('surname').value,
         email: this.entryForm.get('email').value,
-        birthdate: new DatePipe('en').transform(this.entryForm.get('birthdate').value, 'dd/MM/yyyy')
+        birthdate: datePipe ? datePipe : '',
       };
       this.dialogRef.close({ clickedSave: true, details: content });
     }
