@@ -65,13 +65,12 @@ class UserDB:
             "name"             : user["name"],
             "surname"          : user["surname"],
             "email"            : user["email"],
+            "birthdate"        : user.get("birthdate", "")
             "password"         : self._hashPassword(user["password"]), # hash and salt password
             "privilegeLevel"   : user["privilegeLevel"],
             "favoriteWorkout"  : user.get("favoriteWorkout", []),
             "favoriteBusiness" : user.get("favoriteBusiness", [])
         }
-        if "birthdate" in user:
-            _user["birthdate"] = user["birthdate"]
         if _user["privilegeLevel"] == "business":
             _user["businessList"] = []
         try:
